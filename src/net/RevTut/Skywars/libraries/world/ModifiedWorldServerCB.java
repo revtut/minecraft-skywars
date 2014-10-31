@@ -1,8 +1,6 @@
-package net.RevTut.Skywars.world;
+package net.RevTut.Skywars.libraries.world;
 
 import net.minecraft.server.v1_7_R4.*;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import sun.misc.Unsafe;
 
@@ -21,8 +19,8 @@ public class ModifiedWorldServerCB extends WorldServer {
     public ModifiedWorldServerCB(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,
                                  WorldSettings worldsettings, MethodProfiler methodprofiler, org.bukkit.World.Environment env, ChunkGenerator gen) {
         super(minecraftserver, idatamanager, s, i, worldsettings, methodprofiler, env, gen);
-        N = (Set) WorldUtils.acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
-        M = (TreeSet) WorldUtils.acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
+        N = (Set) WorldAPI.acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
+        M = (TreeSet) WorldAPI.acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
     }
 
     @Override
@@ -82,7 +80,7 @@ public class ModifiedWorldServerCB extends WorldServer {
     }
 
     private static class UnsafeLock {
-        private static final Unsafe UNSAFE = (Unsafe) WorldUtils.acquireField(null, "theUnsafe", Unsafe.class);
+        private static final Unsafe UNSAFE = (Unsafe) WorldAPI.acquireField(null, "theUnsafe", Unsafe.class);
 
         private final Object lock;
         private volatile boolean locked = false;
@@ -100,27 +98,5 @@ public class ModifiedWorldServerCB extends WorldServer {
             if (!locked) return;
             UNSAFE.monitorExit(lock);
         }
-    }
-
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("gen")) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    UnsafeLock lock = new UnsafeLock(new ASyncWorld());
-                    lock.lock();
-
-                    //  createWorld(WORLD_0);
-                    // createWorld(WORLD_1);
-                    //  createWorld(WORLD_2);
-
-                    lock.unlock();
-                }
-            });
-            thread.start();
-
-            return true;
-        }
-        return false;
     }
 }

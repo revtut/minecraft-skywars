@@ -4,14 +4,6 @@ import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector.PacketTitle;
 
-/**
- * <p><b>TitleLIB/TitleManager:</b> Class to send <b>Titles, Subtitles and Timings</b> to Players. <i>(Minecraft 1.8)</i><br/>
- * <p/>
- * </p>
- *
- * @author inventivetalent <b>-<b/> <a href="http://www.inventivegames.de"><i>www.inventivegames.de</i></a>
- * @version 2lkjlkj
- */
 public class TitleAPI {
 
     public static int VERSION = 47;

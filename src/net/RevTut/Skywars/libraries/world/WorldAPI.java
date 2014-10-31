@@ -1,13 +1,12 @@
-package net.RevTut.Skywars.world;
-
-/**
- * Created by João on 31/10/2014.
- */
+package net.RevTut.Skywars.libraries.world;
 
 import net.minecraft.server.v1_7_R4.*;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.event.world.WorldInitEvent;
@@ -15,40 +14,50 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 
+import javax.annotation.Nonnull;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Map;
 
-public class ASyncWorld {
+/**
+ * Created by João on 31/10/2014.
+ */
+public class WorldAPI {
 
     /**
      * Load World ASync
      *
-     * @param creator  WorldCreator for loading the world
+     * @param worldName  Name of the world to load
      */
-    public static org.bukkit.World createWorld(WorldCreator creator) {
+    public static org.bukkit.World loadWorldAsync(String worldName) {
+        // World Creator
+        WorldCreator creator = new WorldCreator(worldName);
+
         Validate.notNull(creator, "Creator may not be null");
 
+        // Fields to Get from Main Classes
         CraftServer server = (CraftServer) Bukkit.getServer();
-        MinecraftServer console = (MinecraftServer) WorldUtils.acquireField(server, "console", CraftServer.class);
-        Map<String, org.bukkit.World> worlds = (Map<String, org.bukkit.World>) WorldUtils.acquireField(server, "worlds", CraftServer.class);
-        PluginManager pluginManager = (PluginManager) WorldUtils.acquireField(server, "pluginManager", CraftServer.class);
+        MinecraftServer console = (MinecraftServer) acquireField(server, "console", CraftServer.class);
+        Map<String, World> worlds = (Map<String, org.bukkit.World>) acquireField(server, "worlds", CraftServer.class);
+        PluginManager pluginManager = (PluginManager) acquireField(server, "pluginManager", CraftServer.class);
 
+        // World
         String name = creator.name();
-        ChunkGenerator generator = creator.generator();
-        File folder = new File(server.getWorldContainer(), name);
         org.bukkit.World world = server.getWorld(name);
-        WorldType type = WorldType.getType(creator.type().getName());
-        boolean generateStructures = creator.generateStructures();
-
         if (world != null)
             return world;
 
+        // Folder of the World
+        File folder = new File(server.getWorldContainer(), name);
         if ((folder.exists()) && (!folder.isDirectory()))
             throw new IllegalArgumentException("File exists with the name '" + name + "' and isn't a folder");
 
+        // Chunk Generator
+        ChunkGenerator generator = creator.generator();
         if (generator == null)
             generator = server.getGenerator(name);
 
+        // Convert Existing World
         Convertable converter = new WorldLoaderServer(server.getWorldContainer());
         if (converter.isConvertable(name)) {
             System.out.println("Converting world '" + name + "'");
@@ -67,6 +76,9 @@ public class ASyncWorld {
             }
         } while (used);
         boolean hardcore = false;
+
+        boolean generateStructures = creator.generateStructures();
+        WorldType type = WorldType.getType(creator.type().getName());
 
         WorldServer internal = new ModifiedWorldServerCB(
                 console,
@@ -120,5 +132,52 @@ public class ASyncWorld {
         pluginManager.callEvent(new WorldLoadEvent(internal.getWorld()));
 
         return internal.getWorld();
+    }
+
+    /**
+     * Get object from class
+     *
+     * @param owner     Owner object
+     * @param field     Declared field to get
+     * @param fallback  Class of the field
+     */
+    public static synchronized Object acquireField(Object owner, @Nonnull String field, @Nonnull Class<?> fallback) {
+        try {
+            Field f = fallback.getDeclaredField(field);
+
+            if (f == null)
+                return null;
+
+            f.setAccessible(true);
+            return f.get(owner);
+        } catch (NoSuchFieldException x) {
+            x.printStackTrace();
+        } catch (IllegalAccessException x) {
+            x.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("gen")) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                   // UnsafeLock lock = new UnsafeLock(new ASyncWorld());
+                    //lock.lock();
+
+                    //  createWorld(WORLD_0);
+                    // createWorld(WORLD_1);
+                    //  createWorld(WORLD_2);
+
+                  //  lock.unlock();
+                    System.out.println("Ola");
+                }
+            });
+            thread.start();
+
+            return true;
+        }
+        return false;
     }
 }
