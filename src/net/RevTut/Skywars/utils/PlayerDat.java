@@ -15,9 +15,6 @@ public class PlayerDat {
     /* UUID */
     private UUID uuid;
 
-    /* Configs */
-    private boolean playersVisible;
-
     /* Currency */
     private int points;
 
@@ -29,8 +26,6 @@ public class PlayerDat {
     /* Constructor */
     public PlayerDat(UUID uuid, boolean playersVisible, boolean chat, int points) {
         this.uuid = uuid;
-        this.playersVisible = playersVisible;
-        this.chat = chat;
         this.points = points;
         this.wins = wins;
         this.kills = kills;
