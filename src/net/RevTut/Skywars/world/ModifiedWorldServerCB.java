@@ -1,0 +1,145 @@
+package net.RevTut.Skywars.world;
+
+import net.minecraft.server.v1_7_R4.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.generator.ChunkGenerator;
+import sun.misc.Unsafe;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Field;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+/**
+ * Created by João on 31/10/2014.
+ */
+public class ModifiedWorldServerCB extends WorldServer {
+    private Set N;
+    private SortedSet M;
+    private final UnsafeLock lock = new UnsafeLock(this);
+
+    public ModifiedWorldServerCB(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,
+                                 WorldSettings worldsettings, MethodProfiler methodprofiler, org.bukkit.World.Environment env, ChunkGenerator gen) {
+        super(minecraftserver, idatamanager, s, i, worldsettings, methodprofiler, env, gen);
+        N = (Set) acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
+        M = (TreeSet) acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
+    }
+
+    @Override
+    public void a(int i, int j, int k, Block block, int l, int i1) {
+        lock.lock();
+
+        NextTickListEntry nextticklistentry = new NextTickListEntry(i, j, k, block);
+        byte b0 = 0;
+
+        if (this.d && block.getMaterial() != Material.AIR) {
+            if (block.L()) {
+                b0 = 8;
+                if (this.b(nextticklistentry.a - b0, nextticklistentry.b - b0, nextticklistentry.c - b0, nextticklistentry.a + b0, nextticklistentry.b + b0, nextticklistentry.c + b0)) {
+                    Block block1 = this.getType(nextticklistentry.a, nextticklistentry.b, nextticklistentry.c);
+
+                    if (block1.getMaterial() != Material.AIR && block1 == nextticklistentry.a())
+                        block1.a(this, nextticklistentry.a, nextticklistentry.b, nextticklistentry.c, this.random);
+                }
+
+                return;
+            }
+
+            l = 1;
+        }
+
+        if (this.b(i - b0, j - b0, k - b0, i + b0, j + b0, k + b0)) {
+            if (block.getMaterial() != Material.AIR) {
+                nextticklistentry.a((long) l + this.worldData.getTime());
+                nextticklistentry.a(i1);
+            }
+
+            if (!this.M.contains(nextticklistentry)) {
+                this.M.add(nextticklistentry);
+                this.N.add(nextticklistentry);
+            }
+        }
+
+        lock.unlock();
+    }
+
+    @Override
+    public void b(int i, int j, int k, Block block, int l, int i1) {
+        lock.lock();
+
+        NextTickListEntry nextticklistentry = new NextTickListEntry(i, j, k, block);
+
+        nextticklistentry.a(i1);
+        if (block.getMaterial() != Material.AIR)
+            nextticklistentry.a((long) l + this.worldData.getTime());
+
+        if (!this.M.contains(nextticklistentry)) {
+            this.M.add(nextticklistentry);
+            this.N.add(nextticklistentry);
+        }
+
+        lock.unlock();
+    }
+
+    private static class UnsafeLock {
+        private static final Unsafe UNSAFE = (Unsafe) acquireField(null, "theUnsafe", Unsafe.class);
+
+        private final Object lock;
+        private volatile boolean locked = false;
+
+        public UnsafeLock(Object lock) {
+            this.lock = lock;
+        }
+
+        public void lock() {
+            if (locked) return;
+            UNSAFE.monitorEnter(lock);
+        }
+
+        public void unlock() {
+            if (!locked) return;
+            UNSAFE.monitorExit(lock);
+        }
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("gen")) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    UnsafeLock lock = new UnsafeLock(new ASyncWorld());
+                    lock.lock();
+
+                    //  createWorld(WORLD_0);
+                    // createWorld(WORLD_1);
+                    //  createWorld(WORLD_2);
+
+                    lock.unlock();
+                }
+            });
+            thread.start();
+
+            return true;
+        }
+        return false;
+    }
+
+    public static synchronized Object acquireField(Object owner, @Nonnull String field, @Nonnull Class<?> fallback) {
+        try {
+            Field f = fallback.getDeclaredField(field);
+
+            if (f == null)
+                return null;
+
+            f.setAccessible(true);
+            return f.get(owner);
+        } catch (NoSuchFieldException x) {
+            x.printStackTrace();
+        } catch (IllegalAccessException x) {
+            x.printStackTrace();
+        }
+        return null;
+    }
+}
