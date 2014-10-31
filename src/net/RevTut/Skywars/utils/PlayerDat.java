@@ -24,7 +24,7 @@ public class PlayerDat {
     private int deaths;
 
     /* Constructor */
-    public PlayerDat(UUID uuid, boolean playersVisible, boolean chat, int points) {
+    public PlayerDat(UUID uuid, boolean playersVisible, boolean chat, int points, int wins, int kills, int deaths) {
         this.uuid = uuid;
         this.points = points;
         this.wins = wins;
