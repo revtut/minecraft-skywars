@@ -99,9 +99,9 @@ public class MySQL {
             final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + uuid + "';";
             final ResultSet result = this.connection.createStatement().executeQuery(coreStatement);
             if (result.next()) {
-                PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), result.getLong("PlayTime"), result.getBoolean("PlayersVisible"), result.getBoolean("Chat"), result.getInt("Points"), result.getInt("NumberBans"), result.getInt("NumberJoins"), result.getInt("NumberKicks"), result.getInt("NumberReports")));
+                PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), result.getLong("PlayTime"), result.getInt("Points"), result.getInt("Wins"), result.getInt("Losses"), result.getInt("Kills"), result.getInt("Deaths")));
             } else {
-                PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, true, true, 0, 0, 1, 0, 0));
+                PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0));
             }
         } catch (final SQLException e) {
             System.out.println("Error while trying to create PlayerDat! Reason: " + e.getMessage());
@@ -116,10 +116,10 @@ public class MySQL {
             final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + playerDat.getUUID() + "'";
             final ResultSet result = this.connection.createStatement().executeQuery(coreStatement);
             if (result.next()) {
-                final String coreUpdate = "UPDATE " + DBCore + " SET PlayTime = " + playerDat.getPlayTime() + ", PlayersVisible = " + playerDat.hasPlayersVisible() + ", Chat = " + playerDat.hasChat() + ", Points = " + playerDat.getPoints() + ", NumberBans = " + playerDat.getNumberBans() + ", NumberJoins = " + playerDat.getNumberJoins() + ", NumberKicks = " + playerDat.getNumberKicks() + ", NumberReports = " + playerDat.getNumberReports() + " WHERE Player = '" + playerDat.getUUID() + "';";
+                final String coreUpdate = "UPDATE " + DBCore + " SET PlayTime = " + playerDat.getPlayTime() + ", Points = " + playerDat.getPoints() + ", Wins = " + playerDat.getWins() + ", Losses = " + playerDat.getLosses() + ", Kills = " + playerDat.getKills() + ", Deaths = " + playerDat.getDeaths() + " WHERE Player = '" + playerDat.getUUID() + "';";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             } else {
-                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", " + playerDat.hasPlayersVisible() + ", " + playerDat.hasChat() + ", " + playerDat.getPoints() + ", " + playerDat.getNumberBans() + ", " + playerDat.getNumberJoins() + ", " + playerDat.getNumberKicks() + ", " + playerDat.getNumberReports() + ");";
+                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, Points, Chat, Points, Wins, Losses, Kills, Deaths) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", " + playerDat.getPoints() + ", " + playerDat.getWins() + ", " + playerDat.getLosses() + ", " + playerDat.getKills() + ", " + playerDat.getDeaths() + ");";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             }
         } catch (final SQLException e) {

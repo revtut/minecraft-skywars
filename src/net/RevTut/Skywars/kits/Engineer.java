@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.kits;
 
-
 import net.RevTut.Skywars.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
