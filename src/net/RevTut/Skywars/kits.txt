@@ -1,8 +1,8 @@
 Engineer(engenheiro)
 - Land Mine: explode mal o player pise
   - Quantidade de minas: 2
-- Armadura: de iron com anti fall damage e protection 2
-- Items:
+- Armadura: de iron com anti fall damage e protection explosions 2
+- Items: arco flame 1 e espada stone smite 2
 
 Ninja(slayer)
 - Cana de pesca com hook(agarra se as paredes e puxa)
