@@ -17,7 +17,8 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 
 import javax.annotation.Nonnull;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -30,7 +31,6 @@ public class WorldAPI {
      * Load World ASync
      *
      * @param worldName Name of the world to load
-     *
      * @return world    Loaded bukkit world
      */
     public static org.bukkit.World loadWorldAsync(String worldName) {
@@ -165,22 +165,21 @@ public class WorldAPI {
     /**
      * Copy directory to new location
      *
-     * @param source    Source of the folder
-     * @param target    Target of the folder
-     *
+     * @param source Source of the folder
+     * @param target Target of the folder
      * @return void
      */
-    public static void copyDirectoryAsync(final String source , final String target) {
-        Bukkit.getScheduler().runTaskAsynchronously(new Main(), new Runnable(){
+    public static void copyDirectoryAsync(final String source, final String target) {
+        Bukkit.getScheduler().runTaskAsynchronously(new Main(), new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 File trgDir = new File(source);
                 File srcDir = new File(target);
 
                 try {
                     FileUtils.copyDirectory(srcDir, trgDir);
-                } catch(IOException e){
-                    System.out.println("Error while trying to copy world folder from " + source  + " to " + target + ".");
+                } catch (IOException e) {
+                    System.out.println("Error while trying to copy world folder from " + source + " to " + target + ".");
                     System.out.println(e.getMessage());
                 }
             }

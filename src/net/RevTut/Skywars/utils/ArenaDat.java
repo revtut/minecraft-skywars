@@ -12,9 +12,6 @@ public class ArenaDat {
     private static List<ArenaDat> arenasDat = new ArrayList<ArenaDat>();
 
     /* ArenaDat's Configuration */
-    private static int gameTime = 1800; // Maximum time a game can take (SECONDS)
-    private static int lobbyTime = 300; // After reaching minimum players, how much time to wait for new players to join before game starts
-    private static int waitingTime = 30; // Time before the gam actually starts (when you are already in the map's spawn) (SECONDS)
     private static int minPlayers = 8; // Minimum players for the game starts
     private static int minReduceTimePlayers = 16; // Minimum players for the lobby time reduces
     private static int maxPlayers = 24; // Maximum players that can play in arena
@@ -23,7 +20,7 @@ public class ArenaDat {
     private int arenaNumber;
     private String mapName;
     private String gameNumber;
-    private int currentTime; // Arena's time. It depends on the arena's status, that means it can be the currentGameTime, currentLobbyTime, etc.
+    private int currentTime; // Arena's time. It depends on the arena's status, that means it can be the currentInGameTime, currentLobbyTime, etc.
     private ArenaStatus status; // Current status of the Arena
 
     /* Arena Location */
