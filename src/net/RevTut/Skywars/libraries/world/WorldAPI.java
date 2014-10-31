@@ -1,6 +1,8 @@
 package net.RevTut.Skywars.libraries.world;
 
+import net.RevTut.Skywars.Main;
 import net.minecraft.server.v1_7_R4.*;
+import net.minecraft.util.org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -15,7 +17,7 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 
 import javax.annotation.Nonnull;
-import java.io.File;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -28,6 +30,8 @@ public class WorldAPI {
      * Load World ASync
      *
      * @param worldName Name of the world to load
+     *
+     * @return world    Loaded bukkit world
      */
     public static org.bukkit.World loadWorldAsync(String worldName) {
         // World Creator
@@ -80,7 +84,7 @@ public class WorldAPI {
         boolean generateStructures = creator.generateStructures();
         WorldType type = WorldType.getType(creator.type().getName());
 
-        WorldServer internal = new ModifiedWorldServerCB(
+        WorldServer internal = new WorldServerNMS(
                 console,
                 new ServerNBTManager(server.getWorldContainer(), name, true),
                 name, dimension,
@@ -156,6 +160,31 @@ public class WorldAPI {
             x.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Copy directory to new location
+     *
+     * @param source    Source of the folder
+     * @param target    Target of the folder
+     *
+     * @return void
+     */
+    public static void copyDirectoryAsync(final String source , final String target) {
+        Bukkit.getScheduler().runTaskAsynchronously(new Main(), new Runnable(){
+            @Override
+            public void run(){
+                File trgDir = new File(source);
+                File srcDir = new File(target);
+
+                try {
+                    FileUtils.copyDirectory(srcDir, trgDir);
+                } catch(IOException e){
+                    System.out.println("Error while trying to copy world folder from " + source  + " to " + target + ".");
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

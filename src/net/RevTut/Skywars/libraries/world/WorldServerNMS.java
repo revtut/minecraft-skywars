@@ -11,16 +11,16 @@ import java.util.TreeSet;
 /**
  * Created by João on 31/10/2014.
  */
-public class ModifiedWorldServerCB extends WorldServer {
+public class WorldServerNMS extends WorldServer {
     private Set N;
     private SortedSet M;
     private final UnsafeLock lock = new UnsafeLock(this);
 
-    public ModifiedWorldServerCB(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,
-                                 WorldSettings worldsettings, MethodProfiler methodprofiler, org.bukkit.World.Environment env, ChunkGenerator gen) {
+    public WorldServerNMS(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,
+                          WorldSettings worldsettings, MethodProfiler methodprofiler, org.bukkit.World.Environment env, ChunkGenerator gen) {
         super(minecraftserver, idatamanager, s, i, worldsettings, methodprofiler, env, gen);
-        N = (Set) WorldAPI.acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
-        M = (TreeSet) WorldAPI.acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
+        N = (Set) WorldAPI.acquireField(WorldServerNMS.this, "M", WorldServer.class);
+        M = (TreeSet) WorldAPI.acquireField(WorldServerNMS.this, "N", WorldServer.class);
     }
 
     @Override
