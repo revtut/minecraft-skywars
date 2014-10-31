@@ -10,6 +10,7 @@ import java.util.List;
 public class ArenaDat {
 
     /* Game Info */
+    private String gameNumber;
     private String winner; // This string is in fact the UUID
     private Date startDate;
     private Date stopDate;
@@ -18,6 +19,10 @@ public class ArenaDat {
     private List<String> gameEvents = new ArrayList<String>(); // Game Events
 
     /* Get's */
+    public String getGameNumber() {
+        return gameNumber;
+    }
+
     public String getWinner() {
         return winner;
     }
@@ -43,6 +48,10 @@ public class ArenaDat {
     }
 
     /* Set's */
+    public void setGameNumber(String gameNumber) {
+        this.gameNumber = gameNumber;
+    }
+
     public void setWinner(String winner) {
         this.winner = winner;
     }

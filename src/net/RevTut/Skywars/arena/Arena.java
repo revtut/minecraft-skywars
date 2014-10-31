@@ -18,7 +18,6 @@ public class Arena {
     /* Arena Info */
     private final int arenaNumber;
     private String mapName;
-    private String gameNumber;
     private int remainingTime; // Arena's remaining time. It depends on the arena's status, that means it can be the currentInGameTime, currentLobbyTime, etc.
     private ArenaStatus status; // Current status of the Arena
 
@@ -67,10 +66,6 @@ public class Arena {
         return mapName;
     }
 
-    public String getGameNumber() {
-        return gameNumber;
-    }
-
     public int getRemainingTime() {
         return remainingTime;
     }
@@ -90,10 +85,6 @@ public class Arena {
     /* Set's */
     public void setMapName(String mapName) {
         this.mapName = mapName;
-    }
-
-    public void setGameNumber(String gameNumber) {
-        this.gameNumber = gameNumber;
     }
 
     public void setRemainingTime(int remainingTime) {
