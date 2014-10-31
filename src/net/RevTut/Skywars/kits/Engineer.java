@@ -14,7 +14,9 @@ import java.util.ArrayList;
 
 public class Engineer implements Listener {
 
-    ItemStack mine = new ItemStack(Material.STONE);{
+    ItemStack mine = new ItemStack(Material.STONE);
+
+    {
         ItemMeta mineMeta = mine.getItemMeta();
         mineMeta.setDisplayName("§3Land Mine");
         ArrayList<String> lore =
