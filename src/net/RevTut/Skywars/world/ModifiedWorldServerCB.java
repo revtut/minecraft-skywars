@@ -23,8 +23,8 @@ public class ModifiedWorldServerCB extends WorldServer {
     public ModifiedWorldServerCB(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,
                                  WorldSettings worldsettings, MethodProfiler methodprofiler, org.bukkit.World.Environment env, ChunkGenerator gen) {
         super(minecraftserver, idatamanager, s, i, worldsettings, methodprofiler, env, gen);
-        N = (Set) acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
-        M = (TreeSet) acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
+        N = (Set) WorldUtils.acquireField(ModifiedWorldServerCB.this, "M", WorldServer.class);
+        M = (TreeSet) WorldUtils.acquireField(ModifiedWorldServerCB.this, "N", WorldServer.class);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ModifiedWorldServerCB extends WorldServer {
     }
 
     private static class UnsafeLock {
-        private static final Unsafe UNSAFE = (Unsafe) acquireField(null, "theUnsafe", Unsafe.class);
+        private static final Unsafe UNSAFE = (Unsafe) WorldUtils.acquireField(null, "theUnsafe", Unsafe.class);
 
         private final Object lock;
         private volatile boolean locked = false;
@@ -124,22 +124,5 @@ public class ModifiedWorldServerCB extends WorldServer {
             return true;
         }
         return false;
-    }
-
-    public static synchronized Object acquireField(Object owner, @Nonnull String field, @Nonnull Class<?> fallback) {
-        try {
-            Field f = fallback.getDeclaredField(field);
-
-            if (f == null)
-                return null;
-
-            f.setAccessible(true);
-            return f.get(owner);
-        } catch (NoSuchFieldException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
-        }
-        return null;
     }
 }

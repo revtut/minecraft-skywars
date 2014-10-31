@@ -25,9 +25,9 @@ public class ASyncWorld {
         Validate.notNull(creator, "Creator may not be null");
 
         CraftServer server = (CraftServer) Bukkit.getServer();
-        MinecraftServer console = (MinecraftServer) ModifiedWorldServerCB.acquireField(server, "console", CraftServer.class);
-        Map<String, org.bukkit.World> worlds = (Map<String, org.bukkit.World>) ModifiedWorldServerCB.acquireField(server, "worlds", CraftServer.class);
-        PluginManager pluginManager = (PluginManager) ModifiedWorldServerCB.acquireField(server, "pluginManager", CraftServer.class);
+        MinecraftServer console = (MinecraftServer) WorldUtils.acquireField(server, "console", CraftServer.class);
+        Map<String, org.bukkit.World> worlds = (Map<String, org.bukkit.World>) WorldUtils.acquireField(server, "worlds", CraftServer.class);
+        PluginManager pluginManager = (PluginManager) WorldUtils.acquireField(server, "pluginManager", CraftServer.class);
 
         String name = creator.name();
         ChunkGenerator generator = creator.generator();
@@ -117,6 +117,4 @@ public class ASyncWorld {
 
         return internal.getWorld();
     }
-
-    // NMS code
 }
