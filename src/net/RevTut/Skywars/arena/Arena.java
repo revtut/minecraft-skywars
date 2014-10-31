@@ -28,10 +28,9 @@ public class Arena {
     private ArenaDat arenaDat;
 
     /* Constructor */
-    public Arena(int arenaNumber, String mapName, String gameNumber, ArenaLocation arenaLocation) {
+    public Arena(int arenaNumber, String mapName, ArenaLocation arenaLocation) {
         this.arenaNumber = arenaNumber;
         this.mapName = mapName;
-        this.gameNumber = gameNumber;
         this.arenaLocation = arenaLocation;
         this.arenaDat = new ArenaDat();
         this.remainingTime = ArenaStatus.LOBBY.getTime();
