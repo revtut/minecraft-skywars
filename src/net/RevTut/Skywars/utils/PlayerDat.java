@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,16 +15,22 @@ public class PlayerDat {
     /* Currency */
     private int points;
 
-    /* Behavior */
+    /* Statistics */
+    private Date lastLogin;
+    private long playTime;
     private int wins;
+    private int losses;
     private int kills;
     private int deaths;
 
     /* Constructor */
-    public PlayerDat(UUID uuid, boolean playersVisible, boolean chat, int points, int wins, int kills, int deaths) {
+    public PlayerDat(UUID uuid, Date lastLogin, long playTime, int points, int wins, int losses, int kills, int deaths) {
         this.uuid = uuid;
+        this.lastLogin = lastLogin;
+        this.playTime = playTime;
         this.points = points;
         this.wins = wins;
+        this.losses = losses;
         this.kills = kills;
         this.deaths = deaths;
     }
@@ -52,6 +59,10 @@ public class PlayerDat {
         return uuid;
     }
 
+    public long getPlayTime() {
+        long seconds = (new Date().getTime() - lastLogin.getTime()) / 1000; //
+        return playTime + seconds;
+    }
 
     public int getPoints() {
         return points;
@@ -59,6 +70,10 @@ public class PlayerDat {
 
     public int getWins() {
         return wins;
+    }
+
+    public int getLosses() {
+        return losses;
     }
 
     public int getKills() {
@@ -76,5 +91,9 @@ public class PlayerDat {
 
     public void addWins() {
         this.wins++;
+    }
+
+    public void addLosses() {
+        this.losses++;
     }
 }
