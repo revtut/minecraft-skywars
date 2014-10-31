@@ -1,14 +1,13 @@
-package net.RevTut.Skywars.utils;
+package net.RevTut.Skywars.arena;
 
 /**
  * Created by João on 31/10/2014.
  */
 public enum ArenaStatus {
-    LOOKINGPLAYERS(999), // Waiting for players to join
-    LOBBY (300), // Minimum players reached, waiting for new ones to join before starting
-    WAITING(30), // Waiting time after the players are in the arena
+    LOBBY (300), // Waiting for new ones to join
+    PREGAME(30), // Time before the game actually starts
     INGAME(1800), // Maximum game time
-    FIREWORKS(30); // End of the game time
+    ENDGAME(30); // End of the game time
 
     /* Maximum Time of the Status (SECONDS) */
     private final int time;
