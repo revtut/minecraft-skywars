@@ -46,7 +46,7 @@ public class Engineer implements Listener {
         ironArmor4.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
 
-    public void kit_engineer(Player p){
+    public void kitEngineer(Player p){
         p.getInventory().addItem(mine);
         p.getInventory().addItem(ironArmor1);
         p.getInventory().addItem(ironArmor2);

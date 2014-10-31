@@ -36,7 +36,7 @@ public class Ninja implements Listener {
         ironArmor4.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
 
-    public void kit_engineer(Player p){
+    public void kitNinja(Player p){
         p.getInventory().addItem(hook);
         p.getInventory().setHelmet(ironArmor1);
         p.getInventory().setChestplate(ironArmor2);

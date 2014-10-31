@@ -2,22 +2,18 @@ Engineer(engenheiro) = 100% done
 - Land Mine: explode mal o player pise
   - Quantidade de minas: 2
 - Armadura: de iron com anti fall damage e protection explosions 2
-- Items: arco flame 1 e espada stone smite 2
 
 Ninja(slayer)
 - Cana de pesca com hook(agarra se as paredes e puxa)
   - Durabilidade: 2x
 - Armadura: de chain com anti fall damage e speed 2
-- Items: espada iron, stone ou arco com flame 2 e poison nas setas(random item)
 
 Tatical(fantasma)
 - Pode usar a ender pearl para desaparecer durante 5 segundos
  - Durabilidade: 2x
 - Armadura: dps ve se
-- Items: espada iron,stone ou diamante(random item)
 
 Bypass(Hacker)
 - Direito a respawn quando morre
  - Durabilidade: 1x
 - Armadura: iron
-- Items: espada de iron com knockback 2
