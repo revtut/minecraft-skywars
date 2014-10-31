@@ -6,8 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import sun.misc.Unsafe;
 
-import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
