@@ -1,4 +1,4 @@
-Engineer(engenheiro)
+Engineer(engenheiro) = 100% done
 - Land Mine: explode mal o player pise
   - Quantidade de minas: 2
 - Armadura: de iron com anti fall damage e protection explosions 2
