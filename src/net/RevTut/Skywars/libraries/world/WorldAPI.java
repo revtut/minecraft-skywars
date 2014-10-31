@@ -27,7 +27,7 @@ public class WorldAPI {
     /**
      * Load World ASync
      *
-     * @param worldName  Name of the world to load
+     * @param worldName Name of the world to load
      */
     public static org.bukkit.World loadWorldAsync(String worldName) {
         // World Creator
@@ -137,9 +137,9 @@ public class WorldAPI {
     /**
      * Get object from class
      *
-     * @param owner     Owner object
-     * @param field     Declared field to get
-     * @param fallback  Class of the field
+     * @param owner    Owner object
+     * @param field    Declared field to get
+     * @param fallback Class of the field
      */
     public static synchronized Object acquireField(Object owner, @Nonnull String field, @Nonnull Class<?> fallback) {
         try {
@@ -163,14 +163,14 @@ public class WorldAPI {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                   // UnsafeLock lock = new UnsafeLock(new ASyncWorld());
+                    // UnsafeLock lock = new UnsafeLock(new ASyncWorld());
                     //lock.lock();
 
                     //  createWorld(WORLD_0);
                     // createWorld(WORLD_1);
                     //  createWorld(WORLD_2);
 
-                  //  lock.unlock();
+                    //  lock.unlock();
                     System.out.println("Ola");
                 }
             });

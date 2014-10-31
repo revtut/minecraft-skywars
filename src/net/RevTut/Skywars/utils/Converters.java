@@ -100,7 +100,7 @@ public class Converters {
     }
 
     /* Convert Hours to Days */
-    public static long convertHoursToDays(long hours){
+    public static long convertHoursToDays(long hours) {
         return hours / 24;
     }
 
@@ -115,7 +115,7 @@ public class Converters {
     }
 
     /* Convert Seconds to Days, Hours, Minutes and Seconds */
-    public static String convertSecondsToDHMS(long sec){
+    public static String convertSecondsToDHMS(long sec) {
 
         long seconds = sec % 60;
         long minutes = convertSecondsToMinutes(seconds);

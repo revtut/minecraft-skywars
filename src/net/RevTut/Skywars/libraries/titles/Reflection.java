@@ -22,7 +22,8 @@ public class Reflection {
         }
         return clazz;
     }
-// coise
+
+    // coise
     public static Class<?> getOBCClass(String className) {
         String fullName = "org.bukkit.craftbukkit." + getVersion() + className;
         Class<?> clazz = null;
