@@ -20,7 +20,11 @@ import java.util.Map;
 
 public class ASyncWorld {
 
-    // CB code
+    /**
+     * Load World ASync
+     *
+     * @param creator  WorldCreator for loading the world
+     */
     public static org.bukkit.World createWorld(WorldCreator creator) {
         Validate.notNull(creator, "Creator may not be null");
 
