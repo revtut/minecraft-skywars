@@ -222,7 +222,7 @@ public class Arena {
                     for (int a = 0; a < 3; a++) {
                         parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
                     }
-                    spawnLocations.add(new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]));
+                    spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
                 }
             } else {
                 // Location
@@ -234,18 +234,19 @@ public class Arena {
                 }
                 // Check which location it is
                 if (message.equalsIgnoreCase("lobbyLocation")) {
-                    lobbyLocation = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
+                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
                 } else if (message.equalsIgnoreCase("deathspawnLocation")) {
-                    deathSpawnLocation = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
+                    deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
                 } else if (message.equalsIgnoreCase("firstCorner")) {
-                    firstCorner = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
+                    firstCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
                 } else if (message.equalsIgnoreCase("secondCorner")) {
-                    secondCorner = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
+                    secondCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
                 }
             }
         }
         ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
         Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
+        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
         addArena(arena);
         if(true)
             return;

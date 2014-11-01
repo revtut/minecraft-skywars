@@ -39,38 +39,45 @@ public class PlayerJoin implements Listener {
             public void run() {
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
+                // Config Player
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        // Add to Arena
+                        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
+                        if (playerDat == null) {
+                            /** Send him to Hub. Error in playerDat */
+                            return;
+                        }
+                        if (!Arena.addPlayer(playerDat)) {
+                            /** Send him to Hub. No arena available */
+                            return;
+                        }
+                        Arena arena = Arena.getArenaByPlayer(playerDat);
+                        if (arena == null) {
+                            /** Send him to Hub. Error in arena */
+                            return;
+                        }
+                        // New Arena if Needed
+                        if (Arena.getNumberAvailableArenas() <= 1) {
+                            Arena.createNewArena();
+                        }
+
+                        // Title
+                        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
+                        TitleAPI.sendTitle(p, plugin.titleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+                        TitleAPI.sendSubTitle(p, plugin.subTitleMessage);
+                        // Tab List
+                        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+                        // ScoreBoard
+                        ScoreBoard.showScoreBoard(p);
+                        // NameTag
+                        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
+                        if (board != null)
+                            NameTagAPI.setNameTag(board, p, true);
+                    }
+                });
             }
         });
-        // Add to Arena
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
-        if (playerDat == null) {
-            /** Send him to Hub. Error in playerDat */
-            return;
-        }
-        if (!Arena.addPlayer(playerDat)) {
-            /** Send him to Hub. No arena available */
-            return;
-        }
-        Arena arena = Arena.getArenaByPlayer(playerDat);
-        if (arena == null) {
-            /** Send him to Hub. Error in arena */
-            return;
-        }
-        // New Arena if Needed
-        if (Arena.getNumberAvailableArenas() <= 1) {
-            Arena.createNewArena();
-        }
-        // Title
-        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
-        TitleAPI.sendTitle(p, plugin.titleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
-        TitleAPI.sendSubTitle(p, plugin.subTitleMessage);
-        // Tab List
-        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
-        // ScoreBoard
-        ScoreBoard.showScoreBoard(p);
-        // NameTag
-        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
-        if (board != null)
-            NameTagAPI.setNameTag(board, p, true);
     }
 }

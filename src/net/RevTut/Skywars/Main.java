@@ -1,11 +1,15 @@
 package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
+import net.RevTut.Skywars.listeners.PlayerChat;
+import net.RevTut.Skywars.listeners.PlayerJoin;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -42,6 +46,14 @@ public class Main extends JavaPlugin {
         /* Create Initial Arenas */
         Arena.createNewArena();
         Arena.createNewArena();
+
+        /* Regist Events */
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        /* Libraries */
+        pm.registerEvents(new NameTagAPI(), this);
+        /* Listeners  */
+        pm.registerEvents(new PlayerChat(), this);
+        pm.registerEvents(new PlayerJoin(this), this);
     }
 
     @Override
