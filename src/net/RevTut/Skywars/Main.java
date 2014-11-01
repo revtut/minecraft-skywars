@@ -46,7 +46,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        /* Close MySQL */
+        if (!mysql.closeConnection())
+            System.out.println("Error while trying to close connection.");
     }
 
     private boolean createFiles() {

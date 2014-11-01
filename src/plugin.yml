@@ -1,0 +1,28 @@
+ name: Hub
+ version: 0.1
+ description: RevTut Network SkyWars Plugin
+ author: RevTut
+ website: www.revtut.net
+ main: net.RevTut.SkyWars.Main
+
+############
+# COMANDOS #
+############
+
+ commands:
+
+# Appearance
+  firework:
+    description: Launch Firework
+    aliases: [fw]
+
+##############
+# PERMISSOES #
+##############
+
+ permissions:
+
+# Appearance
+  rev.firework:
+    description: Permission to launch firework
+    default: op
