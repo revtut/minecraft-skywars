@@ -269,26 +269,26 @@ public class Arena {
         return players;
     }
 
-    public List<PlayerDat> getAlivePlayers(){
+    public List<PlayerDat> getAlivePlayers() {
         List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
-        for(int i = 0; i < players.size(); i++)
-            if(players.get(i).getStatus() == PlayerStatus.ALIVE)
+        for (int i = 0; i < players.size(); i++)
+            if (players.get(i).getStatus() == PlayerStatus.ALIVE)
                 alivePlayers.add(players.get(i));
         return alivePlayers;
     }
 
-    public List<PlayerDat> getDeathPlayers(){
+    public List<PlayerDat> getDeathPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
-        for(int i = 0; i < players.size(); i++)
-            if(players.get(i).getStatus() == PlayerStatus.DEAD)
+        for (int i = 0; i < players.size(); i++)
+            if (players.get(i).getStatus() == PlayerStatus.DEAD)
                 deathPlayers.add(players.get(i));
         return deathPlayers;
     }
 
-    public List<PlayerDat> getSpectatorPlayers(){
+    public List<PlayerDat> getSpectatorPlayers() {
         List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
-        for(int i = 0; i < players.size(); i++)
-            if(players.get(i).getStatus() == PlayerStatus.SPECTATOR)
+        for (int i = 0; i < players.size(); i++)
+            if (players.get(i).getStatus() == PlayerStatus.SPECTATOR)
                 spectatorPlayers.add(players.get(i));
         return spectatorPlayers;
     }
