@@ -6,6 +6,7 @@ import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,7 +57,7 @@ public class PlayerJoin implements Listener {
         }
         // Title
         Arena arena = Arena.getArenaByPlayer(playerDat);
-        if(arena == null){
+        if (arena == null) {
             /** Send him to Hub. No arena available */
             return;
         }
@@ -66,10 +67,10 @@ public class PlayerJoin implements Listener {
         // Tab List
         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
         // ScoreBoard
-        //ScoreBoard.showScoreBoard(p);
+        ScoreBoard.showScoreBoard(p);
         // NameTag
-        //Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
-        //if (board != null)
-        //    NameTagAPI.setNameTag(board, p, true);
+        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
+        if (board != null)
+            NameTagAPI.setNameTag(board, p, true);
     }
 }
