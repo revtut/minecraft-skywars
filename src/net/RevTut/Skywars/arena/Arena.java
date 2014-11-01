@@ -183,7 +183,7 @@ public class Arena {
                 String currentDir = System.getProperty("user.dir");
                 // Source Directory
                 String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
-                if(listWorlds == null){
+                if (listWorlds == null) {
                     System.out.println("Worlds folder not found!");
                     return;
                 }
@@ -200,14 +200,14 @@ public class Arena {
 
                 // Check if world is not null
                 World world = Bukkit.getWorld(mapName);
-                if(world == null) {
+                if (world == null) {
                     System.out.println("Error while creating a new arena! World is null!");
                     return;
                 }
 
                 // Create Arena
                 final File locations = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + mapName + File.separator + "locations.yml");
-                if(!locations.exists()){
+                if (!locations.exists()) {
                     System.out.println("File with arena locations does not exists!");
                     return;
                 }

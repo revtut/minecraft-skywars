@@ -1,9 +1,6 @@
 package net.RevTut.Skywars.libraries.world;
 
 import net.minecraft.server.v1_7_R4.*;
-import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
-import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -16,7 +13,9 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 
 import javax.annotation.Nonnull;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -29,7 +28,6 @@ public class WorldAPI {
      * Load World ASync
      *
      * @param worldName Name of the world to load
-
      * @return world    Loaded bukkit world
      */
     public static org.bukkit.World loadWorldAsync(String worldName) {
@@ -166,7 +164,6 @@ public class WorldAPI {
      *
      * @param srcDir Source of the folder
      * @param trgDir Target of the folder
-     *
      * @return void
      */
     public static void copyDirectory(final File srcDir, final File trgDir) {
@@ -185,8 +182,7 @@ public class WorldAPI {
                     // Copy that file / directory
                     copyDirectory(source, dest);
                 }
-            }
-            else {
+            } else {
                 // Copy the file
                 // Open a file for read and write (copy)
                 FileInputStream fInStream = new FileInputStream(srcDir);
@@ -206,8 +202,7 @@ public class WorldAPI {
                     fOutStream.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
         }
@@ -216,21 +211,19 @@ public class WorldAPI {
     /**
      * Delete directory
      *
-     * @param dir    Folder to remove
-
+     * @param dir Folder to remove
      * @return void
      */
     public static void removeDirectory(final File dir) {
         try {
-                if (dir.isDirectory()) {
-                    for (File c : dir.listFiles())
-                        removeDirectory(c);
-                }
-                if (!dir.delete()) {
-                    System.out.println("Error while trying to delete" + dir.getName() + ".");
-                }
-        }
-        catch (Exception e) {
+            if (dir.isDirectory()) {
+                for (File c : dir.listFiles())
+                    removeDirectory(c);
+            }
+            if (!dir.delete()) {
+                System.out.println("Error while trying to delete" + dir.getName() + ".");
+            }
+        } catch (Exception e) {
             System.out.println("Error while trying to delete" + dir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
         }

@@ -1,11 +1,9 @@
 package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,9 +40,8 @@ public class Main extends JavaPlugin {
             System.out.println("Error while trying to read the files.");
 
         /* Create Initial Arenas */
-        WorldAPI.loadWorldAsync("flatroom");
-        //Arena.createNewArena();
-        //Arena.createNewArena();
+        Arena.createNewArena();
+        Arena.createNewArena();
     }
 
     @Override
