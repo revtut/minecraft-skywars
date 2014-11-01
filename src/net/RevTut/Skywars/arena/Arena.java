@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.arena;
 
-import net.RevTut.Skywars.utils.PlayerDat;
+import net.RevTut.Skywars.player.PlayerDat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,9 @@ public class Arena {
     private static List<Arena> arenas = new ArrayList<Arena>();
 
     /* Arena's Configuration */
-    public static final int minPlayers = 8; // Minimum players for the game starts
-    public static final int minReduceTimePlayers = 16; // Minimum players for the lobby time reduces
-    public static final int maxPlayers = 24; // Maximum players that can play in arena
+    public static final int minPlayers = 8; // Minimum player for the game starts
+    public static final int minReduceTimePlayers = 16; // Minimum player for the lobby time reduces
+    public static final int maxPlayers = 24; // Maximum player that can play in arena
 
     /* Arena Info */
     private final int arenaNumber;

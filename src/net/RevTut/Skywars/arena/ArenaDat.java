@@ -14,7 +14,7 @@ public class ArenaDat {
     private String winner; // This string is in fact the UUID
     private Date startDate;
     private Date stopDate;
-    private List<String> initialPlayers = new ArrayList<String>(); // This string is in fact the UUID of the players with which the game started
+    private List<String> initialPlayers = new ArrayList<String>(); // This string is in fact the UUID of the player with which the game started
     private List<String> gameChat = new ArrayList<String>(); // Player's Chat
     private List<String> gameEvents = new ArrayList<String>(); // Game Events
 

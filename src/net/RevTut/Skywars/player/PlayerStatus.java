@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.utils;
+package net.RevTut.Skywars.player;
 
 /**
  * Created by João on 31/10/2014.

@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
-import net.RevTut.Skywars.utils.PlayerDat;
+import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

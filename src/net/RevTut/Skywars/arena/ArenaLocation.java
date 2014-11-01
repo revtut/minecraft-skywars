@@ -15,7 +15,7 @@ public class ArenaLocation {
     private Location deathSpawnLocation; // Location where death player spawn
     private Location firstCorner; // Limits of the arena
     private Location secondCorner; // Limits of the arena
-    private List<Location> spawnLocations = new ArrayList<Location>(); // Spawn players locations
+    private List<Location> spawnLocations = new ArrayList<Location>(); // Spawn player locations
 
     /* Constructor */
     public ArenaLocation(Location lobbyLocation, Location deathSpawnLocation, Location firstCorner, Location secondCorner, List<Location> spawnLocations) {
