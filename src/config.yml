@@ -1,0 +1,10 @@
+# Title Message
+Title: '&3SKY WARS'
+Subtitle: '&7Game Number: %gamenumber%'
+FadeIn: 40
+FadeOut: 20
+TimeOnScreen: 100
+
+# Tab List
+TabTitle: '&3%ALT16% Sky Wars %ALT17%'
+TabFooter: '&6www.revtut.net'

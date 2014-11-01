@@ -2,12 +2,16 @@ package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
+import net.RevTut.Skywars.libraries.tab.TabAPI;
+import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.UUID;
 
@@ -39,21 +43,33 @@ public class PlayerJoin implements Listener {
         // Add to Arena
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
         if (playerDat == null) {
-            /**
-             * Send him to HUB. Error while creating playerDat
-             */
+            /** Send him to Hub. No arena available */
             return;
         }
         if (!Arena.addPlayer(playerDat)) {
-            /**
-             * Send him to HUB. No arena available
-             */
+            /** Send him to Hub. No arena available */
             return;
         }
-        // Check if arenas are needed
+        // New Arena if Needed
         if (Arena.getNumberAvailableArenas() <= 1) {
-            // Add new arena
             Arena.createNewArena();
         }
+        // Title
+        Arena arena = Arena.getArenaByPlayer(playerDat);
+        if(arena == null){
+            /** Send him to Hub. No arena available */
+            return;
+        }
+        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
+        TitleAPI.sendTitle(p, plugin.titleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+        TitleAPI.sendSubTitle(p, plugin.subTitleMessage);
+        // Tab List
+        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+        // ScoreBoard
+        //ScoreBoard.showScoreBoard(p);
+        // NameTag
+        //Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
+        //if (board != null)
+        //    NameTagAPI.setNameTag(board, p, true);
     }
 }
