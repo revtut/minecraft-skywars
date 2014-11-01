@@ -44,11 +44,16 @@ public class PlayerJoin implements Listener {
         // Add to Arena
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
         if (playerDat == null) {
-            /** Send him to Hub. No arena available */
+            /** Send him to Hub. Error in playerDat */
             return;
         }
         if (!Arena.addPlayer(playerDat)) {
             /** Send him to Hub. No arena available */
+            return;
+        }
+        Arena arena = Arena.getArenaByPlayer(playerDat);
+        if (arena == null) {
+            /** Send him to Hub. Error in arena */
             return;
         }
         // New Arena if Needed
@@ -56,11 +61,6 @@ public class PlayerJoin implements Listener {
             Arena.createNewArena();
         }
         // Title
-        Arena arena = Arena.getArenaByPlayer(playerDat);
-        if (arena == null) {
-            /** Send him to Hub. No arena available */
-            return;
-        }
         TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
         TitleAPI.sendTitle(p, plugin.titleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
         TitleAPI.sendSubTitle(p, plugin.subTitleMessage);
