@@ -3,6 +3,7 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.libraries.world.WorldServerNMS;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -266,6 +267,30 @@ public class Arena {
 
     public List<PlayerDat> getPlayers() {
         return players;
+    }
+
+    public List<PlayerDat> getAlivePlayers(){
+        List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
+        for(int i = 0; i < players.size(); i++)
+            if(players.get(i).getStatus() == PlayerStatus.ALIVE)
+                alivePlayers.add(players.get(i));
+        return alivePlayers;
+    }
+
+    public List<PlayerDat> getDeathPlayers(){
+        List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
+        for(int i = 0; i < players.size(); i++)
+            if(players.get(i).getStatus() == PlayerStatus.DEAD)
+                deathPlayers.add(players.get(i));
+        return deathPlayers;
+    }
+
+    public List<PlayerDat> getSpectatorPlayers(){
+        List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
+        for(int i = 0; i < players.size(); i++)
+            if(players.get(i).getStatus() == PlayerStatus.SPECTATOR)
+                spectatorPlayers.add(players.get(i));
+        return spectatorPlayers;
     }
 
     /* Set's */
