@@ -1,9 +1,9 @@
- name: Hub
+ name: SkyWars
  version: 0.1
  description: RevTut Network SkyWars Plugin
  author: RevTut
  website: www.revtut.net
- main: net.RevTut.SkyWars.Main
+ main: net.RevTut.Skywars.Main
 
 ############
 # COMANDOS #

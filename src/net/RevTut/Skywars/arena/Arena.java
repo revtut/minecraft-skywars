@@ -181,13 +181,16 @@ public class Arena {
 
                 // Current Directory
                 String currentDir = System.getProperty("user.dir");
+                System.out.println("Current Directory: " + currentDir);
                 // Source Directory
-                File[] listWorlds = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + "worlds").listFiles();
+                String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
+                System.out.println("Worlds Directory: " + currentDir +  File.separator + "worlds");
                 int posWorld = new Random().nextInt(listWorlds.length);
-                String srcPath = listWorlds[posWorld].getAbsolutePath();
+                String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
                 // Target Directory
-                String mapName = (listWorlds[posWorld].getName() + "_" + arenaNumber);
-                String trgPath = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + mapName).getAbsolutePath();
+                String mapName = listWorlds[posWorld] + "_" + arenaNumber;
+                String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+                System.out.println("Map Name: " + mapName);
 
                 // Copy World
                 WorldAPI.copyDirectoryAsync(srcPath, trgPath);

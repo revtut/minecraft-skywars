@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.libraries.world;
 
-import net.RevTut.Skywars.Main;
 import net.minecraft.server.v1_7_R4.*;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.Validate;
@@ -168,20 +167,15 @@ public class WorldAPI {
      * @return void
      */
     public static void copyDirectoryAsync(final String source, final String target) {
-        Bukkit.getScheduler().runTaskAsynchronously(new Main(), new Runnable() {
-            @Override
-            public void run() {
-                File trgDir = new File(source);
-                File srcDir = new File(target);
+        File trgDir = new File(source);
+        File srcDir = new File(target);
 
-                try {
-                    FileUtils.copyDirectory(srcDir, trgDir);
-                } catch (IOException e) {
-                    System.out.println("Error while trying to copy world folder from " + source + " to " + target + ".");
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
+        try {
+            FileUtils.copyDirectory(srcDir, trgDir);
+        } catch (IOException e) {
+            System.out.println("Error while trying to copy world folder from " + source + " to " + target + ".");
+            System.out.println(e.getMessage());
+        }
     }
 
 }
