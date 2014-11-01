@@ -46,11 +46,13 @@ public class PlayerJoin implements Listener {
             /**
              * Send him to HUB. Error while creating playerDat
              */
+            return;
         }
         if(!Arena.addPlayer(playerDat)) {
             /**
              * Send him to HUB. No arena available
              */
+            return;
         }
         // Check if arenas are needed
         if(Arena.getNumberAvailableArenas() <= 1){

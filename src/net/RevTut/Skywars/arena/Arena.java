@@ -125,7 +125,29 @@ public class Arena {
     }
 
     public static String nextGameNumber(){
-        return "";
+        String gameNumber = "";
+        for(int i = 0; i < arenas.size(); i++){
+            int compResult = gameNumber.compareTo(arenas.get(i).getArenaDat().getGameNumber()) ;
+            if( compResult < 0 )
+                gameNumber = arenas.get(i).getArenaDat().getGameNumber();
+        }
+        boolean nextCharacter = true;
+        int i = 0;
+        while(nextCharacter) {
+            char currentChar = gameNumber.charAt(i);
+            if (currentChar != 'Z') {
+                char[] gameNumberChar = gameNumber.toCharArray();
+                gameNumberChar[i] = currentChar++;
+                gameNumber = String.valueOf(gameNumberChar);
+                nextCharacter = false;
+            } else {
+                char[] gameNumberChar = gameNumber.toCharArray();
+                gameNumberChar[i] = 0;
+                gameNumber = String.valueOf(gameNumberChar);
+            }
+            i++;
+        }
+        return gameNumber;
     }
 
     /* Get's */
