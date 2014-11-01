@@ -65,8 +65,8 @@ public class PlayerJoin implements Listener {
 
                         // Title
                         TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
-                        TitleAPI.sendTitle(p, plugin.titleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
-                        TitleAPI.sendSubTitle(p, plugin.subTitleMessage);
+                        TitleAPI.sendTitle(p, plugin.titleMessage);
+                        TitleAPI.sendSubTitle(p, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
                         // Tab List
                         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
                         // ScoreBoard
