@@ -71,12 +71,12 @@ public class Arena {
         // Check if an arena was found
         if (posArena == -1)
             return false;
-        Arena arena =  Arena.arenas.get(posArena);
+        Arena arena = Arena.arenas.get(posArena);
         // Add Player To Arena
         arena.getPlayers().add(playerDat);
         // Teleport To Lobby
         Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if(player == null){
+        if (player == null) {
             return false;
         }
         player.teleport(arena.getArenaLocation().getLobbyLocation());
@@ -108,7 +108,7 @@ public class Arena {
         return null;
     }
 
-    public static int getNumberAvailableArenas(){
+    public static int getNumberAvailableArenas() {
         int numero = 0;
         for (int i = 0; i < Arena.arenas.size(); i++)
             if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
@@ -116,48 +116,58 @@ public class Arena {
         return numero;
     }
 
-    public static int nextArenaNumber(){
+    public static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
         // Get all arenas numbers
-        for(int i = 0; i < arenas.size(); i++)
+        for (int i = 0; i < arenas.size(); i++)
             arenasNumbers.add(arenas.get(i).getArenaNumber());
         /* Check if there is a missing number in arenas numbers
         If there are 10 arenas, they should be 0, 1, ...., 9.
         But because of the way it is made, it might be 0, 1, ...,8,10.
         So we can assign the nextArenaNumber to the missing "9". */
-        for(int i = 0; i < arenas.size(); i++)
-            if(!arenasNumbers.contains(i))
+        for (int i = 0; i < arenas.size(); i++)
+            if (!arenasNumbers.contains(i))
                 return i;
         return arenas.size() + 1;
     }
 
-    public static String nextGameNumber(){
+    public static String nextGameNumber() {
         String gameNumber = "";
-        for(int i = 0; i < arenas.size(); i++){
-            int compResult = gameNumber.compareTo(arenas.get(i).getArenaDat().getGameNumber()) ;
-            if( compResult < 0 )
-                gameNumber = arenas.get(i).getArenaDat().getGameNumber();
+        for (int i = 0; i < arenas.size(); i++) {
+            String arenaGameNumber = arenas.get(i).getArenaDat().getGameNumber();
+            if (gameNumber.length() == arenaGameNumber.length()) {
+                int compResult = gameNumber.compareTo(arenaGameNumber);
+                if (compResult < 0)
+                    gameNumber = arenaGameNumber;
+            } else if (gameNumber.length() < arenaGameNumber.length()) {
+                gameNumber = arenaGameNumber;
+            }
         }
         boolean nextCharacter = true;
         int i = 0;
-        while(nextCharacter) {
-            char currentChar = gameNumber.charAt(i);
-            if (currentChar != 'Z') {
-                char[] gameNumberChar = gameNumber.toCharArray();
-                gameNumberChar[i] = currentChar++;
-                gameNumber = String.valueOf(gameNumberChar);
-                nextCharacter = false;
+        while (nextCharacter) {
+            if (i < gameNumber.length()) {
+                char currentChar = gameNumber.charAt(i);
+                if (currentChar != 'Z') {
+                    char[] gameNumberChar = gameNumber.toCharArray();
+                    gameNumberChar[i] = currentChar++;
+                    gameNumber = String.valueOf(gameNumberChar);
+                    nextCharacter = false;
+                } else {
+                    char[] gameNumberChar = gameNumber.toCharArray();
+                    gameNumberChar[i] = 0;
+                    gameNumber = String.valueOf(gameNumberChar);
+                }
+                i++;
             } else {
-                char[] gameNumberChar = gameNumber.toCharArray();
-                gameNumberChar[i] = 0;
-                gameNumber = String.valueOf(gameNumberChar);
+                gameNumber = "1" + gameNumber;
+                nextCharacter = false;
             }
-            i++;
         }
         return gameNumber;
     }
 
-    public static void createNewArena(){
+    public static void createNewArena() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -189,7 +199,7 @@ public class Arena {
                 List<Location> spawnLocations = new ArrayList<Location>();
                 for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
                     // Spawn Locations
-                    if(message.equalsIgnoreCase("spawnLocations")){
+                    if (message.equalsIgnoreCase("spawnLocations")) {
                         for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
                             // Location
                             String locString = configLocations.getString(spawnLoc);
@@ -200,7 +210,7 @@ public class Arena {
                             }
                             spawnLocations.add(new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]));
                         }
-                    }else {
+                    } else {
                         // Location
                         String locString = configLocations.getString(message);
                         String[] locStringArgs = locString.split(",");
