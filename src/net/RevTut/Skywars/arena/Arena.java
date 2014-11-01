@@ -109,6 +109,25 @@ public class Arena {
         return numero;
     }
 
+    public static int nextArenaNumber(){
+        List<Integer> arenasNumbers = new ArrayList<Integer>();
+        // Get all arenas numbers
+        for(int i = 0; i < arenas.size(); i++)
+            arenasNumbers.add(arenas.get(i).getArenaNumber());
+        /* Check if there is a missing number in arenas numbers
+        If there are 10 arenas, they should be 0, 1, ...., 9.
+        But because of the way it is made, it might be 0, 1, ...,8,10.
+        So we can assign the nextArenaNumber to the missing "9". */
+        for(int i = 0; i < arenas.size(); i++)
+            if(!arenasNumbers.contains(i))
+                return i;
+        return arenas.size() + 1;
+    }
+
+    public static String nextGameNumber(){
+        return "";
+    }
+
     /* Get's */
     public int getArenaNumber() {
         return arenaNumber;

@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.io.File;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -59,7 +61,20 @@ public class PlayerJoin implements Listener {
                     WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
                     lock.lock();
 
-                    WorldAPI.copyDirectoryAsync("WORLD SOURCE DIRECTORY", "WORLD TARGET DIRECTORY");
+                    // Arena Number
+                    int arenaNumber = Arena.nextArenaNumber();
+
+                    // Current Directory
+                    String currentDir = System.getProperty("user.dir");
+                    // Source Directory
+                    File[] listWorlds = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + "worlds").listFiles();
+                    int posWorld = new Random().nextInt(listWorlds.length);
+                    String srcPath = listWorlds[posWorld].getAbsolutePath();
+                    // Target Directory
+                    String trgPath = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + (listWorlds[posWorld].getName() + "_" + arenaNumber)).getAbsolutePath();
+
+                    // Copy Worlds
+                    WorldAPI.copyDirectoryAsync(srcPath, "WORLD TARGET DIRECTORY");
                     WorldAPI.loadWorldAsync("WORLD NAME");
 
                     lock.unlock();
