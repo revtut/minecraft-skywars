@@ -53,13 +53,19 @@ public class PlayerJoin implements Listener {
         // Check if arenas are needed
         if(Arena.getNumberAvailableArenas() <= 1){
             // Add new arena
-            WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
-            lock.lock();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
+                    lock.lock();
 
-            WorldAPI.copyDirectoryAsync("WORLD SOURCE DIRECTORY", "WORLD TARGET DIRECTORY");
-            WorldAPI.loadWorldAsync("WORLD NAME");
+                    WorldAPI.copyDirectoryAsync("WORLD SOURCE DIRECTORY", "WORLD TARGET DIRECTORY");
+                    WorldAPI.loadWorldAsync("WORLD NAME");
 
-            lock.unlock();
+                    lock.unlock();
+                }
+            });
+            thread.start();
         }
     }
 
