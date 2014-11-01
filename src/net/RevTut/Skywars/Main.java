@@ -41,7 +41,7 @@ public class Main extends JavaPlugin {
 
         /* Create Initial Arenas */
         Arena.createNewArena();
-        Arena.createNewArena();
+        //Arena.createNewArena();
     }
 
     @Override

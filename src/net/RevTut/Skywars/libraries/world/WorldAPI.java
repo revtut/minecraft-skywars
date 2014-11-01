@@ -1,7 +1,9 @@
 package net.RevTut.Skywars.libraries.world;
 
 import net.minecraft.server.v1_7_R4.*;
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
+import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -14,9 +16,10 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -162,20 +165,37 @@ public class WorldAPI {
     /**
      * Copy directory to new location
      *
-     * @param source Source of the folder
-     * @param target Target of the folder
+     * @param srcDir Source of the folder
+     * @param trgDir Target of the folder
      * @return void
      */
-    public static void copyDirectoryAsync(final String source, final String target) {
-        File trgDir = new File(source);
-        File srcDir = new File(target);
-
+    public static void copyDirectoryAsync(final File srcDir, final File trgDir) {
         try {
-            FileUtils.copyDirectory(srcDir, trgDir);
-        } catch (IOException e) {
-            System.out.println("Error while trying to copy world folder from " + source + " to " + target + ".");
+            if (srcDir.isDirectory()) {
+                // Check if target folder exists
+                if (!trgDir.exists()) {
+                    trgDir.mkdirs();
+                }
+
+                // List of files inside source directory
+                String[] fList = srcDir.list();
+
+                for (int index = 0; index < fList.length; index++) {
+                    File dest = new File(trgDir, fList[index]);
+                    File source = new File(srcDir, fList[index]);
+
+                    // Copy that file / directory
+                    copyDirectoryAsync(source, dest);
+                }
+            }
+            else {
+                System.out.println("Source folder is not a directory.");
+                return;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
         }
     }
-
 }
