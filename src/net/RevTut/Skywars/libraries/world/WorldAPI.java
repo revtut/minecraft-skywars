@@ -18,8 +18,6 @@ import org.bukkit.plugin.PluginManager;
 import javax.annotation.Nonnull;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -31,6 +29,7 @@ public class WorldAPI {
      * Load World ASync
      *
      * @param worldName Name of the world to load
+
      * @return world    Loaded bukkit world
      */
     public static org.bukkit.World loadWorldAsync(String worldName) {
@@ -167,6 +166,7 @@ public class WorldAPI {
      *
      * @param srcDir Source of the folder
      * @param trgDir Target of the folder
+     *
      * @return void
      */
     public static void copyDirectoryAsync(final File srcDir, final File trgDir) {
@@ -176,10 +176,8 @@ public class WorldAPI {
                 if (!trgDir.exists()) {
                     trgDir.mkdirs();
                 }
-
                 // List of files inside source directory
                 String[] fList = srcDir.list();
-
                 for (int index = 0; index < fList.length; index++) {
                     File dest = new File(trgDir, fList[index]);
                     File source = new File(srcDir, fList[index]);
@@ -189,12 +187,51 @@ public class WorldAPI {
                 }
             }
             else {
-                System.out.println("Source folder is not a directory.");
-                return;
+                // Copy the file
+                // Open a file for read and write (copy)
+                FileInputStream fInStream = new FileInputStream(srcDir);
+                FileOutputStream fOutStream = new FileOutputStream(trgDir);
+                // Read 2K at a time from the file
+                byte[] buffer = new byte[2048];
+                int iBytesReads;
+                // In each successful read, write back to the source
+                while ((iBytesReads = fInStream.read(buffer)) >= 0) {
+                    fOutStream.write(buffer, 0, iBytesReads);
+                }
+                // Safe exit
+                if (fInStream != null) {
+                    fInStream.close();
+                }
+                if (fOutStream != null) {
+                    fOutStream.close();
+                }
             }
         }
         catch (Exception e) {
             System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Delete directory
+     *
+     * @param dir    Folder to remove
+
+     * @return void
+     */
+    public static void removeDirectoryAsync(final File dir) {
+        try {
+                if (dir.isDirectory()) {
+                    for (File c : dir.listFiles())
+                        removeDirectoryAsync(c);
+                }
+                if (!dir.delete()) {
+                    System.out.println("Error while trying to delete" + dir.getName() + ".");
+                }
+        }
+        catch (Exception e) {
+            System.out.println("Error while trying to delete" + dir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
         }
     }

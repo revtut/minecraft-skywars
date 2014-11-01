@@ -1,6 +1,7 @@
 package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
@@ -41,7 +42,7 @@ public class Main extends JavaPlugin {
 
         /* Create Initial Arenas */
         Arena.createNewArena();
-        //Arena.createNewArena();
+        Arena.createNewArena();
     }
 
     @Override
