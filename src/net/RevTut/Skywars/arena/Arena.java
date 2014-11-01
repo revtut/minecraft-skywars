@@ -246,6 +246,7 @@ public class Arena {
                 }
                 ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
                 Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
+                addArena(arena);
 
                 lock.unlock();
             }

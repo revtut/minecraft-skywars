@@ -1,5 +1,6 @@
 package net.RevTut.Skywars;
 
+import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
@@ -37,6 +38,10 @@ public class Main extends JavaPlugin {
         /* Read Files */
         if (!readFiles())
             System.out.println("Error while trying to read the files.");
+
+        /* Create Initial Arenas */
+        Arena.createNewArena();
+        Arena.createNewArena();
     }
 
     @Override
