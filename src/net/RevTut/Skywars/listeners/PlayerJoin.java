@@ -63,76 +63,7 @@ public class PlayerJoin implements Listener {
         // Check if arenas are needed
         if(Arena.getNumberAvailableArenas() <= 1){
             // Add new arena
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
-                    lock.lock();
-
-                    // Arena Number
-                    int arenaNumber = Arena.nextArenaNumber();
-
-                    // Current Directory
-                    String currentDir = System.getProperty("user.dir");
-                    // Source Directory
-                    File[] listWorlds = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + "worlds").listFiles();
-                    int posWorld = new Random().nextInt(listWorlds.length);
-                    String srcPath = listWorlds[posWorld].getAbsolutePath();
-                    // Target Directory
-                    String mapName = (listWorlds[posWorld].getName() + "_" + arenaNumber);
-                    String trgPath = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + mapName).getAbsolutePath();
-
-                    // Copy World
-                    WorldAPI.copyDirectoryAsync(srcPath, trgPath);
-                    // Load World
-                    WorldAPI.loadWorldAsync(mapName);
-
-                    // Create Arena
-                    final File locations = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + mapName + File.separator + "locations.yml");
-                    final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(locations);
-                    Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
-                    List<Location> spawnLocations = new ArrayList<Location>();
-                    for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
-                        // Spawn Locations
-                        if(message.equalsIgnoreCase("spawnLocations")){
-                            for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
-                                // Location
-                                String locString = configLocations.getString(spawnLoc);
-                                String[] locStringArgs = locString.split(",");
-                                float[] parsed = new float[3];
-                                for (int a = 0; a < 3; a++) {
-                                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                                }
-                                spawnLocations.add(new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]));
-                            }
-                        }else {
-                            // Location
-                            String locString = configLocations.getString(message);
-                            String[] locStringArgs = locString.split(",");
-                            float[] parsed = new float[3];
-                            for (int a = 0; a < 3; a++) {
-                                parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                            }
-                            // Check which location it is
-                            if (message.equalsIgnoreCase("lobbyLocation")) {
-                                lobbyLocation = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
-                            } else if (message.equalsIgnoreCase("deathspawnLocation")) {
-                                deathSpawnLocation = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
-                            } else if (message.equalsIgnoreCase("firstCorner")) {
-                                firstCorner = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
-                            } else if (message.equalsIgnoreCase("secondCorner")) {
-                                secondCorner = new Location(Bukkit.getWorld(locStringArgs[0]), parsed[0], parsed[1], parsed[2]);
-                            }
-                        }
-                    }
-                    ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
-                    Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
-
-                    lock.unlock();
-                }
-            });
-            thread.start();
+            Arena.createNewArena();
         }
     }
-
 }
