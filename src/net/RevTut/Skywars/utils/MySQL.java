@@ -142,10 +142,10 @@ public class MySQL {
             // Update Core
             final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + playerDat.getUUID() + "';";
             final ResultSet resultCore = this.connection.createStatement().executeQuery(coreStatement);
-            if(resultCore.next()){
+            if (resultCore.next()) {
                 final String coreUpdate = "UPDATE " + DBCore + " SET Points = " + playerDat.getPoints() + " WHERE Player = '" + playerDat.getUUID() + "';";
                 this.connection.createStatement().executeUpdate(coreUpdate);
-            }else{
+            } else {
                 final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 0, 0, " + playerDat.getPoints() + ", 0, 1, 0, 0);";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             }

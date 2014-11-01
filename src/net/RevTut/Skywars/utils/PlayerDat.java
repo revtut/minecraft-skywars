@@ -23,6 +23,9 @@ public class PlayerDat {
     private int kills;
     private int deaths;
 
+    /* Status */
+    private PlayerStatus status;
+
     /* Constructor */
     public PlayerDat(UUID uuid, Date lastLogin, long playTime, int points, int wins, int losses, int kills, int deaths) {
         this.uuid = uuid;
@@ -33,6 +36,7 @@ public class PlayerDat {
         this.losses = losses;
         this.kills = kills;
         this.deaths = deaths;
+        this.status = PlayerStatus.WAITING;
     }
 
     /* Static Methods */
@@ -84,16 +88,33 @@ public class PlayerDat {
         return deaths;
     }
 
+    public PlayerStatus getStatus() {
+        return status;
+    }
+
+    /* Set's */
+    public void setStatus(PlayerStatus status) {
+        this.status = status;
+    }
+
     /* Add's */
     public void addPoints(int points) {
         this.points += points;
     }
 
-    public void addWins() {
+    public void addWin() {
         this.wins++;
     }
 
-    public void addLosses() {
+    public void addLose() {
         this.losses++;
+    }
+
+    public void addKill() {
+        this.kills++;
+    }
+
+    public void addDeath() {
+        this.deaths++;
     }
 }

@@ -1,5 +1,7 @@
 package net.RevTut.Skywars.arena;
 
+import net.RevTut.Skywars.utils.PlayerDat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Arena {
     private String mapName;
     private int remainingTime; // Arena's remaining time. It depends on the arena's status, that means it can be the currentInGameTime, currentLobbyTime, etc.
     private ArenaStatus status; // Current status of the Arena
+    private List<PlayerDat> players = new ArrayList<PlayerDat>();
 
     /* Arena Location */
     private ArenaLocation arenaLocation;
@@ -45,14 +48,47 @@ public class Arena {
         return true;
     }
 
+    public static boolean addPlayer(PlayerDat playerDat) {
+        if (getArenaByPlayer(playerDat) != null)
+            return false;
+        // Look for available arena
+        int posArena = -1;
+        int maxPlayers = -1;
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY) // Waiting For Players
+                if (Arena.arenas.get(i).getPlayers().size() < Arena.maxPlayers) // Not Full
+                    if (Arena.arenas.get(i).getPlayers().size() > maxPlayers) // Arena With Highest Amount of Players
+                        posArena = i;
+        // Check if an arena was found
+        if (posArena == -1)
+            return false;
+        // Add Player To Arena
+        Arena.arenas.get(posArena).getPlayers().add(playerDat);
+        return true;
+    }
+
     public static void removeArena(Arena arena) {
         arenas.remove(arena);
+    }
+
+    public static void removePlayer(PlayerDat playerDat) {
+        Arena arena = getArenaByPlayer(playerDat);
+        if (arena != null)
+            arena.getPlayers().remove(playerDat);
     }
 
     public static Arena getArenaByNumber(int number) {
         for (int i = 0; i < Arena.arenas.size(); i++)
             if (Arena.arenas.get(i).getArenaNumber() == number)
                 return Arena.arenas.get(i);
+        return null;
+    }
+
+    public static Arena getArenaByPlayer(PlayerDat playerDat) {
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            for (int j = 0; j < Arena.arenas.get(i).getPlayers().size(); j++)
+                if (Arena.arenas.get(i).getPlayers().get(j).getUUID() == playerDat.getUUID())
+                    return Arena.arenas.get(i);
         return null;
     }
 
@@ -81,6 +117,10 @@ public class Arena {
         return arenaDat;
     }
 
+    public List<PlayerDat> getPlayers() {
+        return players;
+    }
+
     /* Set's */
     public void setMapName(String mapName) {
         this.mapName = mapName;
@@ -91,6 +131,7 @@ public class Arena {
     }
 
     public void setStatus(ArenaStatus status) {
+        this.remainingTime = status.getTime();
         this.status = status;
     }
 
@@ -100,5 +141,9 @@ public class Arena {
 
     public void setArenaDat(ArenaDat arenaDat) {
         this.arenaDat = arenaDat;
+    }
+
+    public void setPlayers(List<PlayerDat> players) {
+        this.players = players;
     }
 }
