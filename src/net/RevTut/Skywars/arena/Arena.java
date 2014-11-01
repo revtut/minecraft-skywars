@@ -6,6 +6,7 @@ import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -193,9 +194,21 @@ public class Arena {
                 // Load World
                 WorldAPI.loadWorldAsync(mapName);
 
+                // Check if world is not null
+                World world = Bukkit.getWorld(mapName);
+                if(world == null) {
+                    System.out.println("Error while creating a new arena! World is null!");
+                    return;
+                }
+
                 // Create Arena
                 final File locations = new File(new File(currentDir).getParentFile().getAbsolutePath() + File.separator + mapName + File.separator + "locations.yml");
+                if(!locations.exists()){
+                    System.out.println("File with arena locations does not exists!");
+                    return;
+                }
                 final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(locations);
+
                 Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
                 List<Location> spawnLocations = new ArrayList<Location>();
                 for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
