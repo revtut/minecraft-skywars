@@ -155,7 +155,6 @@ public class PlayerChat implements Listener {
             mensagem = mensagem.replaceAll("&", "§");
         }
 
-
         // Formato da Mensagem
         e.setFormat(player.getDisplayName() + " §6» §f" + mensagem);
     }
