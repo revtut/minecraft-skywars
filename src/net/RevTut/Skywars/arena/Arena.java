@@ -1,6 +1,8 @@
 package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.player.PlayerDat;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +64,15 @@ public class Arena {
         // Check if an arena was found
         if (posArena == -1)
             return false;
+        Arena arena =  Arena.arenas.get(posArena);
         // Add Player To Arena
-        Arena.arenas.get(posArena).getPlayers().add(playerDat);
+        arena.getPlayers().add(playerDat);
+        // Teleport To Lobby
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null){
+            return false;
+        }
+        player.teleport(arena.getArenaLocation().getLobbyLocation());
         return true;
     }
 
@@ -90,6 +99,14 @@ public class Arena {
                 if (Arena.arenas.get(i).getPlayers().get(j).getUUID() == playerDat.getUUID())
                     return Arena.arenas.get(i);
         return null;
+    }
+
+    public static int getNumberAvailableArenas(){
+        int numero = 0;
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
+                numero++;
+        return numero;
     }
 
     /* Get's */

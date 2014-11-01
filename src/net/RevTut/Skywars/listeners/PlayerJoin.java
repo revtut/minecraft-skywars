@@ -1,9 +1,17 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.world.WorldAPI;
+import net.RevTut.Skywars.libraries.world.WorldServerNMS;
+import net.RevTut.Skywars.player.PlayerDat;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.UUID;
 
 /**
  * Created by waxcoder on 31-10-2014.
@@ -11,10 +19,48 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
+    public Main plugin;
+
+    public PlayerJoin(final Main plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
 
+        // MySQL Tasks
+        final UUID uuid = p.getUniqueId();
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                // PlayerDat
+                plugin.mysql.createPlayerDat(uuid);
+            }
+        });
+        // Add to Arena
+        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
+        if(playerDat == null){
+            /**
+             * Send him to HUB. Error while creating playerDat
+             */
+        }
+        if(!Arena.addPlayer(playerDat)) {
+            /**
+             * Send him to HUB. No arena available
+             */
+        }
+        // Check if arenas are needed
+        if(Arena.getNumberAvailableArenas() <= 1){
+            // Add new arena
+            WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
+            lock.lock();
+
+            WorldAPI.copyDirectoryAsync("WORLD SOURCE DIRECTORY", "WORLD TARGET DIRECTORY");
+            WorldAPI.loadWorldAsync("WORLD NAME");
+
+            lock.unlock();
+        }
     }
 
 }

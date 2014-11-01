@@ -79,7 +79,7 @@ public class WorldServerNMS extends WorldServer {
         lock.unlock();
     }
 
-    private static class UnsafeLock {
+    public static class UnsafeLock {
         private static final Unsafe UNSAFE = (Unsafe) WorldAPI.acquireField(null, "theUnsafe", Unsafe.class);
 
         private final Object lock;
