@@ -186,26 +186,4 @@ public class WorldAPI {
         });
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("gen")) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // UnsafeLock lock = new UnsafeLock(new ASyncWorld());
-                    //lock.lock();
-
-                    //  createWorld(WORLD_0);
-                    // createWorld(WORLD_1);
-                    //  createWorld(WORLD_2);
-
-                    //  lock.unlock();
-                    System.out.println("Ola");
-                }
-            });
-            thread.start();
-
-            return true;
-        }
-        return false;
-    }
 }
