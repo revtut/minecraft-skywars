@@ -194,9 +194,9 @@ public class Arena {
                 String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
 
                 // Copy World
-                WorldAPI.copyDirectoryAsync(new File(srcPath), new File(trgPath));
+                WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
                 // Load World
-                //WorldAPI.loadWorldAsync(mapName);
+                WorldAPI.loadWorldAsync(mapName);
 
                 // Check if world is not null
                 World world = Bukkit.getWorld(mapName);

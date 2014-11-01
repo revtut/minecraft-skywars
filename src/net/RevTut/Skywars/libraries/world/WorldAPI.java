@@ -169,7 +169,7 @@ public class WorldAPI {
      *
      * @return void
      */
-    public static void copyDirectoryAsync(final File srcDir, final File trgDir) {
+    public static void copyDirectory(final File srcDir, final File trgDir) {
         try {
             if (srcDir.isDirectory()) {
                 // Check if target folder exists
@@ -183,7 +183,7 @@ public class WorldAPI {
                     File source = new File(srcDir, fList[index]);
 
                     // Copy that file / directory
-                    copyDirectoryAsync(source, dest);
+                    copyDirectory(source, dest);
                 }
             }
             else {
@@ -220,11 +220,11 @@ public class WorldAPI {
 
      * @return void
      */
-    public static void removeDirectoryAsync(final File dir) {
+    public static void removeDirectory(final File dir) {
         try {
                 if (dir.isDirectory()) {
                     for (File c : dir.listFiles())
-                        removeDirectoryAsync(c);
+                        removeDirectory(c);
                 }
                 if (!dir.delete()) {
                     System.out.println("Error while trying to delete" + dir.getName() + ".");
