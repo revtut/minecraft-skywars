@@ -8,6 +8,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 public class Tatical implements Listener {
 
@@ -56,7 +60,7 @@ public class Tatical implements Listener {
         Player p = e.getPlayer();
         if ((p.getItemInHand().getType() == Material.ENDER_PEARL) && ((e.getAction() == Action.RIGHT_CLICK_AIR)) || ((e.getAction() == Action.RIGHT_CLICK_BLOCK))) {
             if (p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§3Tatical Phantom")) {
-
+                p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,400,1));
             }
         }
     }
