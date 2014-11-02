@@ -14,32 +14,32 @@ public class RespawnBypass{
 
     public void RespawnScreen(PlayerDeathEvent e)
     {
-        final Player player = e.getEntity();
-
-        {
-            public void run()
-            {
-                if (player.isDead()) {
-                    try
-                    {
-                        Object nmsPlayer = player.getClass().getMethod("getHandle", new Class[0]).invoke(player, new Object[0]);
-                        Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
-                        Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
-                        for (Object ob : enumClass.getEnumConstants()) {
-                            if (ob.toString().equals("PERFORM_RESPAWN")) {
-                                packet = packet.getClass().getConstructor(new Class[] { enumClass }).newInstance(new Object[] { ob });
-                            }
-                        }
-                        Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
-                        con.getClass().getMethod("a", new Class[] { packet.getClass() }).invoke(con, new Object[] { packet });
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+//        final Player player = e.getEntity();
+//
+//        {
+//            public void run()
+//            {
+//                if (player.isDead()) {
+//                    try
+//                    {
+//                        Object nmsPlayer = player.getClass().getMethod("getHandle", new Class[0]).invoke(player, new Object[0]);
+//                        Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+//                        Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+//                        for (Object ob : enumClass.getEnumConstants()) {
+//                            if (ob.toString().equals("PERFORM_RESPAWN")) {
+//                                packet = packet.getClass().getConstructor(new Class[] { enumClass }).newInstance(new Object[] { ob });
+//                            }
+//                        }
+//                        Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+//                        con.getClass().getMethod("a", new Class[] { packet.getClass() }).invoke(con, new Object[] { packet });
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
     }
 
 }

@@ -3,17 +3,22 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.minecraft.server.v1_7_R4.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -24,7 +29,7 @@ public class Arena {
     private static List<Arena> arenas = new ArrayList<Arena>();
 
     /* Arena's Configuration */
-    public static final int minPlayers = 8; // Minimum player for the game starts
+    public static final int minPlayers = 1; // Minimum player for the game starts
     public static final int minReduceTimePlayers = 16; // Minimum player for the lobby time reduces
     public static final int maxPlayers = 24; // Maximum player that can play in arena
 
@@ -79,6 +84,7 @@ public class Arena {
             return;
 
         // Update Arena
+        String gameNumber = nextGameNumber();
         arena.setMapName(mapName);
         arena.setArenaDat(new ArenaDat());
         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
@@ -87,7 +93,7 @@ public class Arena {
         if(arenaLocation == null)
             return;
         arena.setArenaLocation(arenaLocation);
-        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
+        arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
     }
 
     private static ArenaLocation createArenaLocation(File file, String mapName){
@@ -213,7 +219,7 @@ public class Arena {
     }
 
     public static void removeMap(Arena arena, boolean arenaRemove) {
-        if(arenaRemove) {
+        if (arenaRemove) {
             // Send alll players to world
             // How it is possible to have remaining players?
             for (int i = 0; i < arena.getPlayers().size(); i++)
@@ -223,7 +229,17 @@ public class Arena {
             arenas.remove(arena);
         }
         // Unload World
-        Bukkit.unloadWorld(arena.getMapName(), false);
+        World world = Bukkit.getWorld(arena.getMapName());
+        world.setAutoSave(false);
+        world.setKeepSpawnInMemory(false);
+
+        for (Player player : world.getPlayers())
+            player.kickPlayer("World is being deleted... and you were in it!");
+
+        boolean removeu = Bukkit.getServer().unloadWorld(world, false);
+        if (!removeu) {
+            System.out.println("Error while unloading world " + arena.getMapName());
+        }
         // Remove Directory
         WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
     }

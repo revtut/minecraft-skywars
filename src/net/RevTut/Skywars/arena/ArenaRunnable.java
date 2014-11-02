@@ -178,9 +178,21 @@ public class ArenaRunnable implements Runnable {
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 0:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7NO WINNER"));
+                    ArenaDat arenaDat = arena.getArenaDat();
+                    if (arenaDat == null)
+                        return;
+                    if(arenaDat.getWinner() == null){
+                        TitleAPI.sendTimings(alvo, 5, 20, 5);
+                        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
+                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7NO WINNER"));
+                    }else{
+                        TitleAPI.sendTimings(alvo, 5, 20, 5);
+                        if(arenaDat.getWinner() == alvo.getUniqueId().toString())
+                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aYOU WON"));
+                        else
+                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§cYOU LOST"));
+                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(arenaDat.getWinner()));
+                    }
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
                     break;
             }
@@ -311,13 +323,14 @@ public class ArenaRunnable implements Runnable {
         }else{
             int i = 0;
             // Remove all the players from this arena
+            final Arena newArena = arenaMove;
             for(final PlayerDat alvoDat : arena.getPlayers()){
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
                         arena.removePlayer(alvoDat);
                         // Add to new arena
-                        if (!Arena.addPlayer(alvoDat, arena)) {
+                        if (!Arena.addPlayer(alvoDat, newArena)) {
                             /** Send him to Hub. Error while adding to arena */
                             return;
                         }
@@ -331,7 +344,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     Arena.removeMap(arena, true);
                 }
-            }, i);
+            }, i + 5);
         }
     }
 }
