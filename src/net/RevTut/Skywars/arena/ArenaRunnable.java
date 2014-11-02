@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.arena;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.appearance.Fireworks;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -15,6 +16,12 @@ import java.util.UUID;
  * Created by João on 02/11/2014.
  */
 public class ArenaRunnable implements Runnable {
+
+    private Main plugin;
+
+    public ArenaRunnable(Main plugin){
+        this.plugin = plugin;
+    }
 
     private static int id;
 
@@ -34,6 +41,9 @@ public class ArenaRunnable implements Runnable {
     public void run(){
         int remainingTime;
         for(Arena arena : Arena.getArenas()){
+            System.out.println("Size: " + arena.getPlayers().size());
+            if(arena.getPlayers().size() < 1)
+                continue;
             remainingTime = arena.getRemainingTime();
             // Time is over ZERO
             if(remainingTime >= 0){
@@ -46,7 +56,7 @@ public class ArenaRunnable implements Runnable {
                 else if(arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
             }
-            arena.setRemainingTime(remainingTime--);
+            arena.setRemainingTime(remainingTime - 1);
         }
     }
 
@@ -56,7 +66,7 @@ public class ArenaRunnable implements Runnable {
         for(PlayerDat alvoDat : arena.getPlayers()){
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if(alvo == null)
-                break;
+                continue;
             alvo.setLevel(remainingTime);
         }
     }
@@ -67,7 +77,7 @@ public class ArenaRunnable implements Runnable {
         for(PlayerDat alvoDat : arena.getPlayers()){
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if(alvo == null)
-                break;
+                continue;
             alvo.setLevel(remainingTime);
             switch (remainingTime){
                 case 10:
@@ -102,7 +112,7 @@ public class ArenaRunnable implements Runnable {
         for(PlayerDat alvoDat : arena.getPlayers()){
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if(alvo == null)
-                break;
+                continue;
             alvo.setLevel(remainingTime);
             switch (remainingTime){
                 case 60:
@@ -151,7 +161,4 @@ public class ArenaRunnable implements Runnable {
             return;
         Fireworks.launchFirework(winner, 10, 2);
     }
-
-   //Jogar task = new Jogar(this);
-   //task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
 }
