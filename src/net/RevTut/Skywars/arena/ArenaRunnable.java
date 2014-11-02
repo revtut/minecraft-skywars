@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -45,8 +46,8 @@ public class ArenaRunnable implements Runnable {
             if (arena.getPlayers().size() < 1)
                 continue;
             remainingTime = arena.getRemainingTime();
-            // Time is over ZERO
             if (remainingTime >= 0) {
+                // Remaining time is over ZERO
                 if (arena.getStatus() == ArenaStatus.LOBBY)
                     onPreGame(arena);
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
@@ -56,12 +57,15 @@ public class ArenaRunnable implements Runnable {
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
             } else {
+                // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
                     fromLobbyToPreGame(arena);
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
                     fromPreGameToInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.INGAME)
                     fromInGameToEndGame(arena);
+                else if (arena.getStatus() == ArenaStatus.ENDGAME)
+                    formEndGameToLobby(arena);
             }
             arena.setRemainingTime(remainingTime - 1);
         }
@@ -263,6 +267,34 @@ public class ArenaRunnable implements Runnable {
             }, i);
             alvo.teleport(centerLocation);
             i++;
+        }
+    }
+
+    /* EndGame To Lobby */
+    public void fromEndGameToLobby(Arena arena) {
+        // Check if we can transfer this players to a new arena
+        List<Arena> arenasAvailable = Arena.getAvailableArenas();
+        Arena arenaMove = null;
+        for(Arena arenaAlvo : arenasAvailable){
+            if(arenaAlvo.getPlayers().size() + arena.getPlayers().size() <= Arena.maxPlayers) {
+                arenaMove = arenaAlvo;
+                break;
+            }
+        }
+        if(arenaMove == null){
+
+        }else{
+            // Remove all the players from this arena
+            for(PlayerDat alvoDat : arena.getPlayers()){
+                arena.removePlayer(alvoDat);
+                // Add to new arena
+                if (!Arena.addPlayer(alvoDat, arena)) {
+                    /** Send him to Hub. Error while adding to arena */
+                    return;
+                }
+            }
+            // Delete The Arena
+            Arena.removeArena(arena);
         }
     }
 }

@@ -164,18 +164,32 @@ public class Arena {
         return true;
     }
 
+    public static boolean addPlayer(PlayerDat playerDat, Arena arena) {
+        if (getArenaByPlayer(playerDat) != null)
+            return false;
+        // Add Player To Arena
+        arena.getPlayers().add(playerDat);
+        // Teleport To Lobby
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null) {
+            return false;
+        }
+        player.teleport(arena.getArenaLocation().getLobbyLocation());
+        return true;
+    }
+
     public static void removeArena(Arena arena) {
         // Send alll players to world
         // How it is possible to have remaining players?
         for (int i = 0; i < arena.getPlayers().size(); i++)
         /** Send to Hub */
             Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
+        // Remove From List
+        arenas.remove(arena);
         // Unload World
         Bukkit.unloadWorld(arena.getMapName(), false);
         // Remove Directory
         WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
-        // Remove From List
-        arenas.remove(arena);
     }
 
     public static void removePlayer(PlayerDat playerDat) {
@@ -203,6 +217,7 @@ public class Arena {
         return null;
     }
 
+    /* Number Available Arenas */
     public static int getNumberAvailableArenas() {
         int numero = 0;
         for (int i = 0; i < Arena.arenas.size(); i++)
@@ -211,6 +226,16 @@ public class Arena {
         return numero;
     }
 
+    /* Available Arenas */
+    public static List<Arena> getAvailableArenas(){
+        List<Arena> arenasAvailable = new ArrayList<Arena>();
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
+                arenasAvailable.add(Arena.arenas.get(i));
+        return arenasAvailable;
+    }
+
+    /* Next Arena Number */
     public static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
         // Get all arenas numbers
@@ -228,6 +253,7 @@ public class Arena {
         return arenas.size() + 1;
     }
 
+    /* Next Game Number (Round Number) */
     public static String nextGameNumber() {
         String gameNumber = "";
         for (int i = 0; i < arenas.size(); i++) {
