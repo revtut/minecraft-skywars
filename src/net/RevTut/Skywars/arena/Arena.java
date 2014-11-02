@@ -298,7 +298,7 @@ public class Arena {
         return alivePlayers;
     }
 
-    public List<PlayerDat> getDeathPlayers() {
+    public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
         for (int i = 0; i < players.size(); i++)
             if (players.get(i).getStatus() == PlayerStatus.DEAD)
