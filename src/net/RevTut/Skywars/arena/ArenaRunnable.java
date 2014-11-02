@@ -38,6 +38,10 @@ public class ArenaRunnable implements Runnable {
                     onLobby(arena);
                 else if(arena.getStatus() == ArenaStatus.PREGAME)
                     onPreGame(arena);
+                else if(arena.getStatus() == ArenaStatus.INGAME)
+                    onInGame(arena);
+                else if(arena.getStatus() == ArenaStatus.ENDGAME)
+                    onEndGame(arena);
             }
             arena.setRemainingTime(remainingTime--);
         }
@@ -67,6 +71,46 @@ public class ArenaRunnable implements Runnable {
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b10"));
                     break;
                 case 5:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§45"));
+                    break;
+                case 4:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§c4"));
+                    break;
+                case 3:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§63"));
+                    break;
+                case 2:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§e2"));
+                    break;
+                case 1:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a1"));
+                    break;
+                case 0:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§2GO"));
+                    alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
+                    break;
+            }
+        }
+    }
+
+    /* InGame */
+    public void onInGame(Arena arena){
+        int remainingTime = arena.getRemainingTime();
+        for(PlayerDat alvoDat : arena.getPlayers()){
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(alvo == null)
+                break;
+            alvo.setLevel(remainingTime);
+            switch (remainingTime){
+                case 60:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    break;
+                case 10:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    break;
+                case 5:
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a5"));
                     break;
                 case 4:
@@ -82,7 +126,47 @@ public class ArenaRunnable implements Runnable {
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§41"));
                     break;
                 case 0:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aGO"));
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
+                    alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
+                    break;
+            }
+        }
+    }
+
+    /* EndGame */
+    public void onEndGame(Arena arena){
+        int remainingTime = arena.getRemainingTime();
+        for(PlayerDat alvoDat : arena.getPlayers()){
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(alvo == null)
+                break;
+            alvo.setLevel(remainingTime);
+            switch (remainingTime){
+                case 60:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    break;
+                case 10:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    break;
+                case 5:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a5"));
+                    break;
+                case 4:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§e4"));
+                    break;
+                case 3:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§63"));
+                    break;
+                case 2:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§c2"));
+                    break;
+                case 1:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§41"));
+                    break;
+                case 0:
+                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
                     alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
                     break;
             }
