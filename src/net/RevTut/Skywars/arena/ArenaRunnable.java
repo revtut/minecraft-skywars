@@ -59,7 +59,10 @@ public class ArenaRunnable implements Runnable {
             } else {
                 // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
-                    fromLobbyToPreGame(arena);
+                    if(arena.getPlayers().size() >= Arena.minPlayers)
+                        fromLobbyToPreGame(arena);
+                    else
+                        arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
                     fromPreGameToInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.INGAME)

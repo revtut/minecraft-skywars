@@ -24,7 +24,7 @@ public class Arena {
     private static List<Arena> arenas = new ArrayList<Arena>();
 
     /* Arena's Configuration */
-    public static final int minPlayers = 8; // Minimum player for the game starts
+    public static final int minPlayers = 1; // Minimum player for the game starts
     public static final int minReduceTimePlayers = 16; // Minimum player for the lobby time reduces
     public static final int maxPlayers = 24; // Maximum player that can play in arena
 
