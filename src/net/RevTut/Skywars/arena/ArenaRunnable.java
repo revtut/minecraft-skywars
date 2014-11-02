@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.arena;
 
+import net.RevTut.Skywars.libraries.appearance.Fireworks;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.Converters;
@@ -7,6 +8,8 @@ import net.minecraft.util.com.google.common.base.Converter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  * Created by João on 02/11/2014.
@@ -136,41 +139,17 @@ public class ArenaRunnable implements Runnable {
     /* EndGame */
     public void onEndGame(Arena arena){
         int remainingTime = arena.getRemainingTime();
-        for(PlayerDat alvoDat : arena.getPlayers()){
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo == null)
-                break;
-            alvo.setLevel(remainingTime);
-            switch (remainingTime){
-                case 60:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
-                    break;
-                case 10:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
-                    break;
-                case 5:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a5"));
-                    break;
-                case 4:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§e4"));
-                    break;
-                case 3:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§63"));
-                    break;
-                case 2:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§c2"));
-                    break;
-                case 1:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§41"));
-                    break;
-                case 0:
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
-                    alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
-                    break;
-            }
-        }
+        // Launch Firework
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(arenaDat == null)
+            return;
+        UUID uuid = UUID.fromString(arenaDat.getWinner());
+        if(uuid == null)
+            return;
+        Player winner = Bukkit.getPlayer(uuid);
+        if(winner == null)
+            return;
+        Fireworks.launchFirework(winner, 10, 2);
     }
 
    //Jogar task = new Jogar(this);
