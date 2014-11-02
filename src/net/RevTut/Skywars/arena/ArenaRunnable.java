@@ -6,6 +6,8 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.Converters;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -53,6 +55,13 @@ public class ArenaRunnable implements Runnable {
                     onInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
+            } else {
+                if (arena.getStatus() == ArenaStatus.LOBBY)
+                    fromLobbyToPreGame(arena);
+                else if (arena.getStatus() == ArenaStatus.PREGAME)
+                    fromPreGameToInGame(arena);
+                else if (arena.getStatus() == ArenaStatus.INGAME)
+                    fromInGameToEndGame(arena);
             }
             arena.setRemainingTime(remainingTime - 1);
         }
@@ -174,7 +183,6 @@ public class ArenaRunnable implements Runnable {
 
     /* EndGame */
     public void onEndGame(Arena arena) {
-        int remainingTime = arena.getRemainingTime();
         // Launch Firework
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null)
@@ -186,5 +194,75 @@ public class ArenaRunnable implements Runnable {
         if (winner == null)
             return;
         Fireworks.launchFirework(winner, 10, 2);
+    }
+
+    /* Lobby To PreGame */
+    public void fromLobbyToPreGame(Arena arena) {
+        // Change Status
+        arena.setStatus(ArenaStatus.PREGAME);
+        // Send Players To Spawns
+        int i = 0;
+        ArenaLocation arenaLocation = arena.getArenaLocation();
+        if (arenaLocation == null)
+            return;
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (alvo == null)
+                continue;
+            final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
+            if (spawnLocation == null)
+                continue;
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    alvo.teleport(spawnLocation);
+                }
+            }, i);
+            i++;
+        }
+    }
+
+    /* PreGame To InGame */
+    public void fromPreGameToInGame(Arena arena) {
+        // Change Status
+        arena.setStatus(ArenaStatus.INGAME);
+        // Remove Glass
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            int i = 0;
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (alvo == null)
+                continue;
+            Location alvoLocation = alvo.getLocation();
+            while (alvoLocation.getBlock().getType() != Material.GLASS || i < 3) {
+                alvoLocation.setY(alvoLocation.getY() - 1);
+                i++;
+            }
+            alvoLocation.getBlock().setType(Material.AIR);
+        }
+    }
+
+    /* InGame To EndGame */
+    public void fromInGameToEndGame(Arena arena) {
+        // Change Status
+        arena.setStatus(ArenaStatus.INGAME);
+        // Remove Glass
+        int i = 0;
+        ArenaLocation arenaLocation = arena.getArenaLocation();
+        if (arenaLocation == null)
+            return;
+        final Location centerLocation = arenaLocation.getDeathSpawnLocation();
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (alvo == null)
+                continue;
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    alvo.teleport(centerLocation);
+                }
+            }, i);
+            alvo.teleport(centerLocation);
+            i++;
+        }
     }
 }
