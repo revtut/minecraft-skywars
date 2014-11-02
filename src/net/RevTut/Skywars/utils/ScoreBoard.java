@@ -54,9 +54,9 @@ public class ScoreBoard implements Listener {
     /* Update Alive */
     public static void updateAlive(Arena arena) {
         int alive = arena.getAlivePlayers().size();
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo != null){
+            if (alvo != null) {
                 Scoreboard board = scoreBoards.get(alvo.getUniqueId());
                 if (board != null) {
                     Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
@@ -69,9 +69,9 @@ public class ScoreBoard implements Listener {
     /* Update Death */
     public static void updateDeath(Arena arena) {
         int dead = arena.getDeadPlayers().size();
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo != null){
+            if (alvo != null) {
                 Scoreboard board = scoreBoards.get(alvo.getUniqueId());
                 if (board != null) {
                     Objective objective = board.getObjective(DisplaySlot.SIDEBAR);

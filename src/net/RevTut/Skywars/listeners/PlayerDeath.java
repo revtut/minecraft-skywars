@@ -1,9 +1,10 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.entity.Player;
+
 /**
  * Created by waxcoder on 01-11-2014.
  */
@@ -11,11 +12,11 @@ import org.bukkit.entity.Player;
 public class PlayerDeath implements Listener {
     public Main plugin;
 
-    public PlayerDeath(Main plugin){
+    public PlayerDeath(Main plugin) {
         this.plugin = plugin;
     }
 
-    public void onDeath(PlayerDeathEvent e){
+    public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
     }
 }

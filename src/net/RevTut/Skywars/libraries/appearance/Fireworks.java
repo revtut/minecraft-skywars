@@ -27,7 +27,7 @@ public class Fireworks {
      * @param delay  Delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
-        for(int i = 0; i < amount; i++){
+        for (int i = 0; i < amount; i++) {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {

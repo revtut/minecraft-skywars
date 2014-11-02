@@ -5,7 +5,6 @@ import net.RevTut.Skywars.libraries.appearance.Fireworks;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.Converters;
-import net.minecraft.util.com.google.common.base.Converter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,7 +18,7 @@ public class ArenaRunnable implements Runnable {
 
     private Main plugin;
 
-    public ArenaRunnable(Main plugin){
+    public ArenaRunnable(Main plugin) {
         this.plugin = plugin;
     }
 
@@ -30,7 +29,7 @@ public class ArenaRunnable implements Runnable {
     }
 
     public void setId(int id) {
-       this.id = id;
+        this.id = id;
     }
 
     public static void cancel() {
@@ -38,21 +37,21 @@ public class ArenaRunnable implements Runnable {
     }
 
     @Override
-    public void run(){
+    public void run() {
         int remainingTime;
-        for(Arena arena : Arena.getArenas()){
-            if(arena.getPlayers().size() < 1)
+        for (Arena arena : Arena.getArenas()) {
+            if (arena.getPlayers().size() < 1)
                 continue;
             remainingTime = arena.getRemainingTime();
             // Time is over ZERO
-            if(remainingTime >= 0){
-                if(arena.getStatus() == ArenaStatus.LOBBY)
+            if (remainingTime >= 0) {
+                if (arena.getStatus() == ArenaStatus.LOBBY)
                     onPreGame(arena);
-                else if(arena.getStatus() == ArenaStatus.PREGAME)
+                else if (arena.getStatus() == ArenaStatus.PREGAME)
                     onPreGame(arena);
-                else if(arena.getStatus() == ArenaStatus.INGAME)
+                else if (arena.getStatus() == ArenaStatus.INGAME)
                     onInGame(arena);
-                else if(arena.getStatus() == ArenaStatus.ENDGAME)
+                else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
             }
             arena.setRemainingTime(remainingTime - 1);
@@ -60,25 +59,25 @@ public class ArenaRunnable implements Runnable {
     }
 
     /* Lobby */
-    public void onLobby(Arena arena){
+    public void onLobby(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo == null)
+            if (alvo == null)
                 continue;
             alvo.setLevel(remainingTime);
         }
     }
 
     /* PreGame */
-    public void onPreGame(Arena arena){
+    public void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo == null)
+            if (alvo == null)
                 continue;
             alvo.setLevel(remainingTime);
-            switch (remainingTime){
+            switch (remainingTime) {
                 case 10:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b10"));
@@ -120,14 +119,14 @@ public class ArenaRunnable implements Runnable {
     }
 
     /* InGame */
-    public void onInGame(Arena arena){
+    public void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(alvo == null)
+            if (alvo == null)
                 continue;
             alvo.setLevel(remainingTime);
-            switch (remainingTime){
+            switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
@@ -174,17 +173,17 @@ public class ArenaRunnable implements Runnable {
     }
 
     /* EndGame */
-    public void onEndGame(Arena arena){
+    public void onEndGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         // Launch Firework
         ArenaDat arenaDat = arena.getArenaDat();
-        if(arenaDat == null)
+        if (arenaDat == null)
             return;
         UUID uuid = UUID.fromString(arenaDat.getWinner());
-        if(uuid == null)
+        if (uuid == null)
             return;
         Player winner = Bukkit.getPlayer(uuid);
-        if(winner == null)
+        if (winner == null)
             return;
         Fireworks.launchFirework(winner, 10, 2);
     }

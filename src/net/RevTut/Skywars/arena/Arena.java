@@ -1,7 +1,6 @@
 package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.libraries.world.WorldAPI;
-import net.RevTut.Skywars.libraries.world.WorldServerNMS;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
@@ -168,8 +167,8 @@ public class Arena {
     public static void removeArena(Arena arena) {
         // Send alll players to world
         // How it is possible to have remaining players?
-        for(int i = 0; i < arena.getPlayers().size(); i++)
-            /** Send to Hub */
+        for (int i = 0; i < arena.getPlayers().size(); i++)
+        /** Send to Hub */
             Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
         // Unload World
         Bukkit.unloadWorld(arena.getMapName(), false);
@@ -185,7 +184,7 @@ public class Arena {
             arena.getPlayers().remove(playerDat);
     }
 
-    public static List<Arena> getArenas(){
+    public static List<Arena> getArenas() {
         return arenas;
     }
 
