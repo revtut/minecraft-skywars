@@ -65,7 +65,7 @@ public class ArenaRunnable implements Runnable {
                 else if (arena.getStatus() == ArenaStatus.INGAME)
                     fromInGameToEndGame(arena);
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
-                    formEndGameToLobby(arena);
+                    fromEndGameToLobby(arena);
             }
             arena.setRemainingTime(remainingTime - 1);
         }
@@ -271,7 +271,7 @@ public class ArenaRunnable implements Runnable {
     }
 
     /* EndGame To Lobby */
-    public void fromEndGameToLobby(Arena arena) {
+    public void fromEndGameToLobby(final Arena arena) {
         // Check if we can transfer this players to a new arena
         List<Arena> arenasAvailable = Arena.getAvailableArenas();
         Arena arenaMove = null;
@@ -281,20 +281,53 @@ public class ArenaRunnable implements Runnable {
                 break;
             }
         }
+        // Keep the same arena or move to an existing one
         if(arenaMove == null){
-
-        }else{
-            // Remove all the players from this arena
+            int i = 0;
+            final Location lobbyLocation = arena.getArenaLocation().getLobbyLocation();
             for(PlayerDat alvoDat : arena.getPlayers()){
-                arena.removePlayer(alvoDat);
-                // Add to new arena
-                if (!Arena.addPlayer(alvoDat, arena)) {
-                    /** Send him to Hub. Error while adding to arena */
-                    return;
+                final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                if(alvo == null)
+                    continue;
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        alvo.teleport(lobbyLocation);
+                    }
+                }, i);
+                alvo.teleport(lobbyLocation);
+                i++;
+            }
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Arena.resetArena(arena);
                 }
+            }, i);
+        }else{
+            int i = 0;
+            // Remove all the players from this arena
+            for(final PlayerDat alvoDat : arena.getPlayers()){
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        arena.removePlayer(alvoDat);
+                        // Add to new arena
+                        if (!Arena.addPlayer(alvoDat, arena)) {
+                            /** Send him to Hub. Error while adding to arena */
+                            return;
+                        }
+                    }
+                }, i);
+                i++;
             }
             // Delete The Arena
-            Arena.removeArena(arena);
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Arena.removeMap(arena, true);
+                }
+            }, i);
         }
     }
 }

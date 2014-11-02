@@ -56,39 +56,46 @@ public class Arena {
         // Arena Number
         int arenaNumber = Arena.nextArenaNumber();
 
-        // Current Directory
-        String currentDir = System.getProperty("user.dir");
-        // Source Directory
-        String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
-        if (listWorlds == null) {
-            System.out.println("Worlds folder not found!");
+        String mapName = addNewMap(arenaNumber);
+        if(mapName == null)
             return;
-        }
-        int posWorld = new Random().nextInt(listWorlds.length);
-        String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
-        // Target Directory
-        String mapName = listWorlds[posWorld] + "_" + arenaNumber;
-        String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
-
-        // Copy World
-        WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
-        // Load World
-        Bukkit.createWorld(new WorldCreator(mapName));
-
-        // Check if world is not null
-        World world = Bukkit.getWorld(mapName);
-        if (world == null) {
-            System.out.println("Error while creating a new arena! World is null!");
-            return;
-        }
 
         // Create Arena
-        final File locations = new File(currentDir + File.separator + mapName + File.separator + "locations.yml");
-        if (!locations.exists()) {
-            System.out.println("File with arena locations does not exists!");
+        ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
+        if(arenaLocation == null)
             return;
+        Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
+        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
+        addArena(arena);
+    }
+
+    public static void resetArena(Arena arena) {
+        /** DELETE EXISTING MAP */
+        removeMap(arena, false);
+
+        /** ADD NEW MAP */
+        String mapName = addNewMap(arena.getArenaNumber());
+        if(mapName == null)
+            return;
+
+        // Update Arena
+        arena.setMapName(mapName);
+        arena.setArenaDat(new ArenaDat());
+        arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
+        arena.setStatus(ArenaStatus.LOBBY);
+        ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
+        if(arenaLocation == null)
+            return;
+        arena.setArenaLocation(arenaLocation);
+        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
+    }
+
+    private static ArenaLocation createArenaLocation(File file, String mapName){
+        if (!file.exists()) {
+            System.out.println("File with arena locations does not exists!");
+            return null;
         }
-        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(locations);
+        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(file);
 
         Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
         List<Location> spawnLocations = new ArrayList<Location>();
@@ -125,10 +132,37 @@ public class Arena {
                 }
             }
         }
-        ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
-        Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
-        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
-        addArena(arena);
+        return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
+    }
+
+    /* Copy and Load Map To Arena (given by number) */
+    private static String addNewMap(int arenaNumber){
+        // Current Directory
+        String currentDir = System.getProperty("user.dir");
+        // Source Directory
+        String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
+        if (listWorlds == null) {
+            System.out.println("Worlds folder not found!");
+            return null;
+        }
+        int posWorld = new Random().nextInt(listWorlds.length);
+        String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
+        // Target Directory
+        String mapName = listWorlds[posWorld] + "_" + arenaNumber;
+        String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+
+        // Copy World
+        WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
+        // Load World
+        Bukkit.createWorld(new WorldCreator(mapName));
+
+        // Check if world is not null
+        World world = Bukkit.getWorld(mapName);
+        if (world == null) {
+            System.out.println("Error while creating a new arena! World is null!");
+            return null;
+        }
+        return mapName;
     }
 
     public static boolean addArena(Arena arena) {
@@ -178,14 +212,16 @@ public class Arena {
         return true;
     }
 
-    public static void removeArena(Arena arena) {
-        // Send alll players to world
-        // How it is possible to have remaining players?
-        for (int i = 0; i < arena.getPlayers().size(); i++)
-        /** Send to Hub */
-            Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
-        // Remove From List
-        arenas.remove(arena);
+    public static void removeMap(Arena arena, boolean arenaRemove) {
+        if(arenaRemove) {
+            // Send alll players to world
+            // How it is possible to have remaining players?
+            for (int i = 0; i < arena.getPlayers().size(); i++)
+            /** Send to Hub */
+                Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
+            // Remove From List
+            arenas.remove(arena);
+        }
         // Unload World
         Bukkit.unloadWorld(arena.getMapName(), false);
         // Remove Directory
