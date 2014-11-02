@@ -4,7 +4,7 @@ package net.RevTut.Skywars.arena;
  * Created by João on 31/10/2014.
  */
 public enum ArenaStatus {
-    LOBBY(30), // Waiting for new ones to join
+    LOBBY(300), // Waiting for new ones to join
     PREGAME(30), // Time before the game actually starts
     INGAME(1800), // Maximum game time
     ENDGAME(30); // End of the game time

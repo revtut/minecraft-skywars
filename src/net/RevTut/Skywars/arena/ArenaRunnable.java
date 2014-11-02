@@ -49,13 +49,14 @@ public class ArenaRunnable implements Runnable {
             if (remainingTime >= 0) {
                 // Remaining time is over ZERO
                 if (arena.getStatus() == ArenaStatus.LOBBY)
-                    onPreGame(arena);
+                    onLobby(arena);
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
                     onPreGame(arena);
                 else if (arena.getStatus() == ArenaStatus.INGAME)
                     onInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
+                arena.setRemainingTime(remainingTime - 1);
             } else {
                 // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
@@ -70,7 +71,6 @@ public class ArenaRunnable implements Runnable {
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     fromEndGameToLobby(arena);
             }
-            arena.setRemainingTime(remainingTime - 1);
         }
     }
 
@@ -240,7 +240,7 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             Location alvoLocation = alvo.getLocation();
-            while (alvoLocation.getBlock().getType() != Material.GLASS || i < 3) {
+            while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
                 alvoLocation.setY(alvoLocation.getY() - 1);
                 i++;
             }
