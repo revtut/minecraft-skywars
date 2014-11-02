@@ -7,6 +7,7 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -86,6 +87,16 @@ public class Arena {
     }
 
     public static void removeArena(Arena arena) {
+        // Send alll players to world
+        // How it is possible to have remaining players?
+        for(int i = 0; i < arena.getPlayers().size(); i++)
+            /** Send to Hub */
+            Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
+        // Unload World
+        Bukkit.unloadWorld(arena.getMapName(), false);
+        // Remove Directory
+        WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
+        // Remove From List
         arenas.remove(arena);
     }
 
@@ -192,7 +203,7 @@ public class Arena {
         // Copy World
         WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
         // Load World
-        WorldAPI.loadWorldAsync(mapName);
+        Bukkit.createWorld(new WorldCreator(mapName));
 
         // Check if world is not null
         World world = Bukkit.getWorld(mapName);
@@ -248,20 +259,6 @@ public class Arena {
         Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
         arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
         addArena(arena);
-        if(true)
-            return;
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
-                lock.lock();
-
-
-                lock.unlock();
-            }
-        });
-        thread.start();
     }
 
     /* Get's */
