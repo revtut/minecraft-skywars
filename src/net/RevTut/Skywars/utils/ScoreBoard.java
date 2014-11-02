@@ -31,15 +31,15 @@ public class ScoreBoard implements Listener {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("§7► §3Sky Wars §7◄");
 
-        /* Online */
-        final Score scoreon = objective.getScore("§aAlive:");
-        scoreon.setScore(arena.getAlivePlayers().size());
+        /* Alive */
+        final Score scoreAlive = objective.getScore("§aAlive:");
+        scoreAlive.setScore(0);
 
-        /* Gaming Points */
-        final Score scoregp = objective.getScore("§cDead:");
-        scoregp.setScore(arena.getDeadPlayers().size());
+        /* Dead */
+        final Score scoreDead = objective.getScore("§cDead:");
+        scoreDead.setScore(0);
 
-            /* Scoreboard footer */
+        /* Scoreboard footer */
         final Score separador = objective.getScore("§3----------");
         separador.setScore(-1);
 
