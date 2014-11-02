@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.entity.Player;
@@ -17,5 +18,11 @@ public class PlayerDeath implements Listener {
 
     public void onDeath(PlayerDeathEvent e){
         Player p = e.getEntity();
-    }
+        p.sendMessage("You died!" + PlayerDat.getPlayerDatByUUID(p.getUniqueId()).getDeaths());
+
+        /* Joao tou aqui com uns probs em casa acabo o resto quando chegar
+        * */
+
+     }
+
 }
