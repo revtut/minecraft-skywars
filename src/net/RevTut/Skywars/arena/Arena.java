@@ -1,12 +1,12 @@
 package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.libraries.world.WorldAPI;
-import net.RevTut.Skywars.libraries.world.WorldServerNMS;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -52,6 +52,85 @@ public class Arena {
     }
 
     /* Static Methods */
+    public static void createNewArena() {
+        // Arena Number
+        int arenaNumber = Arena.nextArenaNumber();
+
+        // Current Directory
+        String currentDir = System.getProperty("user.dir");
+        // Source Directory
+        String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
+        if (listWorlds == null) {
+            System.out.println("Worlds folder not found!");
+            return;
+        }
+        int posWorld = new Random().nextInt(listWorlds.length);
+        String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
+        // Target Directory
+        String mapName = listWorlds[posWorld] + "_" + arenaNumber;
+        String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+
+        // Copy World
+        WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
+        // Load World
+        Bukkit.createWorld(new WorldCreator(mapName));
+
+        // Check if world is not null
+        World world = Bukkit.getWorld(mapName);
+        if (world == null) {
+            System.out.println("Error while creating a new arena! World is null!");
+            return;
+        }
+
+        // Create Arena
+        final File locations = new File(currentDir + File.separator + mapName + File.separator + "locations.yml");
+        if (!locations.exists()) {
+            System.out.println("File with arena locations does not exists!");
+            return;
+        }
+        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(locations);
+
+        Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
+        List<Location> spawnLocations = new ArrayList<Location>();
+        for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
+            // Spawn Locations
+            if (message.equalsIgnoreCase("spawnLocations")) {
+                for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
+                    // Location
+                    String locString = configLocations.getConfigurationSection("spawnLocations").getString(spawnLoc);
+                    String[] locStringArgs = locString.split(",");
+                    float[] parsed = new float[3];
+                    for (int a = 0; a < 3; a++) {
+                        parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                    }
+                    spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
+                }
+            } else {
+                // Location
+                String locString = configLocations.getString(message);
+                String[] locStringArgs = locString.split(",");
+                float[] parsed = new float[3];
+                for (int a = 0; a < 3; a++) {
+                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                }
+                // Check which location it is
+                if (message.equalsIgnoreCase("lobbyLocation")) {
+                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("deathspawnLocation")) {
+                    deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("firstCorner")) {
+                    firstCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("secondCorner")) {
+                    secondCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                }
+            }
+        }
+        ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
+        Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
+        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
+        addArena(arena);
+    }
+
     public static boolean addArena(Arena arena) {
         if (getArenaByNumber(arena.getArenaNumber()) != null)
             return false;
@@ -86,6 +165,16 @@ public class Arena {
     }
 
     public static void removeArena(Arena arena) {
+        // Send alll players to world
+        // How it is possible to have remaining players?
+        for (int i = 0; i < arena.getPlayers().size(); i++)
+        /** Send to Hub */
+            Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
+        // Unload World
+        Bukkit.unloadWorld(arena.getMapName(), false);
+        // Remove Directory
+        WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
+        // Remove From List
         arenas.remove(arena);
     }
 
@@ -93,6 +182,10 @@ public class Arena {
         Arena arena = getArenaByPlayer(playerDat);
         if (arena != null)
             arena.getPlayers().remove(playerDat);
+    }
+
+    public static List<Arena> getArenas() {
+        return arenas;
     }
 
     public static Arena getArenaByNumber(int number) {
@@ -171,99 +264,6 @@ public class Arena {
         return gameNumber;
     }
 
-    public static void createNewArena() {
-        // Arena Number
-        int arenaNumber = Arena.nextArenaNumber();
-
-        // Current Directory
-        String currentDir = System.getProperty("user.dir");
-        // Source Directory
-        String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
-        if (listWorlds == null) {
-            System.out.println("Worlds folder not found!");
-            return;
-        }
-        int posWorld = new Random().nextInt(listWorlds.length);
-        String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
-        // Target Directory
-        String mapName = listWorlds[posWorld] + "_" + arenaNumber;
-        String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
-
-        // Copy World
-        WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
-        // Load World
-        WorldAPI.loadWorldAsync(mapName);
-
-        // Check if world is not null
-        World world = Bukkit.getWorld(mapName);
-        if (world == null) {
-            System.out.println("Error while creating a new arena! World is null!");
-            return;
-        }
-
-        // Create Arena
-        final File locations = new File(currentDir + File.separator + mapName + File.separator + "locations.yml");
-        if (!locations.exists()) {
-            System.out.println("File with arena locations does not exists!");
-            return;
-        }
-        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(locations);
-
-        Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
-        List<Location> spawnLocations = new ArrayList<Location>();
-        for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
-            // Spawn Locations
-            if (message.equalsIgnoreCase("spawnLocations")) {
-                for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
-                    // Location
-                    String locString = configLocations.getConfigurationSection("spawnLocations").getString(spawnLoc);
-                    String[] locStringArgs = locString.split(",");
-                    float[] parsed = new float[3];
-                    for (int a = 0; a < 3; a++) {
-                        parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                    }
-                    spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
-                }
-            } else {
-                // Location
-                String locString = configLocations.getString(message);
-                String[] locStringArgs = locString.split(",");
-                float[] parsed = new float[3];
-                for (int a = 0; a < 3; a++) {
-                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                }
-                // Check which location it is
-                if (message.equalsIgnoreCase("lobbyLocation")) {
-                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("deathspawnLocation")) {
-                    deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("firstCorner")) {
-                    firstCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("secondCorner")) {
-                    secondCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                }
-            }
-        }
-        ArenaLocation arenaLocation = new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
-        Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
-        arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
-        addArena(arena);
-        if(true)
-            return;
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                WorldServerNMS.UnsafeLock lock = new WorldServerNMS.UnsafeLock(new WorldAPI());
-                lock.lock();
-
-
-                lock.unlock();
-            }
-        });
-        thread.start();
-    }
-
     /* Get's */
     public int getArenaNumber() {
         return arenaNumber;
@@ -301,7 +301,7 @@ public class Arena {
         return alivePlayers;
     }
 
-    public List<PlayerDat> getDeathPlayers() {
+    public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
         for (int i = 0; i < players.size(); i++)
             if (players.get(i).getStatus() == PlayerStatus.DEAD)

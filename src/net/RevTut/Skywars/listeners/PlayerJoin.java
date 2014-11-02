@@ -32,17 +32,6 @@ public class PlayerJoin implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
 
-        // Title
-        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
-        TitleAPI.sendTitle(p, plugin.titleMessage);
-        // Tab List
-        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
-        // ScoreBoard
-        ScoreBoard.showScoreBoard(p);
-        // NameTag
-        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
-        if (board != null)
-            NameTagAPI.setNameTag(board, p, true);
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -73,11 +62,18 @@ public class PlayerJoin implements Listener {
                         if (Arena.getNumberAvailableArenas() <= 1) {
                             Arena.createNewArena();
                         }
-                        // Subtitle
+                        // Title
+                        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
+                        TitleAPI.sendTitle(p, plugin.titleMessage);
                         TitleAPI.sendSubTitle(p, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
-                        // ScoreBoard Updates
-                        ScoreBoard.updatePoints(p);
-                        ScoreBoard.updateOnline(p);
+                        // Tab List
+                        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+                        // ScoreBoard
+                        ScoreBoard.showScoreBoard(p, arena);
+                        // NameTag
+                        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
+                        if (board != null)
+                            NameTagAPI.setNameTag(board, p, true);
                     }
                 });
             }

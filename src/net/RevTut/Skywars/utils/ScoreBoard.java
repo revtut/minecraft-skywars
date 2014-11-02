@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.utils;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,29 +21,25 @@ public class ScoreBoard implements Listener {
     /* ScoreBoards */
     private static HashMap<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
 
-    /* ScoreBoard Info */
-    private static int online = 0;
-    private static int points = 0;
-
     /* Show ScoreBoard to Player */
-    public static void showScoreBoard(Player p) {
+    public static void showScoreBoard(Player p, Arena arena) {
         /* Cria a scoreboard */
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
         Objective objective = board.registerNewObjective("test", "dummy");
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName("§7► §3RevTut §7◄");
+        objective.setDisplayName("§7► §3Sky Wars §7◄");
 
-            /* Online */
-        final Score scoreon = objective.getScore("§7Online:");
-        scoreon.setScore(online);
+        /* Alive */
+        final Score scoreAlive = objective.getScore("§aAlive:");
+        scoreAlive.setScore(0);
 
-            /* Gaming Points */
-        final Score scoregp = objective.getScore("§7Points:");
-        scoregp.setScore(points);
+        /* Dead */
+        final Score scoreDead = objective.getScore("§cDead:");
+        scoreDead.setScore(0);
 
-            /* Scoreboard footer */
+        /* Scoreboard footer */
         final Score separador = objective.getScore("§3----------");
         separador.setScore(-1);
 
@@ -54,27 +51,32 @@ public class ScoreBoard implements Listener {
         scoreBoards.put(p.getUniqueId(), board);
     }
 
-    /* Update Online Players */
-    public static void updateOnline(Player p) {
-        if (p != null) {
-            Scoreboard board = scoreBoards.get(p.getUniqueId());
-            if (board != null) {
-                Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-                if (objective != null) {
-                    objective.getScore("§7Online:").setScore(online);
+    /* Update Alive */
+    public static void updateAlive(Arena arena) {
+        int alive = arena.getAlivePlayers().size();
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (alvo != null) {
+                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+                if (board != null) {
+                    Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+                    objective.getScore("§aAlive:").setScore(alive);
                 }
             }
         }
     }
 
-    /* Update Points */
-    public static void updatePoints(Player p) {
-        if (p != null) {
-            Scoreboard board = scoreBoards.get(p.getUniqueId());
-            if (board != null) {
-                Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-                points = PlayerDat.getPlayerDatByUUID(p.getUniqueId()).getPoints();
-                objective.getScore("§7Points:").setScore(points);
+    /* Update Death */
+    public static void updateDeath(Arena arena) {
+        int dead = arena.getDeadPlayers().size();
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (alvo != null) {
+                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+                if (board != null) {
+                    Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+                    objective.getScore("§cDead:").setScore(dead);
+                }
             }
         }
     }

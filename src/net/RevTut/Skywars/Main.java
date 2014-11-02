@@ -1,6 +1,7 @@
 package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.PlayerChat;
 import net.RevTut.Skywars.listeners.PlayerJoin;
@@ -46,6 +47,10 @@ public class Main extends JavaPlugin {
         /* Create Initial Arenas */
         Arena.createNewArena();
         Arena.createNewArena();
+
+        /* Arena Runnable */
+        ArenaRunnable task = new ArenaRunnable(this);
+        task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
 
         /* Regist Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();

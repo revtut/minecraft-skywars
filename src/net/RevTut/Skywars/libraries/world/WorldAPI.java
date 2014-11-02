@@ -34,7 +34,7 @@ public class WorldAPI {
         // World Creator
         WorldCreator creator = new WorldCreator(worldName);
         creator.createWorld();
-        if(true)
+        if (true)
             return Bukkit.getServer().getWorld(worldName);
 
         Validate.notNull(creator, "Creator may not be null");

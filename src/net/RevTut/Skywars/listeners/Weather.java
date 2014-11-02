@@ -1,7 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
-import org.bukkit.entity.LightningStrike;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
@@ -15,24 +14,24 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 public class Weather implements Listener {
     public Main plugin;
 
-    public Weather(Main plugin){
+    public Weather(Main plugin) {
         this.plugin = plugin;
     }
 
     /* Ao mudar o tempo cancela o evento*/
     @EventHandler
-    public void onWeatherChange(WeatherChangeEvent e){
+    public void onWeatherChange(WeatherChangeEvent e) {
         e.setCancelled(true);
     }
 
     /* Ao alterar o trovejar cancela o evento */
     @EventHandler
-    public void onThunderChange(ThunderChangeEvent e){
+    public void onThunderChange(ThunderChangeEvent e) {
         e.setCancelled(true);
     }
 
     @EventHandler
-    public void onLightningStrike(LightningStrikeEvent e){
+    public void onLightningStrike(LightningStrikeEvent e) {
         e.setCancelled(true);
     }
 }
