@@ -227,6 +227,10 @@ public class Arena {
                 Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
             // Remove From List
             arenas.remove(arena);
+            // New Arena if Needed
+            if (Arena.getNumberAvailableArenas() <= 1) {
+                Arena.createNewArena();
+            }
         }
         // Unload World
         World world = Bukkit.getWorld(arena.getMapName());
