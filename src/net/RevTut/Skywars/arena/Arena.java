@@ -53,135 +53,6 @@ public class Arena {
     }
 
     /* Static Methods */
-    public static boolean addArena(Arena arena) {
-        if (getArenaByNumber(arena.getArenaNumber()) != null)
-            return false;
-        arenas.add(arena);
-        return true;
-    }
-
-    public static boolean addPlayer(PlayerDat playerDat) {
-        if (getArenaByPlayer(playerDat) != null)
-            return false;
-        // Look for available arena
-        int posArena = -1;
-        int maxPlayers = -1;
-        for (int i = 0; i < Arena.arenas.size(); i++)
-            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY) // Waiting For Players
-                if (Arena.arenas.get(i).getPlayers().size() < Arena.maxPlayers) // Not Full
-                    if (Arena.arenas.get(i).getPlayers().size() > maxPlayers) // Arena With Highest Amount of Players
-                        posArena = i;
-        // Check if an arena was found
-        if (posArena == -1)
-            return false;
-        Arena arena = Arena.arenas.get(posArena);
-        // Add Player To Arena
-        arena.getPlayers().add(playerDat);
-        // Teleport To Lobby
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if (player == null) {
-            return false;
-        }
-        player.teleport(arena.getArenaLocation().getLobbyLocation());
-        return true;
-    }
-
-    public static void removeArena(Arena arena) {
-        // Send alll players to world
-        // How it is possible to have remaining players?
-        for(int i = 0; i < arena.getPlayers().size(); i++)
-            /** Send to Hub */
-            Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
-        // Unload World
-        Bukkit.unloadWorld(arena.getMapName(), false);
-        // Remove Directory
-        WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
-        // Remove From List
-        arenas.remove(arena);
-    }
-
-    public static void removePlayer(PlayerDat playerDat) {
-        Arena arena = getArenaByPlayer(playerDat);
-        if (arena != null)
-            arena.getPlayers().remove(playerDat);
-    }
-
-    public static Arena getArenaByNumber(int number) {
-        for (int i = 0; i < Arena.arenas.size(); i++)
-            if (Arena.arenas.get(i).getArenaNumber() == number)
-                return Arena.arenas.get(i);
-        return null;
-    }
-
-    public static Arena getArenaByPlayer(PlayerDat playerDat) {
-        for (int i = 0; i < Arena.arenas.size(); i++)
-            for (int j = 0; j < Arena.arenas.get(i).getPlayers().size(); j++)
-                if (Arena.arenas.get(i).getPlayers().get(j).getUUID() == playerDat.getUUID())
-                    return Arena.arenas.get(i);
-        return null;
-    }
-
-    public static int getNumberAvailableArenas() {
-        int numero = 0;
-        for (int i = 0; i < Arena.arenas.size(); i++)
-            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
-                numero++;
-        return numero;
-    }
-
-    public static int nextArenaNumber() {
-        List<Integer> arenasNumbers = new ArrayList<Integer>();
-        // Get all arenas numbers
-        for (int i = 0; i < arenas.size(); i++)
-            arenasNumbers.add(arenas.get(i).getArenaNumber());
-
-        /* Check if there is a missing number in arenas numbers
-        If there are 10 arenas, they should be 0, 1, ...., 9.
-        But because of the way it is made, it might be 0, 1, ...,8,10.
-        So we can assign the nextArenaNumber to the missing "9". */
-        for (int i = 1; i <= arenasNumbers.size(); i++)
-            if (!arenasNumbers.contains(i))
-                return i;
-
-        return arenas.size() + 1;
-    }
-
-    public static String nextGameNumber() {
-        String gameNumber = "";
-        for (int i = 0; i < arenas.size(); i++) {
-            String arenaGameNumber = arenas.get(i).getArenaDat().getGameNumber();
-            if (gameNumber.length() == arenaGameNumber.length()) {
-                int compResult = gameNumber.compareTo(arenaGameNumber);
-                if (compResult < 0)
-                    gameNumber = arenaGameNumber;
-            } else if (gameNumber.length() < arenaGameNumber.length()) {
-                gameNumber = arenaGameNumber;
-            }
-        }
-        boolean nextCharacter = true;
-        int i = 0;
-        while (nextCharacter) {
-            if (i < gameNumber.length()) {
-                char currentChar = gameNumber.charAt(i);
-                if (currentChar != 'Z') {
-                    char[] gameNumberChar = gameNumber.toCharArray();
-                    gameNumberChar[i] = currentChar++;
-                    gameNumber = String.valueOf(gameNumberChar);
-                    nextCharacter = false;
-                } else {
-                    char[] gameNumberChar = gameNumber.toCharArray();
-                    gameNumberChar[i] = 0;
-                    gameNumber = String.valueOf(gameNumberChar);
-                }
-                i++;
-            } else {
-                gameNumber = "1" + gameNumber;
-                nextCharacter = false;
-            }
-        }
-        return gameNumber;
-    }
-
     public static void createNewArena() {
         // Arena Number
         int arenaNumber = Arena.nextArenaNumber();
@@ -259,6 +130,139 @@ public class Arena {
         Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
         arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
         addArena(arena);
+    }
+
+    public static boolean addArena(Arena arena) {
+        if (getArenaByNumber(arena.getArenaNumber()) != null)
+            return false;
+        arenas.add(arena);
+        return true;
+    }
+
+    public static boolean addPlayer(PlayerDat playerDat) {
+        if (getArenaByPlayer(playerDat) != null)
+            return false;
+        // Look for available arena
+        int posArena = -1;
+        int maxPlayers = -1;
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY) // Waiting For Players
+                if (Arena.arenas.get(i).getPlayers().size() < Arena.maxPlayers) // Not Full
+                    if (Arena.arenas.get(i).getPlayers().size() > maxPlayers) // Arena With Highest Amount of Players
+                        posArena = i;
+        // Check if an arena was found
+        if (posArena == -1)
+            return false;
+        Arena arena = Arena.arenas.get(posArena);
+        // Add Player To Arena
+        arena.getPlayers().add(playerDat);
+        // Teleport To Lobby
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null) {
+            return false;
+        }
+        player.teleport(arena.getArenaLocation().getLobbyLocation());
+        return true;
+    }
+
+    public static void removeArena(Arena arena) {
+        // Send alll players to world
+        // How it is possible to have remaining players?
+        for(int i = 0; i < arena.getPlayers().size(); i++)
+            /** Send to Hub */
+            Bukkit.getPlayer(arena.getPlayers().get(i).getUUID());
+        // Unload World
+        Bukkit.unloadWorld(arena.getMapName(), false);
+        // Remove Directory
+        WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
+        // Remove From List
+        arenas.remove(arena);
+    }
+
+    public static void removePlayer(PlayerDat playerDat) {
+        Arena arena = getArenaByPlayer(playerDat);
+        if (arena != null)
+            arena.getPlayers().remove(playerDat);
+    }
+
+    public static List<Arena> getArenas(){
+        return arenas;
+    }
+
+    public static Arena getArenaByNumber(int number) {
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getArenaNumber() == number)
+                return Arena.arenas.get(i);
+        return null;
+    }
+
+    public static Arena getArenaByPlayer(PlayerDat playerDat) {
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            for (int j = 0; j < Arena.arenas.get(i).getPlayers().size(); j++)
+                if (Arena.arenas.get(i).getPlayers().get(j).getUUID() == playerDat.getUUID())
+                    return Arena.arenas.get(i);
+        return null;
+    }
+
+    public static int getNumberAvailableArenas() {
+        int numero = 0;
+        for (int i = 0; i < Arena.arenas.size(); i++)
+            if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
+                numero++;
+        return numero;
+    }
+
+    public static int nextArenaNumber() {
+        List<Integer> arenasNumbers = new ArrayList<Integer>();
+        // Get all arenas numbers
+        for (int i = 0; i < arenas.size(); i++)
+            arenasNumbers.add(arenas.get(i).getArenaNumber());
+
+        /* Check if there is a missing number in arenas numbers
+        If there are 10 arenas, they should be 0, 1, ...., 9.
+        But because of the way it is made, it might be 0, 1, ...,8,10.
+        So we can assign the nextArenaNumber to the missing "9". */
+        for (int i = 1; i <= arenasNumbers.size(); i++)
+            if (!arenasNumbers.contains(i))
+                return i;
+
+        return arenas.size() + 1;
+    }
+
+    public static String nextGameNumber() {
+        String gameNumber = "";
+        for (int i = 0; i < arenas.size(); i++) {
+            String arenaGameNumber = arenas.get(i).getArenaDat().getGameNumber();
+            if (gameNumber.length() == arenaGameNumber.length()) {
+                int compResult = gameNumber.compareTo(arenaGameNumber);
+                if (compResult < 0)
+                    gameNumber = arenaGameNumber;
+            } else if (gameNumber.length() < arenaGameNumber.length()) {
+                gameNumber = arenaGameNumber;
+            }
+        }
+        boolean nextCharacter = true;
+        int i = 0;
+        while (nextCharacter) {
+            if (i < gameNumber.length()) {
+                char currentChar = gameNumber.charAt(i);
+                if (currentChar != 'Z') {
+                    char[] gameNumberChar = gameNumber.toCharArray();
+                    gameNumberChar[i] = currentChar++;
+                    gameNumber = String.valueOf(gameNumberChar);
+                    nextCharacter = false;
+                } else {
+                    char[] gameNumberChar = gameNumber.toCharArray();
+                    gameNumberChar[i] = 0;
+                    gameNumber = String.valueOf(gameNumberChar);
+                }
+                i++;
+            } else {
+                gameNumber = "1" + gameNumber;
+                nextCharacter = false;
+            }
+        }
+        return gameNumber;
     }
 
     /* Get's */
