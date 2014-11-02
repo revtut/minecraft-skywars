@@ -141,7 +141,6 @@ public class ArenaRunnable implements Runnable {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
-            alvo.setLevel(remainingTime);
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
