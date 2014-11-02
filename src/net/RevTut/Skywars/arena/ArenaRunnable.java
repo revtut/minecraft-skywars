@@ -180,7 +180,7 @@ public class ArenaRunnable implements Runnable {
                 case 0:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
-                    TitleAPI.sendSubTitle(alvo, "§7NO WINNER");
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7NO WINNER"));
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
                     break;
             }
@@ -192,6 +192,8 @@ public class ArenaRunnable implements Runnable {
         // Launch Firework
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null)
+            return;
+        if(arenaDat.getWinner() == null)
             return;
         UUID uuid = UUID.fromString(arenaDat.getWinner());
         if (uuid == null)
