@@ -7,4 +7,5 @@ import org.bukkit.event.Listener;
  */
 
 public class PlayerRespawn implements Listener {
+
 }

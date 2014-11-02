@@ -19,10 +19,6 @@ public class PlayerDeath implements Listener {
     public void onDeath(PlayerDeathEvent e){
         Player p = e.getEntity();
         p.sendMessage("You died!" + PlayerDat.getPlayerDatByUUID(p.getUniqueId()).getDeaths());
-
-        /* Joao tou aqui com uns probs em casa acabo o resto quando chegar
-        * */
-
      }
 
 }
