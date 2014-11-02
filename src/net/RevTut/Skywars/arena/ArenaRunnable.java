@@ -143,12 +143,12 @@ public class ArenaRunnable implements Runnable {
                 continue;
             switch (remainingTime) {
                 case 60:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimings(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
                     TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
                     break;
                 case 10:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimings(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
                     TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
                     break;
@@ -250,7 +250,7 @@ public class ArenaRunnable implements Runnable {
     /* InGame To EndGame */
     public void fromInGameToEndGame(Arena arena) {
         // Change Status
-        arena.setStatus(ArenaStatus.INGAME);
+        arena.setStatus(ArenaStatus.ENDGAME);
         // Remove Glass
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
