@@ -224,10 +224,10 @@ public class WorldAPI {
                     removeDirectory(c);
             }
             if (!dir.delete()) {
-                System.out.println("Error while trying to delete" + dir.getName() + ".");
+                System.out.println("Error while trying to delete " + dir.getName() + ".");
             }
         } catch (Exception e) {
-            System.out.println("Error while trying to delete" + dir.getAbsolutePath() + ".");
+            System.out.println("Error while trying to delete " + dir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
         }
     }
