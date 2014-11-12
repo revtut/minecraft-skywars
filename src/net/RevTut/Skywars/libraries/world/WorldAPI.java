@@ -34,7 +34,7 @@ public class WorldAPI {
         // World Creator
         WorldCreator creator = new WorldCreator(worldName);
         creator.createWorld();
-        if (true)
+        if(Bukkit.getServer().getWorld(worldName) != null)
             return Bukkit.getServer().getWorld(worldName);
 
         Validate.notNull(creator, "Creator may not be null");
@@ -167,7 +167,6 @@ public class WorldAPI {
      *
      * @param srcDir Source of the folder
      * @param trgDir Target of the folder
-     * @return void
      */
     public static void copyDirectory(final File srcDir, final File trgDir) {
         try {
@@ -178,9 +177,9 @@ public class WorldAPI {
                 }
                 // List of files inside source directory
                 String[] fList = srcDir.list();
-                for (int index = 0; index < fList.length; index++) {
-                    File dest = new File(trgDir, fList[index]);
-                    File source = new File(srcDir, fList[index]);
+                for (String aFList : fList) {
+                    File dest = new File(trgDir, aFList);
+                    File source = new File(srcDir, aFList);
 
                     // Copy that file / directory
                     copyDirectory(source, dest);
@@ -198,12 +197,8 @@ public class WorldAPI {
                     fOutStream.write(buffer, 0, iBytesReads);
                 }
                 // Safe exit
-                if (fInStream != null) {
-                    fInStream.close();
-                }
-                if (fOutStream != null) {
-                    fOutStream.close();
-                }
+                fInStream.close();
+                fOutStream.close();
             }
         } catch (Exception e) {
             System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
@@ -215,13 +210,13 @@ public class WorldAPI {
      * Delete directory
      *
      * @param dir Folder to remove
-     * @return void
      */
     public static void removeDirectory(final File dir) {
         try {
             if (dir.isDirectory()) {
-                for (File c : dir.listFiles())
-                    removeDirectory(c);
+                if(dir.listFiles() != null)
+                    for (File c : dir.listFiles())
+                        removeDirectory(c);
             }
             if (!dir.delete()) {
                 System.out.println("Error while trying to delete " + dir.getName() + ".");

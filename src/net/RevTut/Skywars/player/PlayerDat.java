@@ -7,17 +7,17 @@ import java.util.UUID;
 
 public class PlayerDat {
     /* PlayerDat's List */
-    private static List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
+    private static final List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
 
     /* UUID */
-    private UUID uuid;
+    private final UUID uuid;
 
     /* Currency */
     private int points;
 
     /* Statistics */
-    private Date lastLogin;
-    private long playTime;
+    private final Date lastLogin;
+    private final long playTime;
     private int wins;
     private int losses;
     private int kills;

@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 
 public class Ninja implements Listener {
 
-    ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
+    private final ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
 
     {
         ItemMeta hookMeta = hook.getItemMeta();
@@ -23,24 +23,24 @@ public class Ninja implements Listener {
         hook.setItemMeta(hookMeta);
     }
 
-    ItemStack ironArmor1 = new ItemStack(Material.LEATHER_HELMET, 1);
+    private final ItemStack ironArmor1 = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
 
     }
 
-    ItemStack ironArmor2 = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+    private final ItemStack ironArmor2 = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
 
     {
 
     }
 
-    ItemStack ironArmor3 = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+    private final ItemStack ironArmor3 = new ItemStack(Material.LEATHER_LEGGINGS, 1);
 
     {
     }
 
-    ItemStack ironArmor4 = new ItemStack(Material.LEATHER_BOOTS, 1);
+    private final ItemStack ironArmor4 = new ItemStack(Material.LEATHER_BOOTS, 1);
 
     {
         ironArmor4.addEnchantment(Enchantment.PROTECTION_FALL, 2);

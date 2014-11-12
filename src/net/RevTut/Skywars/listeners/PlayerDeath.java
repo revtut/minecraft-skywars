@@ -11,7 +11,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  */
 
 public class PlayerDeath implements Listener {
-    public Main plugin;
+    private final Main plugin;
 
     public PlayerDeath(Main plugin) {
         this.plugin = plugin;

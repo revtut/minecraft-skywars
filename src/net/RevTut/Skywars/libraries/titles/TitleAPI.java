@@ -6,8 +6,8 @@ import org.spigotmc.ProtocolInjector.PacketTitle;
 
 public class TitleAPI {
 
-    public static int VERSION = 47;
-    private static Class<?> nmsChatSerializer = Reflection.getNMSClass("ChatSerializer");
+    public static final int VERSION = 47;
+    private static final Class<?> nmsChatSerializer = Reflection.getNMSClass("ChatSerializer");
 
     /**
      * Send a Title

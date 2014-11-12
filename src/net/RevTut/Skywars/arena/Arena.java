@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class Arena {
     /* Arena's List */
-    private static List<Arena> arenas = new ArrayList<Arena>();
+    private static final List<Arena> arenas = new ArrayList<Arena>();
 
     /* Arena's Configuration */
     public static final int minPlayers = 1; // Minimum player for the game starts
@@ -42,7 +42,7 @@ public class Arena {
     private ArenaDat arenaDat;
 
     /* Constructor */
-    public Arena(int arenaNumber, String mapName, ArenaLocation arenaLocation) {
+    private Arena(int arenaNumber, String mapName, ArenaLocation arenaLocation) {
         this.arenaNumber = arenaNumber;
         this.mapName = mapName;
         this.arenaLocation = arenaLocation;
@@ -166,7 +166,7 @@ public class Arena {
         return mapName;
     }
 
-    public static boolean addArena(Arena arena) {
+    private static boolean addArena(Arena arena) {
         if (getArenaByNumber(arena.getArenaNumber()) != null)
             return false;
         arenas.add(arena);
@@ -252,7 +252,7 @@ public class Arena {
         return arenas;
     }
 
-    public static Arena getArenaByNumber(int number) {
+    private static Arena getArenaByNumber(int number) {
         for (int i = 0; i < Arena.arenas.size(); i++)
             if (Arena.arenas.get(i).getArenaNumber() == number)
                 return Arena.arenas.get(i);
@@ -286,7 +286,7 @@ public class Arena {
     }
 
     /* Next Arena Number */
-    public static int nextArenaNumber() {
+    private static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
         // Get all arenas numbers
         for (Arena arena : arenas) arenasNumbers.add(arena.getArenaNumber());
@@ -303,7 +303,7 @@ public class Arena {
     }
 
     /* Next Game Number (Round Number) */
-    public static String nextGameNumber() {
+    private static String nextGameNumber() {
         String gameNumber = "";
         for (Arena arena : arenas) {
             String arenaGameNumber = arena.getArenaDat().getGameNumber();

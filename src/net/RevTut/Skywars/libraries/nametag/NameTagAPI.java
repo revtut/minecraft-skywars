@@ -47,10 +47,7 @@ public class NameTagAPI implements Listener {
      * @param p Player to show the NameTag
      */
     public static boolean isNameTagHidden(Player p) {
-        if (p.getPassenger() != null && p.getPassenger().getType() == EntityType.SQUID && ((LivingEntity) p.getPassenger()).hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-            return true;
-        }
-        return false;
+        return p.getPassenger() != null && p.getPassenger().getType() == EntityType.SQUID && ((LivingEntity) p.getPassenger()).hasPotionEffect(PotionEffectType.INVISIBILITY);
     }
 
     /**
@@ -118,7 +115,7 @@ public class NameTagAPI implements Listener {
 
         // Display Name
         String name = prefix + p.getName();
-        if (p.getDisplayName() != name)
+        if (!p.getDisplayName().equals(name))
             p.setDisplayName(name);
     }
 

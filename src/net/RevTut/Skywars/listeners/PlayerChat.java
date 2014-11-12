@@ -22,9 +22,9 @@ public class PlayerChat implements Listener {
     private final String[] excepcoes_publicidade = {"revtut.net", "youtube.com/RevTut", "facebook.com/RevTut", "twitter.com/RevTut"};
     private final String[] blocked = {"***", "merda", "lixo", "cabrao", "puta", "fdp", "pariu", "foder", "sexo", "fornicar", "chupa", "caralho", "craftlandia", "cabra", "paneleiro", "gay", "lesbica", "shit", "fuck", "fodase", "foderte", "fodasse", "fdx", "vadia", "vadio", "azeiteiro", "veado", "veada", "boi", "camelo", "amor", "amote", "namorar", "cona", "vagina", "piça", "pissa", "pila", "rabo", "lamber", "coninha", "pilinha", "quilhoes", "culhoes", "quilhos", "culhões", "quilhões", "testiculos", "escroto", "karalho", "namo", "vaitomarno",};
     /* Mensagem Anterior */
-    private Map<UUID, String> lastMessage = new HashMap<UUID, String>();
+    private final Map<UUID, String> lastMessage = new HashMap<UUID, String>();
     /* Cooldown */
-    private Map<UUID, Long> cooldownMessage = new HashMap<UUID, Long>();
+    private final Map<UUID, Long> cooldownMessage = new HashMap<UUID, Long>();
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {

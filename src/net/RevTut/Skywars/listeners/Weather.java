@@ -12,7 +12,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
  */
 
 public class Weather implements Listener {
-    public Main plugin;
+    private final Main plugin;
 
     public Weather(Main plugin) {
         this.plugin = plugin;

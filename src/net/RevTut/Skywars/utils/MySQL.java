@@ -25,7 +25,7 @@ public class MySQL {
     private final String DBGameCore = "SkyWarsCore";
     private final String DBGameInfo = "SkyWarsInfo";
     /* Connection */
-    public Connection connection;
+    private Connection connection;
 
     /* Constructor */
     public MySQL(String hostname, String port, String database, String username, String password) {

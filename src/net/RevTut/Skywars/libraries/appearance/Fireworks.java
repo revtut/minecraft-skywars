@@ -17,7 +17,7 @@ public class Fireworks {
 
     private static Main plugin;
 
-    static final Random r = new Random();
+    private static final Random r = new Random();
 
     /**
      * Launch FireWork on Player

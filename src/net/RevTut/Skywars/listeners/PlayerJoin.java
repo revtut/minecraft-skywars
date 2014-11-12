@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class PlayerJoin implements Listener {
 
-    public Main plugin;
+    private final Main plugin;
 
     public PlayerJoin(final Main plugin) {
         this.plugin = plugin;

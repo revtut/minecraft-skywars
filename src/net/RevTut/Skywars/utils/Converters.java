@@ -46,7 +46,7 @@ public class Converters {
                 default:
                     if (c < ' ') {
                         t = "000" + Integer.toHexString(c);
-                        sb.append("\\u" + t.substring(t.length() - 4));
+                        sb.append("\\u").append(t.substring(t.length() - 4));
                     } else {
                         sb.append(c);
                     }
@@ -100,17 +100,17 @@ public class Converters {
     }
 
     /* Convert Hours to Days */
-    public static long convertHoursToDays(long hours) {
+    private static long convertHoursToDays(long hours) {
         return hours / 24;
     }
 
     /* Convert Minutes to Hours */
-    public static long convertMinutesToHours(long minutes) {
+    private static long convertMinutesToHours(long minutes) {
         return minutes / 60;
     }
 
     /* Convert Seconds to Minutes */
-    public static long convertSecondsToMinutes(long seconds) {
+    private static long convertSecondsToMinutes(long seconds) {
         return seconds / 60;
     }
 

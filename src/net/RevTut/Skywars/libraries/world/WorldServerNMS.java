@@ -12,8 +12,8 @@ import java.util.TreeSet;
  * Created by João on 31/10/2014.
  */
 public class WorldServerNMS extends WorldServer {
-    private Set N;
-    private SortedSet M;
+    private final Set N;
+    private final SortedSet M;
     private final UnsafeLock lock = new UnsafeLock(this);
 
     public WorldServerNMS(MinecraftServer minecraftserver, IDataManager idatamanager, String s, int i,

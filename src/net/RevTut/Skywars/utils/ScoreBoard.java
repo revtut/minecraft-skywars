@@ -12,14 +12,14 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ScoreBoard implements Listener {
-    public Main plugin;
+    private final Main plugin;
 
     public ScoreBoard(final Main plugin) {
         this.plugin = plugin;
     }
 
     /* ScoreBoards */
-    private static HashMap<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
+    private static final HashMap<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
 
     /* Show ScoreBoard to Player */
     public static void showScoreBoard(Player p, Arena arena) {

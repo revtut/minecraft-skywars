@@ -7,5 +7,5 @@ public enum PlayerStatus {
     WAITING, // Waiting player
     ALIVE, // Alive Player
     DEAD, // Dead Player
-    SPECTATOR; // Spectating the Game
+    SPECTATOR // Spectating the Game
 }

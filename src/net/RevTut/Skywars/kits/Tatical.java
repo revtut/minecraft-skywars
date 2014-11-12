@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Tatical implements Listener {
 
-    ItemStack enderTransform = new ItemStack(Material.ENDER_PEARL, 2);
+    private final ItemStack enderTransform = new ItemStack(Material.ENDER_PEARL, 2);
 
     {
         ItemMeta enderMeta = enderTransform.getItemMeta();
@@ -21,24 +21,24 @@ public class Tatical implements Listener {
         enderTransform.setItemMeta(enderMeta);
     }
 
-    ItemStack ironArmor1 = new ItemStack(Material.IRON_HELMET, 1);
+    private final ItemStack ironArmor1 = new ItemStack(Material.IRON_HELMET, 1);
 
     {
 
     }
 
-    ItemStack ironArmor2 = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    private final ItemStack ironArmor2 = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
 
     }
 
-    ItemStack ironArmor3 = new ItemStack(Material.IRON_LEGGINGS, 1);
+    private final ItemStack ironArmor3 = new ItemStack(Material.IRON_LEGGINGS, 1);
 
     {
     }
 
-    ItemStack ironArmor4 = new ItemStack(Material.IRON_BOOTS, 1);
+    private final ItemStack ironArmor4 = new ItemStack(Material.IRON_BOOTS, 1);
 
     {
 

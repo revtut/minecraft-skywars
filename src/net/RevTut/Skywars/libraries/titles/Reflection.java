@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class Reflection {
-    public static String getVersion() {
+    private static String getVersion() {
         String name = Bukkit.getServer().getClass().getPackage().getName();
         String version = name.substring(name.lastIndexOf('.') + 1) + ".";
         return version;
@@ -65,7 +65,7 @@ public class Reflection {
         return null;
     }
 
-    public static boolean ClassListEqual(Class<?>[] l1, Class<?>[] l2) {
+    private static boolean ClassListEqual(Class<?>[] l1, Class<?>[] l2) {
         boolean equal = true;
         if (l1.length != l2.length) {
             return false;

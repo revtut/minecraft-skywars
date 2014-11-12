@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Engineer implements Listener {
-    public Main plugin;
+    private final Main plugin;
 
     public Engineer(Main plugin) {
         this.plugin = plugin;
     }
 
-    private List<Location> mines = new ArrayList<Location>();
+    private final List<Location> mines = new ArrayList<Location>();
 
-    ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
+    private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
 
     {
         ItemMeta mineMeta = mine.getItemMeta();
@@ -34,25 +34,25 @@ public class Engineer implements Listener {
         mine.setItemMeta(mineMeta);
     }
 
-    ItemStack ironArmor1 = new ItemStack(Material.IRON_HELMET, 1);
+    private final ItemStack ironArmor1 = new ItemStack(Material.IRON_HELMET, 1);
 
     {
         ironArmor1.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
     }
 
-    ItemStack ironArmor2 = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    private final ItemStack ironArmor2 = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
         ironArmor2.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    ItemStack ironArmor3 = new ItemStack(Material.IRON_LEGGINGS, 1);
+    private final ItemStack ironArmor3 = new ItemStack(Material.IRON_LEGGINGS, 1);
 
     {
         ironArmor3.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    ItemStack ironArmor4 = new ItemStack(Material.IRON_BOOTS, 1);
+    private final ItemStack ironArmor4 = new ItemStack(Material.IRON_BOOTS, 1);
 
     {
         ironArmor4.addEnchantment(Enchantment.PROTECTION_FALL, 2);
