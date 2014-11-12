@@ -60,7 +60,7 @@ public class ArenaRunnable implements Runnable {
             } else {
                 // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
-                    if(arena.getPlayers().size() >= Arena.minPlayers)
+                    if (arena.getPlayers().size() >= Arena.minPlayers)
                         fromLobbyToPreGame(arena);
                     else
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
@@ -181,13 +181,13 @@ public class ArenaRunnable implements Runnable {
                     ArenaDat arenaDat = arena.getArenaDat();
                     if (arenaDat == null)
                         return;
-                    if(arenaDat.getWinner() == null){
+                    if (arenaDat.getWinner() == null) {
                         TitleAPI.sendTimings(alvo, 5, 20, 5);
                         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7NO WINNER"));
-                    }else{
+                    } else {
                         TitleAPI.sendTimings(alvo, 5, 20, 5);
-                        if(arenaDat.getWinner() == alvo.getUniqueId().toString())
+                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString()))
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aYOU WON"));
                         else
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§cYOU LOST"));
@@ -205,7 +205,7 @@ public class ArenaRunnable implements Runnable {
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null)
             return;
-        if(arenaDat.getWinner() == null)
+        if (arenaDat.getWinner() == null)
             return;
         UUID uuid = UUID.fromString(arenaDat.getWinner());
         if (uuid == null)
@@ -291,19 +291,19 @@ public class ArenaRunnable implements Runnable {
         // Check if we can transfer this players to a new arena
         List<Arena> arenasAvailable = Arena.getAvailableArenas();
         Arena arenaMove = null;
-        for(Arena arenaAlvo : arenasAvailable){
-            if(arenaAlvo.getPlayers().size() + arena.getPlayers().size() <= Arena.maxPlayers) {
+        for (Arena arenaAlvo : arenasAvailable) {
+            if (arenaAlvo.getPlayers().size() + arena.getPlayers().size() <= Arena.maxPlayers) {
                 arenaMove = arenaAlvo;
                 break;
             }
         }
         // Keep the same arena or move to an existing one
-        if(arenaMove == null){
+        if (arenaMove == null) {
             int i = 0;
             final Location lobbyLocation = arena.getArenaLocation().getLobbyLocation();
-            for(PlayerDat alvoDat : arena.getPlayers()){
+            for (PlayerDat alvoDat : arena.getPlayers()) {
                 final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                if(alvo == null)
+                if (alvo == null)
                     continue;
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
@@ -320,11 +320,11 @@ public class ArenaRunnable implements Runnable {
                     Arena.resetArena(arena);
                 }
             }, i);
-        }else{
+        } else {
             int i = 0;
             // Remove all the players from this arena
             final Arena newArena = arenaMove;
-            for(final PlayerDat alvoDat : arena.getPlayers()){
+            for (final PlayerDat alvoDat : arena.getPlayers()) {
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -332,7 +332,7 @@ public class ArenaRunnable implements Runnable {
                         // Add to new arena
                         if (!Arena.addPlayer(alvoDat, newArena)) {
                             /** Send him to Hub. Error while adding to arena */
-                            return;
+                            System.out.println("Could not add player to new arena.");
                         }
                     }
                 }, i);

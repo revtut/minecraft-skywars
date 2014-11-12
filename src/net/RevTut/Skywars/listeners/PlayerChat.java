@@ -56,7 +56,7 @@ public class PlayerChat implements Listener {
         // Mensagem Para Verificacoes
         String mensagem_verificacoes = mensagem;
         // Substituir Numeros Por Letras
-        mensagem_verificacoes = mensagem_verificacoes.replaceAll("0", "o").replaceAll("1", "i").replaceAll("2", "s").replaceAll("3", "e").replaceAll("4", "a").replaceAll("6", "g").replaceAll("@", "a").replaceAll("&", "e").replaceAll(" ", "");
+        mensagem_verificacoes = mensagem_verificacoes.replaceAll("0", "o").replaceAll("1", "i").replaceAll("2", "s").replaceAll("3", "e").replaceAll("4", "a").replaceAll("5", "s").replaceAll("6", "g").replaceAll("@", "a").replaceAll("&", "e").replaceAll(" ", "");
         // Tirar Acentos Nas Letras
         mensagem_verificacoes = Normalizer.normalize(mensagem_verificacoes, Normalizer.Form.NFD);
         // Tirar Carateres Nao ALPHA-NUMERICOS

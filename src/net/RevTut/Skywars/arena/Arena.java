@@ -3,22 +3,17 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -62,12 +57,12 @@ public class Arena {
         int arenaNumber = Arena.nextArenaNumber();
 
         String mapName = addNewMap(arenaNumber);
-        if(mapName == null)
+        if (mapName == null)
             return;
 
         // Create Arena
         ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
-        if(arenaLocation == null)
+        if (arenaLocation == null)
             return;
         Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
         arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
@@ -80,7 +75,7 @@ public class Arena {
 
         /** ADD NEW MAP */
         String mapName = addNewMap(arena.getArenaNumber());
-        if(mapName == null)
+        if (mapName == null)
             return;
 
         // Update Arena
@@ -90,13 +85,13 @@ public class Arena {
         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
         arena.setStatus(ArenaStatus.LOBBY);
         ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
-        if(arenaLocation == null)
+        if (arenaLocation == null)
             return;
         arena.setArenaLocation(arenaLocation);
         arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
     }
 
-    private static ArenaLocation createArenaLocation(File file, String mapName){
+    private static ArenaLocation createArenaLocation(File file, String mapName) {
         if (!file.exists()) {
             System.out.println("File with arena locations does not exists!");
             return null;
@@ -142,7 +137,7 @@ public class Arena {
     }
 
     /* Copy and Load Map To Arena (given by number) */
-    private static String addNewMap(int arenaNumber){
+    private static String addNewMap(int arenaNumber) {
         // Current Directory
         String currentDir = System.getProperty("user.dir");
         // Source Directory
@@ -241,9 +236,8 @@ public class Arena {
             player.kickPlayer("World is being deleted... and you were in it!");
 
         boolean removeu = Bukkit.getServer().unloadWorld(world, false);
-        if (!removeu) {
+        if (!removeu)
             System.out.println("Error while unloading world " + arena.getMapName());
-        }
         // Remove Directory
         WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName()));
     }
@@ -283,7 +277,7 @@ public class Arena {
     }
 
     /* Available Arenas */
-    public static List<Arena> getAvailableArenas(){
+    public static List<Arena> getAvailableArenas() {
         List<Arena> arenasAvailable = new ArrayList<Arena>();
         for (int i = 0; i < Arena.arenas.size(); i++)
             if (Arena.arenas.get(i).getStatus() == ArenaStatus.LOBBY)
@@ -295,8 +289,7 @@ public class Arena {
     public static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
         // Get all arenas numbers
-        for (int i = 0; i < arenas.size(); i++)
-            arenasNumbers.add(arenas.get(i).getArenaNumber());
+        for (Arena arena : arenas) arenasNumbers.add(arena.getArenaNumber());
 
         /* Check if there is a missing number in arenas numbers
         If there are 10 arenas, they should be 0, 1, ...., 9.
@@ -312,8 +305,8 @@ public class Arena {
     /* Next Game Number (Round Number) */
     public static String nextGameNumber() {
         String gameNumber = "";
-        for (int i = 0; i < arenas.size(); i++) {
-            String arenaGameNumber = arenas.get(i).getArenaDat().getGameNumber();
+        for (Arena arena : arenas) {
+            String arenaGameNumber = arena.getArenaDat().getGameNumber();
             if (gameNumber.length() == arenaGameNumber.length()) {
                 int compResult = gameNumber.compareTo(arenaGameNumber);
                 if (compResult < 0)
@@ -329,7 +322,7 @@ public class Arena {
                 char currentChar = gameNumber.charAt(i);
                 if (currentChar != 'Z') {
                     char[] gameNumberChar = gameNumber.toCharArray();
-                    gameNumberChar[i] = currentChar++;
+                    gameNumberChar[i] = ++currentChar;
                     gameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
                 } else {
@@ -377,25 +370,25 @@ public class Arena {
 
     public List<PlayerDat> getAlivePlayers() {
         List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
-        for (int i = 0; i < players.size(); i++)
-            if (players.get(i).getStatus() == PlayerStatus.ALIVE)
-                alivePlayers.add(players.get(i));
+        for (PlayerDat player : players)
+            if (player.getStatus() == PlayerStatus.ALIVE)
+                alivePlayers.add(player);
         return alivePlayers;
     }
 
     public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
-        for (int i = 0; i < players.size(); i++)
-            if (players.get(i).getStatus() == PlayerStatus.DEAD)
-                deathPlayers.add(players.get(i));
+        for (PlayerDat player : players)
+            if (player.getStatus() == PlayerStatus.DEAD)
+                deathPlayers.add(player);
         return deathPlayers;
     }
 
     public List<PlayerDat> getSpectatorPlayers() {
         List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
-        for (int i = 0; i < players.size(); i++)
-            if (players.get(i).getStatus() == PlayerStatus.SPECTATOR)
-                spectatorPlayers.add(players.get(i));
+        for (PlayerDat player : players)
+            if (player.getStatus() == PlayerStatus.SPECTATOR)
+                spectatorPlayers.add(player);
         return spectatorPlayers;
     }
 

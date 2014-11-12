@@ -1,19 +1,14 @@
 package net.RevTut.Skywars.libraries.bypasses;
 
-import net.minecraft.server.v1_7_R4.PacketPlayInClientCommand;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Created by waxcoder on 02-11-2014.
  */
 
-public class RespawnBypass{
+public class RespawnBypass {
 
-    public void RespawnScreen(PlayerDeathEvent e)
-    {
+    public void RespawnScreen(PlayerDeathEvent e) {
 //        final Player player = e.getEntity();
 //
 //        {
