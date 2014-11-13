@@ -17,23 +17,34 @@ import java.io.*;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
-    /* Title Message */
+    /** Title message on join */
     public String titleMessage;
-    public String subTitleMessage;
-    public int fadeIn;
-    public int fadeOut;
-    public int timeOnScreen;
-    /* Tab List */
-    public String tabTitle;
-    public String tabFooter;
-    /* MySQL */
-    public MySQL mysql;
-    /* Logger */
-    public Logger log = Logger.getLogger("Minecraft");
 
-    /* Obtem Nome do servidor */
+    /** Subtitle message on join */
+    public String subTitleMessage;
+
+    /** Fade in message time */
+    public int fadeIn;
+
+    /** Fade out message time */
+    public int fadeOut;
+
+    /** Time on screen of messages */
+    public int timeOnScreen;
+
+    /** Tab list title */
+    public String tabTitle;
+
+    /** Tab list footer */
+    public String tabFooter;
+
+    /** MySQL object */
+    public MySQL mysql;
+
+    /** Name of the server */
     public String servidor = Bukkit.getServerName();
 
+    /** Enable the plugin */
     @Override
     public void onEnable() {
         /* Create Files */
@@ -61,6 +72,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerJoin(this), this);
     }
 
+    /** Disable the plugin */
     @Override
     public void onDisable() {
         /* Close MySQL */
@@ -68,6 +80,11 @@ public class Main extends JavaPlugin {
             System.out.println("Error while trying to close connection.");
     }
 
+    /**
+     * Create the configuration files
+     *
+     * @return      true if successfull
+     */
     private boolean createFiles() {
         /* Config File */
         final File config = new File(getDataFolder() + File.separator + "config.yml");
@@ -96,6 +113,13 @@ public class Main extends JavaPlugin {
         return true;
     }
 
+    /**
+     * Copy from a file to another one
+     *
+     * @param in        file to be copied
+     * @param file      file to copy to
+     * @return          true if successfull
+     */
     private boolean copy(final InputStream in, final File file) {
         try {
             final OutputStream out = new FileOutputStream(file);
@@ -113,6 +137,11 @@ public class Main extends JavaPlugin {
         return false;
     }
 
+    /**
+     * Read the configuration files and assign the variables
+     *
+     * @return          true if successfull
+     */
     private boolean readFiles() {
         /* Config File */
         final File config = new File(getDataFolder() + File.separator + "config.yml");
@@ -130,8 +159,10 @@ public class Main extends JavaPlugin {
         final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
         final FileConfiguration mysqlConf = YamlConfiguration.loadConfiguration(mysqlFile);
         mysql = new MySQL(mysqlConf.getString("Hostname"), mysqlConf.getString("Port"), mysqlConf.getString("Database"), mysqlConf.getString("Username"), mysqlConf.getString("Password"));
-        if (mysql.openConnection())
-            mysql.createMySQL();
+        if (!mysql.openConnection())
+            return false;
+        mysql.createMySQL();
+
         return true;
     }
 }
