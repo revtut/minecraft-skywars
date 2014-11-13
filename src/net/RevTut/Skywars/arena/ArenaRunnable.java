@@ -18,33 +18,49 @@ import java.util.UUID;
  * Created by João on 02/11/2014.
  */
 public class ArenaRunnable implements Runnable {
-
+    /** Main class */
     private final Main plugin;
 
+    /** Runnable ID */
+    private static int id;
+
+    /**
+     * Constructor of ArenaRunnable
+     *
+     * @param plugin        the Main class
+     */
     public ArenaRunnable(Main plugin) {
         this.plugin = plugin;
     }
 
-    private static int id;
-
+    /** Returns the task ID */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of the runnable.
+     *
+     * @param id        new ID for the task
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /** Cancel this task from being run. */
     public static void cancel() {
         Bukkit.getScheduler().cancelTask(id);
     }
 
+    /** Runnable which controls the remaining time of all arenas */
     @Override
     public void run() {
         int remainingTime;
         for (Arena arena : Arena.getArenas()) {
+            // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
                 continue;
+            // Remaining time of that arena
             remainingTime = arena.getRemainingTime();
             if (remainingTime >= 0) {
                 // Remaining time is over ZERO
@@ -56,10 +72,16 @@ public class ArenaRunnable implements Runnable {
                     onInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
+                // Decrement remaining time
+                if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= Arena.minReduceTimePlayers){
+                    arena.sendMessageToArena("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
+                    arena.setRemainingTime(31);
+                }
                 arena.setRemainingTime(remainingTime - 1);
             } else {
                 // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
+                    // Minimum Players in the arena
                     if (arena.getPlayers().size() >= Arena.minPlayers)
                         fromLobbyToPreGame(arena);
                     else
@@ -74,24 +96,38 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* Lobby */
+    /**
+     * Sets the player level to remaining time.
+     *
+     * @param arena     arena which is on lobby
+     */
     public void onLobby(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             alvo.setLevel(remainingTime);
         }
     }
 
-    /* PreGame */
+    /**
+     * Sets the player level to remaining time.
+     * If the remaining time is of 10, 5...0 it will display a message on the
+     * player's screen telling the remaining time.
+     *
+     * @param arena     arena which is on pre game
+     */
     public void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             alvo.setLevel(remainingTime);
             switch (remainingTime) {
                 case 10:
@@ -134,13 +170,20 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* InGame */
+    /**
+     * Controls the remaining time. If the remaining time is of 60, 10, 5...0 it will display a message on the
+     * player's screen telling the remaining time.
+     *
+     * @param arena     arena which is in game
+     */
     public void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
@@ -199,7 +242,11 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* EndGame */
+    /**
+     * Launch fireworks on the winner of the game.
+     *
+     * @param arena     arena which is on end game
+     */
     public void onEndGame(Arena arena) {
         // Launch Firework
         ArenaDat arenaDat = arena.getArenaDat();
@@ -216,7 +263,12 @@ public class ArenaRunnable implements Runnable {
         Fireworks.launchFirework(winner, 10, 2);
     }
 
-    /* Lobby To PreGame */
+    /**
+     * Switch an arena from lobby to pre game.
+     * Teleports all the players to the spawn locations with delay between teleports.
+     *
+     * @param arena     arena to switch
+     */
     public void fromLobbyToPreGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.PREGAME);
@@ -227,8 +279,10 @@ public class ArenaRunnable implements Runnable {
             return;
         for (PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null)
                 continue;
@@ -242,7 +296,12 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* PreGame To InGame */
+    /**
+     * Switch an arena from pre game to in game.
+     * Remove the glass block under the player.
+     *
+     * @param arena     arena to switch
+     */
     public void fromPreGameToInGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.INGAME);
@@ -250,8 +309,10 @@ public class ArenaRunnable implements Runnable {
         for (PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
                 alvoLocation.setY(alvoLocation.getY() - 1);
@@ -261,7 +322,12 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* InGame To EndGame */
+    /**
+     * Switch an arena from in game to end game.
+     * Teleport all the players to the center of the arena.
+     *
+     * @param arena     arena to switch
+     */
     public void fromInGameToEndGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.ENDGAME);
@@ -273,8 +339,10 @@ public class ArenaRunnable implements Runnable {
         final Location centerLocation = arenaLocation.getDeathSpawnLocation();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
+            if (alvo == null){
+                arena.removePlayer(alvoDat);
                 continue;
+            }
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -286,7 +354,12 @@ public class ArenaRunnable implements Runnable {
         }
     }
 
-    /* EndGame To Lobby */
+    /**
+     * Switch an arena from end game to lobby.
+     * Teleport all the players to the center of the arena.
+     *
+     * @param arena     arena to switch
+     */
     public void fromEndGameToLobby(final Arena arena) {
         // Check if we can transfer this players to a new arena
         List<Arena> arenasAvailable = Arena.getAvailableArenas();
@@ -319,7 +392,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     Arena.resetArena(arena);
                 }
-            }, i);
+            }, i + 20);
         } else {
             int i = 0;
             // Remove all the players from this arena
@@ -344,7 +417,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     Arena.removeArena(arena);
                 }
-            }, i + 5);
+            }, i + 20);
         }
     }
 }

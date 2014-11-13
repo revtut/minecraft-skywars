@@ -116,6 +116,63 @@ public class Arena {
     }
 
     /**
+     * Loads the locations from a given map name.
+     *
+     * @param file      the locations file
+     * @param mapName   map name which will be used to create the locations
+     * @return          the arenalocation of that map
+     * @see             ArenaLocation
+     */
+    private static ArenaLocation createArenaLocation(File file, String mapName) {
+        if (!file.exists()) {
+            System.out.println("File with arena locations does not exists!");
+            return null;
+        }
+        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(file);
+
+        Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
+        List<Location> spawnLocations = new ArrayList<Location>();
+        for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
+            // Spawn Locations
+            if (message.equalsIgnoreCase("spawnLocations")) {
+                for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
+                    // Location
+                    String locString = configLocations.getConfigurationSection("spawnLocations").getString(spawnLoc);
+                    String[] locStringArgs = locString.split(",");
+                    float[] parsed = new float[3];
+                    for (int a = 0; a < 3; a++) {
+                        parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                    }
+                    spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
+                }
+            } else {
+                // Location
+                String locString = configLocations.getString(message);
+                String[] locStringArgs = locString.split(",");
+                float[] parsed = new float[3];
+                for (int a = 0; a < 3; a++) {
+                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                }
+                // Check which location it is
+                if (message.equalsIgnoreCase("lobbyLocation")) {
+                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("deathspawnLocation")) {
+                    deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("firstCorner")) {
+                    firstCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                } else if (message.equalsIgnoreCase("secondCorner")) {
+                    secondCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                }
+            }
+        }
+        // Max and Min Locations
+        Location temp = firstCorner;
+        firstCorner = new Location(temp.getWorld(), Math.min(temp.getX(), secondCorner.getX()), Math.min(temp.getY(), secondCorner.getY()), Math.min(temp.getZ(), secondCorner.getZ()));
+        secondCorner = new Location(temp.getWorld(), Math.max(temp.getX(), secondCorner.getX()), Math.max(temp.getY(), secondCorner.getY()), Math.max(temp.getZ(), secondCorner.getZ()));
+        return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
+    }
+
+    /**
      * Resets an arena to its original state. It removes the map game, then load a new one and finally
      * resets the arena Status, RemainingTime, ArenaLocation and GameNumber.
      *
@@ -172,60 +229,41 @@ public class Arena {
     }
 
     /**
-     * Loads the locations from a given map name.
+     * Unloads and remove the map from the Arena.
      *
-     * @param file      the locations file
-     * @param mapName   map name which will be used to create the locations
-     * @return          the arenalocation of that map
-     * @see             ArenaLocation
+     * @param arena         the arena to remove the map from
+     * @return              true it was successful when removing it
+     * @see                 Arena
      */
-    private static ArenaLocation createArenaLocation(File file, String mapName) {
-        if (!file.exists()) {
-            System.out.println("File with arena locations does not exists!");
-            return null;
+    private static boolean removeMap(Arena arena) {
+        // Unload of the World
+        if (!WorldAPI.unloadWorld(arena.getMapName())){
+            System.out.println("Error while unloading world " + arena.getMapName());
+            return false;
         }
-        final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(file);
 
-        Location lobbyLocation = null, deathSpawnLocation = null, firstCorner = null, secondCorner = null;
-        List<Location> spawnLocations = new ArrayList<Location>();
-        for (final String message : configLocations.getConfigurationSection("").getKeys(false)) {
-            // Spawn Locations
-            if (message.equalsIgnoreCase("spawnLocations")) {
-                for (final String spawnLoc : configLocations.getConfigurationSection("spawnLocations").getKeys(false)) {
-                    // Location
-                    String locString = configLocations.getConfigurationSection("spawnLocations").getString(spawnLoc);
-                    String[] locStringArgs = locString.split(",");
-                    float[] parsed = new float[3];
-                    for (int a = 0; a < 3; a++) {
-                        parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                    }
-                    spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
-                }
-            } else {
-                // Location
-                String locString = configLocations.getString(message);
-                String[] locStringArgs = locString.split(",");
-                float[] parsed = new float[3];
-                for (int a = 0; a < 3; a++) {
-                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
-                }
-                // Check which location it is
-                if (message.equalsIgnoreCase("lobbyLocation")) {
-                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("deathspawnLocation")) {
-                    deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("firstCorner")) {
-                    firstCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                } else if (message.equalsIgnoreCase("secondCorner")) {
-                    secondCorner = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
-                }
-            }
-        }
-        // Max and Min Locations
-        Location temp = firstCorner;
-        firstCorner = new Location(temp.getWorld(), Math.min(temp.getX(), secondCorner.getX()), Math.min(temp.getY(), secondCorner.getY()), Math.min(temp.getZ(), secondCorner.getZ()));
-        secondCorner = new Location(temp.getWorld(), Math.max(temp.getX(), secondCorner.getX()), Math.max(temp.getY(), secondCorner.getY()), Math.max(temp.getZ(), secondCorner.getZ()));
-        return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
+        // Remove Directory
+        if(WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
+            return true;
+
+        System.out.println("Error while removing world directory " + arena.getMapName());
+        return false;
+    }
+
+    /**
+     * Remove a player from the arena he was playing.
+     *
+     * @param playerDat     playerDat to be removed
+     * @return              true it was successful when removing it
+     * @see                 PlayerDat
+     */
+    public static boolean removePlayer(PlayerDat playerDat) {
+        Arena arena = getArenaByPlayer(playerDat);
+        if (arena == null)
+            return false;
+
+        arena.getPlayers().remove(playerDat);
+        return true;
     }
 
     /**
@@ -326,41 +364,20 @@ public class Arena {
     }
 
     /**
-     * Unloads and remove the map from the Arena.
+     * Send a message to all the players in the arena
      *
-     * @param arena         the arena to remove the map from
-     * @return              true it was successful when removing it
-     * @see                 Arena
+     * @param message       message to be sent
      */
-    private static boolean removeMap(Arena arena) {
-        // Unload of the World
-        if (!WorldAPI.unloadWorld(arena.getMapName())){
-            System.out.println("Error while unloading world " + arena.getMapName());
-            return false;
+    public void sendMessageToArena(String message){
+        for(PlayerDat playerDat : this.getPlayers()){
+            Player player = Bukkit.getPlayer(playerDat.getUUID());
+            if(player == null){
+                this.removePlayer(playerDat);
+                continue;
+            }
+            // Send message
+            player.sendMessage(message);
         }
-
-        // Remove Directory
-        if(WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
-            return true;
-
-        System.out.println("Error while removing world directory " + arena.getMapName());
-        return false;
-    }
-
-    /**
-     * Remove a player from the arena he was playing.
-     *
-     * @param playerDat     playerDat to be removed
-     * @return              true it was successful when removing it
-     * @see                 PlayerDat
-     */
-    public static boolean removePlayer(PlayerDat playerDat) {
-        Arena arena = getArenaByPlayer(playerDat);
-        if (arena == null)
-            return false;
-
-        arena.getPlayers().remove(playerDat);
-        return true;
     }
 
     /** Returns all the arenas from the server */
