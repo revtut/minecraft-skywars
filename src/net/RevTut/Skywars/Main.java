@@ -30,19 +30,19 @@ import java.util.logging.Logger;
  */
 public class Main extends JavaPlugin {
     /** Title message on join */
-    public String titleMessage;
+    public static String titleMessage;
 
     /** Subtitle message on join */
-    public String subTitleMessage;
+    public static String subTitleMessage;
 
     /** Fade in message time */
-    public int fadeIn;
+    public static int fadeIn;
 
     /** Fade out message time */
-    public int fadeOut;
+    public static int fadeOut;
 
     /** Time on screen of messages */
-    public int timeOnScreen;
+    public static int timeOnScreen;
 
     /** Tab list title */
     public String tabTitle;

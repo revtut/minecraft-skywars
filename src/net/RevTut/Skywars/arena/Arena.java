@@ -1,5 +1,7 @@
 package net.RevTut.Skywars.arena;
 
+import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
@@ -361,6 +363,12 @@ public class Arena {
         player.teleport(arena.getArenaLocation().getLobbyLocation());
         // Add Player To Arena
         arena.getPlayers().add(playerDat);
+
+        // Title
+        TitleAPI.sendTimings(player, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
+        TitleAPI.sendTitle(player, Main.titleMessage);
+        TitleAPI.sendSubTitle(player, Main.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+
         return true;
     }
 

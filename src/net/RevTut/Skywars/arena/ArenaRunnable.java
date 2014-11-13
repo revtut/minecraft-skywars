@@ -115,10 +115,8 @@ public class ArenaRunnable implements Runnable {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             alvo.setLevel(remainingTime);
         }
     }
@@ -134,10 +132,8 @@ public class ArenaRunnable implements Runnable {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             alvo.setLevel(remainingTime);
             switch (remainingTime) {
                 case 10:
@@ -190,10 +186,8 @@ public class ArenaRunnable implements Runnable {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
@@ -289,10 +283,8 @@ public class ArenaRunnable implements Runnable {
             return;
         for (PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null)
                 continue;
@@ -319,10 +311,8 @@ public class ArenaRunnable implements Runnable {
         for (PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
                 alvoLocation.setY(alvoLocation.getY() - 1);
@@ -349,10 +339,8 @@ public class ArenaRunnable implements Runnable {
         final Location centerLocation = arenaLocation.getDeathSpawnLocation();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null){
-                arena.removePlayer(alvoDat);
+            if (alvo == null)
                 continue;
-            }
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {

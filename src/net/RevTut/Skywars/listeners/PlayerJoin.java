@@ -79,10 +79,6 @@ public class PlayerJoin implements Listener {
                         if (Arena.getNumberAvailableArenas() <= 1) {
                             Arena.createNewArena();
                         }
-                        // Title
-                        TitleAPI.sendTimings(p, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
-                        TitleAPI.sendTitle(p, plugin.titleMessage);
-                        TitleAPI.sendSubTitle(p, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
                         // Tab List
                         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
                         // ScoreBoard
