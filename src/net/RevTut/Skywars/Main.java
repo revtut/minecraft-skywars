@@ -16,6 +16,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.logging.Logger;
 
+/**
+ * Main class.
+ *
+ * <P>Skywars is a plugin where you have several players in islands. They all have the same amount of chests and resources available.</P>
+ * <P>However inside the chests the furniture is completely random. The goal of a player is either to kill all the players or throw them
+ * to the void since there is no ground on the map. If after a predefined amount of time the game is not over yet we will have a tie so
+ * there will be no winner.</P>
+ * <P>There is a wide variety of kits, each one gives a differente advantage to the player that uses it.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
+ */
 public class Main extends JavaPlugin {
     /** Title message on join */
     public String titleMessage;
