@@ -196,6 +196,7 @@ public class MySQL {
      *
      * @param playerDat         player dat to be updated on MySQL
      * @return                  true if successfull
+     * @see                     PlayerDat
      */
     public boolean updateMySQLPlayerDat(PlayerDat playerDat) {
         try {
@@ -231,6 +232,7 @@ public class MySQL {
      *
      * @param arenaDat          arena dat to be inserted on MySQL
      * @return                  true if successfull
+     * @see                     ArenaDat
      */
     public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
         try {
