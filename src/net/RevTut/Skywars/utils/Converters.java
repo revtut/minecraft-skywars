@@ -1,11 +1,21 @@
 package net.RevTut.Skywars.utils;
 
 /**
- * Created by João on 25/10/2014.
+ * Converters.
+ *
+ * <P>Usefull converters to be used.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class Converters {
 
-    /* Convert From Text to JSON */
+    /**
+     * Convert a text to JSON format
+     *
+     * @param text      text to be converted
+     * @return          converted text to JSON
+     */
     public static String convertToJSON(String text) {
         if (text == null || text.length() == 0) {
             return "\"\"";
@@ -56,7 +66,12 @@ public class Converters {
         return sb.toString();
     }
 
-    /* Replace With Special Characters */
+    /**
+     * Replace some text with special characters in a text
+     *
+     * @param text      text to be replaced
+     * @return          text with special characters
+     */
     public static String convertSpecialCharacters(String text) {
         // First Section
         text = text.replace("%ALT1%", "☺");
@@ -98,22 +113,43 @@ public class Converters {
         return text;
     }
 
-    /* Convert Hours to Days */
+    /**
+     * Convert hours to days
+     *
+     * @param hours     hours to be converted
+     * @return          converted days
+     */
     private static long convertHoursToDays(long hours) {
         return hours / 24;
     }
 
-    /* Convert Minutes to Hours */
+    /**
+     * Convert minutes to hours
+     *
+     * @param minutes   minutes to be converted
+     * @return          converted hours
+     */
     private static long convertMinutesToHours(long minutes) {
         return minutes / 60;
     }
 
-    /* Convert Seconds to Minutes */
+    /**
+     * Convert seconds to minutes
+     *
+     * @param seconds   seconds to be converted
+     * @return          converted minutes
+     */
     private static long convertSecondsToMinutes(long seconds) {
         return seconds / 60;
     }
 
-    /* Convert Seconds to Days, Hours, Minutes and Seconds */
+    /**
+     * Convert seconds to D : H : M : S format.
+     * Days : Hours : Minutes : Seconds
+     *
+     * @param sec       seconds to be converted
+     * @return          seconds converted to the format
+     */
     public static String convertSecondsToDHMS(long sec) {
 
         long seconds = sec % 60;

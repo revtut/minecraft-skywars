@@ -10,24 +10,51 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Created by João on 24/10/2014.
+ * MySQL Object.
+ *
+ * <P>Create and manage a MySQL connection.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class MySQL {
 
-    /* Initializers */
+    /** Hostname of the MySQL Database */
     private final String hostname;
+
+    /** Port of the MySQL Database */
     private final String port;
+
+    /** Database of the MySQL */
     private final String database;
+
+    /** Username of the MySQL Database */
     private final String username;
+
+    /** Password of the MySQL Database */
     private final String password;
-    /* Databases */
+
+    /** Core Database */
     private final String DBCore = "Core";
+
+    /** SkyWars Core Database */
     private final String DBGameCore = "SkyWarsCore";
+
+    /** SkyWars Info Database */
     private final String DBGameInfo = "SkyWarsInfo";
-    /* Connection */
+
+    /** MySQL Database connection */
     private Connection connection;
 
-    /* Constructor */
+    /**
+     * Constructor of MySQL
+     *
+     * @param hostname      hostname of the MySQL
+     * @param port          port of the MySQL
+     * @param database      database of the MySQL
+     * @param username      username of the MySQL
+     * @param password      password of the MySQL
+     */
     public MySQL(String hostname, String port, String database, String username, String password) {
         this.hostname = hostname;
         this.port = port;
@@ -36,7 +63,11 @@ public class MySQL {
         this.password = password;
     }
 
-    /* Open Connection */
+    /**
+     * Open the connection to a MySQL database
+     *
+     * @return      true if successfull opened connection
+     */
     public boolean openConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -53,7 +84,11 @@ public class MySQL {
         return false;
     }
 
-    /* Check Connection */
+    /**
+     * Check the connection to a MySQL database
+     *
+     * @return      true if closed
+     */
     public boolean isClosed() {
         try {
             return this.connection.isClosed();
@@ -63,23 +98,31 @@ public class MySQL {
         return true;
     }
 
-    /* Close Connection */
+    /**
+     * Close the connection to a MySQL database
+     *
+     * @return      true if successfull closed connection
+     */
     public boolean closeConnection() {
         try {
             this.connection.close();
             return true;
         } catch (final SQLException e) {
             System.out.println("Error while trying to close the connection. Reason: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
-    /* Get's */
+    /**
+     * Get the connection to a MySQL
+     *
+     * @return      connection to MySQL
+     */
     public Connection getConnection() {
         return this.connection;
     }
 
-    /* Create MySQL */
+    /** Create initial tables in MySQL */
     public void createMySQL() {
         try {
             Statement statementCreation = connection.createStatement();
@@ -115,7 +158,12 @@ public class MySQL {
         }
     }
 
-    /* Create PlayerDat */
+    /**
+     * Create the player dat of a given player using UUID.
+     *
+     * @param uuid      uuid of the player
+     * @return          true if successfull
+     */
     public boolean createPlayerDat(UUID uuid) {
         try {
             final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + uuid + "';";
@@ -123,21 +171,33 @@ public class MySQL {
             final ResultSet resultCore = this.connection.createStatement().executeQuery(coreStatement);
             final ResultSet resultGame = this.connection.createStatement().executeQuery(gameStatement);
             if (resultGame.next()) {
-                if (resultCore.next())
-                    PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
-                else
-                    PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
+                if (resultCore.next()) {
+                    if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
+                        return true;
+                    return false;
+                } else {
+                    if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
+                        return true;
+                    return false;
+                }
             } else {
-                PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0));
+                if(PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
+                    return true;
+                return false;
             }
         } catch (final SQLException e) {
             System.out.println("Error while trying to create PlayerDat! Reason: " + e.getMessage());
             return false;
         }
-        return true;
     }
 
-    /* Update MySQL PlayerDat */
+    /**
+     * Update the information on MySQL of a player
+     *
+     * @param playerDat         player dat to be updated on MySQL
+     * @return                  true if successfull
+     * @see                     PlayerDat
+     */
     public boolean updateMySQLPlayerDat(PlayerDat playerDat) {
         try {
             // Update Core
@@ -167,7 +227,13 @@ public class MySQL {
         return true;
     }
 
-    /* Update MySQL ArenaDat */
+    /**
+     * Update the information on MySQL regarding a game
+     *
+     * @param arenaDat          arena dat to be inserted on MySQL
+     * @return                  true if successfull
+     * @see                     ArenaDat
+     */
     public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
         try {
             final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "'', '" + arenaDat.getInitialPlayers() + "'', '" + arenaDat.getGameChat() + "', '" + arenaDat.getGameEvents() + "');";
