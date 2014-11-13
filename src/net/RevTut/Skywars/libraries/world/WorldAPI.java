@@ -52,7 +52,7 @@ public class WorldAPI {
         for (Player player : world.getPlayers())
             player.kickPlayer("World is being deleted... and you were in it!");
 
-        return Bukkit.unloadWorld(world, false);
+        return Bukkit.unloadWorld(world, true);
     }
 
     /**
