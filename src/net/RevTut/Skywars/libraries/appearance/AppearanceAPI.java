@@ -76,6 +76,7 @@ public class AppearanceAPI {
      * Convert integer to color
      *
      * @param c     integer to be converted
+     * @return      correspondent color
      */
     private static Color getColor(final int c) {
         switch (c) {
