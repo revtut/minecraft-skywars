@@ -1,174 +1,68 @@
 package net.RevTut.Skywars.libraries.world;
 
-import net.minecraft.server.v1_7_R4.*;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.event.world.WorldInitEvent;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.entity.Player;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
-import java.util.Map;
 
 /**
- * Created by João on 31/10/2014.
+ * World API.
+ *
+ * <P>Library with several methods world related to such as loadWorld, unloadWorld, copyDirectory and so on.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class WorldAPI {
 
     /**
-     * Load World ASync
+     * Load a new world to the server
      *
-     * @param worldName Name of the world to load
-     * @return world    Loaded bukkit world
+     * @param worldName name of the world to load
+     * @return true if world was loaded
      */
-    public static org.bukkit.World loadWorldAsync(String worldName) {
+    public static boolean loadWorld(String worldName) {
         // World Creator
         WorldCreator creator = new WorldCreator(worldName);
-        creator.createWorld();
-        if(Bukkit.getServer().getWorld(worldName) != null)
-            return Bukkit.getServer().getWorld(worldName);
-
-        Validate.notNull(creator, "Creator may not be null");
-
-        // Fields to Get from Main Classes
-        CraftServer server = (CraftServer) Bukkit.getServer();
-        MinecraftServer console = (MinecraftServer) acquireField(server, "console", CraftServer.class);
-        Map<String, World> worlds = (Map<String, org.bukkit.World>) acquireField(server, "worlds", CraftServer.class);
-        PluginManager pluginManager = (PluginManager) acquireField(server, "pluginManager", CraftServer.class);
-
-        // World
-        String name = creator.name();
-        org.bukkit.World world = server.getWorld(name);
-        if (world != null)
-            return world;
-
-        // Folder of the World
-        File folder = new File(server.getWorldContainer(), name);
-        if ((folder.exists()) && (!folder.isDirectory()))
-            throw new IllegalArgumentException("File exists with the name '" + name + "' and isn't a folder");
-
-        // Chunk Generator
-        ChunkGenerator generator = creator.generator();
-        if (generator == null)
-            generator = server.getGenerator(name);
-
-        // Convert Existing World
-        Convertable converter = new WorldLoaderServer(server.getWorldContainer());
-        if (converter.isConvertable(name)) {
-            System.out.println("Converting world '" + name + "'");
-            converter.convert(name, new ConvertProgressUpdater(console));
-        }
-
-        int dimension = CraftWorld.CUSTOM_DIMENSION_OFFSET + console.worlds.size();
-        boolean used = false;
-        do {
-            for (WorldServer server1 : console.worlds) {
-                used = server1.dimension == dimension;
-                if (used) {
-                    dimension++;
-                    break;
-                }
-            }
-        } while (used);
-        boolean hardcore = false;
-
-        boolean generateStructures = creator.generateStructures();
-        WorldType type = WorldType.getType(creator.type().getName());
-
-        WorldServer internal = new WorldServerNMS(
-                console,
-                new ServerNBTManager(server.getWorldContainer(), name, true),
-                name, dimension,
-                new WorldSettings(creator.seed(), EnumGamemode.getById(server.getDefaultGameMode().getValue()), generateStructures,
-                        hardcore, type), console.methodProfiler, creator.environment(), generator
-        );
-
-        if (!(worlds.containsKey(name.toLowerCase())))
-            return null;
-
-        internal.scoreboard = server.getScoreboardManager().getMainScoreboard().getHandle();
-
-        internal.tracker = new EntityTracker(internal);
-        internal.addIWorldAccess(new WorldManager(console, internal));
-        internal.difficulty = EnumDifficulty.EASY;
-        internal.setSpawnFlags(true, true);
-        console.worlds.add(internal);
-
-        if (generator != null)
-            internal.getWorld().getPopulators().addAll(generator.getDefaultPopulators(internal.getWorld()));
-
-        pluginManager.callEvent(new WorldInitEvent(internal.getWorld()));
-        System.out.print("Preparing start region for level " + (console.worlds.size() - 1) + " (Seed: " + internal.getSeed() + ")");
-
-        if (internal.getWorld().getKeepSpawnInMemory()) {
-            short short1 = 196;
-            long i = System.currentTimeMillis();
-            for (int j = -short1; j <= short1; j += 16) {
-                for (int k = -short1; k <= short1; k += 16) {
-                    long l = System.currentTimeMillis();
-
-                    if (l < i) {
-                        i = l;
-                    }
-
-                    if (l > i + 1000L) {
-                        int i1 = (short1 * 2 + 1) * (short1 * 2 + 1);
-                        int j1 = (j + short1) * (short1 * 2 + 1) + k + 1;
-
-                        System.out.println("Preparing spawn area for " + name + ", " + (j1 * 100 / i1) + "%");
-                        i = l;
-                    }
-
-                    ChunkCoordinates chunkcoordinates = internal.getSpawn();
-                    internal.chunkProviderServer.getChunkAt(chunkcoordinates.x + j >> 4, chunkcoordinates.z + k >> 4);
-                }
-            }
-        }
-        pluginManager.callEvent(new WorldLoadEvent(internal.getWorld()));
-
-        return internal.getWorld();
+        World world = Bukkit.createWorld(creator);
+        // Check if it is not Null
+        if (world == null)
+            return false;
+        return true;
     }
 
     /**
-     * Get object from class
+     * Unload a world from the server
      *
-     * @param owner    Owner object
-     * @param field    Declared field to get
-     * @param fallback Class of the field
+     * @param worldName name of the world to load
+     * @return true if world was unloaded
      */
-    public static synchronized Object acquireField(Object owner, @Nonnull String field, @Nonnull Class<?> fallback) {
-        try {
-            Field f = fallback.getDeclaredField(field);
+    public static boolean unloadWorld(String worldName) {
+        World world = Bukkit.getWorld(worldName);
+        if (world == null)
+            return false;
+        world.setAutoSave(false);
+        world.setKeepSpawnInMemory(false);
 
-            if (f == null)
-                return null;
+        // Kick remaining players
+        for (Player player : world.getPlayers())
+            player.kickPlayer("World is being deleted... and you were in it!");
 
-            f.setAccessible(true);
-            return f.get(owner);
-        } catch (NoSuchFieldException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
-        }
-        return null;
+        return Bukkit.unloadWorld(world, false);
     }
 
     /**
-     * Copy directory to new location
+     * Copy existing directory to new location
      *
-     * @param srcDir Source of the folder
-     * @param trgDir Target of the folder
+     * @param srcDir source of the folder to copy
+     * @param trgDir target of the folder
+     * @return true if successfull
      */
-    public static void copyDirectory(final File srcDir, final File trgDir) {
+    public static boolean copyDirectory(final File srcDir, final File trgDir) {
         try {
             if (srcDir.isDirectory()) {
                 // Check if target folder exists
@@ -203,27 +97,30 @@ public class WorldAPI {
         } catch (Exception e) {
             System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
+            return false;
         }
+        return true;
     }
 
     /**
-     * Delete directory
+     * Delete directory. Sub-files and sub-directories will be deleted to.
      *
-     * @param dir Folder to remove
+     * @param dir folder to remove
+     * @return true it successfull when removing directory
      */
-    public static void removeDirectory(final File dir) {
+    public static boolean removeDirectory(final File dir) {
         try {
             if (dir.isDirectory()) {
-                if(dir.listFiles() != null)
+                if (dir.listFiles() != null)
                     for (File c : dir.listFiles())
                         removeDirectory(c);
             }
-            if (!dir.delete()) {
-                System.out.println("Error while trying to delete " + dir.getName() + ".");
-            }
+            dir.delete();
         } catch (Exception e) {
             System.out.println("Error while trying to delete " + dir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
+            return false;
         }
+        return true;
     }
 }
