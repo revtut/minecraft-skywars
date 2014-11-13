@@ -342,7 +342,7 @@ public class ArenaRunnable implements Runnable {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    Arena.removeMap(arena, true);
+                    Arena.removeArena(arena);
                 }
             }, i + 5);
         }

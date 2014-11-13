@@ -119,13 +119,13 @@ public class Arena {
      * Resets an arena to its original state. It removes the map game, then load a new one and finally
      * resets the arena Status, RemainingTime, ArenaLocation and GameNumber.
      *
-     * @param arena     the arena to reset
+     * @param arena     the arena to be reseted
      * @return          true if arena was reseted
      * @see             Arena
      */
     public static boolean resetArena(Arena arena) {
         /* DELETE EXISTING MAP */
-        if(!removeMap(arena, false))
+        if(!removeMap(arena))
             return false;
 
         /* ADD NEW MAP */
@@ -144,6 +144,30 @@ public class Arena {
             return false;
         arena.setArenaLocation(arenaLocation);
         arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
+        return true;
+    }
+
+    /**
+     * Removes an arena from the server.
+     *
+     * @param arena         the arena to be removed
+     * @return              true it was successful when removing it
+     * @see                 Arena
+     */
+    public static boolean removeArena(Arena arena) {
+        // Remove From List
+        arenas.remove(arena);
+
+        // Delete existing map
+        if(!removeMap(arena))
+            return false;
+
+        // New Arena if Needed
+        if (Arena.getNumberAvailableArenas() <= 1) {
+            if(!Arena.createNewArena())
+                return true;
+        }
+
         return true;
     }
 
@@ -290,14 +314,14 @@ public class Arena {
     public static boolean addPlayer(PlayerDat playerDat, Arena arena) {
         if (getArenaByPlayer(playerDat) != null)
             return false;
-        // Add Player To Arena
-        arena.getPlayers().add(playerDat);
         // Teleport To Lobby
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null) {
             return false;
         }
         player.teleport(arena.getArenaLocation().getLobbyLocation());
+        // Add Player To Arena
+        arena.getPlayers().add(playerDat);
         return true;
     }
 
@@ -305,24 +329,10 @@ public class Arena {
      * Unloads and remove the map from the Arena.
      *
      * @param arena         the arena to remove the map from
-     * @param arenaRemove   true if the arena will be deleted or just the game map
      * @return              true it was successful when removing it
      * @see                 Arena
      */
-    public static boolean removeMap(Arena arena, boolean arenaRemove) {
-        if (arenaRemove) {
-            // Send all players to world
-            for (PlayerDat playerDat : arena.getPlayers())
-                Bukkit.getPlayer(playerDat.getUUID());
-            // Remove From List
-            arenas.remove(arena);
-            // New Arena if Needed
-            if (Arena.getNumberAvailableArenas() <= 1) {
-                if(!Arena.createNewArena())
-                    return false;
-            }
-        }
-
+    private static boolean removeMap(Arena arena) {
         // Unload of the World
         if (!WorldAPI.unloadWorld(arena.getMapName())){
             System.out.println("Error while unloading world " + arena.getMapName());
