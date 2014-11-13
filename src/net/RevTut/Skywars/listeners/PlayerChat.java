@@ -13,19 +13,41 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Player Chat.
+ *
+ * <P>Controls the chat event.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
+ */
 public class PlayerChat implements Listener {
-    /* Padroes */
+
+    /** IP address pattern */
     private final Pattern ip = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))");
-    private final Pattern web = Pattern.compile("(http://)|(https://)?(www)?\\S{2,}((\\.com)|(\\.ru)|(\\.net)|(\\.org)|(\\.co\\.uk)|(\\.tk)|(\\.info)|(\\.es)|(\\.de)|(\\.arpa)|(\\.edu)|(\\.firm)|(\\.int)|(\\.mil)|(\\.mobi)|(\\.nato)|(\\.to)|(\\.fr)|(\\.ms)|(\\.vu)|(\\.eu)|(\\.nl)|(\\.us)|(\\.dk))");
-    /* Palavras Bloqueadas */
+
+    /** Web address pattern  */
+    private final Pattern web = Pattern.compile("(http://)|(https://)?(www)?\\S{2,}((\\.com)|(\\.ru)|(\\.net)|(\\.org)|(\\.co\\.uk)|(\\.tk)|(\\.info)|(\\.es)|(\\.de)|(\\.arpa)|(\\.edu)|(\\.firm)|(\\.me)|(\\.pt)|(\\.int)|(\\.mil)|(\\.mobi)|(\\.nato)|(\\.to)|(\\.fr)|(\\.ms)|(\\.vu)|(\\.eu)|(\\.nl)|(\\.us)|(\\.dk))");
+
+    /** Web address exceptions */
     private final String[] excepcoes_publicidade = {"revtut.net", "youtube.com/RevTut", "facebook.com/RevTut", "twitter.com/RevTut"};
+
+    /** Blocked words */
     private final String[] blocked = {"***", "merda", "lixo", "cabrao", "puta", "fdp", "pariu", "foder", "sexo", "fornicar", "chupa", "caralho", "craftlandia", "cabra", "paneleiro", "gay", "lesbica", "shit", "fuck", "fodase", "foderte", "fodasse", "fdx", "vadia", "vadio", "azeiteiro", "veado", "veada", "boi", "camelo", "amor", "amote", "namorar", "cona", "vagina", "piça", "pissa", "pila", "rabo", "lamber", "coninha", "pilinha", "quilhoes", "culhoes", "quilhos", "culhões", "quilhões", "testiculos", "escroto", "karalho", "namo", "vaitomarno",};
-    /* Mensagem Anterior */
+
+    /** Last message sent */
     private final Map<UUID, String> lastMessage = new HashMap<UUID, String>();
-    /* Cooldown */
+
+    /** Player chat cooldown */
     private final Map<UUID, Long> cooldownMessage = new HashMap<UUID, Long>();
 
+    /**
+     * Control the chat of the server. Reformats the messages sent. Before sending
+     * checks for bad words, advertisment, duplicated messages and spam
+     *
+     * @param e     async player chat event
+     * @see         AsyncPlayerChatEvent
+     */
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();

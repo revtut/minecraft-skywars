@@ -8,28 +8,55 @@ import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 /**
- * Created by waxcoder on 01-11-2014.
+ * Weather.
+ *
+ * <P>Controls the weather events.</P>
+ *
+ * @author WaxCoder
+ * @version 1.0
  */
-
 public class Weather implements Listener {
+
+    /** Main class */
     private final Main plugin;
 
+    /**
+     * Constructor
+     *
+     * @param plugin    main class
+     */
     public Weather(Main plugin) {
         this.plugin = plugin;
     }
 
-    /* Ao mudar o tempo cancela o evento*/
+    /**
+     *  Takes care of changes on weather
+     *
+     * @param e     weather change event
+     * @see         WeatherChangeEvent
+     */
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent e) {
         e.setCancelled(true);
     }
 
-    /* Ao alterar o trovejar cancela o evento */
+    /**
+     *  Takes care of changes on thunders
+     *
+     * @param e     thunder change event
+     * @see         ThunderChangeEvent
+     */
     @EventHandler
     public void onThunderChange(ThunderChangeEvent e) {
         e.setCancelled(true);
     }
 
+    /**
+     *  Takes care of lightning strike
+     *
+     * @param e     lightning strike event
+     * @see         LightningStrikeEvent
+     */
     @EventHandler
     public void onLightningStrike(LightningStrikeEvent e) {
         e.setCancelled(true);

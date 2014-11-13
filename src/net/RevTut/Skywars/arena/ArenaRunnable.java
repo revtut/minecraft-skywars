@@ -23,6 +23,7 @@ import java.util.UUID;
  * @version 1.0
  */
 public class ArenaRunnable implements Runnable {
+
     /** Main class */
     private final Main plugin;
 

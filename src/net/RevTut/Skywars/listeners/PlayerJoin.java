@@ -17,17 +17,34 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.UUID;
 
 /**
- * Created by waxcoder on 31-10-2014.
+ * Player Join.
+ *
+ * <P>Controls the join event.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
-
 public class PlayerJoin implements Listener {
 
+    /** Main class */
     private final Main plugin;
 
+    /**
+     * Constructor
+     *
+     * @param plugin    main class
+     */
     public PlayerJoin(final Main plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     *  Takes care of a player when he joins. Create the PlayerDat of him and assign him to
+     *  an existing arena. If needed it creates a new one.
+     *
+     * @param e     player join event
+     * @see         PlayerJoinEvent
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();

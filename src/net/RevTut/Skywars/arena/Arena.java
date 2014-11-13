@@ -25,6 +25,7 @@ import java.util.Random;
  * @version 1.0
  */
 public class Arena {
+
     /** List of all arenas in the server */
     private static final List<Arena> arenas = new ArrayList<Arena>();
 

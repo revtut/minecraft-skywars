@@ -9,6 +9,7 @@ package net.RevTut.Skywars.arena;
  * @version 1.0
  */
 public enum ArenaStatus {
+
     /** Waiting for new players to join the game */
     LOBBY(15),
     /** Waiting for game start. No players can join now. */
