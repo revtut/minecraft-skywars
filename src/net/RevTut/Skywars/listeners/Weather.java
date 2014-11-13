@@ -21,7 +21,7 @@ public class Weather implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor
+     * Constructor of Weather
      *
      * @param plugin    main class
      */

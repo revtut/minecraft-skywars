@@ -1,11 +1,20 @@
 package net.RevTut.Skywars.player;
 
 /**
- * Created by João on 31/10/2014.
+ * Player Status Enum.
+ *
+ * <P>All the status that a player might be</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public enum PlayerStatus {
-    WAITING, // Waiting player
-    ALIVE, // Alive Player
-    DEAD, // Dead Player
-    SPECTATOR // Spectating the Game
+    /** Waiting player in the lobby */
+    WAITING,
+    /** Alive player already ingame */
+    ALIVE,
+    /** Dead player already ingame */
+    DEAD,
+    /** Spectating the game */
+    SPECTATOR
 }

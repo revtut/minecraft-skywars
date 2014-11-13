@@ -20,7 +20,7 @@ public class PlayerDeath implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor
+     * Constructor of PlayerDeath
      *
      * @param plugin    main class
      */

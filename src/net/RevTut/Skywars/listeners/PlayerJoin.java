@@ -30,7 +30,7 @@ public class PlayerJoin implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor
+     * Constructor of PlayerJoin
      *
      * @param plugin    main class
      */
