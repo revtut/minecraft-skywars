@@ -15,12 +15,17 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 /**
- * Created by João on 25/10/2014.
+ * Name Tag Library.
+ *
+ * <P>A library with methods name tag related to.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class NameTagAPI implements Listener {
 
     /**
-     * Hide NameTag
+     * Hide name tag of a player.
      *
      * @param p     player to hide the NameTag
      */
@@ -31,7 +36,7 @@ public class NameTagAPI implements Listener {
     }
 
     /**
-     * Unhide NameTag
+     * Unhide the name tag of a player.
      *
      * @param p     player to Unhide the NameTag
      */
@@ -42,7 +47,7 @@ public class NameTagAPI implements Listener {
     }
 
     /**
-     * Check if Player Has NameTag Hidden
+     * Check if a player has name tag hidden.
      *
      * @param p     player to see if has nametag visible
      * @return      true he has it hidden
@@ -52,7 +57,7 @@ public class NameTagAPI implements Listener {
     }
 
     /**
-     * Change NameTag Color
+     * Change the nametag of a player.
      *
      * @param board                 scoreBoard of the Teams
      * @param p                     player to show the NameTag
@@ -73,7 +78,7 @@ public class NameTagAPI implements Listener {
     }
 
     /**
-     * Change NameTag Color
+     * Change the nametag of a player.
      *
      * @param board     scoreBoard of the Teams
      * @param p         player to show the NameTag
@@ -121,7 +126,7 @@ public class NameTagAPI implements Listener {
     }
 
     /**
-     * Remover Dano da Entidade Invisivel
+     * Remove damage on invisible entity when player has name tag hidden.
      *
      * @param e         entity damage event
      */

@@ -8,19 +8,27 @@ import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector;
 
 /**
- * Created by João on 25/10/2014.
+ * Tab List Library.
+ *
+ * <P>A library with methods tab list related to.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class TabAPI {
 
+    /** Version of Minecraft which might receive these packets */
+    public static final int VERSION = 47;
+
     /**
-     * Set Tab List
+     * Set the tab list of a player.
      *
-     * @param p      Player to send the Tab to
-     * @param title  Tab Title String
-     * @param footer Tab Foot String
+     * @param p         player to send the tab
+     * @param title     tab title
+     * @param footer    tab foot
      */
     public static void setTab(Player p, String title, String footer) {
-        if (!(TitleAPI.getVersion(p) >= TitleAPI.VERSION))
+        if (!(TitleAPI.getVersion(p) >= TabAPI.VERSION))
             return;
         IChatBaseComponent tabTitle = ChatSerializer.a(title);
         IChatBaseComponent tabFooter = ChatSerializer.a(footer);

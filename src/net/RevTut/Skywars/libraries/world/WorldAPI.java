@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 /**
- * World API.
+ * World Library.
  *
  * <P>Library with several methods world related to such as loadWorld, unloadWorld, copyDirectory and so on.</P>
  *
@@ -20,10 +20,10 @@ import java.io.FileOutputStream;
 public class WorldAPI {
 
     /**
-     * Load a new world to the server
+     * Load a new world to the server.
      *
-     * @param worldName name of the world to load
-     * @return true if world was loaded
+     * @param worldName     name of the world to load
+     * @return              true if world was loaded
      */
     public static boolean loadWorld(String worldName) {
         // World Creator
@@ -36,10 +36,10 @@ public class WorldAPI {
     }
 
     /**
-     * Unload a world from the server
+     * Unload a world from the server.
      *
-     * @param worldName name of the world to load
-     * @return true if world was unloaded
+     * @param worldName     name of the world to load
+     * @return              true if world was unloaded
      */
     public static boolean unloadWorld(String worldName) {
         World world = Bukkit.getWorld(worldName);
@@ -56,11 +56,11 @@ public class WorldAPI {
     }
 
     /**
-     * Copy existing directory to new location
+     * Copy existing directory to new location.
      *
-     * @param srcDir source of the folder to copy
-     * @param trgDir target of the folder
-     * @return true if successfull
+     * @param srcDir        source of the folder to copy
+     * @param trgDir        target of the folder
+     * @return              true if successfull
      */
     public static boolean copyDirectory(final File srcDir, final File trgDir) {
         try {
@@ -105,8 +105,8 @@ public class WorldAPI {
     /**
      * Delete directory. Sub-files and sub-directories will be deleted to.
      *
-     * @param dir folder to remove
-     * @return true it successfull when removing directory
+     * @param dir       folder to remove
+     * @return          true it successfull when removing directory
      */
     public static boolean removeDirectory(final File dir) {
         try {

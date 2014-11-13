@@ -11,9 +11,14 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import java.util.Random;
 
 /**
- * Created by João on 02/11/2014.
+ * Appearance Library.
+ *
+ * <P>A library with methods related to game appearance.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
-public class Fireworks {
+public class AppearanceAPI {
 
     /** Main class */
     private static Main plugin = new Main();
@@ -22,10 +27,10 @@ public class Fireworks {
     private static final Random r = new Random();
 
     /**
-     * Launch FireWork on Player
+     * Launch firework on player
      *
      * @param player    player to launch firework
-     * @param amount    amount of Fireworks to Launch
+     * @param amount    amount of fireworks to launch
      * @param delay     delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
@@ -68,7 +73,7 @@ public class Fireworks {
     }
 
     /**
-     * Convert Integer to Color
+     * Convert integer to color
      *
      * @param c     integer to be converted
      */

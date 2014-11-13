@@ -1,7 +1,7 @@
 package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.Main;
-import net.RevTut.Skywars.libraries.appearance.Fireworks;
+import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.Converters;
@@ -269,7 +269,7 @@ public class ArenaRunnable implements Runnable {
         Player winner = Bukkit.getPlayer(uuid);
         if (winner == null)
             return;
-        Fireworks.launchFirework(winner, 10, 2);
+        AppearanceAPI.launchFirework(winner, 10, 2);
     }
 
     /**
