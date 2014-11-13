@@ -15,16 +15,18 @@ import java.util.Random;
  */
 public class Fireworks {
 
-    private static Main plugin;
+    /** Main class */
+    private static Main plugin = new Main();
 
+    /** Copy of random class */
     private static final Random r = new Random();
 
     /**
      * Launch FireWork on Player
      *
-     * @param player Player to launch firework
-     * @param amount Amount of Fireworks to Launch
-     * @param delay  Delay between each firework
+     * @param player    player to launch firework
+     * @param amount    amount of Fireworks to Launch
+     * @param delay     delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
         for (int i = 0; i < amount; i++) {
@@ -68,7 +70,7 @@ public class Fireworks {
     /**
      * Convert Integer to Color
      *
-     * @param c Integer to be converted
+     * @param c     integer to be converted
      */
     private static Color getColor(final int c) {
         switch (c) {

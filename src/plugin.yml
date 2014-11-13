@@ -26,3 +26,26 @@
   rev.firework:
     description: Permission to launch firework
     default: op
+
+# Tags
+  rev.tag.vip:
+    description: Permission to VIP tag
+    default: op
+  rev.tag.youtube:
+    description: Permission to YOUTUBE tag
+    default: op
+  rev.tag.developer:
+    description: Permission to DEVELOPER tag
+    default: op
+  rev.tag.staff:
+    description: Permission to STAFF tag
+    default: op
+  rev.tag.moderator:
+    description: Permission to MODERATOR tag
+    default: op
+  rev.tag.admin:
+    description: Permission to ADMIN tag
+    default: op
+  rev.tag.ceo:
+    description: Permission to CEO tag
+    default: op

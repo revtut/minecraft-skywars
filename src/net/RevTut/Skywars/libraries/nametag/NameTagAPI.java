@@ -22,7 +22,7 @@ public class NameTagAPI implements Listener {
     /**
      * Hide NameTag
      *
-     * @param p Player to hide the NameTag
+     * @param p     player to hide the NameTag
      */
     public static void hideNametag(Player p) {
         LivingEntity entidade = p.getWorld().spawn(p.getLocation(), Squid.class);
@@ -33,7 +33,7 @@ public class NameTagAPI implements Listener {
     /**
      * Unhide NameTag
      *
-     * @param p Player to Unhide the NameTag
+     * @param p     player to Unhide the NameTag
      */
     public static void unHideNametag(Player p) {
         LivingEntity entidade = (LivingEntity) p.getPassenger();
@@ -44,7 +44,8 @@ public class NameTagAPI implements Listener {
     /**
      * Check if Player Has NameTag Hidden
      *
-     * @param p Player to show the NameTag
+     * @param p     player to see if has nametag visible
+     * @return      true he has it hidden
      */
     public static boolean isNameTagHidden(Player p) {
         return p.getPassenger() != null && p.getPassenger().getType() == EntityType.SQUID && ((LivingEntity) p.getPassenger()).hasPotionEffect(PotionEffectType.INVISIBILITY);
@@ -53,9 +54,9 @@ public class NameTagAPI implements Listener {
     /**
      * Change NameTag Color
      *
-     * @param board               ScoreBoard of the Teams
-     * @param p                   Player to show the NameTag
-     * @param perPlayerScoreBoard If multiple ScoreBoards
+     * @param board                 scoreBoard of the Teams
+     * @param p                     player to show the NameTag
+     * @param perPlayerScoreBoard   if multiple ScoreBoards
      */
     public static void setNameTag(Scoreboard board, Player p, boolean perPlayerScoreBoard) {
         if (perPlayerScoreBoard) {
@@ -74,34 +75,34 @@ public class NameTagAPI implements Listener {
     /**
      * Change NameTag Color
      *
-     * @param board ScoreBoard of the Teams
-     * @param p     Player to show the NameTag
+     * @param board     scoreBoard of the Teams
+     * @param p         player to show the NameTag
      */
     private static void setNameTag(Scoreboard board, Player p) {
         String id = "DEFAULT";
         String prefix = "";
         String sufix = "";
-        if (p.hasPermission("rev.vip")) {
+        if (p.hasPermission("rev.tag.vip")) {
             id = "VIP";
             prefix = "§a[VIP] ";
-        } else if (p.hasPermission("rev.developer")) {
-            id = "DEV";
-            prefix = "§6[DEV] ";
-        } else if (p.hasPermission("rev.staff")) {
-            id = "STAFF";
-            prefix = "§2[STAFF] ";
-        } else if (p.hasPermission("rev.moderator")) {
-            id = "MOD";
-            prefix = "§1[MOD] ";
-        } else if (p.hasPermission("rev.admin")) {
-            id = "ADMIN";
-            prefix = "§4[ADMIN] ";
-        } else if (p.hasPermission("rev.ceo")) {
-            id = "CEO";
-            prefix = "§5[CEO] ";
-        } else if (p.hasPermission("rev.youtuber")) {
+        } else if (p.hasPermission("rev.tag.youtuber")) {
             id = "YT";
             prefix = "§b[YT] ";
+        } else if (p.hasPermission("rev.tag.developer")) {
+            id = "DEV";
+            prefix = "§6[DEV] ";
+        } else if (p.hasPermission("rev.tag.staff")) {
+            id = "STAFF";
+            prefix = "§2[STAFF] ";
+        } else if (p.hasPermission("rev.tag.moderator")) {
+            id = "MOD";
+            prefix = "§1[MOD] ";
+        } else if (p.hasPermission("rev.tag.admin")) {
+            id = "ADMIN";
+            prefix = "§4[ADMIN] ";
+        } else if (p.hasPermission("rev.tag.ceo")) {
+            id = "CEO";
+            prefix = "§5[CEO] ";
         }
         Team team = board.getTeam(id);
         if (team == null) {
@@ -119,11 +120,14 @@ public class NameTagAPI implements Listener {
             p.setDisplayName(name);
     }
 
-    /* Remover Dano da Entidade Invisivel */
+    /**
+     * Remover Dano da Entidade Invisivel
+     *
+     * @param e         entity damage event
+     */
     @EventHandler
     public void onDamage(EntityDamageEvent e) {
-        if (e.getEntity().getType() == EntityType.SQUID && ((LivingEntity) e.getEntity()).hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+        if (e.getEntity().getType() == EntityType.SQUID && ((LivingEntity) e.getEntity()).hasPotionEffect(PotionEffectType.INVISIBILITY))
             e.setCancelled(true);
-        }
     }
 }
