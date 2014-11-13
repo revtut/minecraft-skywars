@@ -11,13 +11,13 @@ package net.RevTut.Skywars.arena;
 public enum ArenaStatus {
 
     /** Waiting for new players to join the game */
-    LOBBY(15),
+    LOBBY(2),
     /** Waiting for game start. No players can join now. */
-    PREGAME(15),
+    PREGAME(2),
     /** Players are already playing the game. */
-    INGAME(15),
+    INGAME(2),
     /** The game has ended. */
-    ENDGAME(15);
+    ENDGAME(2);
 
     /** Maximum Time of the Status (SECONDS) */
     private final int time;

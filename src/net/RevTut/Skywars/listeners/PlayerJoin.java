@@ -49,6 +49,12 @@ public class PlayerJoin implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
 
+        // Mensagem Entrada
+        e.setJoinMessage(null);
+
+        // Tab List
+        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -79,8 +85,6 @@ public class PlayerJoin implements Listener {
                         if (Arena.getNumberAvailableArenas() <= 1) {
                             Arena.createNewArena();
                         }
-                        // Tab List
-                        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
                         // ScoreBoard
                         ScoreBoard.showScoreBoard(p, arena);
                         // NameTag

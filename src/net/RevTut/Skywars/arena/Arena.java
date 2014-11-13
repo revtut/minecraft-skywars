@@ -492,21 +492,27 @@ public class Arena {
             }
         }
         boolean nextCharacter = true;
-        int i = 0;
+        int i = gameNumber.length() - 1;
         while (nextCharacter) {
-            if (i < gameNumber.length()) {
+            // Starts on first character and then increments the "i" if needed
+            if (0 <= i) {
                 char currentChar = gameNumber.charAt(i);
-                if (currentChar != 'Z') {
+                if (currentChar != 'Z' && currentChar != '9') {
                     char[] gameNumberChar = gameNumber.toCharArray();
                     gameNumberChar[i] = ++currentChar;
                     gameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
-                } else {
+                } else if(currentChar == '9'){
                     char[] gameNumberChar = gameNumber.toCharArray();
-                    gameNumberChar[i] = 0;
+                    gameNumberChar[i] = 'A';
+                    gameNumber = String.valueOf(gameNumberChar);
+                    nextCharacter = false;
+                } else if(currentChar == 'Z') {
+                    char[] gameNumberChar = gameNumber.toCharArray();
+                    gameNumberChar[i] = '0';
                     gameNumber = String.valueOf(gameNumberChar);
                 }
-                i++;
+                i--;
             } else {
                 gameNumber = "1" + gameNumber;
                 nextCharacter = false;
