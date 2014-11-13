@@ -15,7 +15,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by João on 02/11/2014.
+ * Arena Runnable.
+ *
+ * <P>Takes care of all the arenas when it comes to remaining time.</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public class ArenaRunnable implements Runnable {
     /** Main class */

@@ -1,23 +1,36 @@
 package net.RevTut.Skywars.arena;
 
 /**
- * Created by João on 31/10/2014.
+ * Arena Status Enum.
+ *
+ * <P>All the status that a arena might be</P>
+ *
+ * @author Joao Silva
+ * @version 1.0
  */
 public enum ArenaStatus {
-    LOBBY(15), // Waiting for new ones to join
-    PREGAME(15), // Time before the game actually starts
-    INGAME(15), // Maximum game time
-    ENDGAME(15); // End of the game time
+    /** Waiting for new players to join the game */
+    LOBBY(15),
+    /** Waiting for game start. No players can join now. */
+    PREGAME(15),
+    /** Players are already playing the game. */
+    INGAME(15),
+    /** The game has ended. */
+    ENDGAME(15);
 
-    /* Maximum Time of the Status (SECONDS) */
+    /** Maximum Time of the Status (SECONDS) */
     private final int time;
 
-    /* Construtor */
+    /**
+     * Constructor of ArenaStatus
+     *
+     * @param time          time of that status
+     */
     ArenaStatus(int time) {
         this.time = time;
     }
 
-    /* Get's */
+    /** Returns the time of that status */
     int getTime() {
         return time;
     }
