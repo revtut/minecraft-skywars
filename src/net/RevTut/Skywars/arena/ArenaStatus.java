@@ -30,7 +30,11 @@ public enum ArenaStatus {
         this.time = time;
     }
 
-    /** Returns the time of that status */
+    /**
+     * Returns the time of that status
+     *
+     * @return      the default initial remaining time of that status
+     */
     int getTime() {
         return time;
     }

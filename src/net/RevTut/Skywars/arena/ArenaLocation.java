@@ -47,27 +47,47 @@ public class ArenaLocation {
         this.spawnLocations = spawnLocations;
     }
 
-    /** Returns the lobby location of the arena */
+    /**
+     * Returns the lobby location of the arena
+     *
+     * @return          location of the lobby of the arena
+     */
     public Location getLobbyLocation() {
         return lobbyLocation;
     }
 
-    /** Returns the death spawn location of the arena */
+    /**
+     * Returns the death spawn location of the arena
+     *
+     * @return          death spawn location
+     */
     public Location getDeathSpawnLocation() {
         return deathSpawnLocation;
     }
 
-    /** Returns the first corner of the arena (minimum coords) */
+    /**
+     * Returns the first corner of the arena (minimum coords)
+     *
+     * @return          first corner location
+     */
     public Location getFirstCorner() {
         return firstCorner;
     }
 
-    /** Returns the second corner of the arena (maximum coords) */
+    /**
+     * Returns the second corner of the arena (maximum coords)
+     *
+     * @return          second corner location
+     */
     public Location getSecondCorner() {
         return secondCorner;
     }
 
-    /** Returns list with the spawn locations of the game */
+    /**
+     * Returns list with the spawn locations of the game
+     *
+     * @return          spawn locations of the game
+     */
     public List<Location> getSpawnLocations() {
         return spawnLocations;
     }

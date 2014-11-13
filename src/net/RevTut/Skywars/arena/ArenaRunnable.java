@@ -38,7 +38,11 @@ public class ArenaRunnable implements Runnable {
         this.plugin = plugin;
     }
 
-    /** Returns the task ID */
+    /**
+     * Returns the task ID
+     *
+     * @return          ID of the task
+     */
     public int getId() {
         return id;
     }

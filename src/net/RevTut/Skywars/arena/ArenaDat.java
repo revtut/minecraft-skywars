@@ -35,37 +35,65 @@ public class ArenaDat {
     /** List with the game events history */
     private List<String> gameEvents = new ArrayList<String>(); // Game Events
 
-    /** Returns the game number */
+    /**
+     * Returns the game number
+     *
+     * @return          game number
+     */
     public String getGameNumber() {
         return gameNumber;
     }
 
-    /** Returns the winner of the game */
+    /**
+     * Returns the winner of the game
+     *
+     * @return          winner of the game
+     */
     public String getWinner() {
         return winner;
     }
 
-    /** Returns the start date of the game */
+    /**
+     * Returns the start date of the game
+     *
+     * @return          the start date of the game
+     */
     public Date getStartDate() {
         return startDate;
     }
 
-    /** Returns the end date of the game */
+    /**
+     * Returns the end date of the game
+     *
+     * @return          the end date of the game
+     */
     public Date getEndDate() {
         return endDate;
     }
 
-    /** Returns the initial players of the arena */
+    /**
+     * Returns the initial players of the arena
+     *
+     * @return          the players which were in the arena
+     */
     public List<String> getInitialPlayers() {
         return initialPlayers;
     }
 
-    /** Returns a list with the game chat history */
+    /**
+     * Returns a list with the game chat history
+     *
+     * @return          game chat history
+     */
     public List<String> getGameChat() {
         return gameChat;
     }
 
-    /** Returns a list with all the game events history */
+    /**
+     * Returns a list with all the game events history
+     *
+     * @return          game events history
+     */
     public List<String> getGameEvents() {
         return gameEvents;
     }

@@ -380,7 +380,11 @@ public class Arena {
         }
     }
 
-    /** Returns all the arenas from the server */
+    /**
+     * Returns all the arenas from the server
+     *
+     * @return          list with all the arenas
+     */
     public static List<Arena> getArenas() {
         return Arena.arenas;
     }
@@ -414,7 +418,11 @@ public class Arena {
         return null;
     }
 
-    /** Returns the number of available arenas */
+    /**
+     * Returns the number of available arenas
+     *
+     * @return      number of available arenas
+     */
     public static int getNumberAvailableArenas() {
         int numero = 0;
         for (int i = 0; i < Arena.arenas.size(); i++)
@@ -423,7 +431,11 @@ public class Arena {
         return numero;
     }
 
-    /** Returns a list with all available arenas */
+    /**
+     * Returns a list with all available arenas
+     *
+     * @return      list of available arenas
+     */
     public static List<Arena> getAvailableArenas() {
         List<Arena> arenasAvailable = new ArrayList<Arena>();
         for (int i = 0; i < Arena.arenas.size(); i++)
@@ -432,7 +444,11 @@ public class Arena {
         return arenasAvailable;
     }
 
-    /** Returns the next arena number */
+    /**
+     * Returns the next arena number
+     *
+     * @return          next arena number
+     */
     private static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
         // Get all arenas numbers
@@ -449,7 +465,11 @@ public class Arena {
         return arenas.size() + 1;
     }
 
-    /** Returns the next game number (eg: 18AX2) */
+    /**
+     * Returns the next game number
+     *
+     * @return       next game number (eg: 18AX2)
+     */
     private static String nextGameNumber() {
         String gameNumber = "";
         for (Arena arena : arenas) {
@@ -486,17 +506,29 @@ public class Arena {
         return gameNumber;
     }
 
-    /** Return the arena number */
+    /**
+     * Return the arena number
+     *
+     * @return          arena number
+     */
     public int getArenaNumber() {
         return arenaNumber;
     }
 
-    /** Return the map name */
+    /**
+     * Return the map name
+     *
+     * @return          name of the current map
+     */
     public String getMapName() {
         return mapName;
     }
 
-    /** Return the remaining time of the arena (might be remaining time of lobby etc) */
+    /**
+     * Return the remaining time of the arena (might be remaining time of lobby etc)
+     *
+     * @return          remaining time
+     */
     public int getRemainingTime() {
         return remainingTime;
     }
@@ -504,7 +536,8 @@ public class Arena {
     /**
      * Return the arena status
      *
-     * @see     ArenaStatus
+     * @return      status of the arena
+     * @see         ArenaStatus
      */
     public ArenaStatus getStatus() {
         return status;
@@ -513,7 +546,8 @@ public class Arena {
     /**
      * Return the arena location
      *
-     * @see     ArenaLocation
+     * @return      locations of the arena
+     * @see         ArenaLocation
      */
     public ArenaLocation getArenaLocation() {
         return arenaLocation;
@@ -522,18 +556,27 @@ public class Arena {
     /**
      * Return the arena dat
      *
-     * @see     ArenaDat
+     * @return      arena dat
+     * @see         ArenaDat
      */
     public ArenaDat getArenaDat() {
         return arenaDat;
     }
 
-    /** Return a list with the players on the arena */
+    /**
+     * Return a list with the players on the arena
+     *
+     * @return      list with all the players
+     */
     public List<PlayerDat> getPlayers() {
         return players;
     }
 
-    /** Return a list with the alive players on the arena */
+    /**
+     * Return a list with the alive players on the arena
+     *
+     * @return      list with all alive players
+     */
     public List<PlayerDat> getAlivePlayers() {
         List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
         for (PlayerDat player : players)
@@ -542,7 +585,11 @@ public class Arena {
         return alivePlayers;
     }
 
-    /** Return a list with the dead players on the arena */
+    /**
+     * Return a list with the dead players on the arena
+     *
+     * @return      list with all dead players
+     */
     public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
         for (PlayerDat player : players)
@@ -551,7 +598,11 @@ public class Arena {
         return deathPlayers;
     }
 
-    /** Return a list with the spectator players on the arena */
+    /**
+     * Return a list with the spectator players on the arena
+     *
+     * @return      list with all spectators players
+     */
     public List<PlayerDat> getSpectatorPlayers() {
         List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
         for (PlayerDat player : players)

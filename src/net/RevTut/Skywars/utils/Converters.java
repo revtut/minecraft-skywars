@@ -85,7 +85,6 @@ public class Converters {
         text = text.replace("%ALT24%", "↑");
         text = text.replace("%ALT25%", "↓");
         text = text.replace("%ALT26%", "→");
-        text = text.replace("%ALT27%", "←");
         text = text.replace("%ALT28%", "∟");
         text = text.replace("%ALT29%", "↔");
         text = text.replace("%ALT30%", "▲");
