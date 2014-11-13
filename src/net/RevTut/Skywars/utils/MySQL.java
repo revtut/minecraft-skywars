@@ -102,12 +102,12 @@ public class MySQL {
                 System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
-            /* GameCore - GameNumber, Winner, StartDate, StopDate, InitialPlayers, GameChat, GameEvents */
+            /* GameCore - GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents */
             final ResultSet resultadoGameInfo = connection.getMetaData().getTables(null, null, DBGameInfo, null);
             if (resultadoGameInfo.next()) {
                 System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), StopDate VARCHAR(100), InitialPlayers VARCHAR(250), GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), EndDate VARCHAR(100), InitialPlayers VARCHAR(250), GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
                 System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
         } catch (final SQLException e) {
@@ -170,7 +170,7 @@ public class MySQL {
     /* Update MySQL ArenaDat */
     public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
         try {
-            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, StopDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getStopDate() + "'', '" + arenaDat.getInitialPlayers() + "'', '" + arenaDat.getGameChat() + "', '" + arenaDat.getGameEvents() + "');";
+            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "'', '" + arenaDat.getInitialPlayers() + "'', '" + arenaDat.getGameChat() + "', '" + arenaDat.getGameEvents() + "');";
             this.connection.createStatement().executeUpdate(infoCreate);
         } catch (final SQLException e) {
             System.out.println("Error while trying to update the MySQL! Reason: " + e.getMessage());
