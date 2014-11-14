@@ -57,8 +57,8 @@ public class PlayerChat implements Listener {
      * Control the chat of the server. Reformats the messages sent. Before sending
      * checks for bad words, advertisment, duplicated messages and spam
      *
-     * @param e async player chat event
-     * @see AsyncPlayerChatEvent
+     * @param e     async player chat event
+     * @see         AsyncPlayerChatEvent
      */
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {

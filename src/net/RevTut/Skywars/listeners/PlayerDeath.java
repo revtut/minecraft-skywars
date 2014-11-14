@@ -42,11 +42,6 @@ public class PlayerDeath implements Listener {
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(p.getUniqueId());
         Arena arena = Arena.getArenaByPlayer(playerDat);
         p.sendMessage("§2You died!");
-        arena.sendMessageToArena(p.getDisplayName() + "§4Died");
-    }
-
-    /* Send player to spawn | usage: sendspawn(); */
-    public void sendSpawn() {
-
+        arena.sendMessageToArena(p.getDisplayName() + " §4morreu");
     }
 }
