@@ -5,6 +5,7 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -380,6 +381,10 @@ public class Arena {
         TitleAPI.sendTimings(player, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
         TitleAPI.sendTitle(player, Main.titleMessage);
         TitleAPI.sendSubTitle(player, Main.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+
+        // Update scoreboard
+        ScoreBoard.updateAlive(arena);
+        ScoreBoard.updateDeath(arena);
 
         return true;
     }

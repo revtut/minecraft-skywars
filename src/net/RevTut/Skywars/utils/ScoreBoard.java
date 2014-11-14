@@ -45,10 +45,8 @@ public class ScoreBoard implements Listener {
      * Show a new scoreboard to a player
      *
      * @param p     player to show the scoreboard
-     * @param arena arena where the player is
-     * @see Arena
      */
-    public static void showScoreBoard(Player p, Arena arena) {
+    public static void showScoreBoard(Player p) {
         // Create the scoreboard
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();

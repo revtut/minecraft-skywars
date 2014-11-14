@@ -1,5 +1,8 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.player.PlayerDat;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,8 +27,20 @@ public class PlayerRespawn implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e){
         Player player = e.getPlayer();
-        // Send to spawn
-        player.teleport(player.getWorld().getSpawnLocation());
+        // Player Dat
+        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        if(playerDat == null)
+            return;
+        // Arena
+        Arena arena = Arena.getArenaByPlayer(playerDat);
+        if(arena == null)
+            return;
+        // Location
+        Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();
+        if(deadSpawn == null)
+            return;
+        // Send to dead location
+        player.teleport(deadSpawn);
     }
 
 }

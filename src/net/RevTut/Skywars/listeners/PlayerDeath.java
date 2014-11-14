@@ -7,6 +7,7 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Converters;
+import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -84,6 +85,9 @@ public class PlayerDeath implements Listener {
             // Message to arena
             alvoArena.sendMessageToArena("§4" + alvo.getName() + " morreu.");
         }
+        // Scoreboard update alive players and dead
+        ScoreBoard.updateAlive(alvoArena);
+        ScoreBoard.updateDeath(alvoArena);
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
         // Set status to DEAD
