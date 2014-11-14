@@ -5,6 +5,7 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Converters;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -85,6 +86,8 @@ public class PlayerDeath implements Listener {
         }
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
+        // Set status to DEAD
+        alvoDat.setStatus(PlayerStatus.DEAD);
         // Stats
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();

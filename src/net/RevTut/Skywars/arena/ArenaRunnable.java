@@ -4,6 +4,7 @@ import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Converters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -381,6 +382,7 @@ public class ArenaRunnable implements Runnable {
             int i = 0;
             final Location lobbyLocation = arena.getArenaLocation().getLobbyLocation();
             for (PlayerDat alvoDat : arena.getPlayers()) {
+                alvoDat.setStatus(PlayerStatus.WAITING); // Set status
                 final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
                 if (alvo == null)
                     continue;
@@ -390,7 +392,6 @@ public class ArenaRunnable implements Runnable {
                         alvo.teleport(lobbyLocation);
                     }
                 }, i);
-                alvo.teleport(lobbyLocation);
                 i++;
             }
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -404,6 +405,7 @@ public class ArenaRunnable implements Runnable {
             // Remove all the players from this arena
             final Arena newArena = arenaMove;
             for (final PlayerDat alvoDat : arena.getPlayers()) {
+                alvoDat.setStatus(PlayerStatus.WAITING); // Set status
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
