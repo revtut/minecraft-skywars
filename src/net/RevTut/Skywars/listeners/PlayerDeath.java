@@ -53,6 +53,9 @@ public class PlayerDeath implements Listener {
         PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null)
             return;
+        // Status to DEAD
+        alvoDat.setStatus(PlayerStatus.DEAD);
+        // Arena target
         Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
         if(alvoArena == null)
             return;
@@ -89,13 +92,11 @@ public class PlayerDeath implements Listener {
             // Message to arena
             alvoArena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
         }
+        // Bypass respawn screen
+        BypassesAPI.respawnBypass(alvo);
         // Scoreboard update alive players and dead
         ScoreBoard.updateAlive(alvoArena);
         ScoreBoard.updateDeath(alvoArena);
-        // Bypass respawn screen
-        BypassesAPI.respawnBypass(alvo);
-        // Set status to DEAD
-        alvoDat.setStatus(PlayerStatus.DEAD);
         // Stats
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();
