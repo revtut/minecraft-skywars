@@ -42,6 +42,7 @@ public class PlayerDeath implements Listener {
      * @see PlayerDeathEvent
      */
     public void onDeath(PlayerDeathEvent e) {
+        // Target player
         Player alvo = e.getEntity();
         PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null)
