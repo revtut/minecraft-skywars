@@ -88,13 +88,13 @@ public class ScoreBoard implements Listener {
         int alive = arena.getAlivePlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo != null) {
-                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-                if (board != null) {
-                    Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-                    objective.getScore("§aAlive:").setScore(alive);
-                }
-            }
+            if (alvo == null)
+                continue;
+            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+            if (board == null)
+                continue;
+            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+            objective.getScore("§aAlive:").setScore(alive);
         }
     }
 
@@ -108,13 +108,13 @@ public class ScoreBoard implements Listener {
         int dead = arena.getDeadPlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo != null) {
-                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-                if (board != null) {
-                    Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-                    objective.getScore("§cDead:").setScore(dead);
-                }
-            }
+            if (alvo == null)
+                continue;
+            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+            if (board == null)
+                continue;
+            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+            objective.getScore("§cDead:").setScore(dead);
         }
     }
 
