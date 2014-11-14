@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /**
  * Player Chat.
- * <p/>
+ *
  * <P>Controls the chat event.</P>
  *
  * @author Joao Silva

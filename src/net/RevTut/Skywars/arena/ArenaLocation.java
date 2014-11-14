@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * ArenaLocation Object.
- * <p/>
+ *
  * <P>A complement to Arena Object, which saves all the information regarding game locations.</P>
  *
  * @author Joao Silva

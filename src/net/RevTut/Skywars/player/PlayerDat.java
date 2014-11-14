@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * PlayerDat Object.
- * <p/>
+ *
  * <P>A complement to Player Object, which saves all the information related to the game and server.</P>
  *
  * @author Joao Silva

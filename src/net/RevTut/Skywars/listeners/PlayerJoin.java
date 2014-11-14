@@ -17,7 +17,7 @@ import java.util.UUID;
 
 /**
  * Player Join.
- * <p/>
+ *
  * <P>Controls the join event.</P>
  *
  * @author Joao Silva

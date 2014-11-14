@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  * MySQL Object.
- * <p/>
+ *
  * <P>Create and manage a MySQL connection.</P>
  *
  * @author Joao Silva

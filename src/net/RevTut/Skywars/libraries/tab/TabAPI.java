@@ -9,7 +9,7 @@ import org.spigotmc.ProtocolInjector;
 
 /**
  * Tab List Library.
- * <p/>
+ *
  * <P>A library with methods tab list related to.</P>
  *
  * @author Joao Silva

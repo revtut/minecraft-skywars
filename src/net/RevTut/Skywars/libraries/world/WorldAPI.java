@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 
 /**
  * World Library.
- * <p/>
+ *
  * <P>Library with several methods world related to such as loadWorld, unloadWorld, copyDirectory and so on.</P>
  *
  * @author Joao Silva

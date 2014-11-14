@@ -16,7 +16,7 @@ import java.util.UUID;
 
 /**
  * Arena Runnable.
- * <p/>
+ *
  * <P>Takes care of all the arenas when it comes to remaining time.</P>
  *
  * @author Joao Silva

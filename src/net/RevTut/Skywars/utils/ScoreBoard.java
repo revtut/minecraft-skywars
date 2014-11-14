@@ -14,7 +14,7 @@ import java.util.UUID;
 
 /**
  * ScoreBoard.
- * <p/>
+ *
  * <P>Class to handle all the scoreboards in the server.</P>
  *
  * @author Joao Silva

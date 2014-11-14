@@ -9,7 +9,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 /**
  * Weather.
- * <p/>
+ *
  * <P>Controls the weather events.</P>
  *
  * @author WaxCoder

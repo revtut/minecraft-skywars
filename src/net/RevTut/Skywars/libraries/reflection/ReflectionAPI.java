@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 /**
  * Reflection Library.
- * <p/>
+ *
  * <P>A library with methods related to reflection.</P>
  *
  * @author Joao Silva

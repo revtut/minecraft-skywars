@@ -16,7 +16,7 @@ import org.bukkit.scoreboard.Team;
 
 /**
  * Name Tag Library.
- * <p/>
+ *
  * <P>A library with methods name tag related to.</P>
  *
  * @author Joao Silva

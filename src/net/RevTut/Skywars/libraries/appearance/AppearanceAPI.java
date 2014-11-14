@@ -12,7 +12,7 @@ import java.util.Random;
 
 /**
  * Appearance Library.
- * <p/>
+ *
  * <P>A library with methods related to game appearance.</P>
  *
  * @author Joao Silva

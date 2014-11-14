@@ -7,7 +7,7 @@ import org.spigotmc.ProtocolInjector.PacketTitle;
 
 /**
  * Title Library.
- * <p/>
+ *
  * <P>A library with methods title related to.</P>
  *
  * @author Joao Silva

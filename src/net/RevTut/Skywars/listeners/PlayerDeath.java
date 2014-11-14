@@ -9,7 +9,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Player Death.
- * <p/>
+ *
  * <P>Controls the death event.</P>
  *
  * @author WaxCoder

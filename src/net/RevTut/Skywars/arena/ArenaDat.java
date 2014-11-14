@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * ArenaDat Object.
- * <p/>
+ *
  * <P>A complement to Arena Object, which saves all the information related to a game.</P>
  *
  * @author Joao Silva

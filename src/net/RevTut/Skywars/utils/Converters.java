@@ -2,7 +2,7 @@ package net.RevTut.Skywars.utils;
 
 /**
  * Converters.
- * <p/>
+ *
  * <P>Usefull converters to be used.</P>
  *
  * @author Joao Silva

@@ -18,7 +18,7 @@ import java.util.Random;
 
 /**
  * Arena Object.
- * <p/>
+ *
  * <P>Game arena which includes several attributes arena related to.</P>
  *
  * @author Joao Silva

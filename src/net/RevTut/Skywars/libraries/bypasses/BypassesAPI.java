@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 /**
  * Bypasses Library.
- * <p/>
+ *
  * <P>A library with methods related to game bypasses.</P>
  *
  * @author Joao Silva

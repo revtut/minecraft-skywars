@@ -17,7 +17,7 @@ import java.io.*;
 
 /**
  * Main class.
- * <p/>
+ *
  * <P>Skywars is a plugin where you have several players in islands. They all have the same amount of chests and resources available.</P>
  * <P>However inside the chests the furniture is completely random. The goal of a player is either to kill all the players or throw them
  * to the void since there is no ground on the map. If after a predefined amount of time the game is not over yet we will have a tie so

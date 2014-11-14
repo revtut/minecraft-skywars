@@ -2,7 +2,7 @@ package net.RevTut.Skywars.player;
 
 /**
  * Player Status Enum.
- * <p/>
+ *
  * <P>All the status that a player might be</P>
  *
  * @author Joao Silva
