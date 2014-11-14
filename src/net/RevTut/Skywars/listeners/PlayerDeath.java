@@ -67,12 +67,18 @@ public class PlayerDeath implements Listener {
         }
         // Messages & Title
         TitleAPI.sendTimings(alvo, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
-        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aMORRESTE"));
+        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
         if(damager != null) {
             // Message to arena
             alvoArena.sendMessageToArena("§4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             // Subtitle
-            TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7Por: " + damager.getName()));
+            // Target
+            TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7" + damager.getName()));
+            // Title and SubTitle
+            // Damager
+            TitleAPI.sendTimings(damager, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
+            TitleAPI.sendTitle(damager, Converters.convertToJSON("§aMATASTE"));
+            TitleAPI.sendSubTitle(damager,Converters.convertToJSON("§7" + alvo.getName()));
         }else {
             // Message to arena
             alvoArena.sendMessageToArena("§4" + alvo.getName() + " morreu.");
