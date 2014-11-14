@@ -291,6 +291,7 @@ public class ArenaRunnable implements Runnable {
         if (arenaLocation == null)
             return;
         for (PlayerDat alvoDat : arena.getPlayers()) {
+            alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;

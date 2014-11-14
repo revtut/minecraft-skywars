@@ -21,12 +21,6 @@
 ##############
 
  permissions:
-
-# Appearance
-  rev.firework:
-    description: Permission to launch firework
-    default: op
-
 # Tags
   rev.tag.vip:
     description: Permission to VIP tag

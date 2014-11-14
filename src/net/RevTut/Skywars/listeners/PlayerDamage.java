@@ -3,6 +3,7 @@ package net.RevTut.Skywars.listeners;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -111,10 +112,14 @@ public class PlayerDamage implements Listener {
             return;
         }
         if(alvoDat.getStatus() != PlayerStatus.ALIVE){ // Check if target is alive
-            if(e.getCause() == EntityDamageEvent.DamageCause.VOID) // Void damage
-                alvo.teleport(alvo.getWorld().getSpawnLocation()); // Teleport to spawn
-            e.setCancelled(true);
-            return;
+            if(e.getCause() == EntityDamageEvent.DamageCause.VOID){ // Void damage
+                Location lobbyLocation = alvoArena.getArenaLocation().getLobbyLocation();
+                e.setCancelled(true);
+                if(lobbyLocation == null)
+                    return;
+                alvo.teleport(lobbyLocation); // Teleport to spawn
+                return;
+            }
         }
         if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) // Check if damaged was caused by entity
             return;
