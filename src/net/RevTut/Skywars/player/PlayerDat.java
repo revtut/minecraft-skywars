@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * PlayerDat Object.
- *
+ * <p/>
  * <P>A complement to Player Object, which saves all the information related to the game and server.</P>
  *
  * @author Joao Silva
@@ -15,47 +15,67 @@ import java.util.UUID;
  */
 public class PlayerDat {
 
-    /** List of all playerDats in the server */
+    /**
+     * List of all playerDats in the server
+     */
     private static final List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
 
-    /** UUID of the player */
+    /**
+     * UUID of the player
+     */
     private final UUID uuid;
 
-    /** Points of the player */
+    /**
+     * Points of the player
+     */
     private int points;
 
-    /** Last login of the player */
+    /**
+     * Last login of the player
+     */
     private final Date lastLogin;
 
-    /** Playtime of the player in this game */
+    /**
+     * Playtime of the player in this game
+     */
     private final long playTime;
 
-    /** Number of wins */
+    /**
+     * Number of wins
+     */
     private int wins;
 
-    /** Number of losses */
+    /**
+     * Number of losses
+     */
     private int losses;
 
-    /** Number of kills */
+    /**
+     * Number of kills
+     */
     private int kills;
 
-    /** Number of deaths */
+    /**
+     * Number of deaths
+     */
     private int deaths;
 
-    /** Status of the player */
+    /**
+     * Status of the player
+     */
     private PlayerStatus status;
 
     /**
      * Constructor of PlayerDat
      *
-     * @param uuid          uuid of the player
-     * @param lastLogin     last login of the player
-     * @param playTime      play time of the player
-     * @param points        total points of the player
-     * @param wins          wins in this game of the player
-     * @param losses        losses in this game of the player
-     * @param kills         kills in this game of the player
-     * @param deaths        deaths in this game of the player
+     * @param uuid      uuid of the player
+     * @param lastLogin last login of the player
+     * @param playTime  play time of the player
+     * @param points    total points of the player
+     * @param wins      wins in this game of the player
+     * @param losses    losses in this game of the player
+     * @param kills     kills in this game of the player
+     * @param deaths    deaths in this game of the player
      */
     public PlayerDat(UUID uuid, Date lastLogin, long playTime, int points, int wins, int losses, int kills, int deaths) {
         this.uuid = uuid;
@@ -72,8 +92,8 @@ public class PlayerDat {
     /**
      * Add a new player dat to the server
      *
-     * @param playerDat     player dat to add to the server
-     * @return              true if successfull
+     * @param playerDat player dat to add to the server
+     * @return true if successfull
      */
     public static boolean addPlayerDat(PlayerDat playerDat) {
         if (getPlayerDatByUUID(playerDat.getUUID()) != null)
@@ -85,7 +105,7 @@ public class PlayerDat {
     /**
      * Removes a player dat from the server
      *
-     * @param playerDat     player dat to remove from the server
+     * @param playerDat player dat to remove from the server
      */
     public static void removePlayerDat(PlayerDat playerDat) {
         playersDat.remove(playerDat);
@@ -94,8 +114,8 @@ public class PlayerDat {
     /**
      * Get a player from a given UUID
      *
-     * @param uuid      uuid to get the player dat
-     * @return          player dat of that UUID
+     * @param uuid uuid to get the player dat
+     * @return player dat of that UUID
      */
     public static PlayerDat getPlayerDatByUUID(UUID uuid) {
         for (int i = 0; i < PlayerDat.playersDat.size(); i++)
@@ -107,7 +127,7 @@ public class PlayerDat {
     /**
      * Get the UUID of the player dat
      *
-     * @return      uuid of the player dat
+     * @return uuid of the player dat
      */
     public UUID getUUID() {
         return uuid;
@@ -118,7 +138,7 @@ public class PlayerDat {
      * Adds to the play time the difference between the current
      * date and the last login date
      *
-     * @return      play time of the player dat
+     * @return play time of the player dat
      */
     public long getPlayTime() {
         long seconds = (new Date().getTime() - lastLogin.getTime()) / 1000; //
@@ -128,7 +148,7 @@ public class PlayerDat {
     /**
      * Get points of the player dat
      *
-     * @return      points of the player dat
+     * @return points of the player dat
      */
     public int getPoints() {
         return points;
@@ -137,7 +157,7 @@ public class PlayerDat {
     /**
      * Get wins of the player dat
      *
-     * @return      wins of the player dat
+     * @return wins of the player dat
      */
     public int getWins() {
         return wins;
@@ -146,7 +166,7 @@ public class PlayerDat {
     /**
      * Get losses of the player dat
      *
-     * @return      losses of the player dat
+     * @return losses of the player dat
      */
     public int getLosses() {
         return losses;
@@ -155,7 +175,7 @@ public class PlayerDat {
     /**
      * Get the kills of the player dat
      *
-     * @return      kills of the player dat
+     * @return kills of the player dat
      */
     public int getKills() {
         return kills;
@@ -164,7 +184,7 @@ public class PlayerDat {
     /**
      * Get the deaths of the player dat
      *
-     * @return      deaths of the player dat
+     * @return deaths of the player dat
      */
     public int getDeaths() {
         return deaths;
@@ -173,8 +193,8 @@ public class PlayerDat {
     /**
      * Get the status of the player dat
      *
-     * @return      status of the player dat
-     * @see         PlayerStatus
+     * @return status of the player dat
+     * @see PlayerStatus
      */
     public PlayerStatus getStatus() {
         return status;
@@ -183,8 +203,8 @@ public class PlayerDat {
     /**
      * Set the status of the player dat
      *
-     * @param status        new status of the player dat
-     * @see                 PlayerStatus
+     * @param status new status of the player dat
+     * @see PlayerStatus
      */
     public void setStatus(PlayerStatus status) {
         this.status = status;
@@ -193,28 +213,36 @@ public class PlayerDat {
     /**
      * Add points to the player dat
      *
-     * @param points    points to add
+     * @param points points to add
      */
     public void addPoints(int points) {
         this.points += points;
     }
 
-    /** Add win to the player dat */
+    /**
+     * Add win to the player dat
+     */
     public void addWin() {
         this.wins++;
     }
 
-    /** Add lose to the player dat */
+    /**
+     * Add lose to the player dat
+     */
     public void addLose() {
         this.losses++;
     }
 
-    /** Add kill to the player dat */
+    /**
+     * Add kill to the player dat
+     */
     public void addKill() {
         this.kills++;
     }
 
-    /** Add death to the player dat */
+    /**
+     * Add death to the player dat
+     */
     public void addDeath() {
         this.deaths++;
     }

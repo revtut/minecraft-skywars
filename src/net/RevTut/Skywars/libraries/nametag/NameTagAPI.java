@@ -16,7 +16,7 @@ import org.bukkit.scoreboard.Team;
 
 /**
  * Name Tag Library.
- *
+ * <p/>
  * <P>A library with methods name tag related to.</P>
  *
  * @author Joao Silva
@@ -27,7 +27,7 @@ public class NameTagAPI implements Listener {
     /**
      * Hide name tag of a player.
      *
-     * @param p     player to hide the NameTag
+     * @param p player to hide the NameTag
      */
     public static void hideNametag(Player p) {
         LivingEntity entidade = p.getWorld().spawn(p.getLocation(), Squid.class);
@@ -38,7 +38,7 @@ public class NameTagAPI implements Listener {
     /**
      * Unhide the name tag of a player.
      *
-     * @param p     player to Unhide the NameTag
+     * @param p player to Unhide the NameTag
      */
     public static void unHideNametag(Player p) {
         LivingEntity entidade = (LivingEntity) p.getPassenger();
@@ -49,8 +49,8 @@ public class NameTagAPI implements Listener {
     /**
      * Check if a player has name tag hidden.
      *
-     * @param p     player to see if has nametag visible
-     * @return      true he has it hidden
+     * @param p player to see if has nametag visible
+     * @return true he has it hidden
      */
     public static boolean isNameTagHidden(Player p) {
         return p.getPassenger() != null && p.getPassenger().getType() == EntityType.SQUID && ((LivingEntity) p.getPassenger()).hasPotionEffect(PotionEffectType.INVISIBILITY);
@@ -59,9 +59,9 @@ public class NameTagAPI implements Listener {
     /**
      * Change the nametag of a player.
      *
-     * @param board                 scoreBoard of the Teams
-     * @param p                     player to show the NameTag
-     * @param perPlayerScoreBoard   if multiple ScoreBoards
+     * @param board               scoreBoard of the Teams
+     * @param p                   player to show the NameTag
+     * @param perPlayerScoreBoard if multiple ScoreBoards
      */
     public static void setNameTag(Scoreboard board, Player p, boolean perPlayerScoreBoard) {
         if (perPlayerScoreBoard) {
@@ -80,8 +80,8 @@ public class NameTagAPI implements Listener {
     /**
      * Change the nametag of a player.
      *
-     * @param board     scoreBoard of the Teams
-     * @param p         player to show the NameTag
+     * @param board scoreBoard of the Teams
+     * @param p     player to show the NameTag
      */
     private static void setNameTag(Scoreboard board, Player p) {
         String id = "DEFAULT";
@@ -128,7 +128,7 @@ public class NameTagAPI implements Listener {
     /**
      * Remove damage on invisible entity when player has name tag hidden.
      *
-     * @param e         entity damage event
+     * @param e entity damage event
      */
     @EventHandler
     public void onDamage(EntityDamageEvent e) {

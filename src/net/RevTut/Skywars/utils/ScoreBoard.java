@@ -14,7 +14,7 @@ import java.util.UUID;
 
 /**
  * ScoreBoard.
- *
+ * <p/>
  * <P>Class to handle all the scoreboards in the server.</P>
  *
  * @author Joao Silva
@@ -22,27 +22,31 @@ import java.util.UUID;
  */
 public class ScoreBoard implements Listener {
 
-    /** Main class */
+    /**
+     * Main class
+     */
     private final Main plugin;
 
     /**
      * Constructor of ScoreBoard
      *
-     * @param plugin        main class
+     * @param plugin main class
      */
     public ScoreBoard(final Main plugin) {
         this.plugin = plugin;
     }
 
-    /** Map with all the scoreboards of the players */
+    /**
+     * Map with all the scoreboards of the players
+     */
     private static final Map<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
 
     /**
      * Show a new scoreboard to a player
      *
-     * @param p         player to show the scoreboard
-     * @param arena     arena where the player is
-     * @see             Arena
+     * @param p     player to show the scoreboard
+     * @param arena arena where the player is
+     * @see Arena
      */
     public static void showScoreBoard(Player p, Arena arena) {
         // Create the scoreboard
@@ -80,7 +84,7 @@ public class ScoreBoard implements Listener {
      * Update alive players in the scoreboard of all the
      * players which are on that arena
      *
-     * @param arena     arena to update alive players
+     * @param arena arena to update alive players
      */
     public static void updateAlive(Arena arena) {
         int alive = arena.getAlivePlayers().size();
@@ -100,7 +104,7 @@ public class ScoreBoard implements Listener {
      * Update death players in the scoreboard of all the
      * players which are on that arena
      *
-     * @param arena     arena to update death players
+     * @param arena arena to update death players
      */
     public static void updateDeath(Arena arena) {
         int dead = arena.getDeadPlayers().size();
@@ -119,8 +123,8 @@ public class ScoreBoard implements Listener {
     /**
      * Get the scoreboard of a given player
      *
-     * @param uuid      uuid of the player
-     * @return          scoreboard of the player
+     * @param uuid uuid of the player
+     * @return scoreboard of the player
      */
     public static Scoreboard getScoreBoardByPlayer(UUID uuid) {
         if (scoreBoards.containsKey(uuid))
@@ -131,8 +135,8 @@ public class ScoreBoard implements Listener {
     /**
      * Remove the scoreboard of a player from the Map
      *
-     * @param player        player which scoreboard will be removed
-     * @return              true if successfull
+     * @param player player which scoreboard will be removed
+     * @return true if successfull
      */
     public static boolean removePlayerScoreBoard(Player player) {
         if (scoreBoards.containsKey(player.getUniqueId())) {

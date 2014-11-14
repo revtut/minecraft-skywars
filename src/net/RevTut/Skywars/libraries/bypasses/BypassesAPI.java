@@ -5,11 +5,10 @@ import net.minecraft.server.v1_7_R4.EnumClientCommand;
 import net.minecraft.server.v1_7_R4.PacketPlayInClientCommand;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Bypasses Library.
- *
+ * <p/>
  * <P>A library with methods related to game bypasses.</P>
  *
  * @author Joao Silva
@@ -18,13 +17,13 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class BypassesAPI {
 
     /**
-     *  Bypass player respawn screen.
+     * Bypass player respawn screen.
      *
-     * @param player     player to bypass respawn menu
+     * @param player player to bypass respawn menu
      */
     public static void respawnBypass(Player player) {
         PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
-        EntityPlayer cPlayer = ((CraftPlayer)player).getHandle(); // Gets the EntityPlayer class
+        EntityPlayer cPlayer = ((CraftPlayer) player).getHandle(); // Gets the EntityPlayer class
         cPlayer.playerConnection.a(in); // Handles the rest of it
     }
 

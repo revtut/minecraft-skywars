@@ -9,7 +9,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Player Death.
- *
+ * <p/>
  * <P>Controls the death event.</P>
  *
  * @author WaxCoder
@@ -17,23 +17,25 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  */
 public class PlayerDeath implements Listener {
 
-    /** Main class */
+    /**
+     * Main class
+     */
     private final Main plugin;
 
     /**
      * Constructor of PlayerDeath
      *
-     * @param plugin    main class
+     * @param plugin main class
      */
     public PlayerDeath(Main plugin) {
         this.plugin = plugin;
     }
 
     /**
-     *  Takes care of a player when he dies
+     * Takes care of a player when he dies
      *
-     * @param e     player death event
-     * @see         PlayerDeathEvent
+     * @param e player death event
+     * @see PlayerDeathEvent
      */
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
@@ -44,7 +46,7 @@ public class PlayerDeath implements Listener {
     }
 
     /* Send player to spawn | usage: sendspawn(); */
-    public void sendSpawn(){
+    public void sendSpawn() {
 
     }
 }

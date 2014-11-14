@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 /**
  * Reflection Library.
- *
+ * <p/>
  * <P>A library with methods related to reflection.</P>
  *
  * @author Joao Silva
@@ -18,7 +18,7 @@ public class ReflectionAPI {
     /**
      * Get version of Minecraft.
      *
-     * @return      version of the game
+     * @return version of the game
      */
     private static String getVersion() {
         String name = Bukkit.getServer().getClass().getPackage().getName();
@@ -29,8 +29,8 @@ public class ReflectionAPI {
     /**
      * Get a NMS class given a name.
      *
-     * @param className     className to get the NMS class
-     * @return              nms class
+     * @param className className to get the NMS class
+     * @return nms class
      */
     public static Class<?> getNMSClass(String className) {
         String fullName = "net.minecraft.server." + getVersion() + className;
@@ -46,8 +46,8 @@ public class ReflectionAPI {
     /**
      * Get a CraftBukkit class given its name.
      *
-     * @param className     className to get the CraftBukkit class
-     * @return              craftBukkit class
+     * @param className className to get the CraftBukkit class
+     * @return craftBukkit class
      */
     public static Class<?> getOBCClass(String className) {
         String fullName = "org.bukkit.craftbukkit." + getVersion() + className;
@@ -61,10 +61,10 @@ public class ReflectionAPI {
     }
 
     /**
-     *  Get a object handle.
+     * Get a object handle.
      *
-     * @param obj       object to get the handle
-     * @return          object handle
+     * @param obj object to get the handle
+     * @return object handle
      */
     public static Object getHandle(Object obj) {
         try {
@@ -78,9 +78,9 @@ public class ReflectionAPI {
     /**
      * Get a field from a class given its class and its name.
      *
-     * @param clazz         class to get the field
-     * @param name          field name
-     * @return              field of the class
+     * @param clazz class to get the field
+     * @param name  field name
+     * @return field of the class
      */
     public static Field getField(Class<?> clazz, String name) {
         try {
@@ -94,12 +94,12 @@ public class ReflectionAPI {
     }
 
     /**
-     *  Get a method from a class.
+     * Get a method from a class.
      *
-     * @param clazz         class to get the method
-     * @param name          method name
-     * @param args          args of the method
-     * @return              method of the class
+     * @param clazz class to get the method
+     * @param name  method name
+     * @param args  args of the method
+     * @return method of the class
      */
     public static Method getMethod(Class<?> clazz, String name, Class<?>... args) {
         for (Method m : clazz.getMethods()) {
@@ -114,9 +114,9 @@ public class ReflectionAPI {
     /**
      * Compare two classes
      *
-     * @param l1        class one to compare
-     * @param l2        class second to compare
-     * @return          true if they are equal
+     * @param l1 class one to compare
+     * @param l2 class second to compare
+     * @return true if they are equal
      */
     private static boolean ClassListEqual(Class<?>[] l1, Class<?>[] l2) {
         boolean equal = true;

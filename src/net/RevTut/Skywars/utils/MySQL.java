@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  * MySQL Object.
- *
+ * <p/>
  * <P>Create and manage a MySQL connection.</P>
  *
  * @author Joao Silva
@@ -19,41 +19,59 @@ import java.util.UUID;
  */
 public class MySQL {
 
-    /** Hostname of the MySQL Database */
+    /**
+     * Hostname of the MySQL Database
+     */
     private final String hostname;
 
-    /** Port of the MySQL Database */
+    /**
+     * Port of the MySQL Database
+     */
     private final String port;
 
-    /** Database of the MySQL */
+    /**
+     * Database of the MySQL
+     */
     private final String database;
 
-    /** Username of the MySQL Database */
+    /**
+     * Username of the MySQL Database
+     */
     private final String username;
 
-    /** Password of the MySQL Database */
+    /**
+     * Password of the MySQL Database
+     */
     private final String password;
 
-    /** Core Database */
+    /**
+     * Core Database
+     */
     private final String DBCore = "Core";
 
-    /** SkyWars Core Database */
+    /**
+     * SkyWars Core Database
+     */
     private final String DBGameCore = "SkyWarsCore";
 
-    /** SkyWars Info Database */
+    /**
+     * SkyWars Info Database
+     */
     private final String DBGameInfo = "SkyWarsInfo";
 
-    /** MySQL Database connection */
+    /**
+     * MySQL Database connection
+     */
     private Connection connection;
 
     /**
      * Constructor of MySQL
      *
-     * @param hostname      hostname of the MySQL
-     * @param port          port of the MySQL
-     * @param database      database of the MySQL
-     * @param username      username of the MySQL
-     * @param password      password of the MySQL
+     * @param hostname hostname of the MySQL
+     * @param port     port of the MySQL
+     * @param database database of the MySQL
+     * @param username username of the MySQL
+     * @param password password of the MySQL
      */
     public MySQL(String hostname, String port, String database, String username, String password) {
         this.hostname = hostname;
@@ -66,7 +84,7 @@ public class MySQL {
     /**
      * Open the connection to a MySQL database
      *
-     * @return      true if successfull opened connection
+     * @return true if successfull opened connection
      */
     public boolean openConnection() {
         try {
@@ -87,7 +105,7 @@ public class MySQL {
     /**
      * Check the connection to a MySQL database
      *
-     * @return      true if closed
+     * @return true if closed
      */
     public boolean isClosed() {
         try {
@@ -101,7 +119,7 @@ public class MySQL {
     /**
      * Close the connection to a MySQL database
      *
-     * @return      true if successfull closed connection
+     * @return true if successfull closed connection
      */
     public boolean closeConnection() {
         try {
@@ -116,13 +134,15 @@ public class MySQL {
     /**
      * Get the connection to a MySQL
      *
-     * @return      connection to MySQL
+     * @return connection to MySQL
      */
     public Connection getConnection() {
         return this.connection;
     }
 
-    /** Create initial tables in MySQL */
+    /**
+     * Create initial tables in MySQL
+     */
     public void createMySQL() {
         try {
             Statement statementCreation = connection.createStatement();
@@ -161,8 +181,8 @@ public class MySQL {
     /**
      * Create the player dat of a given player using UUID.
      *
-     * @param uuid      uuid of the player
-     * @return          true if successfull
+     * @param uuid uuid of the player
+     * @return true if successfull
      */
     public boolean createPlayerDat(UUID uuid) {
         try {
@@ -181,7 +201,7 @@ public class MySQL {
                     return false;
                 }
             } else {
-                if(PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
+                if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
                     return true;
                 return false;
             }
@@ -194,9 +214,9 @@ public class MySQL {
     /**
      * Update the information on MySQL of a player
      *
-     * @param playerDat         player dat to be updated on MySQL
-     * @return                  true if successfull
-     * @see                     PlayerDat
+     * @param playerDat player dat to be updated on MySQL
+     * @return true if successfull
+     * @see PlayerDat
      */
     public boolean updateMySQLPlayerDat(PlayerDat playerDat) {
         try {
@@ -230,9 +250,9 @@ public class MySQL {
     /**
      * Update the information on MySQL regarding a game
      *
-     * @param arenaDat          arena dat to be inserted on MySQL
-     * @return                  true if successfull
-     * @see                     ArenaDat
+     * @param arenaDat arena dat to be inserted on MySQL
+     * @return true if successfull
+     * @see ArenaDat
      */
     public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
         try {

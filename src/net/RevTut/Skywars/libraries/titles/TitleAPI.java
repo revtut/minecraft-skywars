@@ -7,7 +7,7 @@ import org.spigotmc.ProtocolInjector.PacketTitle;
 
 /**
  * Title Library.
- *
+ * <p/>
  * <P>A library with methods title related to.</P>
  *
  * @author Joao Silva
@@ -15,17 +15,21 @@ import org.spigotmc.ProtocolInjector.PacketTitle;
  */
 public class TitleAPI {
 
-    /** Version of Minecraft which might receive these packets */
+    /**
+     * Version of Minecraft which might receive these packets
+     */
     public static final int VERSION = 47;
 
-    /** NMS Class */
+    /**
+     * NMS Class
+     */
     private static final Class<?> nmsChatSerializer = ReflectionAPI.getNMSClass("ChatSerializer");
 
     /**
      * Send a title to a player.
      *
-     * @param p         player to send the title
-     * @param title     json title to send
+     * @param p     player to send the title
+     * @param title json title to send
      */
     public static void sendTitle(Player p, String title) {
         if (!(getVersion(p) >= VERSION)) return;
@@ -43,8 +47,8 @@ public class TitleAPI {
     /**
      * Send a subtitle to a player.
      *
-     * @param p             player to send the subtitle
-     * @param subtitle      json subtitle to send
+     * @param p        player to send the subtitle
+     * @param subtitle json subtitle to send
      */
     public static void sendSubTitle(Player p, String subtitle) {
         if (!(getVersion(p) >= VERSION)) return;
@@ -62,10 +66,10 @@ public class TitleAPI {
     /**
      * Set the title timings.
      *
-     * @param p         player to update the timings
-     * @param fadeIn    time the title should take to fade in
-     * @param stay      time the title should stay on screen
-     * @param fadeOut   time the title should take to fade out
+     * @param p       player to update the timings
+     * @param fadeIn  time the title should take to fade in
+     * @param stay    time the title should stay on screen
+     * @param fadeOut time the title should take to fade out
      */
     public static void sendTimings(Player p, int fadeIn, int stay, int fadeOut) {
         if (!(getVersion(p) >= VERSION)) return;
@@ -82,7 +86,7 @@ public class TitleAPI {
     /**
      * Reset the players timing, title, subtitle.
      *
-     * @param p     player to be reseted
+     * @param p player to be reseted
      */
     public static void reset(Player p) {
         if (!(getVersion(p) >= VERSION)) return;
@@ -99,7 +103,7 @@ public class TitleAPI {
     /**
      * Clear the players title.
      *
-     * @param p     player to be cleared
+     * @param p player to be cleared
      */
     public static void clear(Player p) {
         if (!(getVersion(p) >= VERSION)) return;
@@ -116,8 +120,8 @@ public class TitleAPI {
     /**
      * Get the version of a player.
      *
-     * @param p     player to get the Minecraft version
-     * @return      game version number
+     * @param p player to get the Minecraft version
+     * @return game version number
      */
     public static int getVersion(Player p) {
         try {

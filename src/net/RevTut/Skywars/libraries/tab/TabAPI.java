@@ -9,7 +9,7 @@ import org.spigotmc.ProtocolInjector;
 
 /**
  * Tab List Library.
- *
+ * <p/>
  * <P>A library with methods tab list related to.</P>
  *
  * @author Joao Silva
@@ -17,15 +17,17 @@ import org.spigotmc.ProtocolInjector;
  */
 public class TabAPI {
 
-    /** Version of Minecraft which might receive these packets */
+    /**
+     * Version of Minecraft which might receive these packets
+     */
     public static final int VERSION = 47;
 
     /**
      * Set the tab list of a player.
      *
-     * @param p         player to send the tab
-     * @param title     tab title
-     * @param footer    tab foot
+     * @param p      player to send the tab
+     * @param title  tab title
+     * @param footer tab foot
      */
     public static void setTab(Player p, String title, String footer) {
         if (!(TitleAPI.getVersion(p) >= TabAPI.VERSION))

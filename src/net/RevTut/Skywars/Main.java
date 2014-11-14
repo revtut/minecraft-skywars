@@ -14,11 +14,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.logging.Logger;
 
 /**
  * Main class.
- *
+ * <p/>
  * <P>Skywars is a plugin where you have several players in islands. They all have the same amount of chests and resources available.</P>
  * <P>However inside the chests the furniture is completely random. The goal of a player is either to kill all the players or throw them
  * to the void since there is no ground on the map. If after a predefined amount of time the game is not over yet we will have a tie so
@@ -29,34 +28,54 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class Main extends JavaPlugin {
-    /** Title message on join */
+    /**
+     * Title message on join
+     */
     public static String titleMessage;
 
-    /** Subtitle message on join */
+    /**
+     * Subtitle message on join
+     */
     public static String subTitleMessage;
 
-    /** Fade in message time */
+    /**
+     * Fade in message time
+     */
     public static int fadeIn;
 
-    /** Fade out message time */
+    /**
+     * Fade out message time
+     */
     public static int fadeOut;
 
-    /** Time on screen of messages */
+    /**
+     * Time on screen of messages
+     */
     public static int timeOnScreen;
 
-    /** Tab list title */
+    /**
+     * Tab list title
+     */
     public String tabTitle;
 
-    /** Tab list footer */
+    /**
+     * Tab list footer
+     */
     public String tabFooter;
 
-    /** MySQL object */
+    /**
+     * MySQL object
+     */
     public MySQL mysql;
 
-    /** Name of the server */
+    /**
+     * Name of the server
+     */
     public String servidor = Bukkit.getServerName();
 
-    /** Enable the plugin */
+    /**
+     * Enable the plugin
+     */
     @Override
     public void onEnable() {
         /* Create Files */
@@ -84,7 +103,9 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerJoin(this), this);
     }
 
-    /** Disable the plugin */
+    /**
+     * Disable the plugin
+     */
     @Override
     public void onDisable() {
         /* Close MySQL */
@@ -95,7 +116,7 @@ public class Main extends JavaPlugin {
     /**
      * Create the configuration files
      *
-     * @return      true if successfull
+     * @return true if successfull
      */
     private boolean createFiles() {
         /* Config File */
@@ -128,9 +149,9 @@ public class Main extends JavaPlugin {
     /**
      * Copy from a file to another one
      *
-     * @param in        file to be copied
-     * @param file      file to copy to
-     * @return          true if successfull
+     * @param in   file to be copied
+     * @param file file to copy to
+     * @return true if successfull
      */
     private boolean copy(final InputStream in, final File file) {
         try {
@@ -152,7 +173,7 @@ public class Main extends JavaPlugin {
     /**
      * Read the configuration files and assign the variables
      *
-     * @return          true if successfull
+     * @return true if successfull
      */
     private boolean readFiles() {
         /* Config File */

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * ArenaLocation Object.
- *
+ * <p/>
  * <P>A complement to Arena Object, which saves all the information regarding game locations.</P>
  *
  * @author Joao Silva
@@ -15,29 +15,39 @@ import java.util.List;
  */
 public class ArenaLocation {
 
-    /** Lobby location */
+    /**
+     * Lobby location
+     */
     private final Location lobbyLocation;
 
-    /** Location where dead players will spawn */
+    /**
+     * Location where dead players will spawn
+     */
     private Location deathSpawnLocation;
 
-    /** Inferior limit of the arena (minimum coords) */
+    /**
+     * Inferior limit of the arena (minimum coords)
+     */
     private Location firstCorner;
 
-    /** Superior limit of the arena (maximum coords) */
+    /**
+     * Superior limit of the arena (maximum coords)
+     */
     private Location secondCorner;
 
-    /** List with all the spawn locations of the game */
+    /**
+     * List with all the spawn locations of the game
+     */
     private List<Location> spawnLocations = new ArrayList<Location>();
 
     /**
      * Constructor of ArenaLocation
      *
-     * @param lobbyLocation             lobby location
-     * @param deathSpawnLocation        death spawn location
-     * @param firstCorner               first corner of the arena (min coords)
-     * @param secondCorner              second corner of the arena (max coords)
-     * @param spawnLocations            spawn locations of the game
+     * @param lobbyLocation      lobby location
+     * @param deathSpawnLocation death spawn location
+     * @param firstCorner        first corner of the arena (min coords)
+     * @param secondCorner       second corner of the arena (max coords)
+     * @param spawnLocations     spawn locations of the game
      */
     public ArenaLocation(Location lobbyLocation, Location deathSpawnLocation, Location firstCorner, Location secondCorner, List<Location> spawnLocations) {
         this.lobbyLocation = lobbyLocation;
@@ -50,7 +60,7 @@ public class ArenaLocation {
     /**
      * Returns the lobby location of the arena
      *
-     * @return          location of the lobby of the arena
+     * @return location of the lobby of the arena
      */
     public Location getLobbyLocation() {
         return lobbyLocation;
@@ -59,7 +69,7 @@ public class ArenaLocation {
     /**
      * Returns the death spawn location of the arena
      *
-     * @return          death spawn location
+     * @return death spawn location
      */
     public Location getDeathSpawnLocation() {
         return deathSpawnLocation;
@@ -68,7 +78,7 @@ public class ArenaLocation {
     /**
      * Returns the first corner of the arena (minimum coords)
      *
-     * @return          first corner location
+     * @return first corner location
      */
     public Location getFirstCorner() {
         return firstCorner;
@@ -77,7 +87,7 @@ public class ArenaLocation {
     /**
      * Returns the second corner of the arena (maximum coords)
      *
-     * @return          second corner location
+     * @return second corner location
      */
     public Location getSecondCorner() {
         return secondCorner;
@@ -86,7 +96,7 @@ public class ArenaLocation {
     /**
      * Returns list with the spawn locations of the game
      *
-     * @return          spawn locations of the game
+     * @return spawn locations of the game
      */
     public List<Location> getSpawnLocations() {
         return spawnLocations;
@@ -95,7 +105,7 @@ public class ArenaLocation {
     /**
      * Set the death spawn location of the arena
      *
-     * @param deathSpawnLocation        the death spawn location
+     * @param deathSpawnLocation the death spawn location
      */
     public void setDeathSpawnLocation(Location deathSpawnLocation) {
         this.deathSpawnLocation = deathSpawnLocation;
@@ -104,7 +114,7 @@ public class ArenaLocation {
     /**
      * Set the first corner location of the arena
      *
-     * @param firstCorner       the first corner of the arena
+     * @param firstCorner the first corner of the arena
      */
     public void setFirstCorner(Location firstCorner) {
         this.firstCorner = firstCorner;
@@ -113,7 +123,7 @@ public class ArenaLocation {
     /**
      * Set the second corner location of the arena
      *
-     * @param secondCorner      the second corner of the arena
+     * @param secondCorner the second corner of the arena
      */
     public void setSecondCorner(Location secondCorner) {
         this.secondCorner = secondCorner;
@@ -122,7 +132,7 @@ public class ArenaLocation {
     /**
      * Set the spawn locations of the arena
      *
-     * @param spawnLocations        list with all the spawn locations
+     * @param spawnLocations list with all the spawn locations
      */
     public void setSpawnLocations(List<Location> spawnLocations) {
         this.spawnLocations = spawnLocations;

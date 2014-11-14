@@ -7,8 +7,6 @@ import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -20,7 +18,7 @@ import java.util.Random;
 
 /**
  * Arena Object.
- *
+ * <p/>
  * <P>Game arena which includes several attributes arena related to.</P>
  *
  * @author Joao Silva
@@ -28,61 +26,75 @@ import java.util.Random;
  */
 public class Arena {
 
-    /** List of all arenas in the server */
+    /**
+     * List of all arenas in the server
+     */
     private static final List<Arena> arenas = new ArrayList<Arena>();
 
-    /** Minimum players for the game */
+    /**
+     * Minimum players for the game
+     */
     public static final int minPlayers = 1;
 
-    /** Minimum players for lobby time be reduced */
+    /**
+     * Minimum players for lobby time be reduced
+     */
     public static final int minReduceTimePlayers = 16;
 
-    /** Maximum players that can play in each game */
+    /**
+     * Maximum players that can play in each game
+     */
     public static final int maxPlayers = 24;
 
-    /** Arena Number */
+    /**
+     * Arena Number
+     */
     private final int arenaNumber;
 
-    /** Map Name */
+    /**
+     * Map Name
+     */
     private String mapName;
 
     /**
      * Remaining time of the arena. Might be the current ingame time, current lobby time
      *
-     * @see     ArenaStatus
+     * @see ArenaStatus
      */
     private int remainingTime;
 
     /**
      * Status of the arena
      *
-     * @see     ArenaStatus
+     * @see ArenaStatus
      */
     private ArenaStatus status;
 
-    /** List of players which are on the arena */
+    /**
+     * List of players which are on the arena
+     */
     private final List<PlayerDat> players = new ArrayList<PlayerDat>();
 
     /**
      * Arena Location (all the locations of that arena)
      *
-     * @see     ArenaLocation
+     * @see ArenaLocation
      */
     private ArenaLocation arenaLocation;
 
     /**
      * Arena Dat (status of that game)
      *
-     * @see     ArenaDat
+     * @see ArenaDat
      */
     private ArenaDat arenaDat;
 
     /**
      * Constructor of Arena
      *
-     * @param arenaNumber       the arena to reset
-     * @param mapName           the name of the map
-     * @param arenaLocation     the arena location of the arena
+     * @param arenaNumber   the arena to reset
+     * @param mapName       the name of the map
+     * @param arenaLocation the arena location of the arena
      */
     private Arena(int arenaNumber, String mapName, ArenaLocation arenaLocation) {
         this.arenaNumber = arenaNumber;
@@ -96,8 +108,8 @@ public class Arena {
     /**
      * Creates a new arena and add it to the server
      *
-     * @return          true it well succeeded
-     * @see             Arena
+     * @return true it well succeeded
+     * @see Arena
      */
     public static boolean createNewArena() {
         // Arena Number
@@ -113,7 +125,7 @@ public class Arena {
             return false;
         Arena arena = new Arena(arenaNumber, mapName, arenaLocation);
         arena.getArenaDat().setGameNumber(nextGameNumber()); // Set GameNumber
-        if(addArena(arena))
+        if (addArena(arena))
             return true;
         return false;
     }
@@ -121,10 +133,10 @@ public class Arena {
     /**
      * Loads the locations from a given map name.
      *
-     * @param file      the locations file
-     * @param mapName   map name which will be used to create the locations
-     * @return          the arenalocation of that map
-     * @see             ArenaLocation
+     * @param file    the locations file
+     * @param mapName map name which will be used to create the locations
+     * @return the arenalocation of that map
+     * @see ArenaLocation
      */
     private static ArenaLocation createArenaLocation(File file, String mapName) {
         if (!file.exists()) {
@@ -179,13 +191,13 @@ public class Arena {
      * Resets an arena to its original state. It removes the map game, then load a new one and finally
      * resets the arena Status, RemainingTime, ArenaLocation and GameNumber.
      *
-     * @param arena     the arena to be reseted
-     * @return          true if arena was reseted
-     * @see             Arena
+     * @param arena the arena to be reseted
+     * @return true if arena was reseted
+     * @see Arena
      */
     public static boolean resetArena(Arena arena) {
         /* DELETE EXISTING MAP */
-        if(!removeMap(arena))
+        if (!removeMap(arena))
             return false;
 
         /* ADD NEW MAP */
@@ -210,21 +222,21 @@ public class Arena {
     /**
      * Removes an arena from the server.
      *
-     * @param arena         the arena to be removed
-     * @return              true it was successful when removing it
-     * @see                 Arena
+     * @param arena the arena to be removed
+     * @return true it was successful when removing it
+     * @see Arena
      */
     public static boolean removeArena(Arena arena) {
         // Remove From List
         arenas.remove(arena);
 
         // Delete existing map
-        if(!removeMap(arena))
+        if (!removeMap(arena))
             return false;
 
         // New Arena if Needed
         if (Arena.getNumberAvailableArenas() <= 1) {
-            if(!Arena.createNewArena())
+            if (!Arena.createNewArena())
                 return true;
         }
 
@@ -234,19 +246,19 @@ public class Arena {
     /**
      * Unloads and remove the map from the Arena.
      *
-     * @param arena         the arena to remove the map from
-     * @return              true it was successful when removing it
-     * @see                 Arena
+     * @param arena the arena to remove the map from
+     * @return true it was successful when removing it
+     * @see Arena
      */
     private static boolean removeMap(Arena arena) {
         // Unload of the World
-        if (!WorldAPI.unloadWorld(arena.getMapName())){
+        if (!WorldAPI.unloadWorld(arena.getMapName())) {
             System.out.println("Error while unloading world " + arena.getMapName());
             return false;
         }
 
         // Remove Directory
-        if(WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
+        if (WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
             return true;
 
         System.out.println("Error while removing world directory " + arena.getMapName());
@@ -256,9 +268,9 @@ public class Arena {
     /**
      * Remove a player from the arena he was playing.
      *
-     * @param playerDat     playerDat to be removed
-     * @return              true it was successful when removing it
-     * @see                 PlayerDat
+     * @param playerDat playerDat to be removed
+     * @return true it was successful when removing it
+     * @see PlayerDat
      */
     public static boolean removePlayer(PlayerDat playerDat) {
         Arena arena = getArenaByPlayer(playerDat);
@@ -273,8 +285,8 @@ public class Arena {
      * Returns the new loaded map name. First it copies one random map from backup folder
      * to the root folder and then it loads that new map.
      *
-     * @param arenaNumber   the arena which will use the new map
-     * @return              the name of the map
+     * @param arenaNumber the arena which will use the new map
+     * @return the name of the map
      */
     private static String addNewMap(int arenaNumber) {
         // Current Directory
@@ -294,7 +306,7 @@ public class Arena {
         // Copy World
         WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
         // Load World
-        if(!WorldAPI.loadWorld(mapName)){
+        if (!WorldAPI.loadWorld(mapName)) {
             System.out.println("Error while creating a new arena! World is null!");
             return null;
         }
@@ -306,8 +318,8 @@ public class Arena {
      * Adds a new arena to the server. Checks if there is already an arena
      * with the same arena number as the given one.
      *
-     * @param arena     the arena to add
-     * @return          wether it it was successful when adding arena or not
+     * @param arena the arena to add
+     * @return wether it it was successful when adding arena or not
      */
     private static boolean addArena(Arena arena) {
         if (getArenaByNumber(arena.getArenaNumber()) != null)
@@ -320,8 +332,8 @@ public class Arena {
      * Adds a new player to the game. Checks which one has more players online
      * and that has not started yet.
      *
-     * @param playerDat     the playerDat to add to the game
-     * @return              wether it was successful when adding the playerDat or not
+     * @param playerDat the playerDat to add to the game
+     * @return wether it was successful when adding the playerDat or not
      */
     public static boolean addPlayer(PlayerDat playerDat) {
         if (getArenaByPlayer(playerDat) != null)
@@ -340,7 +352,7 @@ public class Arena {
         Arena arena = Arena.arenas.get(posArena);
 
         // Add it to the arena
-        if(addPlayer(playerDat, arena))
+        if (addPlayer(playerDat, arena))
             return true;
         return false;
     }
@@ -348,9 +360,9 @@ public class Arena {
     /**
      * Adds a player to the given arena. Checks if he is not already ingame.
      *
-     * @param playerDat     the playerDat to add to the game
-     * @param arena         the arena where to add the playerDat
-     * @return              wether it it was successful when adding the playerDat or not
+     * @param playerDat the playerDat to add to the game
+     * @param arena     the arena where to add the playerDat
+     * @return wether it it was successful when adding the playerDat or not
      */
     public static boolean addPlayer(PlayerDat playerDat, Arena arena) {
         if (getArenaByPlayer(playerDat) != null)
@@ -375,12 +387,12 @@ public class Arena {
     /**
      * Send a message to all the players in the arena
      *
-     * @param message       message to be sent
+     * @param message message to be sent
      */
-    public void sendMessageToArena(String message){
-        for(PlayerDat playerDat : this.getPlayers()){
+    public void sendMessageToArena(String message) {
+        for (PlayerDat playerDat : this.getPlayers()) {
             Player player = Bukkit.getPlayer(playerDat.getUUID());
-            if(player == null){
+            if (player == null) {
                 this.removePlayer(playerDat);
                 continue;
             }
@@ -392,7 +404,7 @@ public class Arena {
     /**
      * Returns all the arenas from the server
      *
-     * @return          list with all the arenas
+     * @return list with all the arenas
      */
     public static List<Arena> getArenas() {
         return Arena.arenas;
@@ -401,9 +413,9 @@ public class Arena {
     /**
      * Find an arena with a given number.
      *
-     * @param number        number of the arena
-     * @return              the arena which has that game number
-     * @see                 Arena
+     * @param number number of the arena
+     * @return the arena which has that game number
+     * @see Arena
      */
     private static Arena getArenaByNumber(int number) {
         for (int i = 0; i < Arena.arenas.size(); i++)
@@ -415,9 +427,9 @@ public class Arena {
     /**
      * Find the arena where a player is playing.
      *
-     * @param playerDat     playerDat to get the arena
-     * @return              the arena where the player is playing
-     * @see                 Arena
+     * @param playerDat playerDat to get the arena
+     * @return the arena where the player is playing
+     * @see Arena
      */
     public static Arena getArenaByPlayer(PlayerDat playerDat) {
         for (int i = 0; i < Arena.arenas.size(); i++)
@@ -430,7 +442,7 @@ public class Arena {
     /**
      * Returns the number of available arenas
      *
-     * @return      number of available arenas
+     * @return number of available arenas
      */
     public static int getNumberAvailableArenas() {
         int numero = 0;
@@ -443,7 +455,7 @@ public class Arena {
     /**
      * Returns a list with all available arenas
      *
-     * @return      list of available arenas
+     * @return list of available arenas
      */
     public static List<Arena> getAvailableArenas() {
         List<Arena> arenasAvailable = new ArrayList<Arena>();
@@ -456,7 +468,7 @@ public class Arena {
     /**
      * Returns the next arena number
      *
-     * @return          next arena number
+     * @return next arena number
      */
     private static int nextArenaNumber() {
         List<Integer> arenasNumbers = new ArrayList<Integer>();
@@ -477,7 +489,7 @@ public class Arena {
     /**
      * Returns the next game number
      *
-     * @return       next game number (eg: 18AX2)
+     * @return next game number (eg: 18AX2)
      */
     private static String nextGameNumber() {
         String gameNumber = "";
@@ -502,12 +514,12 @@ public class Arena {
                     gameNumberChar[i] = ++currentChar;
                     gameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
-                } else if(currentChar == '9'){
+                } else if (currentChar == '9') {
                     char[] gameNumberChar = gameNumber.toCharArray();
                     gameNumberChar[i] = 'A';
                     gameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
-                } else if(currentChar == 'Z') {
+                } else if (currentChar == 'Z') {
                     char[] gameNumberChar = gameNumber.toCharArray();
                     gameNumberChar[i] = '0';
                     gameNumber = String.valueOf(gameNumberChar);
@@ -524,7 +536,7 @@ public class Arena {
     /**
      * Return the arena number
      *
-     * @return          arena number
+     * @return arena number
      */
     public int getArenaNumber() {
         return arenaNumber;
@@ -533,7 +545,7 @@ public class Arena {
     /**
      * Return the map name
      *
-     * @return          name of the current map
+     * @return name of the current map
      */
     public String getMapName() {
         return mapName;
@@ -542,7 +554,7 @@ public class Arena {
     /**
      * Return the remaining time of the arena (might be remaining time of lobby etc)
      *
-     * @return          remaining time
+     * @return remaining time
      */
     public int getRemainingTime() {
         return remainingTime;
@@ -551,8 +563,8 @@ public class Arena {
     /**
      * Return the arena status
      *
-     * @return      status of the arena
-     * @see         ArenaStatus
+     * @return status of the arena
+     * @see ArenaStatus
      */
     public ArenaStatus getStatus() {
         return status;
@@ -561,8 +573,8 @@ public class Arena {
     /**
      * Return the arena location
      *
-     * @return      locations of the arena
-     * @see         ArenaLocation
+     * @return locations of the arena
+     * @see ArenaLocation
      */
     public ArenaLocation getArenaLocation() {
         return arenaLocation;
@@ -571,8 +583,8 @@ public class Arena {
     /**
      * Return the arena dat
      *
-     * @return      arena dat
-     * @see         ArenaDat
+     * @return arena dat
+     * @see ArenaDat
      */
     public ArenaDat getArenaDat() {
         return arenaDat;
@@ -581,7 +593,7 @@ public class Arena {
     /**
      * Return a list with the players on the arena
      *
-     * @return      list with all the players
+     * @return list with all the players
      */
     public List<PlayerDat> getPlayers() {
         return players;
@@ -590,7 +602,7 @@ public class Arena {
     /**
      * Return a list with the alive players on the arena
      *
-     * @return      list with all alive players
+     * @return list with all alive players
      */
     public List<PlayerDat> getAlivePlayers() {
         List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
@@ -603,7 +615,7 @@ public class Arena {
     /**
      * Return a list with the dead players on the arena
      *
-     * @return      list with all dead players
+     * @return list with all dead players
      */
     public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
@@ -616,7 +628,7 @@ public class Arena {
     /**
      * Return a list with the spectator players on the arena
      *
-     * @return      list with all spectators players
+     * @return list with all spectators players
      */
     public List<PlayerDat> getSpectatorPlayers() {
         List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
@@ -629,7 +641,7 @@ public class Arena {
     /**
      * Set the map name of the arena
      *
-     * @param mapName       the name of the new map
+     * @param mapName the name of the new map
      */
     public void setMapName(String mapName) {
         this.mapName = mapName;
@@ -638,7 +650,7 @@ public class Arena {
     /**
      * Set the remaining time of the arena
      *
-     * @param remainingTime         the remaining time to set the arena
+     * @param remainingTime the remaining time to set the arena
      */
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
@@ -647,7 +659,7 @@ public class Arena {
     /**
      * Set the status of the arena
      *
-     * @param status        the arena status to replace the existing
+     * @param status the arena status to replace the existing
      */
     public void setStatus(ArenaStatus status) {
         this.remainingTime = status.getTime();
@@ -657,7 +669,7 @@ public class Arena {
     /**
      * Set the arena location of the arena
      *
-     * @param arenaLocation     the arena location to replace the existing
+     * @param arenaLocation the arena location to replace the existing
      */
     public void setArenaLocation(ArenaLocation arenaLocation) {
         this.arenaLocation = arenaLocation;
@@ -666,13 +678,15 @@ public class Arena {
     /**
      * Set the arena dat of the arena
      *
-     * @param arenaDat      the arena dat to replace the existing
+     * @param arenaDat the arena dat to replace the existing
      */
     public void setArenaDat(ArenaDat arenaDat) {
         this.arenaDat = arenaDat;
     }
 
-    /** Set the players of the arena */
+    /**
+     * Set the players of the arena
+     */
     public void clearPlayers() {
         this.players.clear();
     }

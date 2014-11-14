@@ -2,7 +2,7 @@ package net.RevTut.Skywars.utils;
 
 /**
  * Converters.
- *
+ * <p/>
  * <P>Usefull converters to be used.</P>
  *
  * @author Joao Silva
@@ -13,8 +13,8 @@ public class Converters {
     /**
      * Convert a text to JSON format
      *
-     * @param text      text to be converted
-     * @return          converted text to JSON
+     * @param text text to be converted
+     * @return converted text to JSON
      */
     public static String convertToJSON(String text) {
         if (text == null || text.length() == 0) {
@@ -69,8 +69,8 @@ public class Converters {
     /**
      * Replace some text with special characters in a text
      *
-     * @param text      text to be replaced
-     * @return          text with special characters
+     * @param text text to be replaced
+     * @return text with special characters
      */
     public static String convertSpecialCharacters(String text) {
         // First Section
@@ -116,8 +116,8 @@ public class Converters {
     /**
      * Convert hours to days
      *
-     * @param hours     hours to be converted
-     * @return          converted days
+     * @param hours hours to be converted
+     * @return converted days
      */
     private static long convertHoursToDays(long hours) {
         return hours / 24;
@@ -126,8 +126,8 @@ public class Converters {
     /**
      * Convert minutes to hours
      *
-     * @param minutes   minutes to be converted
-     * @return          converted hours
+     * @param minutes minutes to be converted
+     * @return converted hours
      */
     private static long convertMinutesToHours(long minutes) {
         return minutes / 60;
@@ -136,8 +136,8 @@ public class Converters {
     /**
      * Convert seconds to minutes
      *
-     * @param seconds   seconds to be converted
-     * @return          converted minutes
+     * @param seconds seconds to be converted
+     * @return converted minutes
      */
     private static long convertSecondsToMinutes(long seconds) {
         return seconds / 60;
@@ -147,8 +147,8 @@ public class Converters {
      * Convert seconds to D : H : M : S format.
      * Days : Hours : Minutes : Seconds
      *
-     * @param sec       seconds to be converted
-     * @return          seconds converted to the format
+     * @param sec seconds to be converted
+     * @return seconds converted to the format
      */
     public static String convertSecondsToDHMS(long sec) {
 

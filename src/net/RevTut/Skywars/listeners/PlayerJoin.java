@@ -4,7 +4,6 @@ import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
-import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 /**
  * Player Join.
- *
+ * <p/>
  * <P>Controls the join event.</P>
  *
  * @author Joao Silva
@@ -26,24 +25,26 @@ import java.util.UUID;
  */
 public class PlayerJoin implements Listener {
 
-    /** Main class */
+    /**
+     * Main class
+     */
     private final Main plugin;
 
     /**
      * Constructor of PlayerJoin
      *
-     * @param plugin    main class
+     * @param plugin main class
      */
     public PlayerJoin(final Main plugin) {
         this.plugin = plugin;
     }
 
     /**
-     *  Takes care of a player when he joins. Create the PlayerDat of him and assign him to
-     *  an existing arena. If needed it creates a new one.
+     * Takes care of a player when he joins. Create the PlayerDat of him and assign him to
+     * an existing arena. If needed it creates a new one.
      *
-     * @param e     player join event
-     * @see         PlayerJoinEvent
+     * @param e player join event
+     * @see PlayerJoinEvent
      */
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

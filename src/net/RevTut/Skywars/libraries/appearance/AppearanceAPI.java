@@ -12,7 +12,7 @@ import java.util.Random;
 
 /**
  * Appearance Library.
- *
+ * <p/>
  * <P>A library with methods related to game appearance.</P>
  *
  * @author Joao Silva
@@ -20,18 +20,22 @@ import java.util.Random;
  */
 public class AppearanceAPI {
 
-    /** Main class */
+    /**
+     * Main class
+     */
     private static Main plugin = new Main();
 
-    /** Copy of random class */
+    /**
+     * Copy of random class
+     */
     private static final Random r = new Random();
 
     /**
      * Launch firework on player
      *
-     * @param player    player to launch firework
-     * @param amount    amount of fireworks to launch
-     * @param delay     delay between each firework
+     * @param player player to launch firework
+     * @param amount amount of fireworks to launch
+     * @param delay  delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
         for (int i = 0; i < amount; i++) {
@@ -75,8 +79,8 @@ public class AppearanceAPI {
     /**
      * Convert integer to color
      *
-     * @param c     integer to be converted
-     * @return      correspondent color
+     * @param c integer to be converted
+     * @return correspondent color
      */
     private static Color getColor(final int c) {
         switch (c) {

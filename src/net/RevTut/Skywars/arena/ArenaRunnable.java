@@ -16,7 +16,7 @@ import java.util.UUID;
 
 /**
  * Arena Runnable.
- *
+ * <p/>
  * <P>Takes care of all the arenas when it comes to remaining time.</P>
  *
  * @author Joao Silva
@@ -24,16 +24,20 @@ import java.util.UUID;
  */
 public class ArenaRunnable implements Runnable {
 
-    /** Main class */
+    /**
+     * Main class
+     */
     private final Main plugin;
 
-    /** Runnable ID */
+    /**
+     * Runnable ID
+     */
     private static int id;
 
     /**
      * Constructor of ArenaRunnable
      *
-     * @param plugin        the Main class
+     * @param plugin the Main class
      */
     public ArenaRunnable(Main plugin) {
         this.plugin = plugin;
@@ -42,7 +46,7 @@ public class ArenaRunnable implements Runnable {
     /**
      * Returns the task ID
      *
-     * @return          ID of the task
+     * @return ID of the task
      */
     public int getId() {
         return id;
@@ -51,18 +55,22 @@ public class ArenaRunnable implements Runnable {
     /**
      * Sets the ID of the runnable.
      *
-     * @param id        new ID for the task
+     * @param id new ID for the task
      */
     public void setId(int id) {
         this.id = id;
     }
 
-    /** Cancel this task from being run. */
+    /**
+     * Cancel this task from being run.
+     */
     public static void cancel() {
         Bukkit.getScheduler().cancelTask(id);
     }
 
-    /** Runnable which controls the remaining time of all arenas */
+    /**
+     * Runnable which controls the remaining time of all arenas
+     */
     @Override
     public void run() {
         int remainingTime;
@@ -83,7 +91,7 @@ public class ArenaRunnable implements Runnable {
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
                 // Decrement remaining time
-                if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= Arena.minReduceTimePlayers){
+                if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= Arena.minReduceTimePlayers) {
                     arena.sendMessageToArena("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
                     arena.setRemainingTime(31);
                 }
@@ -109,7 +117,7 @@ public class ArenaRunnable implements Runnable {
     /**
      * Sets the player level to remaining time.
      *
-     * @param arena     arena which is on lobby
+     * @param arena arena which is on lobby
      */
     public void onLobby(Arena arena) {
         int remainingTime = arena.getRemainingTime();
@@ -126,7 +134,7 @@ public class ArenaRunnable implements Runnable {
      * If the remaining time is of 10, 5...0 it will display a message on the
      * player's screen telling the remaining time.
      *
-     * @param arena     arena which is on pre game
+     * @param arena arena which is on pre game
      */
     public void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
@@ -180,7 +188,7 @@ public class ArenaRunnable implements Runnable {
      * Controls the remaining time. If the remaining time is of 60, 10, 5...0 it will display a message on the
      * player's screen telling the remaining time.
      *
-     * @param arena     arena which is in game
+     * @param arena arena which is in game
      */
     public void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
@@ -249,7 +257,7 @@ public class ArenaRunnable implements Runnable {
     /**
      * Launch fireworks on the winner of the game.
      *
-     * @param arena     arena which is on end game
+     * @param arena arena which is on end game
      */
     public void onEndGame(Arena arena) {
         // Launch Firework
@@ -271,7 +279,7 @@ public class ArenaRunnable implements Runnable {
      * Switch an arena from lobby to pre game.
      * Teleports all the players to the spawn locations with delay between teleports.
      *
-     * @param arena     arena to switch
+     * @param arena arena to switch
      */
     public void fromLobbyToPreGame(Arena arena) {
         // Change Status
@@ -302,7 +310,7 @@ public class ArenaRunnable implements Runnable {
      * Switch an arena from pre game to in game.
      * Remove the glass block under the player.
      *
-     * @param arena     arena to switch
+     * @param arena arena to switch
      */
     public void fromPreGameToInGame(Arena arena) {
         // Change Status
@@ -326,7 +334,7 @@ public class ArenaRunnable implements Runnable {
      * Switch an arena from in game to end game.
      * Teleport all the players to the center of the arena.
      *
-     * @param arena     arena to switch
+     * @param arena arena to switch
      */
     public void fromInGameToEndGame(Arena arena) {
         // Change Status
@@ -356,7 +364,7 @@ public class ArenaRunnable implements Runnable {
      * Switch an arena from end game to lobby.
      * Teleport all the players to the center of the arena.
      *
-     * @param arena     arena to switch
+     * @param arena arena to switch
      */
     public void fromEndGameToLobby(final Arena arena) {
         // Check if we can transfer this players to a new arena
