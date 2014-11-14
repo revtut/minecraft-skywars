@@ -10,6 +10,7 @@ import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -43,6 +44,7 @@ public class PlayerDeath implements Listener {
      * @param e player death event
      * @see PlayerDeathEvent
      */
+    @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         // Target player
         Player alvo = e.getEntity();
