@@ -70,22 +70,22 @@ public class PlayerDeath implements Listener {
                 return;
         }
         // Messages & Title
-        TitleAPI.sendTimings(alvo, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
+        TitleAPI.sendTimings(alvo, 5, 60, 5);
         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
         if(damager != null) {
             // Message to arena
-            alvoArena.sendMessageToArena("§4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
+            alvoArena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             // Subtitle
             // Target
             TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7" + damager.getName()));
             // Title and SubTitle
             // Damager
-            TitleAPI.sendTimings(damager, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
+            TitleAPI.sendTimings(damager, 5, 60, 5);
             TitleAPI.sendTitle(damager, Converters.convertToJSON("§aMATASTE"));
             TitleAPI.sendSubTitle(damager,Converters.convertToJSON("§7" + alvo.getName()));
         }else {
             // Message to arena
-            alvoArena.sendMessageToArena("§4" + alvo.getName() + " morreu.");
+            alvoArena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
         }
         // Scoreboard update alive players and dead
         ScoreBoard.updateAlive(alvoArena);

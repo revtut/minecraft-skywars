@@ -279,6 +279,14 @@ public class Arena {
             return false;
 
         arena.getPlayers().remove(playerDat);
+
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null)
+            return false;
+
+        // Message to arena
+        arena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 saiu da arena!");
+
         return true;
     }
 
@@ -381,6 +389,9 @@ public class Arena {
         TitleAPI.sendTimings(player, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
         TitleAPI.sendTitle(player, Main.titleMessage);
         TitleAPI.sendSubTitle(player, Main.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+
+        // Message to arena
+        arena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
 
         // Update scoreboard
         ScoreBoard.updateAlive(arena);
