@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.*;
@@ -46,6 +47,11 @@ public class PlayerDamage {
             e.setCancelled(true);
             return;
         }
+        Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
+        if(alvoArena == null){
+            e.setCancelled(true);
+            return;
+        }
         // Damager
         Player damager = null;
         Entity entity = e.getDamager();
@@ -61,6 +67,16 @@ public class PlayerDamage {
             return;
         }
         if(damagerDat.getStatus() != PlayerStatus.ALIVE){ // Check if damager is alive
+            e.setCancelled(true);
+            return;
+        }
+        Arena damagerArena = Arena.getArenaByPlayer(damagerDat);
+        if(damagerArena == null){
+            e.setCancelled(true);
+            return;
+        }
+        // Check if they are in the same arena
+        if(alvoArena.getArenaNumber() != damagerArena.getArenaNumber()){
             e.setCancelled(true);
             return;
         }
@@ -85,6 +101,11 @@ public class PlayerDamage {
         Player alvo = (Player) e.getEntity();
         PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null){
+            e.setCancelled(true);
+            return;
+        }
+        Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
+        if(alvoArena == null){
             e.setCancelled(true);
             return;
         }
