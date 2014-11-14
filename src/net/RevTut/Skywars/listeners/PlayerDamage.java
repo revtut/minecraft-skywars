@@ -5,6 +5,7 @@ import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -20,7 +21,7 @@ import java.util.UUID;
  * @author WaxCoder
  * @version 1.0
  */
-public class PlayerDamage {
+public class PlayerDamage implements Listener {
 
     /** Map with last targets and damagers */
     public static Map<UUID, UUID> lastPlayerDamager = new HashMap<UUID, UUID>();

@@ -3,8 +3,7 @@ package net.RevTut.Skywars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
-import net.RevTut.Skywars.listeners.PlayerChat;
-import net.RevTut.Skywars.listeners.PlayerJoin;
+import net.RevTut.Skywars.listeners.*;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
@@ -100,7 +99,10 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
         pm.registerEvents(new PlayerChat(), this);
+        pm.registerEvents(new PlayerDamage(), this);
+        pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerJoin(this), this);
+        pm.registerEvents(new PlayerRespawn(), this);
     }
 
     /**
