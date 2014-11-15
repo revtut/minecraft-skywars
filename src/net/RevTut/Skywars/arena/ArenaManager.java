@@ -290,17 +290,20 @@ public class ArenaManager {
     public boolean addPlayer(PlayerDat playerDat) {
         if (getArenaByPlayer(playerDat) != null)
             return false;
+
         // Look for available arena
         int posArena = -1;
-        int maxPlayers = -1;
+        int maxArenaPlayers = -1;
         for (int i = 0; i < arenas.size(); i++)
             if (arenas.get(i).getStatus() == ArenaStatus.LOBBY) // Waiting For Players
                 if (arenas.get(i).getPlayers().size() < maxPlayers) // Not Full
-                    if (arenas.get(i).getPlayers().size() > maxPlayers) // Arena With Highest Amount of Players
+                    if (arenas.get(i).getPlayers().size() > maxArenaPlayers) // Arena With Highest Amount of Players
                         posArena = i;
+
         // Check if an arena was found
         if (posArena == -1)
             return false;
+
         Arena arena = arenas.get(posArena);
 
         // Add it to the arena
@@ -317,11 +320,12 @@ public class ArenaManager {
     public boolean addPlayer(PlayerDat playerDat, Arena arena) {
         if (getArenaByPlayer(playerDat) != null)
             return false;
+
         // Teleport To Lobby
         Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if (player == null) {
+        if (player == null)
             return false;
-        }
+
         player.teleport(arena.getArenaLocation().getLobbyLocation());
         // Add Player To Arena
         arena.getPlayers().add(playerDat);

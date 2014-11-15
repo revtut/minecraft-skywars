@@ -73,15 +73,18 @@ public class PlayerJoin implements Listener {
                         // Add to Arena
                         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
                         if (playerDat == null) {
+                            System.out.println("PlayerDat is null on join!");
                             /** Send him to Hub. Error in playerDat */
                             return;
                         }
                         if (!plugin.arenaManager.addPlayer(playerDat)) {
+                            System.out.println("Could not add the player to an Arena on join!");
                             /** Send him to Hub. No arena available */
                             return;
                         }
                         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
+                            System.out.println("Player's Arena is null on join!");
                             /** Send him to Hub. Error in arena */
                             return;
                         }
