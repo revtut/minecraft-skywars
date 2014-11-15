@@ -2,12 +2,14 @@ package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.ScoreBoard;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,6 +61,12 @@ public class PlayerDeath implements Listener {
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null)
             return;
+        // ArenaDat
+        ArenaDat arenaDat = alvoArena.getArenaDat();
+        if (arenaDat == null) {
+            System.out.println("ArenaDat is null when player dies!");
+            return;
+        }
         // Damager player
         Player damager = null;
         PlayerDat damagerDat = null;
@@ -80,6 +88,7 @@ public class PlayerDeath implements Listener {
         if(damager != null) {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
+            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Subtitle
             // Target
             TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7" + damager.getName()));
@@ -91,6 +100,7 @@ public class PlayerDeath implements Listener {
         }else {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
+            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Subtitle
             // Target
             TitleAPI.sendSubTitle(alvo,Converters.convertToJSON(""));

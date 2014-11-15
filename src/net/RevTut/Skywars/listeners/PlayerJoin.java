@@ -70,18 +70,20 @@ public class PlayerJoin implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        // Add to Arena
+                        // PlayerDat
                         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
                         if (playerDat == null) {
                             System.out.println("PlayerDat is null on join!");
                             /** Send him to Hub. Error in playerDat */
                             return;
                         }
+                        // Add to Arena
                         if (!plugin.arenaManager.addPlayer(playerDat)) {
                             System.out.println("Could not add the player to an Arena on join!");
                             /** Send him to Hub. No arena available */
                             return;
                         }
+                        // Arena
                         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
                             System.out.println("Player's Arena is null on join!");

@@ -6,6 +6,7 @@ import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.ScoreBoard;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -208,10 +209,8 @@ public class ArenaManager {
         arenas.remove(arena);
 
         // Delete existing map
-        if (!removeMap(arena))
-            return false;
+        return removeMap(arena);
 
-        return true;
     }
 
     /**
@@ -246,8 +245,17 @@ public class ArenaManager {
      */
     public boolean removePlayer(PlayerDat playerDat, boolean checkArena) {
         final Arena arena = getArenaByPlayer(playerDat);
-        if (arena == null)
+        if (arena == null) {
+            System.out.println("Arena is null when removing a player!");
             return false;
+        }
+
+        // ArenaDat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null) {
+            System.out.println("ArenaDat is null when removing a player!");
+            return false;
+        }
 
         arena.getPlayers().remove(playerDat);
 
@@ -257,6 +265,7 @@ public class ArenaManager {
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 saiu da arena!");
+        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
 
         if(checkArena){
             // Check if game already started
@@ -390,12 +399,20 @@ public class ArenaManager {
         if (getArenaByPlayer(playerDat) != null)
             return false;
 
+        // ArenaDat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null) {
+            System.out.println("ArenaDat is null when trying to add a player!");
+            /** Send him to Hub. Error in arena */
+            return false;
+        }
+
         // Teleport To Lobby
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null)
             return false;
-
         player.teleport(arena.getArenaLocation().getLobbyLocation());
+
         // Add Player To Arena
         arena.getPlayers().add(playerDat);
 
@@ -406,6 +423,7 @@ public class ArenaManager {
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
+        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
 
         // Update scoreboard
         ScoreBoard.updateAlive(arena);

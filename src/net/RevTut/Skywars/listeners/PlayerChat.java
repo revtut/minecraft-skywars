@@ -1,7 +1,10 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -78,13 +81,30 @@ public class PlayerChat implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
+
+        // Cancel event. You always do as you cannot speak in Global Chat so you just send a message to the arena
+        e.setCancelled(true);
+
+        // PlayerDat
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
             player.sendMessage("§7[§6Inspetor§7] §4Ha um erro com o teu perfil! Reloga por favor.");
-            e.setCancelled(true);
             return;
         }
 
+        // Arena
+        Arena playerArena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == playerArena){
+            player.sendMessage("§7[§6Inspetor§7] §4Nao te encontras em nenhuma arena! Reloga por favor.");
+            return;
+        }
+
+        // ArenaDat
+        ArenaDat arenaDat = playerArena.getArenaDat();
+        if(null == arenaDat){
+            player.sendMessage("§7[§6Inspetor§7] §4Existe um erro na tua Arena! Reloga por favor.");
+            return;
+        }
 
         // Cooldown
         if (cooldownMessage.containsKey(player.getUniqueId())) {
@@ -125,7 +145,6 @@ public class PlayerChat implements Listener {
             if (verificar)
                 if (matcherip.find() || matcherweb.find()) {
                     player.sendMessage("§7[§6Inspetor§7] §4Publicidade é igual a banimento permanente!");
-                    e.setCancelled(true);
                     return;
                 }
         }
@@ -135,7 +154,6 @@ public class PlayerChat implements Listener {
             for (final String block : blocked) {
                 if (mensagem_verificacoes.toLowerCase().contains(block.toLowerCase())) {
                     player.sendMessage("§7[§6Inspetor§7] §4Por favor nao uses ma linguagem!");
-                    e.setCancelled(true);
                     return;
                 }
             }
@@ -146,7 +164,6 @@ public class PlayerChat implements Listener {
             if (lastMessage.containsKey(player.getUniqueId())) {
                 if (lastMessage.get(player.getUniqueId()).equalsIgnoreCase(mensagem_verificacoes)) {
                     player.sendMessage("§7[§6Inspetor§7] §4Nao podes mandar mensagens duplicadas!");
-                    e.setCancelled(true);
                     return;
                 } else
                     lastMessage.put(player.getUniqueId(), mensagem_verificacoes);
@@ -174,7 +191,6 @@ public class PlayerChat implements Listener {
                     numeroLetrasRepetidas++;
                     if (numeroLetrasRepetidas >= 4) {
                         player.sendMessage("§7[§6Inspetor§7] §4Por favor nao faças spam!");
-                        e.setCancelled(true);
                         return;
                     }
                 } else {
@@ -205,6 +221,7 @@ public class PlayerChat implements Listener {
         }
 
         // Formato da Mensagem
-        e.setFormat(player.getDisplayName() + " §6» §f" + mensagem);
+        playerArena.sendMessage(player.getDisplayName() + " §6» §f" + mensagem);
+        arenaDat.addGameChat(ChatColor.stripColor(player.getDisplayName() + " » " + mensagem)); // Add to chat log
     }
 }
