@@ -201,12 +201,12 @@ public class ArenaRunnable implements Runnable {
                 case 60:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Segundos Restantes"));
                     break;
                 case 10:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Seconds Remaining"));
+                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Segundos Restantes"));
                     break;
                 case 5:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
@@ -239,14 +239,14 @@ public class ArenaRunnable implements Runnable {
                         return;
                     if (arenaDat.getWinner() == null) {
                         TitleAPI.sendTimings(alvo, 5, 20, 5);
-                        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TIMEOUT"));
-                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7NO WINNER"));
+                        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TEMPO ESGOTADO"));
+                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
                     } else {
                         TitleAPI.sendTimings(alvo, 5, 20, 5);
                         if (arenaDat.getWinner().equals(alvo.getUniqueId().toString()))
-                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aYOU WON"));
+                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
                         else
-                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§cYOU LOST"));
+                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(arenaDat.getWinner()));
                     }
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);

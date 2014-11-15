@@ -91,7 +91,7 @@ public class Main extends JavaPlugin {
             System.out.println("Error while trying to read the files.");
 
         /* Create Arena Manager */
-        arenaManager = new ArenaManager();
+        arenaManager = new ArenaManager(this);
         /* Create Initial Arenas */
         arenaManager.createNewArena();
         arenaManager.createNewArena();
