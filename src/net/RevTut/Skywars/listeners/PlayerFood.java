@@ -12,11 +12,11 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 /**
- * Player Respawn.
+ * Player Food.
  *
- * <P>Controls the respawn event.</P>
+ * <P>Controls the food level change event.</P>
  *
- * @author WaxCoder
+ * @author Joao Silva
  * @version 1.0
  */
 public class PlayerFood implements Listener {

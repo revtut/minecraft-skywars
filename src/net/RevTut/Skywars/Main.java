@@ -105,6 +105,7 @@ public class Main extends JavaPlugin {
         /* Libraries */
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
+        pm.registerEvents(new BlockListener(this), this);
         pm.registerEvents(new PlayerChat(this), this);
         pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
