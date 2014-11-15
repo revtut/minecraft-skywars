@@ -112,7 +112,7 @@ public class ArenaManager {
                     String[] locStringArgs = locString.split(",");
                     float[] parsed = new float[3];
                     for (int a = 0; a < 3; a++) {
-                        parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                        parsed[a] = Float.parseFloat(locStringArgs[a]);
                     }
                     spawnLocations.add(new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]));
                 }
@@ -122,7 +122,7 @@ public class ArenaManager {
                 String[] locStringArgs = locString.split(",");
                 float[] parsed = new float[3];
                 for (int a = 0; a < 3; a++) {
-                    parsed[a] = Float.parseFloat(locStringArgs[a + 1]);
+                    parsed[a] = Float.parseFloat(locStringArgs[a]);
                 }
                 // Check which location it is
                 if (message.equalsIgnoreCase("lobbyLocation")) {
