@@ -266,7 +266,7 @@ public class ArenaRunnable implements Runnable {
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null)
             return;
-        if (arenaDat.getWinner() == null)
+        if (arenaDat.getWinner().equals("NULL"))
             return;
         UUID uuid = UUID.fromString(arenaDat.getWinner());
         if (uuid == null)
