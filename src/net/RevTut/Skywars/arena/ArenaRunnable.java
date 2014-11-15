@@ -378,55 +378,42 @@ public class ArenaRunnable implements Runnable {
                 break;
             }
         }
-        // Keep the same arena or move to an existing one
-        if (arenaMove == null) {
-            int i = 0;
-            final Location lobbyLocation = arena.getArenaLocation().getLobbyLocation();
-            for (PlayerDat alvoDat : arena.getPlayers()) {
-                alvoDat.setStatus(PlayerStatus.WAITING); // Set status
-                final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                if (alvo == null)
-                    continue;
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        alvo.teleport(lobbyLocation);
-                    }
-                }, i);
-                i++;
-            }
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.arenaManager.resetArena(arena);
-                }
-            }, i + 20);
-        } else {
-            int i = 0;
-            // Remove all the players from this arena
-            final Arena newArena = arenaMove;
-            for (final PlayerDat alvoDat : arena.getPlayers()) {
-                alvoDat.setStatus(PlayerStatus.WAITING); // Set status
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        plugin.arenaManager.removePlayer(alvoDat);
-                        // Add to new arena
-                        if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {
-                            /** Send him to Hub. Error while adding to arena */
-                            System.out.println("Could not add player to new arena.");
-                        }
-                    }
-                }, i);
-                i++;
-            }
-            // Delete The Arena
+
+        // Set the new arena
+        final Arena newArena;
+        if(arenaMove != null){
+            newArena = arenaMove; // Move to the new arena
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
                     plugin.arenaManager.removeArena(arena);
                 }
-            }, i + 20);
+            }, 100);
+        }
+        else{
+            newArena = arena; // Stay on the same arena
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.arenaManager.resetArena(arena);
+                }
+            }, 100);
+        }
+
+        // Remove players and add them to new arena
+        int i = 0;
+        for (final PlayerDat alvoDat : arena.getPlayers()) {
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.arenaManager.removePlayer(alvoDat, false);
+                    // Add to new arena
+                    if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {
+                        /** Send him to Hub. Error while adding to arena */
+                        System.out.println("Could not add player to the new arena.");
+                    }
+                }
+            }, i);
         }
     }
 }

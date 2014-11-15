@@ -4,6 +4,7 @@ import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -121,11 +122,29 @@ public class ArenaManager {
             }
         }
         // Max and Min Locations
-        Location temp = firstCorner;
-        if(temp == null){
-            System.out.println("Locations are null!");
+        if(lobbyLocation == null){
+            System.out.println("Lobby location is null!");
             return null;
         }
+        if(deathSpawnLocation == null){
+            System.out.println("Death Spawn location is null!");
+            return null;
+        }
+        if(firstCorner == null){
+            System.out.println("First Corner location is null!");
+            return null;
+        }
+        if(secondCorner == null){
+            System.out.println("Second Corner location is null!");
+            return null;
+        }
+        for(Location spawnLocation : spawnLocations)
+            if(spawnLocation == null){
+                System.out.println("One or more spawn locations are null!");
+                return null;
+            }
+
+        Location temp = firstCorner;
         firstCorner = new Location(temp.getWorld(), Math.min(temp.getX(), secondCorner.getX()), Math.min(temp.getY(), secondCorner.getY()), Math.min(temp.getZ(), secondCorner.getZ()));
         secondCorner = new Location(temp.getWorld(), Math.max(temp.getX(), secondCorner.getX()), Math.max(temp.getY(), secondCorner.getY()), Math.max(temp.getZ(), secondCorner.getZ()));
         return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
@@ -213,10 +232,11 @@ public class ArenaManager {
      * Remove a player from the arena he was playing.
      *
      * @param playerDat playerDat to be removed
+     * @param checkArena check if arena has minimum players to continue the game
      * @return true it was successful when removing it
      * @see PlayerDat
      */
-    public boolean removePlayer(PlayerDat playerDat) {
+    public boolean removePlayer(PlayerDat playerDat, boolean checkArena) {
         Arena arena = getArenaByPlayer(playerDat);
         if (arena == null)
             return false;
@@ -229,6 +249,32 @@ public class ArenaManager {
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 saiu da arena!");
+
+        if(checkArena){
+            // Check if game already started
+            if(arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME){
+                if(arena.getAlivePlayers().size() <= 1){
+                    // Send message
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Asignando a uma nova arena devido a jogadores insuficientes!");
+                    // Send remaining players to new arena
+                    for(PlayerDat alvoDat : arena.getPlayers()){
+                        Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                        if(alvo == null)
+                            continue;
+                        if(!removePlayer(alvoDat, false)){
+                            System.out.println("Error while removing PlayerDat from arena on quit!");
+                            /** Send him to Hub. Error while removing him from the arena */
+                        }
+                        if (!addPlayer(alvoDat)) {
+                            System.out.println("Could not add the player to an Arena when not enough players in arena!");
+                            /** Send him to Hub. No arena available */
+                        }
+                    }
+                    // Delete the arena
+                    removeArena(arena);
+                }
+            }
+        }
 
         return true;
     }
@@ -341,6 +387,9 @@ public class ArenaManager {
         // Update scoreboard
         ScoreBoard.updateAlive(arena);
         ScoreBoard.updateDeath(arena);
+
+        // Set Status
+        playerDat.setStatus(PlayerStatus.WAITING);
 
         return true;
     }
