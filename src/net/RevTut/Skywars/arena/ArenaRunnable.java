@@ -269,8 +269,6 @@ public class ArenaRunnable implements Runnable {
         if (arenaDat.getWinner().equals("NULL"))
             return;
         UUID uuid = UUID.fromString(arenaDat.getWinner());
-        if (uuid == null)
-            return;
         Player winner = Bukkit.getPlayer(uuid);
         if (winner == null)
             return;
