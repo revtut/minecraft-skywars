@@ -2,6 +2,7 @@ package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.ArenaManager;
 import net.RevTut.Skywars.arena.ArenaRunnable;
+import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.*;
 import net.RevTut.Skywars.utils.Converters;
@@ -99,6 +100,9 @@ public class Main extends JavaPlugin {
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
         task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
+
+        /* AppearanceAPI Set Main Class */
+        AppearanceAPI.plugin = this;
 
         /* Regist Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();

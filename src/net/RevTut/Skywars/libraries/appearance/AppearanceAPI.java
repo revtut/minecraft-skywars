@@ -23,7 +23,7 @@ public class AppearanceAPI {
     /**
      * Main class
      */
-    private static Main plugin = new Main();
+    public static Main plugin = null;
 
     /**
      * Copy of random class
@@ -38,6 +38,10 @@ public class AppearanceAPI {
      * @param delay  delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
+        if(null == plugin){
+            System.out.println("Main plugin is null inside AppearanceAPI!");
+            return;
+        }
         for (int i = 0; i < amount; i++) {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
@@ -46,7 +50,7 @@ public class AppearanceAPI {
                     final FireworkMeta fm = fw.getFireworkMeta();
 
                     final int fType = r.nextInt(5) + 1;
-                    FireworkEffect.Type type = null;
+                    FireworkEffect.Type type;
                     switch (fType) {
                         case 1:
                             type = FireworkEffect.Type.BALL;
@@ -62,6 +66,10 @@ public class AppearanceAPI {
                             break;
                         case 5:
                             type = FireworkEffect.Type.BURST;
+                            break;
+                        default:
+                            type = FireworkEffect.Type.BALL;
+                            break;
                     }
 
                     final Color c1 = getColor(r.nextInt(16) + 1);

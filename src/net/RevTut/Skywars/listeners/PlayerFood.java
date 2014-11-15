@@ -1,15 +1,12 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
-import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 
 /**
  * Player Food.

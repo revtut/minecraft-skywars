@@ -199,7 +199,7 @@ public class ArenaDat {
     /**
      * Gets the current date formated
      *
-     * return formated current date
+     * @return formated current date
      */
     private String currentDate(){
         Date currentDate = new Date();
