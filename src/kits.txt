@@ -17,3 +17,6 @@ Bypass(Hacker)
 - Direito a respawn quando morre
  - Durabilidade: 1x
 - Armadura: iron
+
+Screamer
+- Ainda por definir
