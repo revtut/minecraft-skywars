@@ -14,6 +14,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.util.Random;
 
 /**
  * Main class.
@@ -31,27 +32,27 @@ public class Main extends JavaPlugin {
     /**
      * Title message on join
      */
-    public static String titleMessage;
+    public String titleMessage;
 
     /**
      * Subtitle message on join
      */
-    public static String subTitleMessage;
+    public String subTitleMessage;
 
     /**
      * Fade in message time
      */
-    public static int fadeIn;
+    public int fadeIn;
 
     /**
      * Fade out message time
      */
-    public static int fadeOut;
+    public int fadeOut;
 
     /**
      * Time on screen of messages
      */
-    public static int timeOnScreen;
+    public int timeOnScreen;
 
     /**
      * Tab list title
@@ -77,6 +78,11 @@ public class Main extends JavaPlugin {
      * Name of the server
      */
     public String servidor = Bukkit.getServerName();
+
+    /**
+     * Copy of Random Class
+     */
+    public Random rand = new Random();
 
     /**
      * Enable the plugin
@@ -111,6 +117,7 @@ public class Main extends JavaPlugin {
         /* Listeners  */
         pm.registerEvents(new BlockListener(this), this);
         pm.registerEvents(new PlayerChat(this), this);
+        pm.registerEvents(new PlayerChest(this), this);
         pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerFood(this), this);

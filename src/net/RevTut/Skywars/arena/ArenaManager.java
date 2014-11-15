@@ -468,9 +468,9 @@ public class ArenaManager {
         arena.getPlayers().add(playerDat);
 
         // Title
-        TitleAPI.sendTimings(player, Main.fadeIn, Main.timeOnScreen, Main.fadeOut);
-        TitleAPI.sendTitle(player, Main.titleMessage);
-        TitleAPI.sendSubTitle(player, Main.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
+        TitleAPI.sendTimings(player, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
+        TitleAPI.sendTitle(player, plugin.titleMessage);
+        TitleAPI.sendSubTitle(player, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
