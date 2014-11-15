@@ -293,7 +293,8 @@ public class ArenaRunnable implements Runnable {
             return;
         }
         // Message
-        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Mapa de Jogo: " + arena.getMapName());
+        String mapName = arena.getMapName().replace("" + arena.getArenaNumber(), "").replaceAll("_", " ");
+        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Mapa de Jogo: " + mapName);
         // Send Players To Spawns
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
@@ -372,6 +373,8 @@ public class ArenaRunnable implements Runnable {
         }
         arenaDat.setEndDate(new Date()); // Set end date
         arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
+        // Message Game Number
+        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Para reportar o jogo, anexe o ID: " + arenaDat.getGameNumber());
         // Teleport to Center Location
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
