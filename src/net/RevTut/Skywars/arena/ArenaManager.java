@@ -499,6 +499,7 @@ public class ArenaManager {
 
         // Inventory
         player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
 
         return true;
     }

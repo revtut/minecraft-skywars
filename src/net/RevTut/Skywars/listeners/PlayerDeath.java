@@ -73,6 +73,7 @@ public class PlayerDeath implements Listener {
 
         // Inventory
         alvo.getInventory().clear();
+        alvo.getInventory().setArmorContents(null);
 
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);

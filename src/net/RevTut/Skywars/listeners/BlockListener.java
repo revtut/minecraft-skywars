@@ -1,6 +1,8 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
@@ -66,7 +68,11 @@ public class BlockListener implements Listener {
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Arena
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+        if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
     }
 
@@ -83,7 +89,11 @@ public class BlockListener implements Listener {
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Arena
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+        if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
     }
 
@@ -100,7 +110,11 @@ public class BlockListener implements Listener {
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Arena
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+        if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
     }
 
@@ -117,7 +131,11 @@ public class BlockListener implements Listener {
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Arena
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+        if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
     }
 }

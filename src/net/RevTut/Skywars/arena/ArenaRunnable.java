@@ -400,6 +400,7 @@ public class ArenaRunnable implements Runnable {
             alvo.setFoodLevel(20);
             // Inventory
             alvo.getInventory().clear();
+            alvo.getInventory().setArmorContents(null);
             // Unhide
             plugin.arenaManager.unhideToArena(alvo, false);
             // Teleport
