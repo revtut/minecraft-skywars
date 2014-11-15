@@ -239,11 +239,11 @@ public class ArenaRunnable implements Runnable {
                     if (arenaDat == null)
                         return;
                     if (arenaDat.getWinner() == null) {
-                        TitleAPI.sendTimings(alvo, 5, 20, 5);
+                        TitleAPI.sendTimings(alvo, 5, 60, 5);
                         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TEMPO ESGOTADO"));
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
                     } else {
-                        TitleAPI.sendTimings(alvo, 5, 20, 5);
+                        TitleAPI.sendTimings(alvo, 5, 60, 5);
                         if (arenaDat.getWinner().equals(alvo.getUniqueId().toString()))
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
                         else
@@ -337,6 +337,7 @@ public class ArenaRunnable implements Runnable {
             return;
         }
         arenaDat.setStartDate(new Date()); // Set start date
+        arenaDat.addGameEvent("Comecou o jogo numero " + arenaDat.getGameNumber());
         // Remove Glass
         for (PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
@@ -368,6 +369,7 @@ public class ArenaRunnable implements Runnable {
             return;
         }
         arenaDat.setEndDate(new Date()); // Set end date
+        arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
         // Teleport to Center Location
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();

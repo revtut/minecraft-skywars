@@ -55,18 +55,22 @@ public class PlayerDeath implements Listener {
         PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null)
             return;
+
         // Status to DEAD
         alvoDat.setStatus(PlayerStatus.DEAD);
+
         // Arena target
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null)
             return;
+
         // ArenaDat
         ArenaDat arenaDat = alvoArena.getArenaDat();
         if (arenaDat == null) {
             System.out.println("ArenaDat is null when player dies!");
             return;
         }
+
         // Damager player
         Player damager = null;
         PlayerDat damagerDat = null;
@@ -82,6 +86,15 @@ public class PlayerDeath implements Listener {
             if(alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
                 return;
         }
+
+        // Scoreboard update alive players and dead
+        ScoreBoard.updateAlive(alvoArena);
+        ScoreBoard.updateDeath(alvoArena);
+
+        // Bypass respawn screen
+        BypassesAPI.respawnBypass(alvo);
+
+
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);
         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
@@ -105,11 +118,17 @@ public class PlayerDeath implements Listener {
             // Target
             TitleAPI.sendSubTitle(alvo,Converters.convertToJSON(""));
         }
-        // Bypass respawn screen
-        BypassesAPI.respawnBypass(alvo);
-        // Scoreboard update alive players and dead
-        ScoreBoard.updateAlive(alvoArena);
-        ScoreBoard.updateDeath(alvoArena);
+
+        // Check if game ended
+        if(alvoArena.getAlivePlayers().size() == 1){
+            // Set Remaining Time
+            alvoArena.setRemainingTime(0);
+            // Winner Dat
+            PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
+            if(winnerDat != null)
+                arenaDat.setWinner(winnerDat.getUUID().toString());
+        }
+
         // Stats
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();
