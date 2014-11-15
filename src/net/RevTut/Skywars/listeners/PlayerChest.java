@@ -68,8 +68,14 @@ public class PlayerChest implements Listener{
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if(null == arena)
             return;
-        if(arena.getStatus() != ArenaStatus.INGAME)
+        if(arena.getStatus() != ArenaStatus.INGAME){
+            e.setCancelled(true);
             return;
+        }
+        if(playerDat.getStatus() != PlayerStatus.ALIVE){
+            e.setCancelled(true);
+            return;
+        }
         // Check if block is a Chest
         if(e.getClickedBlock() == null)
             return;

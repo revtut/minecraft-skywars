@@ -245,11 +245,27 @@ public class ArenaRunnable implements Runnable {
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
                         else
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
-                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(arenaDat.getWinner()));
+                        Player winner = Bukkit.getPlayer(arenaDat.getWinner());
+                        if(winner != null)
+                            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(winner.getName()));
+                        else
+                            TitleAPI.sendSubTitle(alvo, "");
                     }
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
                     break;
             }
+        }
+        ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null)
+            return;
+        if (arenaDat.getWinner().equals("NULL")) {
+            arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
+        } else {
+            Player winner = Bukkit.getPlayer(arenaDat.getWinner());
+            if(winner != null)
+                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
+            else
+                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
         }
     }
 
