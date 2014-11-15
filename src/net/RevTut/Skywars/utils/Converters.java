@@ -1,5 +1,7 @@
 package net.RevTut.Skywars.utils;
 
+import java.util.List;
+
 /**
  * Converters.
  *
@@ -160,5 +162,23 @@ public class Converters {
         hours = hours % 60;
 
         return days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
+    }
+
+    /**
+     * Convert a string list to a string
+     *
+     * @param list list with all the strings
+     * @param separator string to separe each string
+     * @return string unified
+     */
+    public static String convertListToString(List<String> list, String separator){
+        String converted = "";
+        for(int i = 0; i < list.size(); i++){
+            if(i < (list.size() - 1))
+                converted += list.get(i) + separator;
+            else
+                converted += list.get(i);
+        }
+        return converted;
     }
 }
