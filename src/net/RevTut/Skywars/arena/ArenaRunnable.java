@@ -380,6 +380,9 @@ public class ArenaRunnable implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+            // Unhide
+            plugin.arenaManager.unhideToArena(alvo, false);
+            // Teleport
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {

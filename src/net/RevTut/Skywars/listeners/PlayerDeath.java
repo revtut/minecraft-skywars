@@ -59,6 +59,9 @@ public class PlayerDeath implements Listener {
         // Status to DEAD
         alvoDat.setStatus(PlayerStatus.DEAD);
 
+        // Hide to Arena
+        plugin.arenaManager.hideToArena(alvo, false);
+
         // Arena target
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null)

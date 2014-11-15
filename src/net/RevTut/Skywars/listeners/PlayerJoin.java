@@ -59,6 +59,8 @@ public class PlayerJoin implements Listener {
         Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
         if (board != null)
             NameTagAPI.setNameTag(board, p, true);
+        // Hide to Server
+        plugin.arenaManager.hideToServer(p, true);
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {

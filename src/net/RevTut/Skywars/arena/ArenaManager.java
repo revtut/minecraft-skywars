@@ -275,7 +275,7 @@ public class ArenaManager {
     }
 
     /**
-     * Remove a player from the arena he was playing.
+     * Remove a player from the arena he was playing. Hide him to the server
      *
      * @param playerDat playerDat to be removed
      * @param checkArena check if arena has minimum players to continue the game
@@ -305,6 +305,9 @@ public class ArenaManager {
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 saiu da arena!");
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
+
+        // Hide to Server
+        plugin.arenaManager.hideToServer(player, true);
 
         if(checkArena){
             // Check if game already started
@@ -432,6 +435,7 @@ public class ArenaManager {
 
     /**
      * Adds a player to the given arena. Checks if he is not already ingame.
+     * Reveals him to the players in the same arena
      *
      * @param playerDat the playerDat to add to the game
      * @param arena     the arena where to add the playerDat
@@ -466,6 +470,9 @@ public class ArenaManager {
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
+
+        // Unhide to Arena
+        plugin.arenaManager.unhideToArena(player, true);
 
         // Update scoreboard
         ScoreBoard.updateAlive(arena);
@@ -611,33 +618,87 @@ public class ArenaManager {
     }
 
     /**
-     * Hide player to the server and the other players to the player
+     * Hide player to the server
      *
-     * @param player player to hide to server and to hide players
-     * @param includingToArena true if hide to players in the same arena
-     * @return true if successfull
+     * @param player player to hide to server
+     * @param toPlayerToo true if hide all server to player
      */
-    public boolean hideToServer(Player player, boolean includingToArena){
+    public void hideToServer(Player player, boolean toPlayerToo){
+        for(Player alvo : Bukkit.getOnlinePlayers()){
+            alvo.hidePlayer(player);
+            if(toPlayerToo)
+                player.hidePlayer(alvo);
+        }
+    }
+
+    /**
+     * Unhide player to the server
+     *
+     * @param player player to unhide to server
+     * @param toPlayerToo true if unhide all server to player
+     */
+    public void unhideToServer(Player player, boolean toPlayerToo){
+        for(Player alvo : Bukkit.getOnlinePlayers()){
+            alvo.showPlayer(player);
+            if(toPlayerToo)
+                player.showPlayer(alvo);
+        }
+    }
+
+    /**
+     * Hide player to the arena
+     *
+     * @param player player to unhide to the arena
+     * @param toPlayerToo true if hide all in the arena to player
+     * @return true if sucessfully hided to the players in the arena
+     */
+    public boolean hideToArena(Player player, boolean toPlayerToo){
         PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
         if(null == playerDat){
-            System.out.println("Error while hiding player because PlayerDat is null!");
+            System.out.println("Error while hiding player to arena because PlayerDat is null.");
             return false;
         }
-        for(Player alvo : Bukkit.getOnlinePlayers()){
-            if(!includingToArena){
-                PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
-                if(null == alvoDat){
-                    System.out.println("Error while hiding player because AlvoDat is null!");
-                    return false;
-                }
-                if(!inSameArena(playerDat, alvoDat)){
-                    alvo.hidePlayer(player);
-                    player.hidePlayer(alvo);
-                }
-            }else{
-                alvo.hidePlayer(player);
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena){
+            System.out.println("Error while hiding player to arena because Arena is null.");
+            return false;
+        }
+        for(PlayerDat alvoDat : arena.getPlayers()){
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(null == alvo)
+                continue;
+            alvo.hidePlayer(player);
+            if(toPlayerToo)
                 player.hidePlayer(alvo);
-            }
+        }
+        return true;
+    }
+
+    /**
+     * Unhide player to the arena
+     *
+     * @param player player to unhide to the arena
+     * @param toPlayerToo true if hide all in the arena to player
+     * @return true if sucessfully unhided to the players in the arena
+     */
+    public boolean unhideToArena(Player player, boolean toPlayerToo){
+        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        if(null == playerDat){
+            System.out.println("Error while unhiding player to arena because PlayerDat is null.");
+            return false;
+        }
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena){
+            System.out.println("Error while unhiding player to arena because Arena is null.");
+            return false;
+        }
+        for(PlayerDat alvoDat : arena.getPlayers()){
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(null == alvo)
+                continue;
+            alvo.showPlayer(player);
+            if(toPlayerToo)
+                player.showPlayer(alvo);
         }
         return true;
     }
