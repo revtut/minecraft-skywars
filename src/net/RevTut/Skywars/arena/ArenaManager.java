@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -320,6 +321,10 @@ public class ArenaManager {
                             /** Send him to Hub. No arena available */
                         }
                     }
+                    // Config arena dat
+                    arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
+                    arenaDat.setEndDate(new Date());
+                    arenaDat.setWinner("NULL");
                     // Delete the arena
                     Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                         @Override

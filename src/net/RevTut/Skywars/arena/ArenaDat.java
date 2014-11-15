@@ -22,7 +22,7 @@ public class ArenaDat {
     /**
      * Winner of the arena (UUID)
      */
-    private String winner;
+    private String winner = "NULL";
 
     /**
      * Start date of the game

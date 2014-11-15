@@ -238,7 +238,7 @@ public class ArenaRunnable implements Runnable {
                     ArenaDat arenaDat = arena.getArenaDat();
                     if (arenaDat == null)
                         return;
-                    if (arenaDat.getWinner() == null) {
+                    if (arenaDat.getWinner().equals("NULL")) {
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
                         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TEMPO ESGOTADO"));
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
