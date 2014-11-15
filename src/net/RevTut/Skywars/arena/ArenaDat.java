@@ -184,7 +184,7 @@ public class ArenaDat {
      * @param message message to be added
      */
     public void addGameChat(String message) {
-        this.gameChat.add(message);
+        this.gameChat.add(currentDate() + message);
     }
 
     /**
@@ -193,6 +193,16 @@ public class ArenaDat {
      * @param event event message to be added
      */
     public void addGameEvent(String event) {
-        this.gameEvents.add(event);
+        this.gameEvents.add(currentDate() + event);
+    }
+
+    /**
+     * Gets the current date formated
+     *
+     * return formated current date
+     */
+    private String currentDate(){
+        Date currentDate = new Date();
+        return currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
     }
 }

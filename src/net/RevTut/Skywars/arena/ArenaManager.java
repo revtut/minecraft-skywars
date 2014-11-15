@@ -239,13 +239,13 @@ public class ArenaManager {
             }
         });
 
-        // Remove From List
-        arenas.remove(arena);
-
         // New Arena if Needed
         if (getNumberAvailableArenas() <= 1) {
             createNewArena();
         }
+
+        // Remove From List
+        arenas.remove(arena);
 
         // Delete existing map
         return removeMap(arena);
@@ -383,7 +383,6 @@ public class ArenaManager {
             System.out.println("Error while creating a new arena! World is null!");
             return null;
         }
-
         return mapName;
     }
 

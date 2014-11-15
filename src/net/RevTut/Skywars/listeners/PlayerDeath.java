@@ -104,7 +104,7 @@ public class PlayerDeath implements Listener {
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Subtitle
             // Target
-            TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7" + damager.getName()));
+            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7" + damager.getName()));
             // Title and SubTitle
             // Damager
             TitleAPI.sendTimings(damager, 5, 60, 5);
@@ -116,7 +116,7 @@ public class PlayerDeath implements Listener {
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Subtitle
             // Target
-            TitleAPI.sendSubTitle(alvo,Converters.convertToJSON(""));
+            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(""));
         }
 
         // Check if game ended
