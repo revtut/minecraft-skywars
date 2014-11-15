@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -285,19 +286,31 @@ public class ArenaRunnable implements Runnable {
     public void fromLobbyToPreGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.PREGAME);
+        // Arena Dat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(null == arenaDat){
+            System.out.println("ArenaDat is null when changing from Lobby to PreGame!");
+            return;
+        }
         // Send Players To Spawns
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
-        if (arenaLocation == null)
+        if (null == arenaLocation) {
+            System.out.println("Arena location is null when changing from Lobby to PreGame!");
             return;
+        }
         for (PlayerDat alvoDat : arena.getPlayers()) {
-            alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
-            if (spawnLocation == null)
+            if (spawnLocation == null) {
+                System.out.println("Spawn location " + i + " is null when chaning from Lobby to PreGame");
                 continue;
+            }
+            alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
+            arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
+            // Teleport player
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -317,6 +330,13 @@ public class ArenaRunnable implements Runnable {
     public void fromPreGameToInGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.INGAME);
+        // Arena Dat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(null == arenaDat){
+            System.out.println("ArenaDat is null when changing from PreGame to InGame!");
+            return;
+        }
+        arenaDat.setStartDate(new Date()); // Set start date
         // Remove Glass
         for (PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
@@ -341,7 +361,14 @@ public class ArenaRunnable implements Runnable {
     public void fromInGameToEndGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.ENDGAME);
-        // Remove Glass
+        // Arena Dat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(null == arenaDat){
+            System.out.println("ArenaDat is null when changing from InGame to EndGame!");
+            return;
+        }
+        arenaDat.setEndDate(new Date()); // Set end date
+        // Teleport to Center Location
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (arenaLocation == null)
