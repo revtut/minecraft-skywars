@@ -242,6 +242,11 @@ public class ArenaManager {
         // Remove From List
         arenas.remove(arena);
 
+        // New Arena if Needed
+        if (getNumberAvailableArenas() <= 1) {
+            createNewArena();
+        }
+
         // Delete existing map
         return removeMap(arena);
 
