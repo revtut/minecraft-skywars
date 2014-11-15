@@ -385,6 +385,9 @@ public class ArenaRunnable implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+            // GameMode
+            alvo.setAllowFlight(true);
+            alvo.setFlying(true);
             // Unhide
             plugin.arenaManager.unhideToArena(alvo, false);
             // Teleport

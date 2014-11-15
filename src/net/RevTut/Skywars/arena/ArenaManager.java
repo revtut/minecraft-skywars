@@ -8,6 +8,7 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -480,6 +481,11 @@ public class ArenaManager {
 
         // Set Status
         playerDat.setStatus(PlayerStatus.WAITING);
+
+        // GameMode
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setAllowFlight(false);
+        player.setFlying(false);
 
         return true;
     }

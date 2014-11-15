@@ -59,6 +59,10 @@ public class PlayerDeath implements Listener {
         // Status to DEAD
         alvoDat.setStatus(PlayerStatus.DEAD);
 
+        // GameMode
+        alvo.setAllowFlight(true);
+        alvo.setFlying(true);
+
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
