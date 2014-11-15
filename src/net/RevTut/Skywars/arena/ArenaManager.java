@@ -211,12 +211,6 @@ public class ArenaManager {
         if (!removeMap(arena))
             return false;
 
-        // New Arena if Needed
-        if (getNumberAvailableArenas() <= 1) {
-            if (!createNewArena())
-                return true;
-        }
-
         return true;
     }
 
@@ -284,6 +278,16 @@ public class ArenaManager {
                             /** Send him to Hub. No arena available */
                         }
                     }
+                    // Delete the arena
+                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            removeArena(arena);
+                        }
+                    }, 100);
+                }
+            }else if(arena.getStatus() == ArenaStatus.ENDGAME){
+                if(arena.getAlivePlayers().size() < 1){
                     // Delete the arena
                     Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                         @Override
@@ -460,7 +464,8 @@ public class ArenaManager {
         int numero = 0;
         for (Arena arena : arenas)
             if (arena.getStatus() == ArenaStatus.LOBBY)
-                numero++;
+                if(arena.getPlayers().size() < maxPlayers)
+                    numero++;
         return numero;
     }
 
