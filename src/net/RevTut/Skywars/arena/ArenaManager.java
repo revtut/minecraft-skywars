@@ -310,6 +310,10 @@ public class ArenaManager {
         // Hide to Server
         plugin.arenaManager.hideToServer(player, true);
 
+        // Update scoreboard
+        ScoreBoard.updateAlive(arena);
+        ScoreBoard.updateDeath(arena);
+
         if(checkArena){
             // Check if game already started
             if(arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME){
