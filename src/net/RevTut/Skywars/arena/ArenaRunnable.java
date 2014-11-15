@@ -6,10 +6,7 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Converters;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.util.Date;
@@ -309,7 +306,6 @@ public class ArenaRunnable implements Runnable {
                 System.out.println("Spawn location " + i + " is null when chaning from Lobby to PreGame");
                 continue;
             }
-            alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
             arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
             // Teleport player
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -339,12 +335,22 @@ public class ArenaRunnable implements Runnable {
         }
         arenaDat.setStartDate(new Date()); // Set start date
         arenaDat.addGameEvent("Comecou o jogo numero " + arenaDat.getGameNumber());
-        // Remove Glass
-        for (PlayerDat alvoDat : arena.getPlayers()) {
+        // Loop all the players
+        for (final PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+            // GameMode
+            alvo.setGameMode(GameMode.SURVIVAL);
+            // Status (add some delay so they dont lose life when falling)
+            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
+                }
+            }, 20);
+            // Remove Glass
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
                 alvoLocation.setY(alvoLocation.getY() - 1);
@@ -384,8 +390,16 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             // GameMode
+            alvo.setGameMode(GameMode.ADVENTURE);
             alvo.setAllowFlight(true);
             alvo.setFlying(true);
+            // Hunger, Food and Experience
+            alvo.setTotalExperience(0);
+            alvo.setExp(0);
+            alvo.setHealth(20.0);
+            alvo.setFoodLevel(20);
+            // Inventory
+            alvo.getInventory().clear();
             // Unhide
             plugin.arenaManager.unhideToArena(alvo, false);
             // Teleport

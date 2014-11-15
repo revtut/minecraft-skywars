@@ -497,6 +497,9 @@ public class ArenaManager {
         player.setHealth(20.0);
         player.setFoodLevel(20);
 
+        // Inventory
+        player.getInventory().clear();
+
         return true;
     }
 

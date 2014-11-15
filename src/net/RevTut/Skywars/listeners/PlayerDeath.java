@@ -11,6 +11,7 @@ import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,6 +61,7 @@ public class PlayerDeath implements Listener {
         alvoDat.setStatus(PlayerStatus.DEAD);
 
         // GameMode
+        alvo.setGameMode(GameMode.ADVENTURE);
         alvo.setAllowFlight(true);
         alvo.setFlying(true);
 
@@ -68,6 +70,9 @@ public class PlayerDeath implements Listener {
         alvo.setExp(0);
         alvo.setHealth(20.0);
         alvo.setFoodLevel(20);
+
+        // Inventory
+        alvo.getInventory().clear();
 
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
