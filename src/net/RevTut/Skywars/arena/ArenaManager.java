@@ -174,11 +174,28 @@ public class ArenaManager {
      * @see Arena
      */
     public boolean resetArena(Arena arena) {
-        /* DELETE EXISTING MAP */
+        // ArenaDat
+        final ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null) {
+            System.out.println("ArenaDat is null when resetting the arena!");
+            return false;
+        }
+
+        // MySQL Tasks
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                // PlayerDat
+                plugin.mysql.updateMySQLArenaDat(arenaDat);
+            }
+        });
+
+
+        // Delete map
         if (!removeMap(arena))
             return false;
 
-        /* ADD NEW MAP */
+        // Add new map
         String mapName = addNewMap(arena.getArenaNumber());
         if (mapName == null)
             return false;
@@ -205,6 +222,22 @@ public class ArenaManager {
      * @see Arena
      */
     public boolean removeArena(Arena arena) {
+        // ArenaDat
+        final ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null) {
+            System.out.println("ArenaDat is null when resetting the arena!");
+            return false;
+        }
+
+        // MySQL Tasks
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                // PlayerDat
+                plugin.mysql.updateMySQLArenaDat(arenaDat);
+            }
+        });
+
         // Remove From List
         arenas.remove(arena);
 
