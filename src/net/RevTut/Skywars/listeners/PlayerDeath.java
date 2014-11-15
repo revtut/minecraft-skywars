@@ -63,6 +63,12 @@ public class PlayerDeath implements Listener {
         alvo.setAllowFlight(true);
         alvo.setFlying(true);
 
+        // Hunger, Food and Experience
+        alvo.setTotalExperience(0);
+        alvo.setExp(0);
+        alvo.setHealth(20.0);
+        alvo.setFoodLevel(20);
+
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 

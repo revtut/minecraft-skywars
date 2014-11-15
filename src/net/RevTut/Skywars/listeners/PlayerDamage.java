@@ -124,7 +124,8 @@ public class PlayerDamage implements Listener {
         }
         if(alvoDat.getStatus() != PlayerStatus.ALIVE){ // Check if target is alive
             e.setCancelled(true);
-            if(e.getCause() == EntityDamageEvent.DamageCause.VOID){ // Void damage
+            // Void damage
+            if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
                 Location lobbyLocation = alvoArena.getArenaLocation().getLobbyLocation();
                 if(lobbyLocation == null)
                     return;

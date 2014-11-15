@@ -491,6 +491,12 @@ public class ArenaManager {
         player.setAllowFlight(false);
         player.setFlying(false);
 
+        // Hunger, Food and Experience
+        player.setTotalExperience(0);
+        player.setExp(0);
+        player.setHealth(20.0);
+        player.setFoodLevel(20);
+
         return true;
     }
 
