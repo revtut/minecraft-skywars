@@ -64,11 +64,6 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
-        if(alvoArena == null){
-            e.setCancelled(true);
-            return;
-        }
         // Damager
         Player damager = null;
         Entity entity = e.getDamager();
@@ -91,13 +86,8 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
-        if(damagerArena == null){
-            e.setCancelled(true);
-            return;
-        }
         // Check if they are in the same arena
-        if(alvoArena.getArenaNumber() != damagerArena.getArenaNumber()){
+        if(!plugin.arenaManager.inSameArena(alvoDat, damagerDat)){
             e.setCancelled(true);
             return;
         }

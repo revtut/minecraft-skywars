@@ -610,4 +610,56 @@ public class ArenaManager {
         return gameNumber;
     }
 
+    /**
+     * Hide player to the server and the other players to the player
+     *
+     * @param player player to hide to server and to hide players
+     * @param includingToArena true if hide to players in the same arena
+     * @return true if successfull
+     */
+    public boolean hideToServer(Player player, boolean includingToArena){
+        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        if(null == playerDat){
+            System.out.println("Error while hiding player because PlayerDat is null!");
+            return false;
+        }
+        for(Player alvo : Bukkit.getOnlinePlayers()){
+            if(!includingToArena){
+                PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
+                if(null == alvoDat){
+                    System.out.println("Error while hiding player because AlvoDat is null!");
+                    return false;
+                }
+                if(!inSameArena(playerDat, alvoDat)){
+                    alvo.hidePlayer(player);
+                    player.hidePlayer(alvo);
+                }
+            }else{
+                alvo.hidePlayer(player);
+                player.hidePlayer(alvo);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if two players are in the same arena
+     *
+     * @param playerDat player to check
+     * @param alvoDat player to check
+     * @return true if they are in the same arena
+     */
+    public boolean inSameArena(PlayerDat playerDat, PlayerDat alvoDat){
+        Arena playerArena = getArenaByPlayer(playerDat);
+        if(null == playerArena){
+            System.out.println("Error while checking if they are in the same arena because Player's Arena is null!");
+            return false;
+        }
+        Arena alvoArena = getArenaByPlayer(alvoDat);
+        if(null == alvoArena){
+            System.out.println("Error while checking if they are in the same arena because Alvo's Arena is null!");
+            return false;
+        }
+        return playerArena.getArenaNumber() == alvoArena.getArenaNumber();
+    }
 }
