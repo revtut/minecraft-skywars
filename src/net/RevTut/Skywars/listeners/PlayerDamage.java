@@ -2,6 +2,7 @@ package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Location;
@@ -60,10 +61,6 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        if(alvoDat.getStatus() != PlayerStatus.ALIVE){ // Check if target is alive
-            e.setCancelled(true);
-            return;
-        }
         // Damager
         Player damager = null;
         Entity entity = e.getDamager();
@@ -115,15 +112,20 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
+        // Arena
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null){
             e.setCancelled(true);
             return;
         }
+        if(alvoArena.getStatus() != ArenaStatus.INGAME){ // Check if game already started
+            e.setCancelled(true);
+            return;
+        }
         if(alvoDat.getStatus() != PlayerStatus.ALIVE){ // Check if target is alive
+            e.setCancelled(true);
             if(e.getCause() == EntityDamageEvent.DamageCause.VOID){ // Void damage
                 Location lobbyLocation = alvoArena.getArenaLocation().getLobbyLocation();
-                e.setCancelled(true);
                 if(lobbyLocation == null)
                     return;
                 alvo.teleport(lobbyLocation); // Teleport to spawn
