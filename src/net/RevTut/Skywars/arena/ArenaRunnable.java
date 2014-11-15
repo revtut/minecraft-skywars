@@ -349,7 +349,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
                 }
-            }, 20);
+            }, 40);
             // Remove Glass
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
