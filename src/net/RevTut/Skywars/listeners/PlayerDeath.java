@@ -91,6 +91,9 @@ public class PlayerDeath implements Listener {
         }else {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
+            // Subtitle
+            // Target
+            TitleAPI.sendSubTitle(alvo,Converters.convertToJSON(""));
         }
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);

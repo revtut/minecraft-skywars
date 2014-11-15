@@ -28,6 +28,20 @@ import java.util.Random;
 public class ArenaManager {
 
     /**
+     * Main class
+     */
+    private final Main plugin;
+
+    /**
+     * Constructor of PlayerDamage
+     *
+     * @param plugin main class
+     */
+    public ArenaManager(final Main plugin) {
+        this.plugin = plugin;
+    }
+
+    /**
      * List of all arenas in the server
      */
     private final List<Arena> arenas = new ArrayList<Arena>();
@@ -237,7 +251,7 @@ public class ArenaManager {
      * @see PlayerDat
      */
     public boolean removePlayer(PlayerDat playerDat, boolean checkArena) {
-        Arena arena = getArenaByPlayer(playerDat);
+        final Arena arena = getArenaByPlayer(playerDat);
         if (arena == null)
             return false;
 
@@ -271,7 +285,12 @@ public class ArenaManager {
                         }
                     }
                     // Delete the arena
-                    removeArena(arena);
+                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            removeArena(arena);
+                        }
+                    }, 100);
                 }
             }
         }
