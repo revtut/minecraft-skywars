@@ -292,6 +292,8 @@ public class ArenaRunnable implements Runnable {
             System.out.println("ArenaDat is null when changing from Lobby to PreGame!");
             return;
         }
+        // Message
+        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Mapa de Jogo: " + arena.getMapName());
         // Send Players To Spawns
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
