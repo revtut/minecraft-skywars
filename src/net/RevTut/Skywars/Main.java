@@ -1,6 +1,6 @@
 package net.RevTut.Skywars;
 
-import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaManager;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.*;
@@ -68,6 +68,11 @@ public class Main extends JavaPlugin {
     public MySQL mysql;
 
     /**
+     * Arena Manager
+     */
+    public ArenaManager arenaManager;
+
+    /**
      * Name of the server
      */
     public String servidor = Bukkit.getServerName();
@@ -85,9 +90,11 @@ public class Main extends JavaPlugin {
         if (!readFiles())
             System.out.println("Error while trying to read the files.");
 
+        /* Create Arena Manager */
+        arenaManager = new ArenaManager();
         /* Create Initial Arenas */
-        Arena.createNewArena();
-        Arena.createNewArena();
+        arenaManager.createNewArena();
+        arenaManager.createNewArena();
 
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
@@ -98,11 +105,11 @@ public class Main extends JavaPlugin {
         /* Libraries */
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
-        pm.registerEvents(new PlayerChat(), this);
-        pm.registerEvents(new PlayerDamage(), this);
+        pm.registerEvents(new PlayerChat(this), this);
+        pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerJoin(this), this);
-        pm.registerEvents(new PlayerRespawn(), this);
+        pm.registerEvents(new PlayerRespawn(this), this);
     }
 
     /**
@@ -125,8 +132,10 @@ public class Main extends JavaPlugin {
         final File config = new File(getDataFolder() + File.separator + "config.yml");
         if (!config.exists()) {
             try {
-                config.getParentFile().mkdirs();
-                config.createNewFile();
+                if(!config.getParentFile().mkdirs())
+                    return false;
+                if(!config.createNewFile())
+                    return false;
             } catch (IOException e) {
                 System.out.println("Error while creating config.yml. Reason: " + e.getMessage());
             }
@@ -137,8 +146,10 @@ public class Main extends JavaPlugin {
         final File mysqlConf = new File(getDataFolder() + File.separator + "mysql.yml");
         if (!mysqlConf.exists()) {
             try {
-                mysqlConf.getParentFile().mkdirs();
-                mysqlConf.createNewFile();
+                if(!mysqlConf.getParentFile().mkdirs())
+                    return false;
+                if(!mysqlConf.createNewFile())
+                    return false;
             } catch (IOException e) {
                 System.out.println("Error while creating mysql.yml. Reason: " + e.getMessage());
             }

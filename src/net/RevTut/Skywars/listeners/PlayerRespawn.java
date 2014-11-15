@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Location;
@@ -19,6 +20,20 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerRespawn implements Listener {
 
     /**
+     * Main class
+     */
+    private final Main plugin;
+
+    /**
+     * Constructor of PlayerRespawn
+     *
+     * @param plugin main class
+     */
+    public PlayerRespawn(final Main plugin) {
+        this.plugin = plugin;
+    }
+
+    /**
      * Takes care of a player when he respawns
      *
      * @param e     player respawn event
@@ -32,7 +47,7 @@ public class PlayerRespawn implements Listener {
         if(playerDat == null)
             return;
         // Arena
-        Arena arena = Arena.getArenaByPlayer(playerDat);
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if(arena == null)
             return;
         // Location

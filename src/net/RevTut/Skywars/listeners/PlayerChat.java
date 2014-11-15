@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,20 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public class PlayerChat implements Listener {
+
+    /**
+     * Main class
+     */
+    private final Main plugin;
+
+    /**
+     * Constructor of PlayerChat
+     *
+     * @param plugin main class
+     */
+    public PlayerChat(final Main plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * IP address pattern

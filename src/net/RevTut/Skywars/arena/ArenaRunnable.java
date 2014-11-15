@@ -59,7 +59,7 @@ public class ArenaRunnable implements Runnable {
      * @param id new ID for the task
      */
     public void setId(int id) {
-        this.id = id;
+        ArenaRunnable.id = id;
     }
 
     /**
@@ -75,7 +75,7 @@ public class ArenaRunnable implements Runnable {
     @Override
     public void run() {
         int remainingTime;
-        for (Arena arena : Arena.getArenas()) {
+        for (Arena arena : plugin.arenaManager.getArenas()) {
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
                 continue;
@@ -92,8 +92,8 @@ public class ArenaRunnable implements Runnable {
                 else if (arena.getStatus() == ArenaStatus.ENDGAME)
                     onEndGame(arena);
                 // Decrement remaining time
-                if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= Arena.minReduceTimePlayers) {
-                    arena.sendMessageToArena("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
+                if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= plugin.arenaManager.minReduceTimePlayers) {
+                    arena.sendMessage("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
                     arena.setRemainingTime(31);
                 }
                 arena.setRemainingTime(remainingTime - 1);
@@ -101,7 +101,7 @@ public class ArenaRunnable implements Runnable {
                 // Change Arena Status
                 if (arena.getStatus() == ArenaStatus.LOBBY)
                     // Minimum Players in the arena
-                    if (arena.getPlayers().size() >= Arena.minPlayers)
+                    if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
                     else
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
@@ -370,10 +370,10 @@ public class ArenaRunnable implements Runnable {
      */
     public void fromEndGameToLobby(final Arena arena) {
         // Check if we can transfer this players to a new arena
-        List<Arena> arenasAvailable = Arena.getAvailableArenas();
+        List<Arena> arenasAvailable = plugin.arenaManager.getAvailableArenas();
         Arena arenaMove = null;
         for (Arena arenaAlvo : arenasAvailable) {
-            if (arenaAlvo.getPlayers().size() + arena.getPlayers().size() <= Arena.maxPlayers) {
+            if (arenaAlvo.getPlayers().size() + arena.getPlayers().size() <= plugin.arenaManager.maxPlayers) {
                 arenaMove = arenaAlvo;
                 break;
             }
@@ -398,7 +398,7 @@ public class ArenaRunnable implements Runnable {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    Arena.resetArena(arena);
+                    plugin.arenaManager.resetArena(arena);
                 }
             }, i + 20);
         } else {
@@ -410,9 +410,9 @@ public class ArenaRunnable implements Runnable {
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        arena.removePlayer(alvoDat);
+                        plugin.arenaManager.removePlayer(alvoDat);
                         // Add to new arena
-                        if (!Arena.addPlayer(alvoDat, newArena)) {
+                        if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {
                             /** Send him to Hub. Error while adding to arena */
                             System.out.println("Could not add player to new arena.");
                         }
@@ -424,7 +424,7 @@ public class ArenaRunnable implements Runnable {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    Arena.removeArena(arena);
+                    plugin.arenaManager.removeArena(arena);
                 }
             }, i + 20);
         }

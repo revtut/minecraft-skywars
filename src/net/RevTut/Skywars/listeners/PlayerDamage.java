@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.listeners;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
@@ -23,6 +24,20 @@ import java.util.UUID;
  * @version 1.0
  */
 public class PlayerDamage implements Listener {
+
+    /**
+     * Main class
+     */
+    private final Main plugin;
+
+    /**
+     * Constructor of PlayerDamage
+     *
+     * @param plugin main class
+     */
+    public PlayerDamage(final Main plugin) {
+        this.plugin = plugin;
+    }
 
     /** Map with last targets and damagers */
     public static Map<UUID, UUID> lastPlayerDamager = new HashMap<UUID, UUID>();
@@ -49,7 +64,7 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
+        Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null){
             e.setCancelled(true);
             return;
@@ -63,6 +78,10 @@ public class PlayerDamage implements Listener {
             damager = (Player) ((FishHook) entity).getShooter();
         else if(entity instanceof Arrow)
             damager = (Player) ((Arrow) entity).getShooter();
+        if(damager == null){
+            e.setCancelled(true);
+            return;
+        }
         PlayerDat damagerDat = PlayerDat.getPlayerDatByUUID(damager.getUniqueId());
         if(damagerDat == null){
             e.setCancelled(true);
@@ -72,7 +91,7 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        Arena damagerArena = Arena.getArenaByPlayer(damagerDat);
+        Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
         if(damagerArena == null){
             e.setCancelled(true);
             return;
@@ -106,7 +125,7 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
-        Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
+        Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null){
             e.setCancelled(true);
             return;
@@ -118,11 +137,8 @@ public class PlayerDamage implements Listener {
                 if(lobbyLocation == null)
                     return;
                 alvo.teleport(lobbyLocation); // Teleport to spawn
-                return;
             }
         }
-        if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) // Check if damaged was caused by entity
-            return;
     }
 
 }

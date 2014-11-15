@@ -76,18 +76,18 @@ public class PlayerJoin implements Listener {
                             /** Send him to Hub. Error in playerDat */
                             return;
                         }
-                        if (!Arena.addPlayer(playerDat)) {
+                        if (!plugin.arenaManager.addPlayer(playerDat)) {
                             /** Send him to Hub. No arena available */
                             return;
                         }
-                        Arena arena = Arena.getArenaByPlayer(playerDat);
+                        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
                             /** Send him to Hub. Error in arena */
                             return;
                         }
                         // New Arena if Needed
-                        if (Arena.getNumberAvailableArenas() <= 1) {
-                            Arena.createNewArena();
+                        if (plugin.arenaManager.getNumberAvailableArenas() <= 1) {
+                            plugin.arenaManager.createNewArena();
                         }
                     }
                 });

@@ -56,7 +56,7 @@ public class PlayerDeath implements Listener {
         // Status to DEAD
         alvoDat.setStatus(PlayerStatus.DEAD);
         // Arena target
-        Arena alvoArena = Arena.getArenaByPlayer(alvoDat);
+        Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if(alvoArena == null)
             return;
         // Damager player
@@ -67,7 +67,7 @@ public class PlayerDeath implements Listener {
             damagerDat = PlayerDat.getPlayerDatByUUID(damager.getUniqueId());
             if(damagerDat == null)
                 return;
-            Arena damagerArena = Arena.getArenaByPlayer(damagerDat);
+            Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
             if(damagerArena == null)
                 return;
             // Check if they are in the same arena
@@ -79,7 +79,7 @@ public class PlayerDeath implements Listener {
         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
         if(damager != null) {
             // Message to arena
-            alvoArena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
+            alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             // Subtitle
             // Target
             TitleAPI.sendSubTitle(alvo,Converters.convertToJSON("§7" + damager.getName()));
@@ -90,7 +90,7 @@ public class PlayerDeath implements Listener {
             TitleAPI.sendSubTitle(damager,Converters.convertToJSON("§7" + alvo.getName()));
         }else {
             // Message to arena
-            alvoArena.sendMessageToArena("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
+            alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
         }
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
