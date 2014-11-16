@@ -13,6 +13,7 @@ import java.util.List;
  * @author Joao Silva
  * @version 1.0
  */
+
 public class ArenaLocation {
 
     /**
