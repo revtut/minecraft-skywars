@@ -3,6 +3,7 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
+import net.RevTut.Skywars.listeners.PlayerChest;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.ScoreBoard;
@@ -261,6 +262,12 @@ public class ArenaManager {
      * @see Arena
      */
     private boolean removeMap(Arena arena) {
+        // Remove already filled chests locations
+        if(!PlayerChest.clearChestsLocations(arena)){
+            System.out.println("Error while removed already filled chests locations!");
+            return false;
+        }
+
         // Unload of the World
         if (!WorldAPI.unloadWorld(arena.getMapName())) {
             System.out.println("Error while unloading world " + arena.getMapName());
