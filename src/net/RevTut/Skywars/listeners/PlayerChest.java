@@ -109,7 +109,7 @@ public class PlayerChest implements Listener{
         Material[] materialBuckets = { Material.WATER_BUCKET, Material.LAVA_BUCKET, Material.BUCKET, Material.MILK_BUCKET};
         Material[] materialFood = { Material.APPLE, Material.BREAD, Material.MUSHROOM_SOUP, Material.COOKED_BEEF, Material.COOKED_CHICKEN, Material.COOKED_FISH, Material.WHEAT, Material.GOLDEN_APPLE, Material.CARROT, Material.BAKED_POTATO };
         Material[] materialBlock = { Material.WOOD, Material.LOG, Material.STONE, Material.COBBLESTONE };
-        Material[] materialOther = { Material.ENDER_PEARL, Material.TORCH, Material.STICK, Material.FURNACE, Material.CHEST, Material.WORKBENCH };
+        Material[] materialOther = { Material.ENDER_PEARL, Material.EGG, Material.SNOW_BALL};
         Enchantment[] enchantsArmor = {Enchantment.DURABILITY, Enchantment.OXYGEN, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_EXPLOSIONS, Enchantment.PROTECTION_FALL, Enchantment.PROTECTION_FIRE, Enchantment.PROTECTION_PROJECTILE };
         Enchantment[] enchantWeapon = { Enchantment.DURABILITY, Enchantment.ARROW_KNOCKBACK, Enchantment.ARROW_DAMAGE, Enchantment.ARROW_FIRE, Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_ARTHROPODS, Enchantment.DAMAGE_UNDEAD, Enchantment.DIG_SPEED, Enchantment.FIRE_ASPECT, Enchantment.KNOCKBACK, Enchantment.THORNS };
 
@@ -182,7 +182,7 @@ public class PlayerChest implements Listener{
         }
 
         // Other
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 20; i++){
             int pos = plugin.rand.nextInt(materialOther.length);
             int quantidade = plugin.rand.nextInt(15) + 1;
             // ItemStack

@@ -265,4 +265,32 @@ public class MySQL {
         }
         return true;
     }
+
+    /**
+     * Get the last game number of the server
+     *
+     * @return last played game number
+     */
+    public String lastGameNumber() {
+        try {
+            String lastGame = "";
+            final String lastGameStatement = "SELECT GameNumber FROM " + DBGameInfo + ";";
+            final ResultSet resultLastGame = this.connection.createStatement().executeQuery(lastGameStatement);
+            while(resultLastGame.next()){
+                String gameNumber = resultLastGame.getString("GameNumber");
+                System.out.println("GameNumber: " + gameNumber);
+                if (lastGame.length() == gameNumber.length()) {
+                    int compResult = lastGame.compareTo(gameNumber);
+                    if (compResult < 0)
+                        lastGame = gameNumber;
+                } else if (lastGame.length() < gameNumber.length()) {
+                    lastGame = gameNumber;
+                }
+            }
+            return lastGame;
+        } catch (final SQLException e) {
+            System.out.println("Error while trying to get the last game number from the MySQL! Reason: " + e.getMessage());
+            return null;
+        }
+    }
 }

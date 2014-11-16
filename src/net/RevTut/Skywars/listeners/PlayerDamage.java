@@ -64,8 +64,12 @@ public class PlayerDamage implements Listener {
         // Damager
         Player damager = null;
         Entity entity = e.getDamager();
-        if(entity instanceof Snowball)
+        if(entity instanceof Player)
+            damager = (Player) entity;
+        else if(entity instanceof Snowball)
             damager = (Player) ((Snowball) entity).getShooter();
+        else if(entity instanceof Egg)
+            damager = (Player) ((Egg) entity).getShooter();
         else if(entity instanceof FishHook)
             damager = (Player) ((FishHook) entity).getShooter();
         else if(entity instanceof Arrow)
@@ -74,6 +78,7 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
+
         PlayerDat damagerDat = PlayerDat.getPlayerDatByUUID(damager.getUniqueId());
         if(damagerDat == null){
             e.setCancelled(true);

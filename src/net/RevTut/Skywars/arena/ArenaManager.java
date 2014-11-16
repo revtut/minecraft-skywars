@@ -596,45 +596,54 @@ public class ArenaManager {
      * @return next game number (eg: 18AX2)
      */
     private String nextGameNumber() {
-        String gameNumber = "";
+        return nextGameNumber("");
+    }
+
+    /**
+     * Returns the next game number
+     *
+     * @param lastGameNumber last game number
+     * @return next game number (eg: 18AX2)
+     */
+    public String nextGameNumber(String lastGameNumber) {
         for (Arena arena : arenas) {
             String arenaGameNumber = arena.getArenaDat().getGameNumber();
-            if (gameNumber.length() == arenaGameNumber.length()) {
-                int compResult = gameNumber.compareTo(arenaGameNumber);
+            if (lastGameNumber.length() == arenaGameNumber.length()) {
+                int compResult = lastGameNumber.compareTo(arenaGameNumber);
                 if (compResult < 0)
-                    gameNumber = arenaGameNumber;
-            } else if (gameNumber.length() < arenaGameNumber.length()) {
-                gameNumber = arenaGameNumber;
+                    lastGameNumber = arenaGameNumber;
+            } else if (lastGameNumber.length() < arenaGameNumber.length()) {
+                lastGameNumber = arenaGameNumber;
             }
         }
         boolean nextCharacter = true;
-        int i = gameNumber.length() - 1;
+        int i = lastGameNumber.length() - 1;
         while (nextCharacter) {
             // Starts on first character and then increments the "i" if needed
             if (0 <= i) {
-                char currentChar = gameNumber.charAt(i);
+                char currentChar = lastGameNumber.charAt(i);
                 if (currentChar != 'Z' && currentChar != '9') {
-                    char[] gameNumberChar = gameNumber.toCharArray();
+                    char[] gameNumberChar = lastGameNumber.toCharArray();
                     gameNumberChar[i] = ++currentChar;
-                    gameNumber = String.valueOf(gameNumberChar);
+                    lastGameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
                 } else if (currentChar == '9') {
-                    char[] gameNumberChar = gameNumber.toCharArray();
+                    char[] gameNumberChar = lastGameNumber.toCharArray();
                     gameNumberChar[i] = 'A';
-                    gameNumber = String.valueOf(gameNumberChar);
+                    lastGameNumber = String.valueOf(gameNumberChar);
                     nextCharacter = false;
                 } else {
-                    char[] gameNumberChar = gameNumber.toCharArray();
+                    char[] gameNumberChar = lastGameNumber.toCharArray();
                     gameNumberChar[i] = '0';
-                    gameNumber = String.valueOf(gameNumberChar);
+                    lastGameNumber = String.valueOf(gameNumberChar);
                 }
                 i--;
             } else {
-                gameNumber = "1" + gameNumber;
+                lastGameNumber = "1" + lastGameNumber;
                 nextCharacter = false;
             }
         }
-        return gameNumber;
+        return lastGameNumber;
     }
 
     /**

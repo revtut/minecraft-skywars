@@ -1,5 +1,7 @@
 package net.RevTut.Skywars;
 
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaManager;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
@@ -100,8 +102,30 @@ public class Main extends JavaPlugin {
         /* Create Arena Manager */
         arenaManager = new ArenaManager(this);
         /* Create Initial Arenas */
-        arenaManager.createNewArena();
-        arenaManager.createNewArena();
+        String lastGameNumber = mysql.lastGameNumber();
+        if(lastGameNumber == null){
+            System.out.println("Error while creating the initial arenas as last game number is null.");
+            return;
+        }
+        lastGameNumber = arenaManager.nextGameNumber(lastGameNumber);
+        // Arena 1
+        if(!arenaManager.createNewArena()){
+            System.out.println("Error while creating the initial arenas.");
+            return;
+        }
+        Arena arena = arenaManager.getArenas().get(0);
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(arenaDat == null){
+            System.out.println("Error while creating the initial arenas as arena dat is null.");
+            return;
+        }
+        arenaDat.setGameNumber(lastGameNumber);
+        if(!arenaManager.createNewArena()){
+            System.out.println("Error while creating the initial arenas.");
+            return;
+        }
+
+
 
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
