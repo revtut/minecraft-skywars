@@ -150,6 +150,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
+        pm.registerEvents(new Weather(this), this);
     }
 
     /**
