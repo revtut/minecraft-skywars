@@ -113,7 +113,6 @@ public class PlayerDeath implements Listener {
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
 
-
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);
         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
