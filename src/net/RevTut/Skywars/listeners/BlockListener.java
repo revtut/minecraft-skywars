@@ -53,6 +53,8 @@ public class BlockListener implements Listener {
             return;
         if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+            e.setCancelled(true);
     }
 
     /**
@@ -73,6 +75,8 @@ public class BlockListener implements Listener {
         if(null == arena)
             return;
         if(arena.getStatus() != ArenaStatus.INGAME)
+            e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 
@@ -95,6 +99,8 @@ public class BlockListener implements Listener {
             return;
         if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+            e.setCancelled(true);
     }
 
     /**
@@ -116,6 +122,8 @@ public class BlockListener implements Listener {
             return;
         if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+            e.setCancelled(true);
     }
 
     /**
@@ -136,6 +144,8 @@ public class BlockListener implements Listener {
         if(null == arena)
             return;
         if(arena.getStatus() != ArenaStatus.INGAME)
+            e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 }
