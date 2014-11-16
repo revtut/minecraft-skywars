@@ -121,7 +121,6 @@ public class PlayerChat implements Listener {
 
         // Verificacoes a Mensagem
         String mensagem = e.getMessage();
-        mensagem = mensagem.replaceAll("%", "%%");
         // Mensagem Para Verificacoes
         String mensagem_verificacoes = mensagem;
         // Substituir Numeros Por Letras
