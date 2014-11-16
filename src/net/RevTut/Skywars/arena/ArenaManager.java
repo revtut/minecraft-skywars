@@ -322,7 +322,8 @@ public class ArenaManager {
                     // Send message
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Asignando a uma nova arena devido a jogadores insuficientes!");
                     // Send remaining players to new arena
-                    for(PlayerDat alvoDat : arena.getPlayers()){
+                    List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
+                    for(PlayerDat alvoDat : arenaPlayers){
                         Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
                         if(alvo == null)
                             continue;
