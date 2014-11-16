@@ -263,9 +263,13 @@ public class ArenaRunnable implements Runnable {
                 arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
             } else {
                 Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                if(winner != null)
+                if(null != winner){
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
-                else
+                    // Winner Dat
+                    PlayerDat winnerDat = PlayerDat.getPlayerDatByUUID(winner.getUniqueId());
+                    if(null != winnerDat)
+                        winnerDat.addWin();
+                } else
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
             }
         }
