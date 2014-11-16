@@ -147,6 +147,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new PlayerFood(this), this);
         pm.registerEvents(new PlayerJoin(this), this);
+        pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
     }

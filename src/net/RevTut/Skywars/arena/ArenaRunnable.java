@@ -255,17 +255,19 @@ public class ArenaRunnable implements Runnable {
                     break;
             }
         }
-        ArenaDat arenaDat = arena.getArenaDat();
-        if (arenaDat == null)
-            return;
-        if (arenaDat.getWinner().equals("NULL")) {
-            arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
-        } else {
-            Player winner = Bukkit.getPlayer(arenaDat.getWinner());
-            if(winner != null)
-                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
-            else
-                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
+        if(remainingTime == 0){
+            ArenaDat arenaDat = arena.getArenaDat();
+            if (arenaDat == null)
+                return;
+            if (arenaDat.getWinner().equals("NULL")) {
+                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
+            } else {
+                Player winner = Bukkit.getPlayer(arenaDat.getWinner());
+                if(winner != null)
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
+                else
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
+            }
         }
     }
 
