@@ -182,7 +182,7 @@ public class Arena {
      */
     public List<PlayerDat> getDeadPlayers() {
         List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
-        for (PlayerDat player : players)
+        for (PlayerDat player : this.players)
             if (player.getStatus() == PlayerStatus.DEAD)
                 deathPlayers.add(player);
         return deathPlayers;

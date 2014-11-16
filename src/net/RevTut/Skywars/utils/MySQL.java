@@ -278,7 +278,6 @@ public class MySQL {
             final ResultSet resultLastGame = this.connection.createStatement().executeQuery(lastGameStatement);
             while(resultLastGame.next()){
                 String gameNumber = resultLastGame.getString("GameNumber");
-                System.out.println("GameNumber: " + gameNumber);
                 if (lastGame.length() == gameNumber.length()) {
                     int compResult = lastGame.compareTo(gameNumber);
                     if (compResult < 0)

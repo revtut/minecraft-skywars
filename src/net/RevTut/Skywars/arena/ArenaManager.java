@@ -479,12 +479,12 @@ public class ArenaManager {
         // Unhide to Arena
         plugin.arenaManager.unhideToArena(player, true);
 
+        // Set Status
+        playerDat.setStatus(PlayerStatus.WAITING);
+
         // Update scoreboard
         ScoreBoard.updateAlive(arena);
         ScoreBoard.updateDeath(arena);
-
-        // Set Status
-        playerDat.setStatus(PlayerStatus.WAITING);
 
         // GameMode
         player.setGameMode(GameMode.ADVENTURE);
