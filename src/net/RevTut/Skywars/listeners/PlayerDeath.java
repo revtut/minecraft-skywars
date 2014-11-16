@@ -138,6 +138,7 @@ public class PlayerDeath implements Listener {
         // Stats
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();
+        alvoDat.addLose();
         if(damagerDat == null)
             return;
         damagerDat.addKill(); // Damager stats
