@@ -3,7 +3,6 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
-import net.RevTut.Skywars.listeners.PlayerChest;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.ScoreBoard;
@@ -320,7 +319,7 @@ public class ArenaManager {
             if(arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME){
                 if(arena.getAlivePlayers().size() <= 1){
                     // Send message
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Asignando a uma nova arena devido a jogadores insuficientes!");
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
                     // Send remaining players to new arena
                     List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
                     for(PlayerDat alvoDat : arenaPlayers){
@@ -484,33 +483,15 @@ public class ArenaManager {
         // Unhide to Arena
         plugin.arenaManager.unhideToArena(player, true);
 
-        // Set Status
-        playerDat.setStatus(PlayerStatus.WAITING);
+        // Config Player
+        if(!PlayerDat.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)){
+            System.out.println("Error while configuring the player.");
+            return false;
+        }
 
         // Update scoreboard
         ScoreBoard.updateAlive(arena);
         ScoreBoard.updateDeath(arena);
-
-        // GameMode
-        player.setGameMode(GameMode.ADVENTURE);
-        player.setAllowFlight(false);
-        player.setFlying(false);
-
-        // Hunger, Food and Experience
-        player.setTotalExperience(0);
-        player.setExp(0);
-        player.setHealth(20.0);
-        player.setFoodLevel(20);
-
-        // Potion Effects
-        player.getActivePotionEffects().clear();
-
-        // Inventory
-        player.getInventory().clear();
-        player.getInventory().setArmorContents(null);
-
-        // Fire
-        player.setFireTicks(0);
 
         return true;
     }

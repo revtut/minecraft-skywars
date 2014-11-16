@@ -57,29 +57,11 @@ public class PlayerDeath implements Listener {
         if(alvoDat == null)
             return;
 
-        // Status to DEAD
-        alvoDat.setStatus(PlayerStatus.DEAD);
-
-        // GameMode
-        alvo.setGameMode(GameMode.ADVENTURE);
-        alvo.setAllowFlight(true);
-        alvo.setFlying(true);
-
-        // Hunger, Food and Experience
-        alvo.setTotalExperience(0);
-        alvo.setExp(0);
-        alvo.setHealth(20.0);
-        alvo.setFoodLevel(20);
-
-        // Inventory
-        alvo.getInventory().clear();
-        alvo.getInventory().setArmorContents(null);
-
-        // Potion Effects
-        alvo.getActivePotionEffects().clear();
-
-        // Fire
-        alvo.setFireTicks(0);
+        // Config Player
+        if(!PlayerDat.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+            System.out.println("Error while configuring the player.");
+            return;
+        }
 
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);

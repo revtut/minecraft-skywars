@@ -1,5 +1,9 @@
 package net.RevTut.Skywars.player;
 
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,6 +126,46 @@ public class PlayerDat {
             if (PlayerDat.playersDat.get(i).getUUID() == uuid)
                 return PlayerDat.playersDat.get(i);
         return null;
+    }
+
+    /**
+     * Configure a player
+     *
+     * @param playerDat player to configure
+     * @param status status of the player
+     * @param gameMode gamemode of the player
+     * @param allowFlight allow player to fly
+     * @param setFlying set player as flying
+     * @param expLevel experience level of the player
+     * @param expPercent experience percentage of the player
+     * @param healthLevel health level of the player
+     * @param foodLevel food level of the player
+     * @param removePotions true if needs to remove all potions of the player
+     * @param clearInv true if needs to clear players inventory
+     * @param fireTicks fire ticks of the player
+     * @return true if successfull
+     */
+    public static boolean configPlayer(PlayerDat playerDat, PlayerStatus status, GameMode gameMode, boolean allowFlight, boolean setFlying, int expLevel, float expPercent, double healthLevel, int foodLevel, boolean removePotions, boolean clearInv, int fireTicks){
+        playerDat.setStatus(status);
+        // Player
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(null == player)
+            return false;
+        player.setGameMode(gameMode);
+        player.setAllowFlight(allowFlight);
+        player.setFlying(setFlying);
+        player.setTotalExperience(expLevel);
+        player.setExp(expPercent);
+        player.setHealth(healthLevel);
+        player.setFoodLevel(foodLevel);
+        if(removePotions)
+            player.getActivePotionEffects().clear();
+        if(clearInv){
+            player.getInventory().clear();
+            player.getInventory().setArmorContents(null);
+        }
+        player.setFireTicks(fireTicks);
+        return true;
     }
 
     /**

@@ -407,22 +407,11 @@ public class ArenaRunnable implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
-            // GameMode
-            alvo.setGameMode(GameMode.ADVENTURE);
-            alvo.setAllowFlight(true);
-            alvo.setFlying(true);
-            // Hunger, Food and Experience
-            alvo.setTotalExperience(0);
-            alvo.setExp(0);
-            alvo.setHealth(20.0);
-            alvo.setFoodLevel(20);
-            // Inventory
-            alvo.getInventory().clear();
-            alvo.getInventory().setArmorContents(null);
-            // Potion Effects
-            alvo.getActivePotionEffects().clear();
-            // Fire
-            alvo.setFireTicks(0);
+            // Config Player
+            if(!PlayerDat.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+                System.out.println("Error while configuring the player.");
+                continue;
+            }
             // Unhide
             plugin.arenaManager.unhideToArena(alvo, false);
             // Teleport
