@@ -247,7 +247,7 @@ public class ArenaRunnable implements Runnable {
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                         Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
                         if(winner != null)
-                            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(winner.getName()));
+                            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Vencedor: " + winner.getName()));
                         else
                             TitleAPI.sendSubTitle(alvo, "");
                     }
