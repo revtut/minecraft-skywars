@@ -497,6 +497,9 @@ public class ArenaManager {
         player.setHealth(20.0);
         player.setFoodLevel(20);
 
+        // Potion Effects
+        player.getActivePotionEffects().clear();
+
         // Inventory
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
