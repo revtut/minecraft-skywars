@@ -262,12 +262,6 @@ public class ArenaManager {
      * @see Arena
      */
     private boolean removeMap(Arena arena) {
-        // Remove already filled chests locations
-        if(!PlayerChest.clearChestsLocations(arena)){
-            System.out.println("Error while removed already filled chests locations!");
-            return false;
-        }
-
         // Unload of the World
         if (!WorldAPI.unloadWorld(arena.getMapName())) {
             System.out.println("Error while unloading world " + arena.getMapName());

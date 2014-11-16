@@ -215,22 +215,4 @@ public class PlayerChest implements Listener{
             itemStacks.add(itemStack);
         }
     }
-
-    /**
-     * Clears locations of an Arena from already filled chests locations list
-     *
-     * @param arena arena to clean locations
-     * @return true if successfull
-     */
-    public static boolean clearChestsLocations(Arena arena){
-        World worldArena = Bukkit.getWorld(arena.getMapName());
-        if(worldArena == null){
-            System.out.println("Error while removing chests locations as world of the arena is null!");
-            return false;
-        }
-        for(Location chestLoc : locChests)
-            if(chestLoc.getWorld() == worldArena)
-                locChests.remove(chestLoc);
-        return true;
-    }
 }
