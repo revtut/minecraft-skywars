@@ -421,6 +421,8 @@ public class ArenaRunnable implements Runnable {
             alvo.getInventory().setArmorContents(null);
             // Potion Effects
             alvo.getActivePotionEffects().clear();
+            // Fire
+            alvo.setFireTicks(0);
             // Unhide
             plugin.arenaManager.unhideToArena(alvo, false);
             // Teleport

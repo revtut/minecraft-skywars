@@ -509,6 +509,9 @@ public class ArenaManager {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
 
+        // Fire
+        player.setFireTicks(0);
+
         return true;
     }
 
