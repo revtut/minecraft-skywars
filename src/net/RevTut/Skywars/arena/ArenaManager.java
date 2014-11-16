@@ -425,10 +425,13 @@ public class ArenaManager {
         int posArena = -1;
         int maxArenaPlayers = -1;
         for (int i = 0; i < arenas.size(); i++)
-            if (arenas.get(i).getStatus() == ArenaStatus.LOBBY) // Waiting For Players
-                if (arenas.get(i).getPlayers().size() < maxPlayers) // Not Full
-                    if (arenas.get(i).getPlayers().size() > maxArenaPlayers) // Arena With Highest Amount of Players
-                        posArena = i;
+            if (arenas.get(i).getStatus() == ArenaStatus.LOBBY) { // Waiting For Players
+                int playersInArena = arenas.get(i).getPlayers().size();
+                if (playersInArena < maxPlayers && playersInArena > maxArenaPlayers) { // Not Full & Arena With Highest Amount of Players
+                    posArena = i;
+                    maxArenaPlayers = playersInArena;
+                }
+            }
 
         // Check if an arena was found
         if (posArena == -1)
