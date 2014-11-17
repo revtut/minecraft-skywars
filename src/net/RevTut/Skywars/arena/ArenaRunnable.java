@@ -363,15 +363,18 @@ public class ArenaRunnable implements Runnable {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
-            // GameMode
-            alvo.setGameMode(GameMode.SURVIVAL);
+            // Config Player
+            if(!PlayerDat.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)){
+                System.out.println("Error while configuring the player.");
+                continue;
+            }
             // Status (add some delay so they dont lose life when falling)
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
                     alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
                 }
-            }, 40);
+            }, 25);
             // Remove Glass
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
