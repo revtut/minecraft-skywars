@@ -8,7 +8,6 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 /**
@@ -45,7 +44,7 @@ public class PlayerPickup implements Listener {
     public void onPlayerPickupItem(PlayerPickupItemEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena

@@ -86,7 +86,7 @@ public class PlayerChat implements Listener {
         e.setCancelled(true);
 
         // PlayerDat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
             player.sendMessage("§7[§6Inspetor§7] §4Ha um erro com o teu perfil! Reloga por favor.");
             return;

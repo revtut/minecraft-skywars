@@ -36,7 +36,7 @@ public class ArenaManager {
     private final Main plugin;
 
     /**
-     * Constructor of PlayerDamage
+     * Constructor of ArenaManager
      *
      * @param plugin main class
      */
@@ -484,7 +484,7 @@ public class ArenaManager {
         plugin.arenaManager.unhideToArena(player, true);
 
         // Config Player
-        if(!PlayerDat.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)){
+        if(!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)){
             System.out.println("Error while configuring the player.");
             return false;
         }
@@ -674,7 +674,7 @@ public class ArenaManager {
      * @return true if sucessfully hided to the players in the arena
      */
     public boolean hideToArena(Player player, boolean toPlayerToo){
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(null == playerDat){
             System.out.println("Error while hiding player to arena because PlayerDat is null.");
             return false;
@@ -703,7 +703,7 @@ public class ArenaManager {
      * @return true if sucessfully unhided to the players in the arena
      */
     public boolean unhideToArena(Player player, boolean toPlayerToo){
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(null == playerDat){
             System.out.println("Error while unhiding player to arena because PlayerDat is null.");
             return false;

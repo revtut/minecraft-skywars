@@ -7,6 +7,7 @@ import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.*;
+import net.RevTut.Skywars.player.PlayerManager;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
@@ -77,6 +78,11 @@ public class Main extends JavaPlugin {
     public ArenaManager arenaManager;
 
     /**
+     * Player Manager
+     */
+    public PlayerManager playerManager;
+
+    /**
      * Name of the server
      */
     public String servidor = Bukkit.getServerName();
@@ -125,11 +131,12 @@ public class Main extends JavaPlugin {
             return;
         }
 
-
-
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
         task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
+
+        /* Create Player Manager */
+        playerManager = new PlayerManager(this);
 
         /* AppearanceAPI Set Main Class */
         AppearanceAPI.plugin = this;
@@ -245,7 +252,7 @@ public class Main extends JavaPlugin {
         /* MySQL File */
         final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
         final FileConfiguration mysqlConf = YamlConfiguration.loadConfiguration(mysqlFile);
-        mysql = new MySQL(mysqlConf.getString("Hostname"), mysqlConf.getString("Port"), mysqlConf.getString("Database"), mysqlConf.getString("Username"), mysqlConf.getString("Password"));
+        mysql = new MySQL(this, mysqlConf.getString("Hostname"), mysqlConf.getString("Port"), mysqlConf.getString("Database"), mysqlConf.getString("Username"), mysqlConf.getString("Password"));
         if (!mysql.openConnection())
             return false;
         mysql.createMySQL();

@@ -42,7 +42,7 @@ public class PlayerFood implements Listener {
     public void onFoodChange(FoodLevelChangeEvent e){
         Player player = (Player) e.getEntity();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         if(playerDat.getStatus() != PlayerStatus.ALIVE)

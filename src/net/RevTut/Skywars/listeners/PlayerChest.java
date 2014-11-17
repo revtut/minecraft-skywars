@@ -8,7 +8,6 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -69,7 +68,7 @@ public class PlayerChest implements Listener{
     public void onChestInteract(PlayerInteractEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena

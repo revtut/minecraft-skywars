@@ -266,7 +266,7 @@ public class ArenaRunnable implements Runnable {
                 if(null != winner){
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
                     // Winner Dat
-                    PlayerDat winnerDat = PlayerDat.getPlayerDatByUUID(winner.getUniqueId());
+                    PlayerDat winnerDat = plugin.playerManager.getPlayerDatByUUID(winner.getUniqueId());
                     if(null != winnerDat)
                         winnerDat.addWin();
                 } else
@@ -364,7 +364,7 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             // Config Player
-            if(!PlayerDat.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)){
+            if(!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)){
                 System.out.println("Error while configuring the player.");
                 continue;
             }
@@ -415,7 +415,7 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             // Config Player
-            if(!PlayerDat.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+            if(!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
                 System.out.println("Error while configuring the player.");
                 continue;
             }

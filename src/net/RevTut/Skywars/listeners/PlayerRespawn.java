@@ -43,7 +43,7 @@ public class PlayerRespawn implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena

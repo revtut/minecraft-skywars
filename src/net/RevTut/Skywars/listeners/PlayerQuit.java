@@ -45,12 +45,12 @@ public class PlayerQuit implements Listener {
         e.setQuitMessage(null);
 
         // PlayerDat
-        final PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(p.getUniqueId());
+        final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
         if(playerDat == null){
             System.out.println("Error while updating PlayerDat on quit as it is NULL!");
             return;
         }
-        PlayerDat.removePlayerDat(playerDat); // Remove playerDat
+        plugin.playerManager.removePlayerDat(playerDat); // Remove playerDat
 
         // Remove from arena
         if(!plugin.arenaManager.removePlayer(playerDat, true)){

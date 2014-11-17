@@ -1,8 +1,8 @@
 package net.RevTut.Skywars.utils;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.player.PlayerDat;
-import net.minecraft.util.com.google.common.base.Converter;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
 
@@ -19,6 +19,11 @@ import java.util.UUID;
  * @version 1.0
  */
 public class MySQL {
+
+    /**
+     * Main class
+     */
+    private final Main plugin;
 
     /**
      * Hostname of the MySQL Database
@@ -68,13 +73,15 @@ public class MySQL {
     /**
      * Constructor of MySQL
      *
+     * @param plugin   main class
      * @param hostname hostname of the MySQL
      * @param port     port of the MySQL
      * @param database database of the MySQL
      * @param username username of the MySQL
      * @param password password of the MySQL
      */
-    public MySQL(String hostname, String port, String database, String username, String password) {
+    public MySQL(Main plugin, String hostname, String port, String database, String username, String password) {
+        this.plugin = plugin;
         this.hostname = hostname;
         this.port = port;
         this.database = database;
@@ -193,16 +200,16 @@ public class MySQL {
             final ResultSet resultGame = this.connection.createStatement().executeQuery(gameStatement);
             if (resultGame.next()) {
                 if (resultCore.next()) {
-                    if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
+                    if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
                         return true;
                     return false;
                 } else {
-                    if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
+                    if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
                         return true;
                     return false;
                 }
             } else {
-                if (PlayerDat.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
+                if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
                     return true;
                 return false;
             }

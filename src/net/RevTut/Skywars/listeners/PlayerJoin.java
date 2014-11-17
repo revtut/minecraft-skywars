@@ -73,7 +73,7 @@ public class PlayerJoin implements Listener {
                     @Override
                     public void run() {
                         // PlayerDat
-                        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(uuid);
+                        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(uuid);
                         if (playerDat == null) {
                             System.out.println("PlayerDat is null on join!");
                             /** Send him to Hub. Error in playerDat */

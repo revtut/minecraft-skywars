@@ -53,12 +53,12 @@ public class PlayerDeath implements Listener {
         e.setDeathMessage(null);
         // Target player
         Player alvo = e.getEntity();
-        PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
+        PlayerDat alvoDat = plugin.playerManager.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null)
             return;
 
         // Config Player
-        if(!PlayerDat.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+        if(!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
             System.out.println("Error while configuring the player.");
             return;
         }
@@ -83,7 +83,7 @@ public class PlayerDeath implements Listener {
         PlayerDat damagerDat = null;
         if(PlayerDamage.lastPlayerDamager.containsKey(alvo.getUniqueId())){
             damager = Bukkit.getPlayer(PlayerDamage.lastPlayerDamager.get(alvo.getUniqueId()));
-            damagerDat = PlayerDat.getPlayerDatByUUID(damager.getUniqueId());
+            damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
             if(damagerDat == null)
                 return;
             Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);

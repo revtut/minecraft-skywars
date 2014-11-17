@@ -48,10 +48,14 @@ public class BlockListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Arena
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+        if(arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
         if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
@@ -67,7 +71,7 @@ public class BlockListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena
@@ -90,7 +94,7 @@ public class BlockListener implements Listener {
     public void onEmptyBucket(PlayerBucketEmptyEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena
@@ -113,7 +117,7 @@ public class BlockListener implements Listener {
     public void onFillBucket(PlayerBucketFillEvent e){
         Player player = e.getPlayer();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena
@@ -136,7 +140,7 @@ public class BlockListener implements Listener {
     public void onFillBucket(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
         // Player Dat
-        PlayerDat playerDat = PlayerDat.getPlayerDatByUUID(player.getUniqueId());
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
             return;
         // Arena

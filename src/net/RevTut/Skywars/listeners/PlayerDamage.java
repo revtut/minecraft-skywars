@@ -56,7 +56,7 @@ public class PlayerDamage implements Listener {
             return;
         // Target Player
         Player alvo = (Player) e.getEntity();
-        PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
+        PlayerDat alvoDat = plugin.playerManager.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null){
             e.setCancelled(true);
             return;
@@ -79,7 +79,7 @@ public class PlayerDamage implements Listener {
             return;
         }
 
-        PlayerDat damagerDat = PlayerDat.getPlayerDatByUUID(damager.getUniqueId());
+        PlayerDat damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
         if(damagerDat == null){
             e.setCancelled(true);
             return;
@@ -112,7 +112,7 @@ public class PlayerDamage implements Listener {
             return;
         // Target Player
         Player alvo = (Player) e.getEntity();
-        PlayerDat alvoDat = PlayerDat.getPlayerDatByUUID(alvo.getUniqueId());
+        PlayerDat alvoDat = plugin.playerManager.getPlayerDatByUUID(alvo.getUniqueId());
         if(alvoDat == null){
             e.setCancelled(true);
             return;
