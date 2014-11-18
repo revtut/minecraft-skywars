@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.listeners;
+package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
@@ -8,17 +8,17 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
- * Player Drop.
+ * Player Inventory Click.
  *
- * <P>Controls the drop item event.</P>
+ * <P>Controls when a player clicks in his inventory.</P>
  *
- * @author WaxCoder
+ * @author Joao Silva
  * @version 1.0
  */
-public class PlayerDrop implements Listener {
+public class PlayerInventoryClick implements Listener {
 
     /**
      * Main class
@@ -26,23 +26,23 @@ public class PlayerDrop implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor of PlayerDrop
+     * Constructor of PlayerInventoryClick
      *
      * @param plugin main class
      */
-    public PlayerDrop(final Main plugin) {
+    public PlayerInventoryClick(final Main plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Takes care of a player when he drops an item
+     * Takes care of what to do when player clicks in his inventory
      *
-     * @param e     player drop item event
-     * @see         PlayerDropItemEvent
+     * @param e     inventory click event
+     * @see         InventoryClickEvent
      */
     @EventHandler
-    public void onPlayerDropItem(PlayerDropItemEvent e){
-        Player player = e.getPlayer();
+    public void onInventoryClick(InventoryClickEvent e){
+        Player player = (Player) e.getWhoClicked();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if(playerDat == null)
@@ -56,5 +56,4 @@ public class PlayerDrop implements Listener {
         if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
-
 }

@@ -5,7 +5,10 @@ import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
-import net.RevTut.Skywars.listeners.*;
+import net.RevTut.Skywars.listeners.block.BlockBreak;
+import net.RevTut.Skywars.listeners.block.BlockPlace;
+import net.RevTut.Skywars.listeners.environment.Weather;
+import net.RevTut.Skywars.listeners.player.*;
 import net.RevTut.Skywars.managers.ArenaManager;
 import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.managers.PlayerManager;
@@ -152,17 +155,24 @@ public class Main extends JavaPlugin {
         /* Libraries */
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
-        pm.registerEvents(new BlockListener(this), this);
+        // Block
+        pm.registerEvents(new BlockBreak(this), this);
+        pm.registerEvents(new BlockPlace(this), this);
+        // Player
+        pm.registerEvents(new PlayerBucketEmpty(this), this);
+        pm.registerEvents(new PlayerBucketFill(this), this);
         pm.registerEvents(new PlayerChat(this), this);
         pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new PlayerFood(this), this);
         pm.registerEvents(new PlayerInteract(this), this);
+        pm.registerEvents(new PlayerInventoryClick(this), this);
         pm.registerEvents(new PlayerJoin(this), this);
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
+        // Environment
         pm.registerEvents(new Weather(this), this);
     }
 

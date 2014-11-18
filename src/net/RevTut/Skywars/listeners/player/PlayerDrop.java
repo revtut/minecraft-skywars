@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.listeners;
+package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
@@ -8,17 +8,17 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 
 /**
- * Player Pickup.
+ * Player Drop.
  *
- * <P>Controls the pickup item event.</P>
+ * <P>Controls the drop item event.</P>
  *
  * @author WaxCoder
  * @version 1.0
  */
-public class PlayerPickup implements Listener {
+public class PlayerDrop implements Listener {
 
     /**
      * Main class
@@ -26,22 +26,22 @@ public class PlayerPickup implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor of PlayerPickup
+     * Constructor of PlayerDrop
      *
      * @param plugin main class
      */
-    public PlayerPickup(final Main plugin) {
+    public PlayerDrop(final Main plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Takes care of a player when he pickups an item
+     * Takes care of a player when he drops an item
      *
-     * @param e     player pickup item event
-     * @see         PlayerPickupItemEvent
+     * @param e     player drop item event
+     * @see         PlayerDropItemEvent
      */
     @EventHandler
-    public void onPlayerPickupItem(PlayerPickupItemEvent e){
+    public void onPlayerDropItem(PlayerDropItemEvent e){
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());

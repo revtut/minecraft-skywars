@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.listeners;
+package net.RevTut.Skywars.listeners.environment;
 
 import net.RevTut.Skywars.Main;
 import org.bukkit.event.EventHandler;

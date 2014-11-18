@@ -14,6 +14,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Engineer Kit.
+ *
+ * <P>Kit Engineer with land mines. Will explode when a player step on them.</P>
+ *
+ * @author WaxCoder
+ * @version 1.0
+ */
 public class Engineer implements Listener {
 
     /**
@@ -107,11 +115,11 @@ public class Engineer implements Listener {
      * Check if a player is placing a land mine. If so tell him he placed one and add the location
      * to the lands mine list
      *
-     * @param p player who placed the block
+     * @param player player who placed the block
      * @param itemStack item stack placed by the player
      * @param location location of the placed block
      */
-    public void mineLandPlace(Player p, ItemStack itemStack, Location location) {
+    public void mineLandPlace(Player player, ItemStack itemStack, Location location) {
         if (itemStack.getType() != Material.IRON_BLOCK)
             return;
         if(!itemStack.hasItemMeta())
@@ -123,6 +131,6 @@ public class Engineer implements Listener {
         // Add to list of placed mines
         landMinesList.add(location);
         // Send message
-        p.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias te uma mina!");
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias te uma mina!");
     }
 }

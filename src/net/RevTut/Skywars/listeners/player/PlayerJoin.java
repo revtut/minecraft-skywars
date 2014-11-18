@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.listeners;
+package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;

@@ -2,6 +2,7 @@ package net.RevTut.Skywars.managers;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.kits.Engineer;
+import net.RevTut.Skywars.kits.Hacker;
 
 /**
  * Kit Manager.
@@ -21,6 +22,9 @@ public class KitManager {
     /** Kit Engineer */
     public final Engineer engineer;
 
+    /** Kit Hacker */
+    public final Hacker hacker;
+
     /**
      * Constructor of Kit Manager
      *
@@ -30,5 +34,6 @@ public class KitManager {
         this.plugin = plugin;
         // Initialize Kits
         engineer = new Engineer(plugin);
+        hacker = new Hacker(plugin);
     }
 }

@@ -2,9 +2,7 @@ package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.Main;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -14,18 +12,25 @@ import java.util.HashMap;
  */
 
 public class Hacker implements Listener {
-    public Main plugin;
+    /**
+     * Main Class
+     */
+    private final Main plugin;
 
-    public Hacker(final Main plugin){
+    /**
+     * Constructor of Kit Manager
+     *
+     * @param plugin main class
+     */
+    public Hacker(Main plugin) {
         this.plugin = plugin;
     }
 
     public HashMap<Player , ItemStack[]> items = new HashMap<Player , ItemStack[]>();
 
-    @EventHandler()
-    public void onDeath(PlayerDeathEvent event){
-        ItemStack[] content = event.getEntity().getInventory().getContents();
-        items.put(event.getEntity(), content);
-        event.getEntity().getInventory().clear();
+    public void onDeath(Player player){
+        ItemStack[] content = player.getInventory().getContents();
+        items.put(player, content);
+        player.getInventory().clear();
     }
 }

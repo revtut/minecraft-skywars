@@ -1,23 +1,24 @@
-package net.RevTut.Skywars.listeners;
+package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
-import org.bukkit.Location;
+import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 /**
- * Player Respawn.
+ * Player Pickup.
  *
- * <P>Controls the respawn event.</P>
+ * <P>Controls the pickup item event.</P>
  *
  * @author WaxCoder
  * @version 1.0
  */
-public class PlayerRespawn implements Listener {
+public class PlayerPickup implements Listener {
 
     /**
      * Main class
@@ -25,22 +26,22 @@ public class PlayerRespawn implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor of PlayerRespawn
+     * Constructor of PlayerPickup
      *
      * @param plugin main class
      */
-    public PlayerRespawn(final Main plugin) {
+    public PlayerPickup(final Main plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Takes care of a player when he respawns
+     * Takes care of a player when he pickups an item
      *
-     * @param e     player respawn event
-     * @see         PlayerRespawnEvent
+     * @param e     player pickup item event
+     * @see         PlayerPickupItemEvent
      */
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent e){
+    public void onPlayerPickupItem(PlayerPickupItemEvent e){
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
@@ -48,14 +49,12 @@ public class PlayerRespawn implements Listener {
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(arena == null)
+        if(null == arena)
             return;
-        // Location
-        Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();
-        if(deadSpawn == null)
-            return;
-        // Set respawn location
-        e.setRespawnLocation(deadSpawn);
+        if(arena.getStatus() != ArenaStatus.INGAME)
+            e.setCancelled(true);
+        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+            e.setCancelled(true);
     }
 
 }
