@@ -19,6 +19,12 @@ import java.util.Random;
 public class ParticlesAPI {
 
     /**
+     * Random class
+     */
+    private static final Random r = new Random();
+
+
+    /**
      * Create helix particle effect using particles packet
      *
      * @param player player to create helix effect
@@ -41,8 +47,7 @@ public class ParticlesAPI {
      *
      * @param player player to create helix effect
      */
-
-    public static void HelixPlayer(Player player) {
+    public static void helixPlayer(Player player) {
         Location loc = player.getLocation();
         int radius = 4;
         for (double y = 0; y <= 50; y += 0.05) {
@@ -61,7 +66,6 @@ public class ParticlesAPI {
      * Make a random particle
      */
     private static String randomParticles() {
-        Random r = new Random();
         int rint = r.nextInt(5) + 1;
         if(rint == 1)
             return "fireworksSpark";
