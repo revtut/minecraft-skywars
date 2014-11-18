@@ -40,7 +40,7 @@ public class Hacker implements Listener {
     /**
      * Black Leather Helmet
      */
-    private final ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+    private static ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
         // Set helmet's color
@@ -54,7 +54,7 @@ public class Hacker implements Listener {
      *
      * @param p player to give the kit
      */
-    public void kitHacker(Player p) {
+    public static void kitHacker(Player p) {
         p.getInventory().setHelmet(leatherHelmet);
     }
 

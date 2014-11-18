@@ -14,6 +14,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
  * Created by waxcoder on 16-11-2014.
  */
@@ -55,20 +58,22 @@ public class KitMenu implements Listener {
         }
     }
 
-    @EventHandler
-    public void InventoryClick(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
+    public static void darKit(final Player p){
+        if(plugin.hKits.containsKey(p.getUniqueId())){
+            int kit = plugin.hKits.get(p.getUniqueId());
 
-        if (e.getInventory().getName().equals(menu.getName())) {
-            e.setCancelled(true);
-        }
+            /* Give the right kit */
+            if(kit == 0){
+                Engineer.kitEngineer(p);
+            }else if(kit == 1){
+                Hacker.kitHacker(p);
+            }else if(kit == 2){
+                Tatical.kitTatical(p);
+            }else if(kit == 3){
+                Ninja.kitNinja(p);
+            }else if(kit == 4){
 
-        if (e.getCurrentItem() == null) {
-            return;
-        }
-
-        if (e.getCurrentItem().getType() == Material.ENDER_PEARL) {
-
+            }
         }
     }
 }
