@@ -2,6 +2,7 @@ package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
+import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -93,6 +94,7 @@ public class Hacker {
         if (spawnLocation == null)
             return false;
         player.teleport(spawnLocation);
+        ParticlesAPI.HelixPlayer(player);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players

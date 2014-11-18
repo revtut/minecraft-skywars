@@ -1,7 +1,6 @@
 package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
-import net.RevTut.Skywars.libraries.particles.particlesAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;

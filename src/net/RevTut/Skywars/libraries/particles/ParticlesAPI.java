@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Random;
+
 /**
  * Particle API.
  *
@@ -34,18 +36,41 @@ public class ParticlesAPI {
         }
     }
 
+    /**
+     * Create helix particle effect using particles packet
+     *
+     * @param player player to create helix effect
+     */
+
     public static void HelixPlayer(Player player) {
         Location loc = player.getLocation();
         int radius = 4;
         for (double y = 0; y <= 50; y += 0.05) {
             double x = radius * Math.cos(y);
             double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles("fireworksSpark", (float) (loc.getX() + x), (float) (loc.getY() + y), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), (float) (loc.getX() + x), (float) (loc.getY() + y), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
         }
 
 
+    }
+
+    public static String randomParticles() {
+        Random r = new Random();
+        int rNumb = r.nextInt(5) + 1;
+        if(rNumb == 1)
+            return "fireworksSpark";
+        else if(rNumb == 2)
+            return "happyVillager";
+        else if(rNumb == 3)
+            return "witchMagic";
+        else if(rNumb == 4)
+            return "flame";
+        else if(rNumb == 5) {
+            return "blockcrack_152_0";
+        }
+        return null;
     }
 }
