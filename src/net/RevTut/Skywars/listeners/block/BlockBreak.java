@@ -18,7 +18,7 @@ import org.bukkit.event.block.BlockBreakEvent;
  * @author Joao Silva
  * @version 1.0
  */
-public class BlockBreaks implements Listener {
+public class BlockBreak implements Listener {
 
     /**
      * Main class
@@ -30,7 +30,7 @@ public class BlockBreaks implements Listener {
      *
      * @param plugin main class
      */
-    public BlockBreaks(final Main plugin) {
+    public BlockBreak(final Main plugin) {
         this.plugin = plugin;
     }
 
