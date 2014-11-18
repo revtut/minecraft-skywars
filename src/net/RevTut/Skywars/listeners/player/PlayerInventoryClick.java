@@ -37,23 +37,23 @@ public class PlayerInventoryClick implements Listener {
     /**
      * Takes care of what to do when player clicks in his inventory
      *
-     * @param e     inventory click event
-     * @see         InventoryClickEvent
+     * @param e inventory click event
+     * @see InventoryClickEvent
      */
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e){
+    public void onInventoryClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
+        if (null == arena)
             return;
-        if(arena.getStatus() != ArenaStatus.INGAME)
+        if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 }

@@ -122,24 +122,24 @@ public class Main extends JavaPlugin {
 
         /* Create Initial Arenas */
         String lastGameNumber = mysql.lastGameNumber();
-        if(lastGameNumber == null){
+        if (lastGameNumber == null) {
             System.out.println("Error while creating the initial arenas as last game number is null.");
             return;
         }
         lastGameNumber = arenaManager.nextGameNumber(lastGameNumber);
         // Arena 1
-        if(!arenaManager.createNewArena()){
+        if (!arenaManager.createNewArena()) {
             System.out.println("Error while creating the initial arenas.");
             return;
         }
         Arena arena = arenaManager.getArenas().get(0);
         ArenaDat arenaDat = arena.getArenaDat();
-        if(arenaDat == null){
+        if (arenaDat == null) {
             System.out.println("Error while creating the initial arenas as arena dat is null.");
             return;
         }
         arenaDat.setGameNumber(lastGameNumber);
-        if(!arenaManager.createNewArena()){
+        if (!arenaManager.createNewArena()) {
             System.out.println("Error while creating the initial arenas.");
             return;
         }
@@ -198,9 +198,9 @@ public class Main extends JavaPlugin {
         final File config = new File(getDataFolder() + File.separator + "config.yml");
         if (!config.exists()) {
             try {
-                if(!config.getParentFile().mkdirs())
+                if (!config.getParentFile().mkdirs())
                     return false;
-                if(!config.createNewFile())
+                if (!config.createNewFile())
                     return false;
             } catch (IOException e) {
                 System.out.println("Error while creating config.yml. Reason: " + e.getMessage());
@@ -212,9 +212,9 @@ public class Main extends JavaPlugin {
         final File mysqlConf = new File(getDataFolder() + File.separator + "mysql.yml");
         if (!mysqlConf.exists()) {
             try {
-                if(!mysqlConf.getParentFile().mkdirs())
+                if (!mysqlConf.getParentFile().mkdirs())
                     return false;
-                if(!mysqlConf.createNewFile())
+                if (!mysqlConf.createNewFile())
                     return false;
             } catch (IOException e) {
                 System.out.println("Error while creating mysql.yml. Reason: " + e.getMessage());

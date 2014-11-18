@@ -44,7 +44,7 @@ public class ScoreBoard implements Listener {
     /**
      * Show a new scoreboard to a player
      *
-     * @param p     player to show the scoreboard
+     * @param p player to show the scoreboard
      */
     public static void showScoreBoard(Player p) {
         // Create the scoreboard

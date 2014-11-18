@@ -35,17 +35,17 @@ public class PlayerFood implements Listener {
     /**
      * Takes care of a food when it changes level
      *
-     * @param e     food level change event
-     * @see         FoodLevelChangeEvent
+     * @param e food level change event
+     * @see FoodLevelChangeEvent
      */
     @EventHandler
-    public void onFoodChange(FoodLevelChangeEvent e){
+    public void onFoodChange(FoodLevelChangeEvent e) {
         Player player = (Player) e.getEntity();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 

@@ -36,28 +36,28 @@ public class PlayerRespawn implements Listener {
     /**
      * Takes care of a player when he respawns
      *
-     * @param e     player respawn event
-     * @see         PlayerRespawnEvent
+     * @param e player respawn event
+     * @see PlayerRespawnEvent
      */
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent e){
+    public void onPlayerRespawn(PlayerRespawnEvent e) {
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(arena == null)
+        if (arena == null)
             return;
 
         // Ninja
-        if(plugin.kitManager.hacker.restorePlayer(player, arena))
+        if (plugin.kitManager.hacker.restorePlayer(player, arena))
             return;
 
         // Location
         Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();
-        if(deadSpawn == null)
+        if (deadSpawn == null)
             return;
         // Set respawn location
         e.setRespawnLocation(deadSpawn);

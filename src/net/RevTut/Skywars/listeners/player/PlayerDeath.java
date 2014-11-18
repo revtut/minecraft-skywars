@@ -54,18 +54,18 @@ public class PlayerDeath implements Listener {
         // Target player
         Player alvo = e.getEntity();
         PlayerDat alvoDat = plugin.playerManager.getPlayerDatByUUID(alvo.getUniqueId());
-        if(alvoDat == null)
+        if (alvoDat == null)
             return;
 
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
 
         // Hacker
-        if(plugin.kitManager.hacker.saveInventory(alvo))
+        if (plugin.kitManager.hacker.saveInventory(alvo))
             return;
 
         // Config Player
-        if(!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
             System.out.println("Error while configuring the player.");
             return;
         }
@@ -75,7 +75,7 @@ public class PlayerDeath implements Listener {
 
         // Arena target
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
-        if(alvoArena == null)
+        if (alvoArena == null)
             return;
 
         // ArenaDat
@@ -88,16 +88,16 @@ public class PlayerDeath implements Listener {
         // Damager player
         Player damager = null;
         PlayerDat damagerDat = null;
-        if(PlayerDamage.lastPlayerDamager.containsKey(alvo.getUniqueId())){
+        if (PlayerDamage.lastPlayerDamager.containsKey(alvo.getUniqueId())) {
             damager = Bukkit.getPlayer(PlayerDamage.lastPlayerDamager.get(alvo.getUniqueId()));
             damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
-            if(damagerDat == null)
+            if (damagerDat == null)
                 return;
             Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
-            if(damagerArena == null)
+            if (damagerArena == null)
                 return;
             // Check if they are in the same arena
-            if(alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
+            if (alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
                 return;
         }
 
@@ -108,7 +108,7 @@ public class PlayerDeath implements Listener {
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);
         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
-        if(damager != null) {
+        if (damager != null) {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
@@ -119,8 +119,8 @@ public class PlayerDeath implements Listener {
             // Damager
             TitleAPI.sendTimings(damager, 5, 60, 5);
             TitleAPI.sendTitle(damager, Converters.convertToJSON("§aMATASTE"));
-            TitleAPI.sendSubTitle(damager,Converters.convertToJSON("§7" + alvo.getName()));
-        }else {
+            TitleAPI.sendSubTitle(damager, Converters.convertToJSON("§7" + alvo.getName()));
+        } else {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
@@ -130,12 +130,12 @@ public class PlayerDeath implements Listener {
         }
 
         // Check if game ended
-        if(alvoArena.getAlivePlayers().size() == 1){
+        if (alvoArena.getAlivePlayers().size() == 1) {
             // Set Remaining Time
             alvoArena.setRemainingTime(0);
             // Winner Dat
             PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
-            if(winnerDat != null)
+            if (winnerDat != null)
                 arenaDat.setWinner(winnerDat.getUUID().toString());
         }
 
@@ -143,7 +143,7 @@ public class PlayerDeath implements Listener {
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();
         alvoDat.addLose();
-        if(damagerDat == null)
+        if (damagerDat == null)
             return;
         damagerDat.addKill(); // Damager stats
     }

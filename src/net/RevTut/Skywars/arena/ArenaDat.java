@@ -201,7 +201,7 @@ public class ArenaDat {
      *
      * @return formated current date
      */
-    private String currentDate(){
+    private String currentDate() {
         Date currentDate = new Date();
         return currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
     }

@@ -101,8 +101,8 @@ public class ArenaRunnable implements Runnable {
                     // Minimum Players in the arena
                     if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
-                    else{
-                        arena.sendMessage("§7|§3SkyWars47| §4Minimo de "+ plugin.arenaManager.minPlayers +" jogadores nao atingidos.");
+                    else {
+                        arena.sendMessage("§7|§3SkyWars47| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                     }
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
@@ -243,14 +243,13 @@ public class ArenaRunnable implements Runnable {
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
                     } else {
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString())){
+                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString())) {
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
                             alvoDat.addWin();
-                        }
-                        else
+                        } else
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                         Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                        if(winner != null)
+                        if (winner != null)
                             TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Vencedor: " + winner.getName()));
                         else
                             TitleAPI.sendSubTitle(alvo, "");
@@ -259,7 +258,7 @@ public class ArenaRunnable implements Runnable {
                     break;
             }
         }
-        if(remainingTime == 0){
+        if (remainingTime == 0) {
             ArenaDat arenaDat = arena.getArenaDat();
             if (arenaDat == null)
                 return;
@@ -267,7 +266,7 @@ public class ArenaRunnable implements Runnable {
                 arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
             } else {
                 Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                if(null != winner){
+                if (null != winner) {
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
                 } else
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
@@ -305,7 +304,7 @@ public class ArenaRunnable implements Runnable {
         arena.setStatus(ArenaStatus.PREGAME);
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
-        if(null == arenaDat){
+        if (null == arenaDat) {
             System.out.println("ArenaDat is null when changing from Lobby to PreGame!");
             return;
         }
@@ -351,7 +350,7 @@ public class ArenaRunnable implements Runnable {
         arena.setStatus(ArenaStatus.INGAME);
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
-        if(null == arenaDat){
+        if (null == arenaDat) {
             System.out.println("ArenaDat is null when changing from PreGame to InGame!");
             return;
         }
@@ -364,7 +363,7 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             // Config Player
-            if(!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)){
+            if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)) {
                 System.out.println("Error while configuring the player.");
                 continue;
             }
@@ -396,7 +395,7 @@ public class ArenaRunnable implements Runnable {
         arena.setStatus(ArenaStatus.ENDGAME);
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
-        if(null == arenaDat){
+        if (null == arenaDat) {
             System.out.println("ArenaDat is null when changing from InGame to EndGame!");
             return;
         }
@@ -415,7 +414,7 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             // Config Player
-            if(!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
+            if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
                 System.out.println("Error while configuring the player.");
                 continue;
             }
@@ -452,7 +451,7 @@ public class ArenaRunnable implements Runnable {
 
         // Set the new arena
         final Arena newArena;
-        if(arenaMove != null){
+        if (arenaMove != null) {
             newArena = arenaMove; // Move to the new arena
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
@@ -460,8 +459,7 @@ public class ArenaRunnable implements Runnable {
                     plugin.arenaManager.removeArena(arena);
                 }
             }, 100);
-        }
-        else{
+        } else {
             newArena = arena; // Stay on the same arena
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override

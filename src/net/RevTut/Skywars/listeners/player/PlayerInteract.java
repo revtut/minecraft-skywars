@@ -38,8 +38,8 @@ public class PlayerInteract implements Listener {
     /**
      * Takes care of what to do when a player interacts with something
      *
-     * @param e     player interact event
-     * @see         PlayerInteractEvent
+     * @param e player interact event
+     * @see PlayerInteractEvent
      */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {

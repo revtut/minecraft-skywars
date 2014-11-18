@@ -42,16 +42,16 @@ public class ProjectileHit implements Listener {
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent e) {
         Projectile projectile = e.getEntity();
-        if(!(projectile.getShooter() instanceof Player))
+        if (!(projectile.getShooter() instanceof Player))
             return;
         Player player = (Player) projectile.getShooter();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
+        if (null == arena)
             return;
 
         // Ninja

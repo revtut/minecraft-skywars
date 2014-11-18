@@ -75,8 +75,8 @@ public class PlayerChat implements Listener {
      * Control the chat of the server. Reformats the messages sent. Before sending
      * checks for bad words, advertisment, duplicated messages and spam
      *
-     * @param e     async player chat event
-     * @see         AsyncPlayerChatEvent
+     * @param e async player chat event
+     * @see AsyncPlayerChatEvent
      */
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e) {
@@ -94,14 +94,14 @@ public class PlayerChat implements Listener {
 
         // Arena
         Arena playerArena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == playerArena){
+        if (null == playerArena) {
             player.sendMessage("§7[§6Inspetor§7] §4Nao te encontras em nenhuma arena! Reloga por favor.");
             return;
         }
 
         // ArenaDat
         ArenaDat arenaDat = playerArena.getArenaDat();
-        if(null == arenaDat){
+        if (null == arenaDat) {
             player.sendMessage("§7[§6Inspetor§7] §4Existe um erro na tua Arena! Reloga por favor.");
             return;
         }

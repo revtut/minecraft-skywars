@@ -35,8 +35,11 @@ public class Ninja implements Listener {
         this.plugin = plugin;
     }
 
-    /** Fishing Rod Hooker */
+    /**
+     * Fishing Rod Hooker
+     */
     private final ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
+
     {
         ItemMeta hookMeta = hook.getItemMeta();
         hook.setDurability((short) 2); // Two uses only
@@ -44,17 +47,26 @@ public class Ninja implements Listener {
         hook.setItemMeta(hookMeta);
     }
 
-    /** Leather Helmet */
+    /**
+     * Leather Helmet
+     */
     private final ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
-    /** Leather ChestPlate */
+    /**
+     * Leather ChestPlate
+     */
     private final ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
 
-    /** Leather Leggings */
+    /**
+     * Leather Leggings
+     */
     private final ItemStack leatherLeggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
 
-    /** Leather Boots */
+    /**
+     * Leather Boots
+     */
     private final ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
+
     {
         leatherBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
@@ -75,22 +87,22 @@ public class Ninja implements Listener {
     /**
      * Throw a player in the direction of a projectile
      *
-     * @param player player to throw
-     * @param itemStack item stack used by the player
+     * @param player     player to throw
+     * @param itemStack  item stack used by the player
      * @param projectile projectile thrown by the player
      */
     public void throwPlayer(Player player, ItemStack itemStack, Projectile projectile) { // MAKES USE OF PROJECTILE HIT EVENT
-        if(itemStack == null)
+        if (itemStack == null)
             return;
-        if(itemStack.getType() == null)
+        if (itemStack.getType() == null)
             return;
         if (itemStack.getType() != Material.FISHING_ROD)
             return;
-        if(!itemStack.hasItemMeta())
+        if (!itemStack.hasItemMeta())
             return;
-        if(!itemStack.getItemMeta().hasDisplayName())
+        if (!itemStack.getItemMeta().hasDisplayName())
             return;
-        if(!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Ninja Rod"))
+        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Ninja Rod"))
             return;
         // Locations needed
         Location A = player.getLocation(); // Location of the player

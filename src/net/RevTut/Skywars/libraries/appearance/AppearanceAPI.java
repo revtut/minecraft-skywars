@@ -38,7 +38,7 @@ public class AppearanceAPI {
      * @param delay  delay between each firework
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
-        if(null == plugin){
+        if (null == plugin) {
             System.out.println("Main plugin is null inside AppearanceAPI!");
             return;
         }

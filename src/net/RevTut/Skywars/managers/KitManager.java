@@ -20,13 +20,19 @@ public class KitManager {
      */
     private final Main plugin;
 
-    /** Kit Engineer */
+    /**
+     * Kit Engineer
+     */
     public final Engineer engineer;
 
-    /** Kit Hacker */
+    /**
+     * Kit Hacker
+     */
     public final Hacker hacker;
 
-    /** Kit Ninja */
+    /**
+     * Kit Ninja
+     */
     public final Ninja ninja;
 
     /**

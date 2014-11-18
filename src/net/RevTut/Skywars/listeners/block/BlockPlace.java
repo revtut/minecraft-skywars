@@ -37,23 +37,23 @@ public class BlockPlace implements Listener {
     /**
      * Takes care of what to do when a block is placed
      *
-     * @param e     block place event
-     * @see         BlockPlaceEvent
+     * @param e block place event
+     * @see BlockPlaceEvent
      */
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent e){
+    public void onBlockPlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
+        if (null == arena)
             return;
-        if(arena.getStatus() != ArenaStatus.INGAME)
+        if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
 
         // Check if its a Chest

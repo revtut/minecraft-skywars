@@ -37,23 +37,23 @@ public class PlayerPickup implements Listener {
     /**
      * Takes care of a player when he pickups an item
      *
-     * @param e     player pickup item event
-     * @see         PlayerPickupItemEvent
+     * @param e player pickup item event
+     * @see PlayerPickupItemEvent
      */
     @EventHandler
-    public void onPlayerPickupItem(PlayerPickupItemEvent e){
+    public void onPlayerPickupItem(PlayerPickupItemEvent e) {
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
+        if (null == arena)
             return;
-        if(arena.getStatus() != ArenaStatus.INGAME)
+        if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 

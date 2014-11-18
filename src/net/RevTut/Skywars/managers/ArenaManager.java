@@ -143,24 +143,24 @@ public class ArenaManager {
             }
         }
         // Max and Min Locations
-        if(lobbyLocation == null){
+        if (lobbyLocation == null) {
             System.out.println("Lobby location is null!");
             return null;
         }
-        if(deathSpawnLocation == null){
+        if (deathSpawnLocation == null) {
             System.out.println("Death Spawn location is null!");
             return null;
         }
-        if(firstCorner == null){
+        if (firstCorner == null) {
             System.out.println("First Corner location is null!");
             return null;
         }
-        if(secondCorner == null){
+        if (secondCorner == null) {
             System.out.println("Second Corner location is null!");
             return null;
         }
-        for(Location spawnLocation : spawnLocations)
-            if(spawnLocation == null){
+        for (Location spawnLocation : spawnLocations)
+            if (spawnLocation == null) {
                 System.out.println("One or more spawn locations are null!");
                 return null;
             }
@@ -282,7 +282,7 @@ public class ArenaManager {
     /**
      * Remove a player from the arena he was playing. Hide him to the server
      *
-     * @param playerDat playerDat to be removed
+     * @param playerDat  playerDat to be removed
      * @param checkArena check if arena has minimum players to continue the game
      * @return true it was successful when removing it
      * @see PlayerDat
@@ -304,7 +304,7 @@ public class ArenaManager {
         arena.getPlayers().remove(playerDat);
 
         Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if(player == null)
+        if (player == null)
             return false;
 
         // Message to arena
@@ -318,19 +318,19 @@ public class ArenaManager {
         ScoreBoard.updateAlive(arena);
         ScoreBoard.updateDeath(arena);
 
-        if(checkArena){
+        if (checkArena) {
             // Check if game already started
-            if(arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME){
-                if(arena.getAlivePlayers().size() <= 1){
+            if (arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME) {
+                if (arena.getAlivePlayers().size() <= 1) {
                     // Send message
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
                     // Send remaining players to new arena
                     List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
-                    for(PlayerDat alvoDat : arenaPlayers){
+                    for (PlayerDat alvoDat : arenaPlayers) {
                         Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                        if(alvo == null)
+                        if (alvo == null)
                             continue;
-                        if(!removePlayer(alvoDat, false)){
+                        if (!removePlayer(alvoDat, false)) {
                             System.out.println("Error while removing PlayerDat from arena on quit!");
                             /** Send him to Hub. Error while removing him from the arena */
                         }
@@ -351,8 +351,8 @@ public class ArenaManager {
                         }
                     }, 100);
                 }
-            }else if(arena.getStatus() == ArenaStatus.ENDGAME){
-                if(arena.getAlivePlayers().size() < 1){
+            } else if (arena.getStatus() == ArenaStatus.ENDGAME) {
+                if (arena.getAlivePlayers().size() < 1) {
                     // Delete the arena
                     Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                         @Override
@@ -488,7 +488,7 @@ public class ArenaManager {
         plugin.arenaManager.unhideToArena(player, true);
 
         // Config Player
-        if(!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)){
+        if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)) {
             System.out.println("Error while configuring the player.");
             return false;
         }
@@ -547,7 +547,7 @@ public class ArenaManager {
         int numero = 0;
         for (Arena arena : arenas)
             if (arena.getStatus() == ArenaStatus.LOBBY)
-                if(arena.getPlayers().size() < maxPlayers)
+                if (arena.getPlayers().size() < maxPlayers)
                     numero++;
         return numero;
     }
@@ -645,13 +645,13 @@ public class ArenaManager {
     /**
      * Hide player to the server
      *
-     * @param player player to hide to server
+     * @param player      player to hide to server
      * @param toPlayerToo true if hide all server to player
      */
-    public void hideToServer(Player player, boolean toPlayerToo){
-        for(Player alvo : Bukkit.getOnlinePlayers()){
+    public void hideToServer(Player player, boolean toPlayerToo) {
+        for (Player alvo : Bukkit.getOnlinePlayers()) {
             alvo.hidePlayer(player);
-            if(toPlayerToo)
+            if (toPlayerToo)
                 player.hidePlayer(alvo);
         }
     }
@@ -659,13 +659,13 @@ public class ArenaManager {
     /**
      * Unhide player to the server
      *
-     * @param player player to unhide to server
+     * @param player      player to unhide to server
      * @param toPlayerToo true if unhide all server to player
      */
-    public void unhideToServer(Player player, boolean toPlayerToo){
-        for(Player alvo : Bukkit.getOnlinePlayers()){
+    public void unhideToServer(Player player, boolean toPlayerToo) {
+        for (Player alvo : Bukkit.getOnlinePlayers()) {
             alvo.showPlayer(player);
-            if(toPlayerToo)
+            if (toPlayerToo)
                 player.showPlayer(alvo);
         }
     }
@@ -673,27 +673,27 @@ public class ArenaManager {
     /**
      * Hide player to the arena
      *
-     * @param player player to unhide to the arena
+     * @param player      player to unhide to the arena
      * @param toPlayerToo true if hide all in the arena to player
      * @return true if sucessfully hided to the players in the arena
      */
-    public boolean hideToArena(Player player, boolean toPlayerToo){
+    public boolean hideToArena(Player player, boolean toPlayerToo) {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(null == playerDat){
+        if (null == playerDat) {
             System.out.println("Error while hiding player to arena because PlayerDat is null.");
             return false;
         }
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena){
+        if (null == arena) {
             System.out.println("Error while hiding player to arena because Arena is null.");
             return false;
         }
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(null == alvo)
+            if (null == alvo)
                 continue;
             alvo.hidePlayer(player);
-            if(toPlayerToo)
+            if (toPlayerToo)
                 player.hidePlayer(alvo);
         }
         return true;
@@ -702,27 +702,27 @@ public class ArenaManager {
     /**
      * Unhide player to the arena
      *
-     * @param player player to unhide to the arena
+     * @param player      player to unhide to the arena
      * @param toPlayerToo true if hide all in the arena to player
      * @return true if sucessfully unhided to the players in the arena
      */
-    public boolean unhideToArena(Player player, boolean toPlayerToo){
+    public boolean unhideToArena(Player player, boolean toPlayerToo) {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(null == playerDat){
+        if (null == playerDat) {
             System.out.println("Error while unhiding player to arena because PlayerDat is null.");
             return false;
         }
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena){
+        if (null == arena) {
             System.out.println("Error while unhiding player to arena because Arena is null.");
             return false;
         }
-        for(PlayerDat alvoDat : arena.getPlayers()){
+        for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(null == alvo)
+            if (null == alvo)
                 continue;
             alvo.showPlayer(player);
-            if(toPlayerToo)
+            if (toPlayerToo)
                 player.showPlayer(alvo);
         }
         return true;
@@ -732,17 +732,17 @@ public class ArenaManager {
      * Check if two players are in the same arena
      *
      * @param playerDat player to check
-     * @param alvoDat player to check
+     * @param alvoDat   player to check
      * @return true if they are in the same arena
      */
-    public boolean inSameArena(PlayerDat playerDat, PlayerDat alvoDat){
+    public boolean inSameArena(PlayerDat playerDat, PlayerDat alvoDat) {
         Arena playerArena = getArenaByPlayer(playerDat);
-        if(null == playerArena){
+        if (null == playerArena) {
             System.out.println("Error while checking if they are in the same arena because Player's Arena is null!");
             return false;
         }
         Arena alvoArena = getArenaByPlayer(alvoDat);
-        if(null == alvoArena){
+        if (null == alvoArena) {
             System.out.println("Error while checking if they are in the same arena because Alvo's Arena is null!");
             return false;
         }

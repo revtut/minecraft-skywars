@@ -37,23 +37,23 @@ public class BlockBreak implements Listener {
     /**
      * Takes care of what to do when a block is broken
      *
-     * @param e     block break event
-     * @see         BlockBreakEvent
+     * @param e block break event
+     * @see BlockBreakEvent
      */
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e){
+    public void onBlockBreak(BlockBreakEvent e) {
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
+        if (playerDat == null)
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
+        if (null == arena)
             return;
-        if(arena.getStatus() != ArenaStatus.INGAME)
+        if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
-        if(playerDat.getStatus() != PlayerStatus.ALIVE)
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
     }
 }

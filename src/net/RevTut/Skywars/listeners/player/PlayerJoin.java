@@ -43,8 +43,8 @@ public class PlayerJoin implements Listener {
      * Takes care of a player when he joins. Create the PlayerDat of him and assign him to
      * an existing arena. If needed it creates a new one.
      *
-     * @param e     player join event
-     * @see         PlayerJoinEvent
+     * @param e player join event
+     * @see PlayerJoinEvent
      */
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {

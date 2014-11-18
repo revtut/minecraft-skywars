@@ -167,14 +167,14 @@ public class Converters {
     /**
      * Convert a string list to a string
      *
-     * @param list list with all the strings
+     * @param list      list with all the strings
      * @param separator string to separe each string
      * @return string unified
      */
-    public static String convertListToString(List<String> list, String separator){
+    public static String convertListToString(List<String> list, String separator) {
         String converted = "";
-        for(int i = 0; i < list.size(); i++){
-            if(i < (list.size() - 1))
+        for (int i = 0; i < list.size(); i++) {
+            if (i < (list.size() - 1))
                 converted += list.get(i) + separator;
             else
                 converted += list.get(i);

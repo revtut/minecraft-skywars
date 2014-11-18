@@ -38,37 +38,54 @@ public class Engineer implements Listener {
         this.plugin = plugin;
     }
 
-    /** List with all the mines in the arena */
+    /**
+     * List with all the mines in the arena
+     */
     private final List<Location> landMinesList = new ArrayList<Location>();
 
-    /** Land Mine */
+    /**
+     * Land Mine
+     */
     private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
+
     {
         ItemMeta mineMeta = mine.getItemMeta();
         mineMeta.setDisplayName("§3Land Mine");
         mine.setItemMeta(mineMeta);
     }
 
-    /** Iron Helmet */
+    /**
+     * Iron Helmet
+     */
     private final ItemStack ironHelmet = new ItemStack(Material.IRON_HELMET, 1);
+
     {
         ironHelmet.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
     }
 
-    /** Iron ChestPlate */
+    /**
+     * Iron ChestPlate
+     */
     private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+
     {
         ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    /** Iron Leggings */
+    /**
+     * Iron Leggings
+     */
     private final ItemStack ironLeggings = new ItemStack(Material.IRON_LEGGINGS, 1);
+
     {
         ironLeggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    /** Iron Boots */
+    /**
+     * Iron Boots
+     */
     private final ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
+
     {
         ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
@@ -90,14 +107,14 @@ public class Engineer implements Listener {
      * Check if a player stepped in a land mine
      *
      * @param action action of the player
-     * @param block block interacted with
+     * @param block  block interacted with
      */
     public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
         if (!action.equals(Action.PHYSICAL))
             return;
-        if(block == null)
+        if (block == null)
             return;
-        if(block.getType() == null)
+        if (block.getType() == null)
             return;
         if (!block.getType().equals(Material.IRON_BLOCK))
             return;
@@ -113,22 +130,22 @@ public class Engineer implements Listener {
      * Check if a player is placing a land mine. If so tell him he placed one and add the location
      * to the lands mine list
      *
-     * @param player player who placed the block
+     * @param player    player who placed the block
      * @param itemStack item stack placed by the player
-     * @param location location of the placed block
+     * @param location  location of the placed block
      */
     public void mineLandPlace(Player player, ItemStack itemStack, Location location) { // MAKES USE OF BLOCK PLACE EVENT
-        if(itemStack == null)
+        if (itemStack == null)
             return;
-        if(itemStack.getType() == null)
+        if (itemStack.getType() == null)
             return;
         if (itemStack.getType() != Material.IRON_BLOCK)
             return;
-        if(!itemStack.hasItemMeta())
+        if (!itemStack.hasItemMeta())
             return;
-        if(!itemStack.getItemMeta().hasDisplayName())
+        if (!itemStack.getItemMeta().hasDisplayName())
             return;
-        if(!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Land Mine"))
+        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Land Mine"))
             return;
         // Add to list of placed mines
         landMinesList.add(location);

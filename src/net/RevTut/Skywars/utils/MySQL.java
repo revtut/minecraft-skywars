@@ -283,7 +283,7 @@ public class MySQL {
             String lastGame = "";
             final String lastGameStatement = "SELECT GameNumber FROM " + DBGameInfo + ";";
             final ResultSet resultLastGame = this.connection.createStatement().executeQuery(lastGameStatement);
-            while(resultLastGame.next()){
+            while (resultLastGame.next()) {
                 String gameNumber = resultLastGame.getString("GameNumber");
                 if (lastGame.length() == gameNumber.length()) {
                     int compResult = lastGame.compareTo(gameNumber);

@@ -21,17 +21,21 @@ public class KitMenu implements Listener {
     public static Main plugin;
     public Inventory menu;
 
-    ItemStack eng = new ItemStack(Material.ENDER_PEARL);{
+    ItemStack eng = new ItemStack(Material.ENDER_PEARL);
+
+    {
         ItemMeta engMeta = eng.getItemMeta();
         engMeta.setDisplayName("§6Engineer ");
     }
 
-    ItemStack start = new ItemStack(Material.ENDER_PEARL);{
+    ItemStack start = new ItemStack(Material.ENDER_PEARL);
+
+    {
         ItemMeta startMeta = eng.getItemMeta();
         startMeta.setDisplayName("§2Kits");
     }
 
-    public KitMenu(final Main plugin){
+    public KitMenu(final Main plugin) {
         KitMenu.plugin = plugin;
     }
 
@@ -40,30 +44,30 @@ public class KitMenu implements Listener {
 
     /* Event create menu with 18 slots */
     @EventHandler
-    public void criarMenu (PlayerInteractEvent e){
+    public void criarMenu(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        menu = Bukkit.createInventory(null,18, "$6Escolha um kit!");
+        menu = Bukkit.createInventory(null, 18, "$6Escolha um kit!");
 
-        if(p.getInventory().getItemInHand().getType() == Material.NETHER_STAR){
-            if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+        if (p.getInventory().getItemInHand().getType() == Material.NETHER_STAR) {
+            if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 p.openInventory(menu);
             }
         }
     }
 
     @EventHandler
-    public void InventoryClick(InventoryClickEvent e){
+    public void InventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
 
-        if(e.getInventory().getName().equals(menu.getName())){
+        if (e.getInventory().getName().equals(menu.getName())) {
             e.setCancelled(true);
         }
 
-        if(e.getCurrentItem() == null){
+        if (e.getCurrentItem() == null) {
             return;
         }
 
-        if(e.getCurrentItem().getType() == Material.ENDER_PEARL){
+        if (e.getCurrentItem().getType() == Material.ENDER_PEARL) {
 
         }
     }

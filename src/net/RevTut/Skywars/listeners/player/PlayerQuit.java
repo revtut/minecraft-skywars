@@ -35,8 +35,8 @@ public class PlayerQuit implements Listener {
     /**
      * Takes care of a player when he leaves. Delete the PlayerDat and the arena if needed.
      *
-     * @param e     player quit event
-     * @see         PlayerQuitEvent
+     * @param e player quit event
+     * @see PlayerQuitEvent
      */
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
@@ -46,14 +46,14 @@ public class PlayerQuit implements Listener {
 
         // PlayerDat
         final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
-        if(playerDat == null){
+        if (playerDat == null) {
             System.out.println("Error while updating PlayerDat on quit as it is NULL!");
             return;
         }
         plugin.playerManager.removePlayerDat(playerDat); // Remove playerDat
 
         // Remove from arena
-        if(!plugin.arenaManager.removePlayer(playerDat, true)){
+        if (!plugin.arenaManager.removePlayer(playerDat, true)) {
             System.out.println("Error while removing PlayerDat from arena on quit!");
             return;
         }
