@@ -57,6 +57,9 @@ public class ParticlesAPI {
 
     }
 
+    /**
+     * Make a random particle
+     */
     private static String randomParticles() {
         Random r = new Random();
         int rint = r.nextInt(5) + 1;
