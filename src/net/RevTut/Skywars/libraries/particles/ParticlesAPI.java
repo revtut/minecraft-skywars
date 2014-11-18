@@ -25,7 +25,7 @@ public class ParticlesAPI {
 
 
     /**
-     * Create helix particle effect in position X
+     * Create helix particle effect follow X-Axis
      *
      * @param player player to create helix effect
      */
@@ -43,7 +43,7 @@ public class ParticlesAPI {
     }
 
     /**
-     * Create helix particle effect in position Y
+     * Create helix particle effect follow Y-Axis
      *
      * @param player player to create helix effect
      */
@@ -58,8 +58,6 @@ public class ParticlesAPI {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
         }
-
-
     }
 
     /**
@@ -79,6 +77,6 @@ public class ParticlesAPI {
         else if(rint == 5) {
             return "blockcrack_152_0";
         }
-        return null;
+        return "fireworksSpark";
     }
 }
