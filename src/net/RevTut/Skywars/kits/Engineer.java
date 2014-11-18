@@ -25,12 +25,12 @@ public class Engineer {
     /**
      * List with all the mines in the arena
      */
-    private final List<Location> landMinesList = new ArrayList<Location>();
+    private static List<Location> landMinesList = new ArrayList<Location>();
 
     /**
      * Land Mine
      */
-    private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
+    private static ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
 
     {
         ItemMeta mineMeta = mine.getItemMeta();
@@ -41,7 +41,7 @@ public class Engineer {
     /**
      * Iron ChestPlate
      */
-    private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    private static ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
         ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
@@ -52,10 +52,11 @@ public class Engineer {
      *
      * @param p player to give the kit
      */
-    public void kitEngineer(Player p) {
+    public static void kitEngineer(Player p) {
         p.getInventory().addItem(mine);
         p.getInventory().setChestplate(ironChestPlate);
     }
+
 
     /**
      * Check if a player stepped in a land mine

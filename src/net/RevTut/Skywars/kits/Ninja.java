@@ -24,7 +24,7 @@ public class Ninja {
     /**
      * Fishing Rod Hooker
      */
-    private final ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
+    private static ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
 
     {
         ItemMeta hookMeta = hook.getItemMeta();
@@ -36,7 +36,7 @@ public class Ninja {
     /**
      * Leather Helmet
      */
-    private final ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+    private static ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
         // Set helmet's color
@@ -48,7 +48,7 @@ public class Ninja {
     /**
      * Leather Boots
      */
-    private final ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
+    private static ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
 
     {
         leatherBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
@@ -63,7 +63,7 @@ public class Ninja {
      *
      * @param p player to give the kit
      */
-    public void kitNinja(Player p) {
+    public static void kitNinja(Player p) {
         p.getInventory().addItem(hook);
         p.getInventory().setHelmet(leatherHelmet);
         p.getInventory().setBoots(leatherBoots);
@@ -76,6 +76,7 @@ public class Ninja {
      * @param itemStack  item stack used by the player
      * @param projectile projectile thrown by the player
      */
+
     public void throwPlayer(Player player, ItemStack itemStack, Projectile projectile) { // MAKES USE OF PROJECTILE HIT EVENT
         if (itemStack == null)
             return;
