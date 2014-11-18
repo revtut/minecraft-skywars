@@ -83,5 +83,4 @@ public class Tatical {
         itemStack.setAmount(itemStack.getAmount() - 1);
         return true;
     }
-
 }

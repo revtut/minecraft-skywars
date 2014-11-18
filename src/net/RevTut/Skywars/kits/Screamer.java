@@ -3,11 +3,11 @@ package net.RevTut.Skywars.kits;
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
