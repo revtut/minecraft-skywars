@@ -25,7 +25,7 @@ public class ParticlesAPI {
 
 
     /**
-     * Create helix particle effect using particles packet
+     * Create helix particle effect in position X
      *
      * @param player player to create helix effect
      */
@@ -43,7 +43,7 @@ public class ParticlesAPI {
     }
 
     /**
-     * Create helix particle effect using particles packet
+     * Create helix particle effect in position Y
      *
      * @param player player to create helix effect
      */
