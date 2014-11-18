@@ -29,7 +29,7 @@ public class ParticlesAPI {
      *
      * @param player player to create helix effect
      */
-    public static void HelixPosX(Player player) {
+    public static void helixPosX(Player player) {
         Location loc = player.getLocation();
         int radius = 2;
         for(double y = 0; y <= 50; y+=0.05) {
@@ -47,7 +47,7 @@ public class ParticlesAPI {
      *
      * @param player player to create helix effect
      */
-    public static void HelixPosY(Player player) {
+    public static void helixPosY(Player player) {
         Location loc = player.getLocation();
         int radius = 4;
         for (double y = 0; y <= 50; y += 0.05) {
