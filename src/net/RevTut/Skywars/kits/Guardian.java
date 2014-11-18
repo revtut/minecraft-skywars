@@ -2,10 +2,10 @@ package net.RevTut.Skywars.kits;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -68,7 +68,7 @@ public class Guardian {
             return false;
         if (!itemStack.getItemMeta().hasDisplayName())
             return false;
-        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§33Guardian Rage"))
+        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Guardian Rage"))
             return false;
         // Add potion effect
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * duration, 2));
