@@ -80,7 +80,13 @@ public class Tatical {
         // Add potion effect
         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * duration, 1));
         // Remove item
-        itemStack.setAmount(itemStack.getAmount() - 1);
+        int amount = itemStack.getAmount();
+        if(amount > 1)
+            itemStack.setAmount(itemStack.getAmount() - 1);
+        else
+            player.getInventory().remove(itemStack);
+        // Send message
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Estas invisivel por " + duration + " segundos!");
         return true;
     }
 }
