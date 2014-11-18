@@ -33,11 +33,6 @@ public class Hacker {
     private final Map<UUID, ItemStack[]> playerInventoryContent = new HashMap<UUID, ItemStack[]>();
 
     /**
-     * Map with all the armour items of a player
-     */
-    private final Map<UUID, ItemStack[]> playerArmourContent = new HashMap<UUID, ItemStack[]>();
-
-    /**
      * List with players that already respawned
      */
     private final List<UUID> respawnedPlayers = new ArrayList<UUID>();
@@ -67,6 +62,7 @@ public class Hacker {
      * Save all the items of a player if the player has not respawned yet
      *
      * @param player player to save inventory
+     * @param arena player's arena
      * @return true if player may respawn
      */
     public boolean saveInventory(Player player, Arena arena) { // MAKES USE OF PLAYER DEATH EVENT
@@ -78,10 +74,7 @@ public class Hacker {
         if(kit != Kit.HACKER)
             return false;
         // Add content of his inventory to the map
-        ItemStack[] content = player.getInventory().getContents();
-        ItemStack[] armourContents = player.getInventory().getArmorContents();
-        playerInventoryContent.put(player.getUniqueId(), content);
-        playerArmourContent.put(player.getUniqueId(), armourContents);
+        playerInventoryContent.put(player.getUniqueId(), player.getInventory().getContents().clone());
         return true;
     }
 
@@ -93,18 +86,12 @@ public class Hacker {
      * @return location to send the player
      */
     public Location restorePlayer(Player player, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
-        if (!playerInventoryContent.containsKey(player.getUniqueId())){
-            if(!playerArmourContent.containsKey(player.getUniqueId())){
+        if (!playerInventoryContent.containsKey(player.getUniqueId()))
                 return null;
-            }
-        }
         ItemStack[] inventoryContent = playerInventoryContent.get(player.getUniqueId());
-        ItemStack[] armourContent = playerArmourContent.get(player.getUniqueId());
         player.getInventory().setContents(inventoryContent);
-        player.getInventory().setArmorContents(armourContent);
         // Remove from maps
         playerInventoryContent.remove(player.getUniqueId());
-        playerArmourContent.remove(player.getUniqueId());
         // Teleport to a random spawn location
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (arenaLocation == null)
