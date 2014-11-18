@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
  * @author WaxCoder
  * @version 1.0
  */
-
 public class ParticlesAPI {
 
     /**

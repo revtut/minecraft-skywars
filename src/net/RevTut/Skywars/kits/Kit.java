@@ -27,7 +27,7 @@ public enum Kit {
     /**
      * Tatical
      */
-    TATICAL("§6Tatical", Material.ENDER_PEARL, 750);
+    TATICAL("§6Tatical", Material.ENDER_PEARL, 750),
     /**
      * Guardian
      */
