@@ -92,7 +92,7 @@ public class Engineer implements Listener {
      * @param action action of the player
      * @param block block interacted with
      */
-    public void landMineActivate(Action action, Block block) {
+    public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
         if (!action.equals(Action.PHYSICAL))
             return;
         if(block == null)
@@ -117,7 +117,7 @@ public class Engineer implements Listener {
      * @param itemStack item stack placed by the player
      * @param location location of the placed block
      */
-    public void mineLandPlace(Player player, ItemStack itemStack, Location location) {
+    public void mineLandPlace(Player player, ItemStack itemStack, Location location) { // MAKES USE OF BLOCK PLACE EVENT
         if(itemStack == null)
             return;
         if(itemStack.getType() == null)

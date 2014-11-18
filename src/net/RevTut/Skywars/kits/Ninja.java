@@ -79,7 +79,7 @@ public class Ninja implements Listener {
      * @param itemStack item stack used by the player
      * @param projectile projectile thrown by the player
      */
-    public void throwPlayer(Player player, ItemStack itemStack, Projectile projectile) {
+    public void throwPlayer(Player player, ItemStack itemStack, Projectile projectile) { // MAKES USE OF PROJECTILE HIT EVENT
         if(itemStack == null)
             return;
         if(itemStack.getType() == null)

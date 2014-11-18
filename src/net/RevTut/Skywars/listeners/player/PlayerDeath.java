@@ -57,6 +57,13 @@ public class PlayerDeath implements Listener {
         if(alvoDat == null)
             return;
 
+        // Bypass respawn screen
+        BypassesAPI.respawnBypass(alvo);
+
+        // Hacker
+        if(plugin.kitManager.hacker.saveInventory(alvo))
+            return;
+
         // Config Player
         if(!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)){
             System.out.println("Error while configuring the player.");
@@ -97,9 +104,6 @@ public class PlayerDeath implements Listener {
         // Scoreboard update alive players and dead
         ScoreBoard.updateAlive(alvoArena);
         ScoreBoard.updateDeath(alvoArena);
-
-        // Bypass respawn screen
-        BypassesAPI.respawnBypass(alvo);
 
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);

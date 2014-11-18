@@ -50,6 +50,11 @@ public class PlayerRespawn implements Listener {
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if(arena == null)
             return;
+
+        // Ninja
+        if(plugin.kitManager.hacker.restoreInventory(player))
+            return;
+
         // Location
         Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();
         if(deadSpawn == null)
