@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 public class particlesAPI {
 
     /**
-     * Create helix particle effect using packets
+     * Create helix particle effect using particles packet
      *
      * @param player player to create helix effect
      */
