@@ -53,7 +53,7 @@ public class ParticlesAPI {
         for (double y = 0; y <= 50; y += 0.05) {
             double x = radius * Math.cos(y);
             double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles("fireworksSpark", (float) (loc.getX() + y), (float) (loc.getY() + x ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), (float) (loc.getX() + y), (float) (loc.getY() + x ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
