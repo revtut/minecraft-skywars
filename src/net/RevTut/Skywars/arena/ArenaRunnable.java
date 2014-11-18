@@ -322,13 +322,18 @@ public class ArenaRunnable implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+            // Config Player
+            if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)) {
+                System.out.println("Error while configuring the player.");
+                continue;
+            }
+            // Teleport player
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null) {
                 System.out.println("Spawn location " + i + " is null when chaning from Lobby to PreGame");
                 continue;
             }
             arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
-            // Teleport player
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
