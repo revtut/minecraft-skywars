@@ -5,7 +5,7 @@ import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
-import net.RevTut.Skywars.listeners.block.BlockBreak;
+import net.RevTut.Skywars.listeners.block.BlockBreaks;
 import net.RevTut.Skywars.listeners.block.BlockPlace;
 import net.RevTut.Skywars.listeners.environment.ProjectileHit;
 import net.RevTut.Skywars.listeners.environment.Weather;
@@ -151,7 +151,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
         // Block
-        pm.registerEvents(new BlockBreak(this), this);
+        pm.registerEvents(new BlockBreaks(this), this);
         pm.registerEvents(new BlockPlace(this), this);
         // Environment
         pm.registerEvents(new ProjectileHit(this), this);
