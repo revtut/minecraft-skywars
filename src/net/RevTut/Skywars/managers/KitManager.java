@@ -50,6 +50,11 @@ public class KitManager {
     public final Tatical tatical = new Tatical();
 
     /**
+     * Kit Screamer
+     */
+    public final Screamer screamer = new Screamer();
+
+    /**
      * Kit Menu Item
      */
     private final ItemStack kitMenuItem = new ItemStack(Material.NETHER_STAR, 1);
@@ -100,6 +105,8 @@ public class KitManager {
             ninja.kitNinja(player);
         else if(kit == Kit.TATICAL)
             tatical.kitTatical(player);
+        else if(kit == Kit.SCREAMER)
+            screamer.kitScreamer(player);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §aRecebeste o Kit " + ChatColor.stripColor(kit.getDisplayName())+ "!");
     }

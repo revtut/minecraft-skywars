@@ -24,7 +24,7 @@ public class Screamer implements Listener {
         Arrow arrow = (Arrow) proj;
         if(proj instanceof Arrow){
             Player p = (Player) arrow.getShooter();
-            ParticlesAPI.createHelix(p);
+            ParticlesAPI.helixPosX(p);
         }
     }
 

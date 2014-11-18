@@ -31,7 +31,12 @@ public enum Kit {
     /**
      * Guardian
      */
-    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 1200);
+    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 1200),
+
+    /**
+     * Guardian
+     */
+    SCREAMER("§6Screamer", Material.BONE, 1200);
 
     /**
      * Displayname of the kit
