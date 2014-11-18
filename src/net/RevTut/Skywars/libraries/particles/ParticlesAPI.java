@@ -59,16 +59,16 @@ public class ParticlesAPI {
 
     private static String randomParticles() {
         Random r = new Random();
-        int rNumb = r.nextInt(5) + 1;
-        if(rNumb == 1)
+        int rint = r.nextInt(5) + 1;
+        if(rint == 1)
             return "fireworksSpark";
-        else if(rNumb == 2)
+        else if(rint == 2)
             return "happyVillager";
-        else if(rNumb == 3)
+        else if(rint == 3)
             return "witchMagic";
-        else if(rNumb == 4)
+        else if(rint == 4)
             return "flame";
-        else if(rNumb == 5) {
+        else if(rint == 5) {
             return "blockcrack_152_0";
         }
         return null;
