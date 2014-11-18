@@ -40,15 +40,6 @@ public class Engineer implements Listener {
     }
 
     /**
-     * Iron Helmet
-     */
-    private final ItemStack ironHelmet = new ItemStack(Material.IRON_HELMET, 1);
-
-    {
-        ironHelmet.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-    }
-
-    /**
      * Iron ChestPlate
      */
     private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
@@ -58,34 +49,13 @@ public class Engineer implements Listener {
     }
 
     /**
-     * Iron Leggings
-     */
-    private final ItemStack ironLeggings = new ItemStack(Material.IRON_LEGGINGS, 1);
-
-    {
-        ironLeggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-    }
-
-    /**
-     * Iron Boots
-     */
-    private final ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
-
-    {
-        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
-    }
-
-    /**
      * Give kit engineer to a player
      *
      * @param p player to give the kit
      */
     public void kitEngineer(Player p) {
         p.getInventory().addItem(mine);
-        p.getInventory().setHelmet(ironHelmet);
         p.getInventory().setChestplate(ironChestPlate);
-        p.getInventory().setLeggings(ironLeggings);
-        p.getInventory().setBoots(ironBoots);
     }
 
     /**

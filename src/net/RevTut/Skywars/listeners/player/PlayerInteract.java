@@ -66,6 +66,9 @@ public class PlayerInteract implements Listener {
 
         // Engineer
         arena.getKitManager().engineer.landMineActivate(e.getAction(), e.getClickedBlock());
+        // Tactical
+        if(arena.getKitManager().tatical.setInvisible(player, e.getAction(), player.getItemInHand(), 10))
+            e.setCancelled(true);
     }
 
 }

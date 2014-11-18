@@ -1,22 +1,22 @@
 Engineer(engenheiro) = 100% done
 - Land Mine: explode mal o player pise
   - Quantidade de minas: 2
-- Armadura: de iron com anti fall damage e protection explosions 2
+- Armadura: colete de iron com protecao de explosao
 
 Ninja(slayer)
 - Cana de pesca com hook(agarra se as paredes e puxa)
   - Durabilidade: 2x
-- Armadura: de chain com anti fall damage e speed 2
+- Armadura: botas e capacete vermelho
 
 Tatical(fantasma)
 - Pode usar a ender pearl para desaparecer durante 5 segundos
  - Durabilidade: 2x
-- Armadura: dps ve se
+- Armadura: colete verde
 
 Bypass(Hacker)
 - Direito a respawn quando morre
  - Durabilidade: 1x
-- Armadura: iron
+- Armadura: capacete preto
 
 Screamer
 - Ainda por definir

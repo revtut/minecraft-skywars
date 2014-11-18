@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.util.Vector;
 
 /**
@@ -37,15 +39,12 @@ public class Ninja implements Listener {
      */
     private final ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
-    /**
-     * Leather ChestPlate
-     */
-    private final ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
-
-    /**
-     * Leather Leggings
-     */
-    private final ItemStack leatherLeggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+    {
+        // Set helmet's color
+        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) leatherHelmet.getItemMeta();
+        leatherArmorMeta.setColor(Color.RED);
+        leatherHelmet.setItemMeta(leatherArmorMeta);
+    }
 
     /**
      * Leather Boots
@@ -54,6 +53,10 @@ public class Ninja implements Listener {
 
     {
         leatherBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
+        // Set boot's color
+        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) leatherBoots.getItemMeta();
+        leatherArmorMeta.setColor(Color.BLACK);
+        leatherBoots.setItemMeta(leatherArmorMeta);
     }
 
     /**
@@ -64,8 +67,6 @@ public class Ninja implements Listener {
     public void kitNinja(Player p) {
         p.getInventory().addItem(hook);
         p.getInventory().setHelmet(leatherHelmet);
-        p.getInventory().setChestplate(leatherChestPlate);
-        p.getInventory().setLeggings(leatherLeggings);
         p.getInventory().setBoots(leatherBoots);
     }
 

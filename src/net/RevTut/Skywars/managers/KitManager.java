@@ -3,6 +3,7 @@ package net.RevTut.Skywars.managers;
 import net.RevTut.Skywars.kits.Engineer;
 import net.RevTut.Skywars.kits.Hacker;
 import net.RevTut.Skywars.kits.Ninja;
+import net.RevTut.Skywars.kits.Tatical;
 
 /**
  * Kit Manager.
@@ -28,4 +29,9 @@ public class KitManager {
      * Kit Ninja
      */
     public final Ninja ninja = new Ninja();
+
+    /**
+     * Kit Tatical
+     */
+    public final Tatical tatical = new Tatical();
 }
