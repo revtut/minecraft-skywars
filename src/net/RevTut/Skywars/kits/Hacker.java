@@ -69,8 +69,13 @@ public class Hacker {
      * @param player player to save inventory
      * @return true if player may respawn
      */
-    public boolean saveInventory(Player player) { // MAKES USE OF PLAYER DEATH EVENT
+    public boolean saveInventory(Player player, Arena arena) { // MAKES USE OF PLAYER DEATH EVENT
         if (respawnedPlayers.contains(player.getUniqueId()))
+            return false;
+        if(!arena.getKitManager().playerKit.containsKey(player.getUniqueId()))
+            return false;
+        Kit kit = arena.getKitManager().playerKit.get(player.getUniqueId());
+        if(kit != Kit.HACKER)
             return false;
         // Add content of his inventory to the map
         ItemStack[] content = player.getInventory().getContents();

@@ -86,7 +86,7 @@ public class Tatical {
         else
             player.getInventory().remove(itemStack);
         // Send message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Estas invisivel por " + duration + " segundos!");
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Modo fantasma ativado por " + duration + " segundos!");
         return true;
     }
 }

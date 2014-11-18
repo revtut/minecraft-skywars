@@ -73,7 +73,7 @@ public class PlayerDeath implements Listener {
         plugin.arenaManager.hideToArena(alvo, false);
 
         // Hacker
-        if (alvoArena.getKitManager().hacker.saveInventory(alvo)){
+        if (alvoArena.getKitManager().hacker.saveInventory(alvo, alvoArena)){
             // Bypass respawn screen
             BypassesAPI.respawnBypass(alvo);
             return;

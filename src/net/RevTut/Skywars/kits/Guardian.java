@@ -25,7 +25,7 @@ public class Guardian {
     private ItemStack rageTear = new ItemStack(Material.GHAST_TEAR, 2);
     {
         ItemMeta enderPearlMeta = rageTear.getItemMeta();
-        enderPearlMeta.setDisplayName("§33Guardian Rage");
+        enderPearlMeta.setDisplayName("§3Guardian Rage");
         rageTear.setItemMeta(enderPearlMeta);
     }
 
@@ -73,7 +73,13 @@ public class Guardian {
         // Add potion effect
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * duration, 2));
         // Remove item
-        itemStack.setAmount(itemStack.getAmount() - 1);
+        int amount = itemStack.getAmount();
+        if(amount > 1)
+            itemStack.setAmount(itemStack.getAmount() - 1);
+        else
+            player.getInventory().remove(itemStack);
+        // Send message
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Ativaste o modo rage por " + duration + " segundos!");
         return true;
     }
 
