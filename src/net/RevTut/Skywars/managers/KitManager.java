@@ -30,6 +30,11 @@ public class KitManager {
     public final Engineer engineer = new Engineer() ;
 
     /**
+     * Kit Guardian
+     */
+    public final Guardian guardian = new Guardian();
+
+    /**
      * Kit Hacker
      */
     public final Hacker hacker = new Hacker();
@@ -43,11 +48,6 @@ public class KitManager {
      * Kit Tatical
      */
     public final Tatical tatical = new Tatical();
-
-    /**
-     * Kit Guardian
-     */
-    public final Guardian guardian = new Guardian();
 
     /**
      * Kit Menu Item
@@ -92,14 +92,14 @@ public class KitManager {
         Kit kit = playerKit.get(playerDat.getUUID());
         if(kit == Kit.ENGINEER)
             engineer.kitEngineer(player);
+        else if(kit == Kit.GUARDIAN)
+            guardian.kitGuardian(player);
         else if(kit == Kit.HACKER)
             hacker.kitHacker(player);
         else if(kit == Kit.NINJA)
             ninja.kitNinja(player);
         else if(kit == Kit.TATICAL)
             tatical.kitTatical(player);
-        else if(kit == Kit.GUARDIAN)
-            guardian.kitGuardian(player);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §aRecebeste o Kit " + ChatColor.stripColor(kit.getDisplayName())+ "!");
     }

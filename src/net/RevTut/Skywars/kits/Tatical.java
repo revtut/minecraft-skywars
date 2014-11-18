@@ -63,7 +63,7 @@ public class Tatical {
      * @return true if player was set invisible
      */
 
-    public boolean setInvisible(Player player, Action action, ItemStack itemStack, int duration) {
+    public boolean setInvisible(Player player, Action action, ItemStack itemStack, int duration) { // MAKES USE OF PLAYER INTERACT EVENT
         // Check action type
         if(action != Action.RIGHT_CLICK_AIR)
             if(action != Action.RIGHT_CLICK_BLOCK)
