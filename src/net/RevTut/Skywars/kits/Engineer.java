@@ -25,12 +25,12 @@ public class Engineer {
     /**
      * List with all the mines in the arena
      */
-    private static List<Location> landMinesList = new ArrayList<Location>();
+    private List<Location> landMinesList = new ArrayList<Location>();
 
     /**
      * Land Mine
      */
-    private static ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
+    private ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
 
     {
         ItemMeta mineMeta = mine.getItemMeta();
@@ -41,7 +41,7 @@ public class Engineer {
     /**
      * Iron ChestPlate
      */
-    private static ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    private ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
         ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
@@ -52,7 +52,7 @@ public class Engineer {
      *
      * @param p player to give the kit
      */
-    public static void kitEngineer(Player p) {
+    public void kitEngineer(Player p) {
         p.getInventory().addItem(mine);
         p.getInventory().setChestplate(ironChestPlate);
     }

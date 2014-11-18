@@ -23,7 +23,7 @@ public class Tatical {
     /**
      * Invisible Ender Pearls
      */
-    private static ItemStack invisibleEnder = new ItemStack(Material.ENDER_PEARL, 2);
+    private ItemStack invisibleEnder = new ItemStack(Material.ENDER_PEARL, 2);
     {
         ItemMeta enderPearlMeta = invisibleEnder.getItemMeta();
         enderPearlMeta.setDisplayName("§3Tatical Phantom");
@@ -33,7 +33,7 @@ public class Tatical {
     /**
      * Leather ChestPlate
      */
-    private static ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+    private ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
 
     {
         // Set chesplate's color
@@ -47,7 +47,7 @@ public class Tatical {
      *
      * @param p player to give the kit
      */
-    public static void kitTatical(Player p) {
+    public void kitTatical(Player p) {
         p.getInventory().addItem(invisibleEnder);
         p.getInventory().setChestplate(leatherChestPlate);
 

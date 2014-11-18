@@ -21,9 +21,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * Main class.
@@ -106,9 +104,6 @@ public class Main extends JavaPlugin {
     /**
      * Enable the plugin
      */
-
-    public HashMap<UUID, Integer> hKits = new HashMap<UUID, Integer>();
-
     @Override
     public void onEnable() {
         /* Create Files */

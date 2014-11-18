@@ -24,7 +24,7 @@ public class Ninja {
     /**
      * Fishing Rod Hooker
      */
-    private static ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
+    private ItemStack hook = new ItemStack(Material.FISHING_ROD, 2);
 
     {
         ItemMeta hookMeta = hook.getItemMeta();
@@ -36,7 +36,7 @@ public class Ninja {
     /**
      * Leather Helmet
      */
-    private static ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+    private ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
         // Set helmet's color
@@ -48,7 +48,7 @@ public class Ninja {
     /**
      * Leather Boots
      */
-    private static ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
+    private ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
 
     {
         leatherBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
@@ -63,7 +63,7 @@ public class Ninja {
      *
      * @param p player to give the kit
      */
-    public static void kitNinja(Player p) {
+    public void kitNinja(Player p) {
         p.getInventory().addItem(hook);
         p.getInventory().setHelmet(leatherHelmet);
         p.getInventory().setBoots(leatherBoots);

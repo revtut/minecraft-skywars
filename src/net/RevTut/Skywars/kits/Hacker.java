@@ -39,7 +39,7 @@ public class Hacker {
     /**
      * Black Leather Helmet
      */
-    private static ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+    private ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
         // Set helmet's color
@@ -53,7 +53,7 @@ public class Hacker {
      *
      * @param p player to give the kit
      */
-    public static void kitHacker(Player p) {
+    public void kitHacker(Player p) {
         p.getInventory().setHelmet(leatherHelmet);
     }
 
