@@ -28,6 +28,10 @@ public enum Kit {
      * Tatical
      */
     TATICAL("§6Tatical", Material.ENDER_PEARL, 750);
+    /**
+     * Guardian
+     */
+    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 1200);
 
     /**
      * Displayname of the kit
