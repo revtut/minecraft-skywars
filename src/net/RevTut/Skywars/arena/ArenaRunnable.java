@@ -327,6 +327,8 @@ public class ArenaRunnable implements Runnable {
                 System.out.println("Error while configuring the player.");
                 continue;
             }
+            // Give kit menu to the player
+            arena.getKitManager().giveKitMenuItem(alvoDat);
             // Teleport player
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null) {
@@ -372,6 +374,8 @@ public class ArenaRunnable implements Runnable {
                 System.out.println("Error while configuring the player.");
                 continue;
             }
+            // Give the Kit
+            arena.getKitManager().giveChoosenKit(alvoDat);
             // Status (add some delay so they dont lose life when falling)
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override

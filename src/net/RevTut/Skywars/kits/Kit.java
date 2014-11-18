@@ -10,7 +10,7 @@ import org.bukkit.Material;
  * @author Joao Silva
  * @version 1.0
  */
-public enum Kits {
+public enum Kit {
 
     /**
      * Engineer
@@ -30,12 +30,12 @@ public enum Kits {
     TATICAL("§6Tatical", Material.ENDER_PEARL, 750);
 
     /**
-     * Displayname of the Kit
+     * Displayname of the kit
      */
     private final String displayName;
 
     /**
-     * Material that represents the Kit
+     * Material that represents the kit
      */
     private final Material material;
 
@@ -50,7 +50,7 @@ public enum Kits {
      * @param displayName display name of the kit
      * @param cost cost of the kit
      */
-    Kits(String displayName, Material material, int cost) {
+    Kit(String displayName, Material material, int cost) {
         this.displayName = displayName;
         this.material = material;
         this.cost = cost;

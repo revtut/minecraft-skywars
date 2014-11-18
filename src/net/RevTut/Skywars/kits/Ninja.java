@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -20,7 +19,7 @@ import org.bukkit.util.Vector;
  * @author WaxCoder
  * @version 1.0
  */
-public class Ninja implements Listener {
+public class Ninja {
 
     /**
      * Fishing Rod Hooker

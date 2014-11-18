@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Player Interact.
@@ -48,10 +49,18 @@ public class PlayerInteract implements Listener {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (playerDat == null)
             return;
+
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == arena)
             return;
+
+        // Kit Menu
+        Inventory inventory = arena.getKitManager().createKitMenu(player.getItemInHand());
+        if(inventory != null)
+            player.openInventory(inventory);
+
+        // Check status
         if (arena.getStatus() != ArenaStatus.INGAME) {
             e.setCancelled(true);
             return;
