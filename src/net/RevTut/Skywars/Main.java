@@ -89,7 +89,7 @@ public class Main extends JavaPlugin {
     /**
      * Player Chest
      */
-    public final PlayerChest playerChest = new PlayerChest(this);
+    public PlayerChest playerChest;
 
     /**
      * Name of the server
@@ -141,6 +141,9 @@ public class Main extends JavaPlugin {
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
         task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
+
+        /* Player Chest */
+        playerChest = new PlayerChest(this);
 
         /* AppearanceAPI Set Main Class */
         AppearanceAPI.plugin = this;

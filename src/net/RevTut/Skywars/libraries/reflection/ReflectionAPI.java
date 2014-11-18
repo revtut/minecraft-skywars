@@ -67,7 +67,7 @@ public class ReflectionAPI {
      */
     public static Object getHandle(Object obj) {
         try {
-            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, obj);
+            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, new Object[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }

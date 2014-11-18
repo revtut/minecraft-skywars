@@ -61,9 +61,9 @@ public class KitManager {
     private final ItemStack kitMenuItem = new ItemStack(Material.NETHER_STAR, 1);
 
     {
-        ItemMeta m = kitMenuItem.getItemMeta();
-        m.setDisplayName("§3Kit Menu");
-        kitMenuItem.setItemMeta(m);
+        ItemMeta kitMenuMeta = kitMenuItem.getItemMeta();
+        kitMenuMeta.setDisplayName("§3Kit Menu");
+        kitMenuItem.setItemMeta(kitMenuMeta);
     }
 
     /**

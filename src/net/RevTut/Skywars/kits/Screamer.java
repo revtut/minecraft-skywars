@@ -28,7 +28,7 @@ public class Screamer implements Listener {
         }
     }
 
-    public static void kitScreamer(Player p) {
+    public void kitScreamer(Player p) {
         p.getInventory().addItem(arrowScreamer);
     }
 }
