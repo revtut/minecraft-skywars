@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.kits;
 
-import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
 import org.bukkit.Color;
@@ -22,19 +21,11 @@ import java.util.*;
  * @version 1.0
  */
 public class Hacker implements Listener {
-    /**
-     * Main Class
-     */
-    private final Main plugin;
 
     /**
-     * Constructor of Kit Hacker
-     *
-     * @param plugin main class
+     * Random Class
      */
-    public Hacker(Main plugin) {
-        this.plugin = plugin;
-    }
+    private final Random rand = new Random();
 
     /**
      * Map with all the items of a player
@@ -99,7 +90,7 @@ public class Hacker implements Listener {
         if (arenaLocation == null)
             return false;
         List<Location> spawnLocations = arenaLocation.getSpawnLocations();
-        Location spawnLocation = spawnLocations.get(plugin.rand.nextInt(spawnLocations.size()));
+        Location spawnLocation = spawnLocations.get(rand.nextInt(spawnLocations.size()));
         if (spawnLocation == null)
             return false;
         player.teleport(spawnLocation);

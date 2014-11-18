@@ -48,19 +48,19 @@ public class PlayerChest implements Listener {
     /**
      * List with all items available
      */
-    private List<ItemStack> itemStacks = new ArrayList<ItemStack>();
+    private final List<ItemStack> itemStacks = new ArrayList<ItemStack>();
 
     /**
      * List with already filled chests
      */
-    private static List<Location> locChests = new ArrayList<Location>();
+    private static final List<Location> locChests = new ArrayList<Location>();
 
     /**
      * Takes care of what to do when a player interacts with a chest
      *
      * @param block block interacted with
      */
-    public void onChestInteract(Block block) {
+    public void onChestInteract(Block block) { // MAKES USE OF PLAYER INTERACT EVENT
         // Check if block is a Chest
         if (block == null)
             return;
@@ -86,7 +86,7 @@ public class PlayerChest implements Listener {
      *
      * @param block placed block
      */
-    public void onChestPlace(Block block) {
+    public void onChestPlace(Block block) { // MAKES USE OF BLOCK PLACE EVENT
         if (block.getType() == Material.CHEST)
             locChests.add(block.getLocation());
     }

@@ -60,6 +60,6 @@ public class BlockPlace implements Listener {
         plugin.playerChest.onChestPlace(e.getBlock());
 
         // Engineer
-        plugin.kitManager.engineer.mineLandPlace(player, player.getItemInHand(), e.getBlock().getLocation());
+        arena.getKitManager().engineer.mineLandPlace(player, player.getItemInHand(), e.getBlock().getLocation());
     }
 }

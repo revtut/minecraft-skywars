@@ -22,8 +22,7 @@ public class ReflectionAPI {
      */
     private static String getVersion() {
         String name = Bukkit.getServer().getClass().getPackage().getName();
-        String version = name.substring(name.lastIndexOf('.') + 1) + ".";
-        return version;
+        return name.substring(name.lastIndexOf('.') + 1) + ".";
     }
 
     /**
@@ -68,7 +67,7 @@ public class ReflectionAPI {
      */
     public static Object getHandle(Object obj) {
         try {
-            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, new Object[0]);
+            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, obj);
         } catch (Exception e) {
             e.printStackTrace();
         }

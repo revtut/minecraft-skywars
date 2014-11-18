@@ -11,7 +11,6 @@ import net.RevTut.Skywars.listeners.environment.ProjectileHit;
 import net.RevTut.Skywars.listeners.environment.Weather;
 import net.RevTut.Skywars.listeners.player.*;
 import net.RevTut.Skywars.managers.ArenaManager;
-import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.managers.PlayerManager;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
@@ -80,22 +79,17 @@ public class Main extends JavaPlugin {
     /**
      * Arena Manager
      */
-    public ArenaManager arenaManager = new ArenaManager(this);
+    public final ArenaManager arenaManager = new ArenaManager(this);
 
     /**
      * Player Manager
      */
-    public PlayerManager playerManager = new PlayerManager(this);
-
-    /**
-     * Kit Manager
-     */
-    public KitManager kitManager = new KitManager(this);
+    public final PlayerManager playerManager = new PlayerManager(this);
 
     /**
      * Player Chest
      */
-    public PlayerChest playerChest = new PlayerChest(this);
+    public final PlayerChest playerChest = new PlayerChest(this);
 
     /**
      * Name of the server
@@ -105,7 +99,7 @@ public class Main extends JavaPlugin {
     /**
      * Random Class
      */
-    public Random rand = new Random();
+    public final Random rand = new Random();
 
     /**
      * Enable the plugin

@@ -43,7 +43,7 @@ public class PlayerDamage implements Listener {
     /**
      * Map with last targets and damagers
      */
-    public static Map<UUID, UUID> lastPlayerDamager = new HashMap<UUID, UUID>();
+    public static final Map<UUID, UUID> lastPlayerDamager = new HashMap<UUID, UUID>();
 
     /**
      * Control the damage by entity on the server

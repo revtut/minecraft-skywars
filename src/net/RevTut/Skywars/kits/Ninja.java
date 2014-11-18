@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.kits;
 
-import net.RevTut.Skywars.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -20,20 +19,6 @@ import org.bukkit.util.Vector;
  * @version 1.0
  */
 public class Ninja implements Listener {
-
-    /**
-     * Main Class
-     */
-    private final Main plugin;
-
-    /**
-     * Constructor of Kit Ninja
-     *
-     * @param plugin main class
-     */
-    public Ninja(Main plugin) {
-        this.plugin = plugin;
-    }
 
     /**
      * Fishing Rod Hooker

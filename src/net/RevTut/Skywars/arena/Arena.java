@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.arena;
 
+import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
@@ -62,6 +63,13 @@ public class Arena {
     private ArenaDat arenaDat;
 
     /**
+     * Kit Manager (manages all the kits of the players)
+     *
+     * @see KitManager
+     */
+    private KitManager kitManager;
+
+    /**
      * Constructor of Arena
      *
      * @param arenaNumber   the arena to reset
@@ -75,6 +83,7 @@ public class Arena {
         this.arenaDat = new ArenaDat();
         this.remainingTime = ArenaStatus.LOBBY.getTime();
         this.status = ArenaStatus.LOBBY;
+        this.kitManager = new KitManager();
     }
 
     /**
@@ -147,6 +156,16 @@ public class Arena {
      */
     public ArenaDat getArenaDat() {
         return arenaDat;
+    }
+
+    /**
+     * Return the kit manager
+     *
+     * @return kit manager
+     * @see KitManager
+     */
+    public KitManager getKitManager() {
+        return kitManager;
     }
 
     /**
@@ -246,6 +265,16 @@ public class Arena {
     public void setArenaDat(ArenaDat arenaDat) {
         this.arenaDat = arenaDat;
     }
+
+    /**
+     * Set the kit manager of the arena
+     *
+     * @param kitManager the kit manager to replace the existing
+     */
+    public void setKitManager(KitManager kitManager) {
+        this.kitManager = kitManager;
+    }
+
 
     /**
      * Set the players of the arena

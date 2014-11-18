@@ -57,22 +57,6 @@ public class PlayerDeath implements Listener {
         if (alvoDat == null)
             return;
 
-        // Bypass respawn screen
-        BypassesAPI.respawnBypass(alvo);
-
-        // Hacker
-        if (plugin.kitManager.hacker.saveInventory(alvo))
-            return;
-
-        // Config Player
-        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-            System.out.println("Error while configuring the player.");
-            return;
-        }
-
-        // Hide to Arena
-        plugin.arenaManager.hideToArena(alvo, false);
-
         // Arena target
         Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
         if (alvoArena == null)
@@ -82,6 +66,22 @@ public class PlayerDeath implements Listener {
         ArenaDat arenaDat = alvoArena.getArenaDat();
         if (arenaDat == null) {
             System.out.println("ArenaDat is null when player dies!");
+            return;
+        }
+
+        // Hide to Arena
+        plugin.arenaManager.hideToArena(alvo, false);
+
+        // Bypass respawn screen
+        BypassesAPI.respawnBypass(alvo);
+
+        // Hacker
+        if (alvoArena.getKitManager().hacker.saveInventory(alvo))
+            return;
+
+        // Config Player
+        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
+            System.out.println("Error while configuring the player.");
             return;
         }
 

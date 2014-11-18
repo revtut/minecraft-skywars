@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.kits;
 
-import net.RevTut.Skywars.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -23,20 +22,6 @@ import java.util.List;
  * @version 1.0
  */
 public class Engineer implements Listener {
-
-    /**
-     * Main Class
-     */
-    private final Main plugin;
-
-    /**
-     * Constructor of Kit Engineer
-     *
-     * @param plugin main class
-     */
-    public Engineer(Main plugin) {
-        this.plugin = plugin;
-    }
 
     /**
      * List with all the mines in the arena

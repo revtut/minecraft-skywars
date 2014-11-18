@@ -52,7 +52,7 @@ public class PlayerRespawn implements Listener {
             return;
 
         // Ninja
-        if (plugin.kitManager.hacker.restorePlayer(player, arena))
+        if (arena.getKitManager().hacker.restorePlayer(player, arena))
             return;
 
         // Location

@@ -200,18 +200,12 @@ public class MySQL {
             final ResultSet resultGame = this.connection.createStatement().executeQuery(gameStatement);
             if (resultGame.next()) {
                 if (resultCore.next()) {
-                    if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
-                        return true;
-                    return false;
+                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
                 } else {
-                    if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths"))))
-                        return true;
-                    return false;
+                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
                 }
             } else {
-                if (plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0)))
-                    return true;
-                return false;
+                return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0));
             }
         } catch (final SQLException e) {
             System.out.println("Error while trying to create PlayerDat! Reason: " + e.getMessage());

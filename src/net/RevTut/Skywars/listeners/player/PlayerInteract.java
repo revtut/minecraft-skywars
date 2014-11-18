@@ -65,7 +65,7 @@ public class PlayerInteract implements Listener {
         plugin.playerChest.onChestInteract(e.getClickedBlock());
 
         // Engineer
-        plugin.kitManager.engineer.landMineActivate(e.getAction(), e.getClickedBlock());
+        arena.getKitManager().engineer.landMineActivate(e.getAction(), e.getClickedBlock());
     }
 
 }

@@ -55,7 +55,7 @@ public class ProjectileHit implements Listener {
             return;
 
         // Ninja
-        plugin.kitManager.ninja.throwPlayer(player, player.getItemInHand(), projectile);
+        arena.getKitManager().ninja.throwPlayer(player, player.getItemInHand(), projectile);
     }
 
 }

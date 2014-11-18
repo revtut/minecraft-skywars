@@ -1,6 +1,5 @@
 package net.RevTut.Skywars.managers;
 
-import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.kits.Engineer;
 import net.RevTut.Skywars.kits.Hacker;
 import net.RevTut.Skywars.kits.Ninja;
@@ -16,35 +15,17 @@ import net.RevTut.Skywars.kits.Ninja;
 public class KitManager {
 
     /**
-     * Main class
-     */
-    private final Main plugin;
-
-    /**
      * Kit Engineer
      */
-    public final Engineer engineer;
+    public final Engineer engineer = new Engineer() ;
 
     /**
      * Kit Hacker
      */
-    public final Hacker hacker;
+    public final Hacker hacker = new Hacker();
 
     /**
      * Kit Ninja
      */
-    public final Ninja ninja;
-
-    /**
-     * Constructor of Kit Manager
-     *
-     * @param plugin main class
-     */
-    public KitManager(final Main plugin) {
-        this.plugin = plugin;
-        // Initialize Kits
-        engineer = new Engineer(plugin);
-        hacker = new Hacker(plugin);
-        ninja = new Ninja(plugin);
-    }
+    public final Ninja ninja = new Ninja();
 }

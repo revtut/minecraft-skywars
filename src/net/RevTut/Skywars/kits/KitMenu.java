@@ -21,7 +21,7 @@ public class KitMenu implements Listener {
     public static Main plugin;
     public Inventory menu;
 
-    ItemStack eng = new ItemStack(Material.ENDER_PEARL);
+    final ItemStack eng = new ItemStack(Material.ENDER_PEARL);
 
     {
         ItemMeta engMeta = eng.getItemMeta();

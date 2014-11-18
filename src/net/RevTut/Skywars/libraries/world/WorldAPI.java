@@ -30,9 +30,7 @@ public class WorldAPI {
         WorldCreator creator = new WorldCreator(worldName);
         World world = Bukkit.createWorld(creator);
         // Check if it is not Null
-        if (world == null)
-            return false;
-        return true;
+        return world != null;
     }
 
     /**
@@ -66,9 +64,9 @@ public class WorldAPI {
         try {
             if (srcDir.isDirectory()) {
                 // Check if target folder exists
-                if (!trgDir.exists()) {
-                    trgDir.mkdirs();
-                }
+                if (!trgDir.exists())
+                    if(!trgDir.mkdirs())
+                        return false;
                 // List of files inside source directory
                 String[] fList = srcDir.list();
                 for (String aFList : fList) {
@@ -115,7 +113,8 @@ public class WorldAPI {
                     for (File c : dir.listFiles())
                         removeDirectory(c);
             }
-            dir.delete();
+            if(!dir.delete())
+                System.out.println("Error while trying to delete " + dir.getName() + ".");
         } catch (Exception e) {
             System.out.println("Error while trying to delete " + dir.getAbsolutePath() + ".");
             System.out.println(e.getMessage());
