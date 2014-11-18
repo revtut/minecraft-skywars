@@ -7,6 +7,7 @@ import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.block.BlockBreak;
 import net.RevTut.Skywars.listeners.block.BlockPlace;
+import net.RevTut.Skywars.listeners.environment.ProjectileHit;
 import net.RevTut.Skywars.listeners.environment.Weather;
 import net.RevTut.Skywars.listeners.player.*;
 import net.RevTut.Skywars.managers.ArenaManager;
@@ -158,6 +159,9 @@ public class Main extends JavaPlugin {
         // Block
         pm.registerEvents(new BlockBreak(this), this);
         pm.registerEvents(new BlockPlace(this), this);
+        // Environment
+        pm.registerEvents(new ProjectileHit(this), this);
+        pm.registerEvents(new Weather(this), this);
         // Player
         pm.registerEvents(new PlayerBucketEmpty(this), this);
         pm.registerEvents(new PlayerBucketFill(this), this);
@@ -172,8 +176,6 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
-        // Environment
-        pm.registerEvents(new Weather(this), this);
     }
 
     /**

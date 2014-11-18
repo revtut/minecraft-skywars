@@ -3,6 +3,7 @@ package net.RevTut.Skywars.managers;
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.kits.Engineer;
 import net.RevTut.Skywars.kits.Hacker;
+import net.RevTut.Skywars.kits.Ninja;
 
 /**
  * Kit Manager.
@@ -25,6 +26,9 @@ public class KitManager {
     /** Kit Hacker */
     public final Hacker hacker;
 
+    /** Kit Ninja */
+    public final Ninja ninja;
+
     /**
      * Constructor of Kit Manager
      *
@@ -35,5 +39,6 @@ public class KitManager {
         // Initialize Kits
         engineer = new Engineer(plugin);
         hacker = new Hacker(plugin);
+        ninja = new Ninja(plugin);
     }
 }

@@ -30,7 +30,7 @@ public class Engineer implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor of Kit Manager
+     * Constructor of Kit Engineer
      *
      * @param plugin main class
      */
@@ -43,7 +43,6 @@ public class Engineer implements Listener {
 
     /** Land Mine */
     private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
-
     {
         ItemMeta mineMeta = mine.getItemMeta();
         mineMeta.setDisplayName("§3Land Mine");
@@ -52,28 +51,24 @@ public class Engineer implements Listener {
 
     /** Iron Helmet */
     private final ItemStack ironHelmet = new ItemStack(Material.IRON_HELMET, 1);
-
     {
         ironHelmet.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
     }
 
     /** Iron ChestPlate */
     private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
-
     {
         ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
     /** Iron Leggings */
     private final ItemStack ironLeggings = new ItemStack(Material.IRON_LEGGINGS, 1);
-
     {
         ironLeggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
     /** Iron Boots */
     private final ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
-
     {
         ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
@@ -89,7 +84,6 @@ public class Engineer implements Listener {
         p.getInventory().setChestplate(ironChestPlate);
         p.getInventory().setLeggings(ironLeggings);
         p.getInventory().setBoots(ironBoots);
-
     }
 
     /**
@@ -100,6 +94,10 @@ public class Engineer implements Listener {
      */
     public void landMineActivate(Action action, Block block) {
         if (!action.equals(Action.PHYSICAL))
+            return;
+        if(block == null)
+            return;
+        if(block.getType() == null)
             return;
         if (!block.getType().equals(Material.IRON_BLOCK))
             return;
@@ -120,6 +118,10 @@ public class Engineer implements Listener {
      * @param location location of the placed block
      */
     public void mineLandPlace(Player player, ItemStack itemStack, Location location) {
+        if(itemStack == null)
+            return;
+        if(itemStack.getType() == null)
+            return;
         if (itemStack.getType() != Material.IRON_BLOCK)
             return;
         if(!itemStack.hasItemMeta())

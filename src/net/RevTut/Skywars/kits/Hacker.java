@@ -18,7 +18,7 @@ public class Hacker implements Listener {
     private final Main plugin;
 
     /**
-     * Constructor of Kit Manager
+     * Constructor of Kit Hacker
      *
      * @param plugin main class
      */

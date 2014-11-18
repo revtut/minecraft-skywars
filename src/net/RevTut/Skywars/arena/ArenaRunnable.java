@@ -243,8 +243,10 @@ public class ArenaRunnable implements Runnable {
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
                     } else {
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString()))
+                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString())){
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
+                            alvoDat.addWin();
+                        }
                         else
                             TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                         Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
@@ -267,10 +269,6 @@ public class ArenaRunnable implements Runnable {
                 Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
                 if(null != winner){
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
-                    // Winner Dat
-                    PlayerDat winnerDat = plugin.playerManager.getPlayerDatByUUID(winner.getUniqueId());
-                    if(null != winnerDat)
-                        winnerDat.addWin();
                 } else
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
             }
