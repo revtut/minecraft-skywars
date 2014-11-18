@@ -28,9 +28,14 @@ public class Hacker {
     private final Random rand = new Random();
 
     /**
-     * Map with all the items of a player
+     * Map with all the inventory items of a player
      */
-    private final Map<UUID, ItemStack[]> playerItems = new HashMap<UUID, ItemStack[]>();
+    private final Map<UUID, ItemStack[]> playerInventoryContent = new HashMap<UUID, ItemStack[]>();
+
+    /**
+     * Map with all the armour items of a player
+     */
+    private final Map<UUID, ItemStack[]> playerArmourContent = new HashMap<UUID, ItemStack[]>();
 
     /**
      * List with players that already respawned
@@ -69,7 +74,9 @@ public class Hacker {
             return false;
         // Add content of his inventory to the map
         ItemStack[] content = player.getInventory().getContents();
-        playerItems.put(player.getUniqueId(), content);
+        ItemStack[] armourContents = player.getInventory().getArmorContents();
+        playerInventoryContent.put(player.getUniqueId(), content);
+        playerArmourContent.put(player.getUniqueId(), armourContents);
         return true;
     }
 
@@ -78,28 +85,35 @@ public class Hacker {
      *
      * @param player player to restore inventory
      * @param arena  arena of the player
-     * @return true if restored a player
+     * @return location to send the player
      */
-    public boolean restorePlayer(Player player, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
-        if (!playerItems.containsKey(player.getUniqueId()))
-            return false;
-        ItemStack[] content = playerItems.get(player.getUniqueId());
-        player.getInventory().setContents(content);
+    public Location restorePlayer(Player player, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
+        if (!playerInventoryContent.containsKey(player.getUniqueId())){
+            if(!playerArmourContent.containsKey(player.getUniqueId())){
+                return null;
+            }
+        }
+        ItemStack[] inventoryContent = playerInventoryContent.get(player.getUniqueId());
+        ItemStack[] armourContent = playerArmourContent.get(player.getUniqueId());
+        player.getInventory().setContents(inventoryContent);
+        player.getInventory().setArmorContents(armourContent);
+        // Remove from maps
+        playerInventoryContent.remove(player.getUniqueId());
+        playerArmourContent.remove(player.getUniqueId());
         // Teleport to a random spawn location
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (arenaLocation == null)
-            return false;
+            return null;
         List<Location> spawnLocations = arenaLocation.getSpawnLocations();
         Location spawnLocation = spawnLocations.get(rand.nextInt(spawnLocations.size()));
         if (spawnLocation == null)
-            return false;
-        player.teleport(spawnLocation);
+            return null;
         // Play particle effects
-        ParticlesAPI.helixPosY(player);
+        ParticlesAPI.helixPosY(spawnLocation);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players
         respawnedPlayers.add(player.getUniqueId());
-        return true;
+        return spawnLocation;
     }
 }

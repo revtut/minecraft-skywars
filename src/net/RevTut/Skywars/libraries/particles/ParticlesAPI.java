@@ -61,6 +61,23 @@ public class ParticlesAPI {
     }
 
     /**
+     * Create helix particle effect follow Y-Axis
+     *
+     * @param location location to create helix effect
+     */
+    public static void helixPosY(Location location) {
+        int radius = 4;
+        for (double y = 0; y <= 50; y += 0.05) {
+            double x = radius * Math.cos(y);
+            double z = radius * Math.sin(y);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), (float) (location.getX() + y), (float) (location.getY() + x ), (float) (location.getZ() + z), 0, 0, 0, 0, 1);
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
+            }
+        }
+    }
+
+    /**
      * Make a random particle
      * @return return null
      */

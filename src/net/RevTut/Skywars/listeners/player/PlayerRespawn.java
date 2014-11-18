@@ -52,8 +52,11 @@ public class PlayerRespawn implements Listener {
             return;
 
         // Ninja
-        if (arena.getKitManager().hacker.restorePlayer(player, arena))
+        Location locSpawn = arena.getKitManager().hacker.restorePlayer(player, arena);
+        if (locSpawn != null){
+            e.setRespawnLocation(locSpawn);
             return;
+        }
 
         // Location
         Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();

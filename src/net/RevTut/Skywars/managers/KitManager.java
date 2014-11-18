@@ -154,11 +154,14 @@ public class KitManager {
 
         // Create Menu
         Kit kit;
+        ItemMeta itemMeta;
         for(int i = 0; i < kits.length; i++){
             kit = kits[i];
             itemStack = new ItemStack(kit.getMaterial(), 1);
-            itemStack.getItemMeta().setDisplayName(kit.getDisplayName());
-            itemStack.getItemMeta().setLore(Arrays.asList("§7Custo: §b" + kit.getCost()));
+            itemMeta = itemStack.getItemMeta(); // ItemMeta
+            itemMeta.setDisplayName(kit.getDisplayName()); // DisplayName
+            itemMeta.setLore(Arrays.asList("§7Custo: §b" + kit.getCost())); // Lore
+            itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
 
