@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import net.RevTut.Skywars.libraries.particles.particlesAPI;
 import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -21,6 +22,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 public class Screamer implements Listener {
 
     private static ItemStack arrowScreamer = new ItemStack(Material.ARROW, 32);
+
     /* Create projectile with particle effect helix */
     @EventHandler
     public void projectile(ProjectileHitEvent e){
@@ -28,25 +30,11 @@ public class Screamer implements Listener {
         Arrow arrow = (Arrow) proj;
         if(proj instanceof Arrow){
             Player p = (Player) arrow.getShooter();
-            createHelix(p);
+            particlesAPI.createHelix(p);
         }
     }
 
-    public static void kitScreamer(Player p){
+    public static void kitScreamer(Player p) {
         p.getInventory().addItem(arrowScreamer);
-    }
-
-    /* Create helix effect */
-    public void createHelix(Player player) {
-        Location loc = player.getLocation();
-        int radius = 2;
-        for(double y = 0; y <= 50; y+=0.05) {
-            double x = radius * Math.cos(y);
-            double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles("fireworksSpark", (float) (loc.getX() + x), (float) (loc.getY() + y), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
-            for(Player online : Bukkit.getOnlinePlayers()) {
-                ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
-            }
-        }
     }
 }

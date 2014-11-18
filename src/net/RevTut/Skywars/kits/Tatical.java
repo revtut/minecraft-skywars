@@ -63,6 +63,7 @@ public class Tatical implements Listener {
      * @param duration duration of invisibility
      * @return true if player was set invisible
      */
+
     public boolean setInvisible(Player player, Action action, ItemStack itemStack, int duration) {
         // Check action type
         if(action != Action.RIGHT_CLICK_AIR)

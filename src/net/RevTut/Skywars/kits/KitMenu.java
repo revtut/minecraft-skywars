@@ -60,9 +60,9 @@ public class KitMenu implements Listener {
 
     public static void darKit(final Player p){
         if(plugin.hKits.containsKey(p.getUniqueId())){
+            /* Give the right kit */
             int kit = plugin.hKits.get(p.getUniqueId());
 
-            /* Give the right kit */
             if(kit == 0){
                 Engineer.kitEngineer(p);
             }else if(kit == 1){
@@ -72,7 +72,9 @@ public class KitMenu implements Listener {
             }else if(kit == 3){
                 Ninja.kitNinja(p);
             }else if(kit == 4){
-
+                Screamer.kitScreamer(p);
+            }else if(kit == 5){
+                Guardian.kitGuardian(p);
             }
         }
     }
