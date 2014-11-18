@@ -2,34 +2,39 @@ package net.RevTut.Skywars.kits;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
  * Guardian Kit.
  *
- * <P>Kit guardian can be speedy for 2 times 10 seconds and have anti-fall damage level 1</P>
+ * <P>Kit Guardian can increase speed two times for seconds and have anti-fall damage</P>
  *
  * @author WaxCoder
  * @version 1.0
  */
-
-public class Guardian implements Listener {
+public class Guardian {
 
     /**
-     * guardianBoots with anti fall damage
+     * Rage mode activator
      */
-    private static ItemStack guardianBoots = new ItemStack(Material.IRON_BOOTS, 1);
+    private ItemStack rageTear = new ItemStack(Material.GHAST_TEAR, 2);
     {
-        ItemMeta guardianMeta = guardianBoots.getItemMeta();
-        guardianMeta.setDisplayName("§3Guardian Boots");
-        guardianBoots.setItemMeta(guardianMeta);
-        guardianBoots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
+        ItemMeta enderPearlMeta = rageTear.getItemMeta();
+        enderPearlMeta.setDisplayName("§33Guardian Rage");
+        rageTear.setItemMeta(enderPearlMeta);
+    }
+
+    /**
+     * Iron Boots
+     */
+    private ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
+    {
+        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
     }
 
     /**
@@ -37,24 +42,39 @@ public class Guardian implements Listener {
      *
      * @param p player to give the kit
      */
-    public static void kitGuardian(Player p){
-        p.getInventory().addItem(guardianBoots);
+    public void kitGuardian(Player p){
+        p.getInventory().addItem(rageTear);
+        p.getInventory().setBoots(ironBoots);
     }
 
     /**
      * Set a player speed for a duration
      *
      * @param player player to set speed
-     * @param duration duration of speed
+     * @param action interact action
+     * @param duration speed duration
      * @param itemStack itemstack of the player
      * @return true if player was set invisible
      */
-
-    public void setGuardian(Player player, ItemStack itemStack, int duration){
+    public boolean setSpeed(Player player, Action action, ItemStack itemStack, int duration){
+        // Check action type
+        if(action != Action.RIGHT_CLICK_AIR)
+            if(action != Action.RIGHT_CLICK_BLOCK)
+                return false;
+        // Type of item
+        if(itemStack.getType() != Material.GHAST_TEAR)
+            return false;
+        if (!itemStack.hasItemMeta())
+            return false;
+        if (!itemStack.getItemMeta().hasDisplayName())
+            return false;
+        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§33Guardian Rage"))
+            return false;
         // Add potion effect
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * duration, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * duration, 2));
         // Remove item
         itemStack.setAmount(itemStack.getAmount() - 1);
+        return true;
     }
 
 }
