@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import net.RevTut.Skywars.libraries.particles.particlesAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -24,7 +25,7 @@ public class Screamer implements Listener {
         Arrow arrow = (Arrow) proj;
         if(proj instanceof Arrow){
             Player p = (Player) arrow.getShooter();
-            particlesAPI.createHelix(p);
+            ParticlesAPI.createHelix(p);
         }
     }
 
