@@ -50,12 +50,11 @@ public class Guardian implements Listener {
      * @return true if player was set invisible
      */
 
-    public boolean setGuardian(Player player, ItemStack itemStack, int duration){
+    public void setGuardian(Player player, ItemStack itemStack, int duration){
         // Add potion effect
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * duration, 1));
         // Remove item
         itemStack.setAmount(itemStack.getAmount() - 1);
-        return true;
     }
 
 }
