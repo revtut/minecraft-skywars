@@ -51,6 +51,11 @@ public class PlayerInventoryClick implements Listener {
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == arena)
             return;
+
+        // Kit Menu
+        arena.getKitManager().setKit(playerDat, e.getInventory(), e.getSlot());
+
+        // Check status
         if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
         if (playerDat.getStatus() != PlayerStatus.ALIVE)

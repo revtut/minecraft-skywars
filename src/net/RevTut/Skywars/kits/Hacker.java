@@ -6,7 +6,6 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -20,7 +19,7 @@ import java.util.*;
  * @author WaxCoder
  * @version 1.0
  */
-public class Hacker implements Listener {
+public class Hacker {
 
     /**
      * Random Class

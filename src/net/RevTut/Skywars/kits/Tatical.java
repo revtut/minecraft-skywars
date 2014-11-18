@@ -3,7 +3,6 @@ package net.RevTut.Skywars.kits;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
  * @author WaxCoder
  * @version 1.0
  */
-public class Tatical implements Listener {
+public class Tatical {
 
     /**
      * Invisible Ender Pearls

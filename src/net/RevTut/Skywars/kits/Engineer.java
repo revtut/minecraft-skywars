@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +20,7 @@ import java.util.List;
  * @author WaxCoder
  * @version 1.0
  */
-public class Engineer implements Listener {
+public class Engineer {
 
     /**
      * List with all the mines in the arena
