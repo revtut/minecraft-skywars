@@ -3,7 +3,7 @@ package net.RevTut.Skywars.arena;
 /**
  * Arena Status Enum.
  *
- * <P>All the status that a arena might be</P>
+ * <P>All the status that a arena might be.</P>
  *
  * @author Joao Silva
  * @version 1.0
