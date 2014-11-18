@@ -95,7 +95,7 @@ public class Hacker {
             return false;
         player.teleport(spawnLocation);
         // Play particle effects
-        ParticlesAPI.helixPlayer(player);
+        ParticlesAPI.HelixPosX(player);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players
