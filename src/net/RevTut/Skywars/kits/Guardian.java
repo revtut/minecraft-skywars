@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * Tactical Kit.
+ * Guardian Kit.
  *
  * <P>Kit guardian can be speedy for 2 times 10 seconds and have anti-fall damage level 1</P>
  *
