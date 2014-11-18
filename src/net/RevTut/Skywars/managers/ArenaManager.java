@@ -1,6 +1,10 @@
-package net.RevTut.Skywars.arena;
+package net.RevTut.Skywars.managers;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaDat;
+import net.RevTut.Skywars.arena.ArenaLocation;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;

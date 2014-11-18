@@ -2,12 +2,13 @@ package net.RevTut.Skywars;
 
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
-import net.RevTut.Skywars.arena.ArenaManager;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.*;
-import net.RevTut.Skywars.player.PlayerManager;
+import net.RevTut.Skywars.managers.ArenaManager;
+import net.RevTut.Skywars.managers.KitManager;
+import net.RevTut.Skywars.managers.PlayerManager;
 import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
@@ -35,37 +36,37 @@ public class Main extends JavaPlugin {
     /**
      * Title message on join
      */
-    public String titleMessage;
+    public String titleMessage = "§3RevTut";
 
     /**
      * Subtitle message on join
      */
-    public String subTitleMessage;
+    public String subTitleMessage = "§7Network";
 
     /**
      * Fade in message time
      */
-    public int fadeIn;
+    public int fadeIn = 20;
 
     /**
      * Fade out message time
      */
-    public int fadeOut;
+    public int fadeOut = 20;
 
     /**
      * Time on screen of messages
      */
-    public int timeOnScreen;
+    public int timeOnScreen = 20;
 
     /**
      * Tab list title
      */
-    public String tabTitle;
+    public String tabTitle = "§3RevTut";
 
     /**
      * Tab list footer
      */
-    public String tabFooter;
+    public String tabFooter = "§6www.revtut.net";
 
     /**
      * MySQL object
@@ -75,12 +76,22 @@ public class Main extends JavaPlugin {
     /**
      * Arena Manager
      */
-    public ArenaManager arenaManager;
+    public ArenaManager arenaManager = new ArenaManager(this);
 
     /**
      * Player Manager
      */
-    public PlayerManager playerManager;
+    public PlayerManager playerManager = new PlayerManager(this);
+
+    /**
+     * Kit Manager
+     */
+    public KitManager kitManager = new KitManager(this);
+
+    /**
+     * Player Chest
+     */
+    public PlayerChest playerChest = new PlayerChest(this);
 
     /**
      * Name of the server
@@ -88,7 +99,7 @@ public class Main extends JavaPlugin {
     public String servidor = Bukkit.getServerName();
 
     /**
-     * Copy of Random Class
+     * Random Class
      */
     public Random rand = new Random();
 
@@ -105,8 +116,6 @@ public class Main extends JavaPlugin {
         if (!readFiles())
             System.out.println("Error while trying to read the files.");
 
-        /* Create Arena Manager */
-        arenaManager = new ArenaManager(this);
         /* Create Initial Arenas */
         String lastGameNumber = mysql.lastGameNumber();
         if(lastGameNumber == null){
@@ -135,24 +144,21 @@ public class Main extends JavaPlugin {
         ArenaRunnable task = new ArenaRunnable(this);
         task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
 
-        /* Create Player Manager */
-        playerManager = new PlayerManager(this);
-
         /* AppearanceAPI Set Main Class */
         AppearanceAPI.plugin = this;
 
-        /* Regist Events */
+        /* Register Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();
         /* Libraries */
         pm.registerEvents(new NameTagAPI(), this);
         /* Listeners  */
         pm.registerEvents(new BlockListener(this), this);
         pm.registerEvents(new PlayerChat(this), this);
-        pm.registerEvents(new PlayerChest(this), this);
         pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new PlayerFood(this), this);
+        pm.registerEvents(new PlayerInteract(this), this);
         pm.registerEvents(new PlayerJoin(this), this);
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);

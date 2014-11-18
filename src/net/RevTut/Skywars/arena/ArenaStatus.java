@@ -46,7 +46,7 @@ public enum ArenaStatus {
      *
      * @return the default initial remaining time of that status
      */
-    int getTime() {
+    public final int getTime() {
         return time;
     }
 }

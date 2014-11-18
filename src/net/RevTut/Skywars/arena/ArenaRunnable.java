@@ -101,8 +101,10 @@ public class ArenaRunnable implements Runnable {
                     // Minimum Players in the arena
                     if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
-                    else
+                    else{
+                        arena.sendMessage("§7|§3SkyWars47| §4Minimo de "+ plugin.arenaManager.minPlayers +" jogadores nao atingidos.");
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
+                    }
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
                     fromPreGameToInGame(arena);
                 else if (arena.getStatus() == ArenaStatus.INGAME)
@@ -485,6 +487,7 @@ public class ArenaRunnable implements Runnable {
                     }
                 }
             }, i);
+            i++;
         }
     }
 }

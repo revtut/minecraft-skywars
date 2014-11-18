@@ -1,20 +1,13 @@
 package net.RevTut.Skywars.listeners;
 
 import net.RevTut.Skywars.Main;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaStatus;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -61,37 +54,18 @@ public class PlayerChest implements Listener{
     /**
      * Takes care of what to do when a player interacts with a chest
      *
-     * @param e     player interact event
-     * @see         PlayerInteractEvent
+     * @param block block interacted with
      */
-    @EventHandler
-    public void onChestInteract(PlayerInteractEvent e){
-        Player player = e.getPlayer();
-        // Player Dat
-        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if(playerDat == null)
-            return;
-        // Arena
-        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if(null == arena)
-            return;
-        if(arena.getStatus() != ArenaStatus.INGAME){
-            e.setCancelled(true);
-            return;
-        }
-        if(playerDat.getStatus() != PlayerStatus.ALIVE){
-            e.setCancelled(true);
-            return;
-        }
+    public void onChestInteract(Block block){
         // Check if block is a Chest
-        if(e.getClickedBlock() == null)
+        if(block == null)
             return;
-        if(e.getClickedBlock().getType() != Material.CHEST)
+        if(block.getType() != Material.CHEST)
             return;
-        if(locChests.contains(e.getClickedBlock().getLocation()))
+        if(locChests.contains(block.getLocation()))
             return;
         // Chest
-        Chest chest = (Chest) e.getClickedBlock().getState();
+        Chest chest = (Chest) block.getState();
         Inventory chestInv = chest.getInventory();
         // Fill chest
         int numItems = plugin.rand.nextInt(10) + 15;
@@ -106,13 +80,11 @@ public class PlayerChest implements Listener{
     /**
      * Takes care of what to do when a chest is placed
      *
-     * @param e     block place event
-     * @see         BlockPlaceEvent
+     * @param block placed block
      */
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent e){
-        if(e.getBlockPlaced().getType() == Material.CHEST)
-            locChests.add(e.getBlockPlaced().getLocation());
+    public void onChestPlace(Block block){
+        if(block.getType() == Material.CHEST)
+            locChests.add(block.getLocation());
     }
 
     /** Generates all the ItemStacks that might be in a Chest */

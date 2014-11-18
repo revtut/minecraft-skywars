@@ -1,16 +1,13 @@
 package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.Main;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,14 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Engineer implements Listener {
+
+    /**
+     * Main Class
+     */
     private final Main plugin;
 
+    /**
+     * Constructor of Kit Manager
+     *
+     * @param plugin main class
+     */
     public Engineer(Main plugin) {
         this.plugin = plugin;
     }
 
-    private final List<Location> mines = new ArrayList<Location>();
+    /** List with all the mines in the arena */
+    private final List<Location> landMinesList = new ArrayList<Location>();
 
+    /** Land Mine */
     private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
 
     {
@@ -34,57 +42,87 @@ public class Engineer implements Listener {
         mine.setItemMeta(mineMeta);
     }
 
-    private final ItemStack ironArmor1 = new ItemStack(Material.IRON_HELMET, 1);
+    /** Iron Helmet */
+    private final ItemStack ironHelmet = new ItemStack(Material.IRON_HELMET, 1);
 
     {
-        ironArmor1.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+        ironHelmet.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
     }
 
-    private final ItemStack ironArmor2 = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    /** Iron ChestPlate */
+    private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
-        ironArmor2.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+        ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    private final ItemStack ironArmor3 = new ItemStack(Material.IRON_LEGGINGS, 1);
+    /** Iron Leggings */
+    private final ItemStack ironLeggings = new ItemStack(Material.IRON_LEGGINGS, 1);
 
     {
-        ironArmor3.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+        ironLeggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
     }
 
-    private final ItemStack ironArmor4 = new ItemStack(Material.IRON_BOOTS, 1);
+    /** Iron Boots */
+    private final ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
 
     {
-        ironArmor4.addEnchantment(Enchantment.PROTECTION_FALL, 2);
+        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
 
+    /**
+     * Give kit engineer to a player
+     *
+     * @param p player to give the kit
+     */
     public void kitEngineer(Player p) {
         p.getInventory().addItem(mine);
-        p.getInventory().addItem(ironArmor1);
-        p.getInventory().addItem(ironArmor2);
-        p.getInventory().addItem(ironArmor3);
-        p.getInventory().addItem(ironArmor4);
+        p.getInventory().setHelmet(ironHelmet);
+        p.getInventory().setChestplate(ironChestPlate);
+        p.getInventory().setLeggings(ironLeggings);
+        p.getInventory().setBoots(ironBoots);
 
     }
 
-    @EventHandler
-    public void onActivate(PlayerInteractEvent e) {
-        if (e.getAction().equals(Action.PHYSICAL)) {
-            if (e.getClickedBlock().getType().equals(Material.IRON_BLOCK)) {
-                if (mines.contains(e.getClickedBlock().getLocation())) {
-                    e.getClickedBlock().setType(Material.AIR);
-                    mines.remove(e.getClickedBlock().getLocation());
-                    e.getClickedBlock().getWorld().createExplosion(e.getClickedBlock().getLocation(), 2, false);
-                }
-            }
-        }
+    /**
+     * Check if a player stepped in a land mine
+     *
+     * @param action action of the player
+     * @param block block interacted with
+     */
+    public void landMineActivate(Action action, Block block) {
+        if (!action.equals(Action.PHYSICAL))
+            return;
+        if (!block.getType().equals(Material.IRON_BLOCK))
+            return;
+        if (!landMinesList.contains(block.getLocation()))
+            return;
+        landMinesList.remove(block.getLocation());
+        block.setType(Material.AIR);
+        // Create Explosion
+        block.getWorld().createExplosion(block.getLocation(), 2, false);
     }
 
-    @EventHandler
-    public void onPlace(BlockPlaceEvent e) {
-        if (e.getBlock().getType().equals(Material.IRON_BLOCK)) {
-            mines.add(e.getBlock().getLocation());
-            e.getPlayer().sendMessage(ChatColor.GOLD + "Crias te uma" + ChatColor.DARK_RED + " mina!");
-        }
+    /**
+     * Check if a player is placing a land mine. If so tell him he placed one and add the location
+     * to the lands mine list
+     *
+     * @param p player who placed the block
+     * @param itemStack item stack placed by the player
+     * @param location location of the placed block
+     */
+    public void mineLandPlace(Player p, ItemStack itemStack, Location location) {
+        if (itemStack.getType() != Material.IRON_BLOCK)
+            return;
+        if(!itemStack.hasItemMeta())
+            return;
+        if(!itemStack.getItemMeta().hasDisplayName())
+            return;
+        if(!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Land Mine"))
+            return;
+        // Add to list of placed mines
+        landMinesList.add(location);
+        // Send message
+        p.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias te uma mina!");
     }
 }

@@ -59,6 +59,12 @@ public class BlockListener implements Listener {
             e.setCancelled(true);
         if(playerDat.getStatus() != PlayerStatus.ALIVE)
             e.setCancelled(true);
+
+        // Check if its a Chest
+        plugin.playerChest.onChestPlace(e.getBlock());
+
+        // Engineer
+        plugin.kitManager.engineer.mineLandPlace(player, player.getItemInHand(), e.getBlock().getLocation());
     }
 
     /**
@@ -137,7 +143,7 @@ public class BlockListener implements Listener {
      * @see         InventoryClickEvent
      */
     @EventHandler
-    public void onFillBucket(InventoryClickEvent e){
+    public void onInventoryClick(InventoryClickEvent e){
         Player player = (Player) e.getWhoClicked();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
