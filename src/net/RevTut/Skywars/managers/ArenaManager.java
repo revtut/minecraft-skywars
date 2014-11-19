@@ -5,6 +5,7 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaLocation;
 import net.RevTut.Skywars.arena.ArenaStatus;
+import net.RevTut.Skywars.libraries.algebra.AlgebraAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -163,6 +164,11 @@ public class ArenaManager {
             if (spawnLocation == null) {
                 System.out.println("One or more spawn locations are null!");
                 return null;
+            }else{
+                // Change yaw and pitch of a location
+                Location locationAt = AlgebraAPI.locationLookAt(spawnLocation, deathSpawnLocation);
+                spawnLocation.setPitch(locationAt.getPitch());
+                spawnLocation.setYaw(locationAt.getYaw());
             }
 
         Location temp = firstCorner;

@@ -4,6 +4,7 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
+import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.block.BlockBreak;
 import net.RevTut.Skywars.listeners.block.BlockPlace;
@@ -12,7 +13,6 @@ import net.RevTut.Skywars.listeners.environment.Weather;
 import net.RevTut.Skywars.listeners.player.*;
 import net.RevTut.Skywars.managers.ArenaManager;
 import net.RevTut.Skywars.managers.PlayerManager;
-import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -293,14 +293,14 @@ public class Main extends JavaPlugin {
         final File config = new File(getDataFolder() + File.separator + "config.yml");
         final FileConfiguration configConf = YamlConfiguration.loadConfiguration(config);
         // Title
-        titleMessage = Converters.convertToJSON(configConf.getString("Title").replaceAll("&", "§"));
-        subTitleMessage = Converters.convertToJSON(configConf.getString("Subtitle").replaceAll("&", "§"));
+        titleMessage = ConvertersAPI.convertToJSON(configConf.getString("Title").replaceAll("&", "§"));
+        subTitleMessage = ConvertersAPI.convertToJSON(configConf.getString("Subtitle").replaceAll("&", "§"));
         fadeIn = configConf.getInt("FadeIn");
         fadeOut = configConf.getInt("FadeOut");
         timeOnScreen = configConf.getInt("TimeOnScreen");
         // Tab
-        tabTitle = Converters.convertSpecialCharacters(Converters.convertToJSON(configConf.getString("TabTitle").replaceAll("&", "§")));
-        tabFooter = Converters.convertSpecialCharacters(Converters.convertToJSON(configConf.getString("TabFooter").replaceAll("&", "§")));
+        tabTitle = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabTitle").replaceAll("&", "§")));
+        tabFooter = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabFooter").replaceAll("&", "§")));
         /* MySQL File */
         final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
         final FileConfiguration mysqlConf = YamlConfiguration.loadConfiguration(mysqlFile);

@@ -2,6 +2,7 @@ package net.RevTut.Skywars.utils;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.ArenaDat;
+import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
@@ -258,7 +259,7 @@ public class MySQL {
      */
     public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
         try {
-            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "', '" + Converters.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + Converters.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + Converters.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
+            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "', '" + ConvertersAPI.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
             this.connection.createStatement().executeUpdate(infoCreate);
         } catch (final SQLException e) {
             System.out.println("Error while trying to update the MySQL! Reason: " + e.getMessage());

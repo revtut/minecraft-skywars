@@ -4,10 +4,10 @@ import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
+import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.Converters;
 import net.RevTut.Skywars.utils.ScoreBoard;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -110,26 +110,26 @@ public class PlayerDeath implements Listener {
 
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);
-        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4MORRESTE"));
+        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
         if (damager != null) {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Subtitle
             // Target
-            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Morto por " + damager.getName()));
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Morto por " + damager.getName()));
             // Title and SubTitle
             // Damager
             TitleAPI.sendTimings(damager, 5, 60, 5);
-            TitleAPI.sendTitle(damager, Converters.convertToJSON("§aMATASTE"));
-            TitleAPI.sendSubTitle(damager, Converters.convertToJSON("§7" + alvo.getName()));
+            TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON("§aMATASTE"));
+            TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
         } else {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Subtitle
             // Target
-            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON(""));
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(""));
         }
 
         // Check if game ended

@@ -2,10 +2,10 @@ package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
+import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.Converters;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -147,37 +147,37 @@ public class ArenaRunnable implements Runnable {
             switch (remainingTime) {
                 case 10:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b10"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b10"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 5:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§45"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§45"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 4:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§c4"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c4"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 3:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§63"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 2:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§e2"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e2"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 1:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a1"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a1"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 0:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§2GO"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§2GO"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
                     break;
@@ -200,37 +200,37 @@ public class ArenaRunnable implements Runnable {
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§b60"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Segundos Restantes"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
+                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
                     break;
                 case 10:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§210"));
-                    TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Segundos Restantes"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§210"));
+                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
                     break;
                 case 5:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§a5"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a5"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 4:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§e4"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e4"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 3:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§63"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 2:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§c2"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c2"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 1:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, Converters.convertToJSON("§41"));
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§41"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 0:
@@ -239,8 +239,8 @@ public class ArenaRunnable implements Runnable {
                         return;
                     if (arenaDat.getWinner().equals("NULL")) {
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TEMPO ESGOTADO"));
-                        TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
+                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4TEMPO ESGOTADO"));
+                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
                     } else {
                         // Points earned
                         int poinsEarned = plugin.pointsPerGame + plugin.pointsPerGame * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * (plugin.rand.nextInt(26) / 100);
@@ -251,18 +251,18 @@ public class ArenaRunnable implements Runnable {
                         if (winner != null){
                             // Title
                             if (winner.getUniqueId().equals(alvo.getUniqueId())) {
-                                TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
+                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
                                 alvoDat.addWin(); // Add win
                                 // Points earned
                                 poinsEarned = plugin.pointsPerWin + plugin.pointsPerWin * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * (plugin.rand.nextInt(51) / 100);
                                 alvoDat.addPoints(poinsEarned);
                             } else
-                                TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
+                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
                             // Subtitle
-                            TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Vencedor: " + winner.getName()));
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Vencedor: " + winner.getName()));
                         }
                         else{
-                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
                             TitleAPI.sendSubTitle(alvo, "");
                         }
                     }

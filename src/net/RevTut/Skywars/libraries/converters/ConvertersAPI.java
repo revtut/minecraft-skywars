@@ -1,16 +1,16 @@
-package net.RevTut.Skywars.utils;
+package net.RevTut.Skywars.libraries.converters;
 
 import java.util.List;
 
 /**
- * Converters.
+ * Converters Library.
  *
  * <P>Usefull converters to be used.</P>
  *
  * @author Joao Silva
  * @version 1.0
  */
-public class Converters {
+public class ConvertersAPI {
 
     /**
      * Convert a text to JSON format
