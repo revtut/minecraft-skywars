@@ -2,8 +2,10 @@ package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
-import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
+import net.RevTut.Skywars.managers.KitManager;
+import net.RevTut.Skywars.player.PlayerDat;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,14 +31,14 @@ public class Hacker {
     private final Random rand = new Random();
 
     /**
-     * Map with all the inventory items of a player
-     */
-    private final Map<UUID, ItemStack[]> playerInventoryContent = new HashMap<UUID, ItemStack[]>();
-
-    /**
      * List with players that already respawned
      */
     private final List<UUID> respawnedPlayers = new ArrayList<UUID>();
+
+    /**
+     * List with players to be respawned
+     */
+    private final List<UUID> toBeRespawnedPlayers = new ArrayList<UUID>();
 
     /**
      * Black Leather Helmet
@@ -60,28 +62,42 @@ public class Hacker {
     }
 
     /**
-     * Save all the items of a player if the player has not respawned yet
+     * Check if a player may respawn
      *
-     * @param player player to save inventory
-     * @param arena player's arena
+     * @param playerDat player to check it can b respawned
+     * @param arena arena where player is currently playibg
      * @return true if player may respawn
      */
+    public boolean canRespawn(PlayerDat playerDat, Arena arena){
+        if(respawnedPlayers.contains(playerDat.getUUID()))
+            return false;
 
+        KitManager kitManager = arena.getKitManager();
+        if(!kitManager.playerKit.containsKey(playerDat.getUUID()))
+            return false;
+
+        Kit kit = kitManager.playerKit.get(playerDat.getUUID());
+        if(kit != Kit.HACKER)
+            return false;
+
+        toBeRespawnedPlayers.add(playerDat.getUUID());
+        return true;
+    }
 
     /**
-     * Restore a player's inventory and send him back to a random spawn. Before it checks if a player's inventory may be restored
+     * Respawn a player and send back to a random spawn
      *
-     * @param player player to restore inventory
+     * @param playerDat player dat to be respawned
      * @param arena  arena of the player
      * @return location to send the player
      */
-    public Location restorePlayer(Player player, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
-        if (!playerInventoryContent.containsKey(player.getUniqueId()))
+    public Location respawnPlayer(PlayerDat playerDat, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
+        if (!toBeRespawnedPlayers.contains(playerDat.getUUID()))
                 return null;
-        ItemStack[] inventoryContent = playerInventoryContent.get(player.getUniqueId());
-        player.getInventory().setContents(inventoryContent);
-        // Remove from maps
-        playerInventoryContent.remove(player.getUniqueId());
+        // Player
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null)
+            return null;
         // Teleport to a random spawn location
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (arenaLocation == null)
@@ -95,7 +111,8 @@ public class Hacker {
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players
-        BypassesAPI.respawnBypass(player);
+        respawnedPlayers.add(playerDat.getUUID());
+        toBeRespawnedPlayers.remove(playerDat.getUUID());
         return spawnLocation;
     }
 }
