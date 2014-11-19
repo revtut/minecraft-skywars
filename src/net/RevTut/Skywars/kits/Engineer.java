@@ -28,7 +28,6 @@ import java.util.List;
 public class Engineer {
 
     public boolean force_dead;
-    public Integer power;
 
     /**
      * List with all the mines in the arena
@@ -80,7 +79,7 @@ public class Engineer {
                     event.getPlayer().setHealth(1.0D);
                 }
                 Bukkit.broadcastMessage(player.getName() + " was killed by a mine!");
-                loc.getWorld().createExplosion(player.getLocation(), this.power.intValue(), true);
+                loc.getWorld().createExplosion(player.getLocation(),0.25F, true);
             }
         }
 
@@ -91,6 +90,7 @@ public class Engineer {
      * @param action action of the player
      * @param block  block interacted with
      */
+
    /* public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
         if (!action.equals(Action.PHYSICAL))
             return;
