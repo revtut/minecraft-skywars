@@ -70,9 +70,6 @@ public class PlayerDeath implements Listener {
             return;
         }
 
-        // Hide to Arena
-        plugin.arenaManager.hideToArena(alvo, false);
-
         // Hacker
         if (alvoArena.getKitManager().hacker.canRespawn(alvoDat, alvoArena)){
             // Bypass respawn screen
@@ -80,9 +77,13 @@ public class PlayerDeath implements Listener {
             return;
         }
 
+        // Hide to Arena
+        plugin.arenaManager.hideToArena(alvo, false);
+
         // Drop items in the location where player died
         for(ItemStack itemStack : e.getDrops())
                 alvo.getWorld().dropItemNaturally(alvo.getLocation(), itemStack);
+        e.getDrops().clear();
 
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
@@ -153,7 +154,7 @@ public class PlayerDeath implements Listener {
         if (damagerDat == null)
             return;
         // Points earned
-        int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * (float)( damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * (float)(plugin.rand.nextInt(11) / 100));
+        int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
         damagerDat.addPoints(poinsEarned);
         // Add kill
         damagerDat.addKill();

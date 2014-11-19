@@ -2,7 +2,9 @@ package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,7 +49,11 @@ public class PlayerMove implements Listener {
             return;
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if (arena == null)
+        if (null == arena)
+            return;
+        if (arena.getStatus() != ArenaStatus.INGAME)
+            return;
+        if (playerDat.getStatus() != PlayerStatus.ALIVE)
             return;
 
         // Engineer

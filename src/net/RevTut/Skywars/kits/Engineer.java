@@ -81,7 +81,7 @@ public class Engineer{
             player.setHealth(1.0);
         // Create Explosion
         block.setType(Material.AIR);
-        block.getWorld().createExplosion(block.getLocation(), 3, false);
+        block.getWorld().createExplosion(block.getLocation(), 5, false);
     }
 
     /**
@@ -108,6 +108,6 @@ public class Engineer{
         // Add to list of placed mines
         landMinesList.add(location);
         // Send message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias te uma mina!");
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias-te uma mina!");
     }
 }

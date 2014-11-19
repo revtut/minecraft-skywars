@@ -4,6 +4,7 @@ import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -220,7 +221,10 @@ public class PlayerChat implements Listener {
         }
 
         // Formato da Mensagem
-        playerArena.sendMessage(player.getDisplayName() + " §6» §f" + mensagem);
+        if(playerDat.getStatus() == PlayerStatus.DEAD)
+            playerArena.sendMessage("§7|§4MORTO§7| " + player.getDisplayName() + " §6» §f" + mensagem);
+        else
+            playerArena.sendMessage(player.getDisplayName() + " §6» §f" + mensagem);
         arenaDat.addGameChat(ChatColor.stripColor(player.getDisplayName() + " » " + mensagem)); // Add to chat log
     }
 }
