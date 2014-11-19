@@ -1,11 +1,16 @@
 package net.RevTut.Skywars.kits;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -21,6 +26,9 @@ import java.util.List;
  * @version 1.0
  */
 public class Engineer {
+
+    public boolean force_dead;
+    public Integer power;
 
     /**
      * List with all the mines in the arena
@@ -57,6 +65,25 @@ public class Engineer {
         p.getInventory().setChestplate(ironChestPlate);
     }
 
+    //Teste Handler Mine
+    @EventHandler
+    public void MOVE_landmine(PlayerMoveEvent event)
+    {
+        Player player = event.getPlayer();
+            Location loc = event.getPlayer().getLocation();
+            Block cover = loc.getBlock();
+            loc.setY(loc.getY() - 1.0D);
+            if ((cover.getType().equals(Material.IRON_BLOCK)))
+            {
+                loc.getBlock().setType(Material.AIR);
+                if (this.force_dead) {
+                    event.getPlayer().setHealth(1.0D);
+                }
+                Bukkit.broadcastMessage(player.getName() + " was killed by a mine!");
+                loc.getWorld().createExplosion(player.getLocation(), this.power.intValue(), true);
+            }
+        }
+
 
     /**
      * Check if a player stepped in a land mine
@@ -64,7 +91,7 @@ public class Engineer {
      * @param action action of the player
      * @param block  block interacted with
      */
-    public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
+   /* public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
         if (!action.equals(Action.PHYSICAL))
             return;
         if (block == null)
@@ -79,7 +106,7 @@ public class Engineer {
         block.setType(Material.AIR);
         // Create Explosion
         block.getWorld().createExplosion(block.getLocation(), 2, false);
-    }
+    }/*
 
     /**
      * Check if a player is placing a land mine. If so tell him he placed one and add the location
