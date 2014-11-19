@@ -2,6 +2,7 @@ package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
+import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -65,18 +66,7 @@ public class Hacker {
      * @param arena player's arena
      * @return true if player may respawn
      */
-    public boolean saveInventory(Player player, Arena arena) { // MAKES USE OF PLAYER DEATH EVENT
-        if (respawnedPlayers.contains(player.getUniqueId()))
-            return false;
-        if(!arena.getKitManager().playerKit.containsKey(player.getUniqueId()))
-            return false;
-        Kit kit = arena.getKitManager().playerKit.get(player.getUniqueId());
-        if(kit != Kit.HACKER)
-            return false;
-        // Add content of his inventory to the map
-        playerInventoryContent.put(player.getUniqueId(), player.getInventory().getContents().clone());
-        return true;
-    }
+
 
     /**
      * Restore a player's inventory and send him back to a random spawn. Before it checks if a player's inventory may be restored
@@ -105,7 +95,7 @@ public class Hacker {
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players
-        respawnedPlayers.add(player.getUniqueId());
+        BypassesAPI.respawnBypass(player);
         return spawnLocation;
     }
 }
