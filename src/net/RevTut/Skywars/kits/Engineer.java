@@ -81,7 +81,7 @@ public class Engineer{
             player.setHealth(1.0);
         // Create Explosion
         block.setType(Material.AIR);
-        block.getWorld().createExplosion(block.getLocation(), 2, false);
+        block.getWorld().createExplosion(block.getLocation(), 3, false);
     }
 
     /**

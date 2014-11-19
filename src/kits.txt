@@ -1,7 +1,17 @@
-Engineer(engenheiro) = 100% done
-- Land Mine: explode mal o player pise
+Engineer(engenheiro)
+- Land Mine: explode mal o player pisa
   - Quantidade de minas: 2
 - Armadura: colete de iron com protecao de explosao
+
+Guardian(Guardiao)
+- Pode usar ghast tear para ativar speed
+ - Durabilidade: 2x
+- Armadura: botas de anti fall nivel 2
+
+Bypass(Hacker)
+- Direito a respawn quando morre
+ - Durabilidade: 1x
+- Armadura: capacete preto
 
 Ninja(slayer)
 - Cana de pesca com hook(agarra se as paredes e puxa)
@@ -12,11 +22,6 @@ Tatical(fantasma)
 - Pode usar a ender pearl para desaparecer durante 5 segundos
  - Durabilidade: 2x
 - Armadura: colete verde
-
-Bypass(Hacker)
-- Direito a respawn quando morre
- - Durabilidade: 1x
-- Armadura: capacete preto
 
 Screamer
 - Ainda por definir

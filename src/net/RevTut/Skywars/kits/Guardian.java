@@ -34,7 +34,7 @@ public class Guardian {
      */
     private ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
     {
-        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 3);
+        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }
 
     /**
