@@ -94,8 +94,8 @@ public class Ninja {
         Location A = player.getLocation(); // Location of the player
         Location B = projectile.getLocation(); // Location of the projectile
         // Direction to throw player
-        Vector dir = B.toVector().subtract(A.toVector().normalize());
-        player.setVelocity(dir.multiply(2));
+        Vector dir = B.toVector().subtract(A.toVector());
+        player.setVelocity(dir.multiply(0.25));
         // Remove projectile
         projectile.remove();
     }
