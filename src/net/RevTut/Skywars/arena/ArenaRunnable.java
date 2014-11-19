@@ -243,7 +243,7 @@ public class ArenaRunnable implements Runnable {
                         TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
                     } else {
                         // Points earned
-                        int poinsEarned = plugin.pointsPerGame + plugin.pointsPerGame * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * (plugin.rand.nextInt(26) / 100);
+                        int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * (float)( alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * (float)(plugin.rand.nextInt(51) / 100));
                         alvoDat.addPoints(poinsEarned);
                         // Title timings
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
@@ -254,7 +254,7 @@ public class ArenaRunnable implements Runnable {
                                 TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
                                 alvoDat.addWin(); // Add win
                                 // Points earned
-                                poinsEarned = plugin.pointsPerWin + plugin.pointsPerWin * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * (plugin.rand.nextInt(51) / 100);
+                                poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * (float)( alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * (float)(plugin.rand.nextInt(26) / 100));
                                 alvoDat.addPoints(poinsEarned);
                             } else
                                 TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
