@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Guardian Kit.
  *
- * <P>Kit Guardian can increase speed two times for seconds and have anti-fall damage</P>
+ * <P>Kit Guardian can increase speed two times for seconds and have anti-fall damage boots</P>
  *
  * @author WaxCoder
  * @version 1.0
@@ -34,7 +34,7 @@ public class Guardian {
      */
     private ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
     {
-        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
+        ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 3);
     }
 
     /**

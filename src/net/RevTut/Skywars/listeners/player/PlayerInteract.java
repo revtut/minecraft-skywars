@@ -73,8 +73,6 @@ public class PlayerInteract implements Listener {
         // Chest interact
         plugin.playerChest.onChestInteract(e.getClickedBlock());
 
-        // Engineer
-        arena.getKitManager().engineer.landMineActivate(e.getAction(), e.getClickedBlock());
         // Guardian
         if(arena.getKitManager().guardian.setSpeed(player, e.getAction(), player.getItemInHand(), 10))
             e.setCancelled(true);

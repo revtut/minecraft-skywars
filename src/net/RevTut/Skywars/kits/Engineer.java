@@ -1,16 +1,11 @@
 package net.RevTut.Skywars.kits;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -25,7 +20,7 @@ import java.util.List;
  * @author WaxCoder
  * @version 1.0
  */
-public class Engineer {
+public class Engineer{
 
     public boolean force_dead;
 
@@ -64,36 +59,14 @@ public class Engineer {
         p.getInventory().setChestplate(ironChestPlate);
     }
 
-    //Teste Handler Mine
-    @EventHandler
-    public void MOVE_landmine(PlayerMoveEvent event)
-    {
-        Player player = event.getPlayer();
-            Location loc = event.getPlayer().getLocation();
-            Block cover = loc.getBlock();
-            loc.setY(loc.getY() - 1.0D);
-            if ((cover.getType().equals(Material.IRON_BLOCK)))
-            {
-                loc.getBlock().setType(Material.AIR);
-                if (this.force_dead) {
-                    event.getPlayer().setHealth(1.0D);
-                }
-                Bukkit.broadcastMessage(player.getName() + " was killed by a mine!");
-                loc.getWorld().createExplosion(player.getLocation(),0.20F, true);
-            }
-        }
-
-
     /**
      * Check if a player stepped in a land mine
      *
-     * @param action action of the player
-     * @param block  block interacted with
+     * @param player to check if stepped a mine
      */
 
-   /* public void landMineActivate(Action action, Block block) { // MAKES USE OF PLAYER INTERACT EVENT
-        if (!action.equals(Action.PHYSICAL))
-            return;
+    public void landMineActivate(Player player) { // MAKES USE OF PLAYER MOVE EVENT
+        Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
         if (block == null)
             return;
         if (block.getType() == null)
@@ -103,10 +76,13 @@ public class Engineer {
         if (!landMinesList.contains(block.getLocation()))
             return;
         landMinesList.remove(block.getLocation());
-        block.setType(Material.AIR);
+        // Check if player must die
+        if(force_dead)
+            player.setHealth(1.0);
         // Create Explosion
+        block.setType(Material.AIR);
         block.getWorld().createExplosion(block.getLocation(), 2, false);
-    }/*
+    }
 
     /**
      * Check if a player is placing a land mine. If so tell him he placed one and add the location
