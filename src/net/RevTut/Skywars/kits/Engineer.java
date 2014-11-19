@@ -79,7 +79,7 @@ public class Engineer {
                     event.getPlayer().setHealth(1.0D);
                 }
                 Bukkit.broadcastMessage(player.getName() + " was killed by a mine!");
-                loc.getWorld().createExplosion(player.getLocation(),0.25F, true);
+                loc.getWorld().createExplosion(player.getLocation(),0.20F, true);
             }
         }
 
