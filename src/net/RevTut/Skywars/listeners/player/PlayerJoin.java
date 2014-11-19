@@ -96,6 +96,8 @@ public class PlayerJoin implements Listener {
                         if (plugin.arenaManager.getNumberAvailableArenas() <= 1) {
                             plugin.arenaManager.createNewArena();
                         }
+                        // Update points in ScoreBoard
+                        ScoreBoard.updatePoints(playerDat);
                     }
                 });
             }

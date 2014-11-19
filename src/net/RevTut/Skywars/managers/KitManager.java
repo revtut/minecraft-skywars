@@ -92,10 +92,9 @@ public class KitManager {
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if(player == null)
             return;
-        if(!playerKit.containsKey(playerDat.getUUID())){
-            player.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Nenhum kit te foi dado pois nao o escolheste!");
+        // Check if player bought kit
+        if(!playerKit.containsKey(playerDat.getUUID()))
             return;
-        }
         // Kit
         Kit kit = playerKit.get(playerDat.getUUID());
         if(kit == Kit.ENGINEER)
@@ -187,16 +186,23 @@ public class KitManager {
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if(player == null)
             return;
+        // Close Inventory
+        player.closeInventory();
         // Check if player has not choose the kit already
         if(playerKit.containsKey(playerDat.getUUID())){
             player.sendMessage("§7|" + "§3Sky Wars" + "§7| §4O teu kit ja foi escolhido!");
             return;
         }
+        // Choosen kit
         Kit kit = Kit.values()[position];
+        // Check if player has enough points
+        if(playerDat.getPoints() < kit.getCost()){
+            player.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Pontos insuficientes para o kit!");
+            return;
+        }
+        // Add to map
         playerKit.put(playerDat.getUUID(), kit);
-        // Close Inventory
-        player.closeInventory();
         // Message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Kit " + ChatColor.stripColor(kit.getDisplayName()) + " escolhido!");
+        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Kit " + ChatColor.stripColor(kit.getDisplayName()) + " comprado!");
     }
 }

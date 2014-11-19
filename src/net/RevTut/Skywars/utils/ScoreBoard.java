@@ -1,11 +1,9 @@
 package net.RevTut.Skywars.utils;
 
-import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.*;
 
 import java.util.HashMap;
@@ -20,21 +18,7 @@ import java.util.UUID;
  * @author Joao Silva
  * @version 1.0
  */
-public class ScoreBoard implements Listener {
-
-    /**
-     * Main class
-     */
-    private final Main plugin;
-
-    /**
-     * Constructor of ScoreBoard
-     *
-     * @param plugin main class
-     */
-    public ScoreBoard(final Main plugin) {
-        this.plugin = plugin;
-    }
+public class ScoreBoard {
 
     /**
      * Map with all the scoreboards of the players
@@ -62,6 +46,10 @@ public class ScoreBoard implements Listener {
         // Dead
         final Score scoreDead = objective.getScore("§cDead:");
         scoreDead.setScore(0);
+
+        // Points
+        final Score scorePoints = objective.getScore("§7Points:");
+        scorePoints.setScore(0);
 
         // Scoreboard footer
         final Score separador = objective.getScore("§3----------");
@@ -116,6 +104,23 @@ public class ScoreBoard implements Listener {
             Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
             objective.getScore("§cDead:").setScore(dead);
         }
+    }
+
+    /**
+     * Update points of players in the scoreboard
+     *
+     * @param playerDat player to update the points
+     */
+    public static void updatePoints(PlayerDat playerDat) {
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null)
+            return;
+        int points = playerDat.getPoints();
+        Scoreboard board = scoreBoards.get(player.getUniqueId());
+        if (board == null)
+            return;
+        Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+        objective.getScore("§7Points:").setScore(points);
     }
 
     /**
