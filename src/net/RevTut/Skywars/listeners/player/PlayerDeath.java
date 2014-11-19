@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Player Death.
@@ -78,6 +79,10 @@ public class PlayerDeath implements Listener {
             BypassesAPI.respawnBypass(alvo); // If bypassed before, player wont be teleported to the right spawn
             return;
         }
+
+        // Drop items in the location where player died
+        for(ItemStack itemStack : e.getDrops())
+                alvo.getWorld().dropItemNaturally(alvo.getLocation(), itemStack);
 
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
@@ -148,7 +153,7 @@ public class PlayerDeath implements Listener {
         if (damagerDat == null)
             return;
         // Points earned
-        int poinsEarned = plugin.pointsPerKill + plugin.pointsPerKill * (damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * (plugin.rand.nextInt(11) / 100);
+        int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * (float)( damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * (float)(plugin.rand.nextInt(11) / 100));
         damagerDat.addPoints(poinsEarned);
         // Add kill
         damagerDat.addKill();
