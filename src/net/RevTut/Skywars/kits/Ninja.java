@@ -28,7 +28,6 @@ public class Ninja {
 
     {
         ItemMeta hookMeta = hook.getItemMeta();
-        hook.setDurability((short) 2); // Two uses only
         hookMeta.setDisplayName("§3Ninja Rod");
         hook.setItemMeta(hookMeta);
     }
@@ -94,9 +93,15 @@ public class Ninja {
         Location A = player.getLocation(); // Location of the player
         Location B = projectile.getLocation(); // Location of the projectile
         // Direction to throw player
-        Vector dir = B.toVector().subtract(A.toVector().normalize());
-        player.setVelocity(dir.multiply(2));
+        Vector dir = B.toVector().subtract(A.toVector());
+        player.setVelocity(dir.multiply(0.25));
         // Remove projectile
         projectile.remove();
+        // Remove item
+        int amount = itemStack.getAmount();
+        if(amount > 1)
+            itemStack.setAmount(itemStack.getAmount() - 1);
+        else
+            player.getInventory().remove(itemStack);
     }
 }

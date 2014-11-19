@@ -117,6 +117,7 @@ public class KitManager {
     /**
      * Open kit menu to a player
      *
+     * @param itemStack item stack used by the player
      * @return inventory menu with all kits
      */
     public final Inventory createKitMenu(ItemStack itemStack) { // MAKES USE OF PLAYER INTERACT EVENT
@@ -172,6 +173,7 @@ public class KitManager {
      * Set the kit of a player
      *
      * @param playerDat player to set the kit
+     * @param inventory inventory of the player
      * @param position position of the kit
      */
     public final void setKit(PlayerDat playerDat, Inventory inventory, int position){ // MAKES USE OF PLAYER INVENTORY CLICK EVENT

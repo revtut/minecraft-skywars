@@ -57,6 +57,7 @@ public enum Kit {
      * Constructor of Kits
      *
      * @param displayName display name of the kit
+     * @param material representative material of the kit
      * @param cost cost of the kit
      */
     Kit(String displayName, Material material, int cost) {
