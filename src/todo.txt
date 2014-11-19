@@ -1,0 +1,5 @@
+- Reabrir conexão à MySQL quando a conexão é fechada.
+
+- Enviar jogadores para o Hub quando acontece algo que não era suposto acontecer.
+
+- Corrigir kits
