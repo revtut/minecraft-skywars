@@ -1,5 +1,9 @@
 package net.RevTut.Skywars.player;
 
+import net.RevTut.Skywars.utils.ScoreBoard;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -176,6 +180,14 @@ public class PlayerDat {
      */
     public void addPoints(int points) {
         this.points += points;
+        // Player
+        Player player = Bukkit.getPlayer(uuid);
+        if(player == null)
+            return;
+        // Message
+        player.sendMessage("§6" + points + " pontos");
+        // Update points in ScoreBoard
+        ScoreBoard.updatePoints(this);
     }
 
     /**

@@ -202,6 +202,8 @@ public class KitManager {
         }
         // Add to map
         playerKit.put(playerDat.getUUID(), kit);
+        // Decrease points
+        playerDat.addPoints(0 - kit.getCost());
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Kit " + ChatColor.stripColor(kit.getDisplayName()) + " comprado!");
     }
