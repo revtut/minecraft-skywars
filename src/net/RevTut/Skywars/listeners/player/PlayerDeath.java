@@ -72,12 +72,15 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
+        // Hacker
+        if (alvoArena.getKitManager().hacker.canRespawn(alvoDat, alvoArena)){
+            // Bypass respawn screen
+            BypassesAPI.respawnBypass(alvo); // If bypassed before, player wont be teleported to the right spawn
+            return;
+        }
+
         // Bypass respawn screen
         BypassesAPI.respawnBypass(alvo);
-
-        // Hacker
-        if (alvoArena.getKitManager().hacker.canRespawn(alvoDat, alvoArena))
-            return;
 
         // Config Player
         if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {

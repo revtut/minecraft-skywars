@@ -5,7 +5,6 @@ import net.RevTut.Skywars.arena.ArenaLocation;
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.player.PlayerDat;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -87,17 +86,13 @@ public class Hacker {
     /**
      * Respawn a player and send back to a random spawn
      *
-     * @param playerDat player dat to be respawned
+     * @param player player to be respawned
      * @param arena  arena of the player
      * @return location to send the player
      */
-    public Location respawnPlayer(PlayerDat playerDat, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
-        if (!toBeRespawnedPlayers.contains(playerDat.getUUID()))
+    public Location respawnPlayer(Player player, Arena arena) { // MAKES USE OF PLAYER RESPAWN EVENT
+        if (!toBeRespawnedPlayers.contains(player.getUniqueId()))
                 return null;
-        // Player
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if(player == null)
-            return null;
         // Teleport to a random spawn location
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (arenaLocation == null)
@@ -111,8 +106,8 @@ public class Hacker {
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
         // Add to already respawned players
-        respawnedPlayers.add(playerDat.getUUID());
-        toBeRespawnedPlayers.remove(playerDat.getUUID());
+        respawnedPlayers.add(player.getUniqueId());
+        toBeRespawnedPlayers.remove(player.getUniqueId());
         return spawnLocation;
     }
 }
