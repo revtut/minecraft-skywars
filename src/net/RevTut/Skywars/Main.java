@@ -102,6 +102,42 @@ public class Main extends JavaPlugin {
     public final Random rand = new Random();
 
     /**
+     * Points earned per win. This is not the final amount as it depends on a luck factor
+     * and depends either on the amount of players killed.
+     * PE = points earned
+     * PW = points per win
+     * K = kills
+     * N = number of players
+     * F = random percentage (between 0 - 50%)
+     * Formula: PE = PW + PW * ( K / N ) + PW * F
+     */
+    public final int pointsPerWin = 800;
+
+    /**
+     * Points earned per game played. This is not the final amount as it depends on a luck factor
+     * and depends either on the amount of players killed.
+     * PE = points earned
+     * PG = points per game
+     * K = kills
+     * N = number of players
+     * F = random percentage (0 - 25%)
+     * Formula: PE = PG + PG * ( K / N ) + PG * F
+     */
+    public final int pointsPerGame = 200;
+
+    /**
+     * Points earned per kill. This is not the final amount as it depends on a luck factor
+     * and depends either on the amount of players already killed.
+     * PE = points earned
+     * PK = points per kill
+     * K = kills
+     * N = number of players
+     * F = random percentage (0 - 10%)
+     * Formula: PE = PK + PK * (K / N) + PK * F
+     */
+    public final int pointsPerKill = 50;
+
+    /**
      * Enable the plugin
      */
     @Override

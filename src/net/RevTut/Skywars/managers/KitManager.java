@@ -169,7 +169,8 @@ public class KitManager {
     }
 
     /**
-     * Set the kit of a player
+     * Set the kit of a player. Checks if player has enough points to buy it and if player
+     * has not choosen the kit yet
      *
      * @param playerDat player to set the kit
      * @param inventory inventory of the player

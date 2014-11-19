@@ -242,17 +242,29 @@ public class ArenaRunnable implements Runnable {
                         TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4TEMPO ESGOTADO"));
                         TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7SEM VENCEDOR"));
                     } else {
+                        // Points earned
+                        int poinsEarned = plugin.pointsPerGame + plugin.pointsPerGame * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * (plugin.rand.nextInt(26) / 100);
+                        alvoDat.addPoints(poinsEarned);
+                        // Title timings
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        if (arenaDat.getWinner().equals(alvo.getUniqueId().toString())) {
-                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
-                            alvoDat.addWin();
-                        } else
-                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                         Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                        if (winner != null)
+                        if (winner != null){
+                            // Title
+                            if (winner.getUniqueId().equals(alvo.getUniqueId())) {
+                                TitleAPI.sendTitle(alvo, Converters.convertToJSON("§aVENCESTE"));
+                                alvoDat.addWin(); // Add win
+                                // Points earned
+                                poinsEarned = plugin.pointsPerWin + plugin.pointsPerWin * (alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * (plugin.rand.nextInt(51) / 100);
+                                alvoDat.addPoints(poinsEarned);
+                            } else
+                                TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
+                            // Subtitle
                             TitleAPI.sendSubTitle(alvo, Converters.convertToJSON("§7Vencedor: " + winner.getName()));
-                        else
+                        }
+                        else{
+                            TitleAPI.sendTitle(alvo, Converters.convertToJSON("§4PERDESTE"));
                             TitleAPI.sendSubTitle(alvo, "");
+                        }
                     }
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
                     break;

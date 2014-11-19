@@ -492,6 +492,8 @@ public class ArenaManager {
             System.out.println("Error while configuring the player.");
             return false;
         }
+        // Reset game kills
+        playerDat.resetGameKills();
 
         // Update scoreboard
         ScoreBoard.updateAlive(arena);

@@ -147,9 +147,12 @@ public class PlayerDeath implements Listener {
         // Stats
         alvoDat.addDeath(); // Target stats
         alvoDat.addLose();
-        alvoDat.addLose();
         if (damagerDat == null)
             return;
-        damagerDat.addKill(); // Damager stats
+        // Points earned
+        int poinsEarned = plugin.pointsPerKill + plugin.pointsPerKill * (damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * (plugin.rand.nextInt(11) / 100);
+        damagerDat.addPoints(poinsEarned);
+        // Add kill
+        damagerDat.addKill();
     }
 }

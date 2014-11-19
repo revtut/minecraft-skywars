@@ -54,6 +54,11 @@ public class PlayerDat {
     private int kills;
 
     /**
+     * Number of kills in this game
+     */
+    private int gameKills;
+
+    /**
      * Number of deaths
      */
     private int deaths;
@@ -83,6 +88,7 @@ public class PlayerDat {
         this.wins = wins;
         this.losses = losses;
         this.kills = kills;
+        this.gameKills = 0;
         this.deaths = deaths;
         this.status = PlayerStatus.WAITING;
     }
@@ -142,6 +148,15 @@ public class PlayerDat {
      */
     public int getKills() {
         return kills;
+    }
+
+    /**
+     * Get the kills of the player dat in this game
+     *
+     * @return kills of the player dat in this game
+     */
+    public int getGameKills() {
+        return gameKills;
     }
 
     /**
@@ -209,6 +224,7 @@ public class PlayerDat {
      */
     public void addKill() {
         this.kills++;
+        this.gameKills++;
     }
 
     /**
@@ -217,4 +233,9 @@ public class PlayerDat {
     public void addDeath() {
         this.deaths++;
     }
+
+    /**
+     * Reset the game kills of a player
+     */
+    public void resetGameKills() { this.gameKills = 0; }
 }
