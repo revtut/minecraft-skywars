@@ -243,13 +243,13 @@ public class ArenaManager {
         }
 
         // MySQL Tasks
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 // PlayerDat
                 plugin.mysql.updateMySQLArenaDat(arenaDat);
             }
-        });
+        }, 1);
 
         // New Arena if Needed
         if (getNumberAvailableArenas() <= 1) {

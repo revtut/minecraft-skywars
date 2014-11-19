@@ -59,12 +59,12 @@ public class PlayerQuit implements Listener {
         }
 
         // MySQL Tasks
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 // PlayerDat
                 plugin.mysql.updateMySQLPlayerDat(playerDat);
             }
-        });
+        }, 1L);
     }
 }

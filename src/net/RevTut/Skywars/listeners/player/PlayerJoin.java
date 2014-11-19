@@ -54,22 +54,22 @@ public class PlayerJoin implements Listener {
         // Tab List
         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
         // ScoreBoard
-        ScoreBoard.showScoreBoard(p);
-        // NameTag
         Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
-        if (board != null)
-            NameTagAPI.setNameTag(board, p, true);
+        if (board == null)
+            board = ScoreBoard.showScoreBoard(p);
+        // NameTag
+        NameTagAPI.setNameTag(board, p, true);
         // Hide to Server
         plugin.arenaManager.hideToServer(p, true);
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
                 // Config Player
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
                         // PlayerDat
@@ -99,8 +99,8 @@ public class PlayerJoin implements Listener {
                         // Update points in ScoreBoard
                         ScoreBoard.updatePoints(playerDat);
                     }
-                });
+                }, 1L);
             }
-        });
+        }, 1L);
     }
 }

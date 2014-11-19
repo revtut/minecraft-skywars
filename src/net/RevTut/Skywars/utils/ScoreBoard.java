@@ -29,8 +29,9 @@ public class ScoreBoard {
      * Show a new scoreboard to a player
      *
      * @param p player to show the scoreboard
+     * @return scoreboard of the player
      */
-    public static void showScoreBoard(Player p) {
+    public static Scoreboard showScoreBoard(Player p) {
         // Create the scoreboard
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
@@ -64,6 +65,8 @@ public class ScoreBoard {
 
         // Add to the map
         scoreBoards.put(p.getUniqueId(), board);
+
+        return board;
     }
 
     /**
