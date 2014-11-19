@@ -28,7 +28,6 @@ public class Ninja {
 
     {
         ItemMeta hookMeta = hook.getItemMeta();
-        hook.setDurability((short) 2); // Two uses only
         hookMeta.setDisplayName("§3Ninja Rod");
         hook.setItemMeta(hookMeta);
     }
@@ -98,5 +97,11 @@ public class Ninja {
         player.setVelocity(dir.multiply(0.25));
         // Remove projectile
         projectile.remove();
+        // Remove item
+        int amount = itemStack.getAmount();
+        if(amount > 1)
+            itemStack.setAmount(itemStack.getAmount() - 1);
+        else
+            player.getInventory().remove(itemStack);
     }
 }
