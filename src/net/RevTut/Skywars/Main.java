@@ -13,6 +13,8 @@ import net.RevTut.Skywars.listeners.environment.Weather;
 import net.RevTut.Skywars.listeners.player.*;
 import net.RevTut.Skywars.managers.ArenaManager;
 import net.RevTut.Skywars.managers.PlayerManager;
+import net.RevTut.Skywars.managers.ScoreBoardManager;
+import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -87,6 +89,11 @@ public class Main extends JavaPlugin {
     public final PlayerManager playerManager = new PlayerManager(this);
 
     /**
+     * ScoreBoard Manager
+     */
+    public final ScoreBoardManager scoreBoardManager = new ScoreBoardManager(this);
+
+    /**
      * Player Chest
      */
     public PlayerChest playerChest;
@@ -94,7 +101,7 @@ public class Main extends JavaPlugin {
     /**
      * Name of the server
      */
-    public String servidor = Bukkit.getServerName();
+    public final String servidor = Bukkit.getServerName();
 
     /**
      * Random Class
@@ -181,8 +188,10 @@ public class Main extends JavaPlugin {
         /* Player Chest */
         playerChest = new PlayerChest(this);
 
-        /* AppearanceAPI Set Main Class */
+        /* Set Main Classes */
         AppearanceAPI.plugin = this;
+        NameTagAPI.plugin = this;
+        PlayerDat.plugin = this;
 
         /* Register Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();

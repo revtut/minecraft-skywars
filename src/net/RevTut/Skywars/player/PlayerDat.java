@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.player;
 
-import net.RevTut.Skywars.utils.ScoreBoard;
+import net.RevTut.Skywars.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,6 +17,11 @@ import java.util.UUID;
  */
 
 public class PlayerDat {
+
+    /**
+     * Main class
+     */
+    public static Main plugin = null;
 
     /**
      * UUID of the player
@@ -194,6 +199,10 @@ public class PlayerDat {
      * @param points points to add
      */
     public void addPoints(int points) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside PlayerDat!");
+            return;
+        }
         this.points += points;
         // Player
         Player player = Bukkit.getPlayer(uuid);
@@ -202,7 +211,7 @@ public class PlayerDat {
         // Message
         player.sendMessage("§6" + points + " pontos");
         // Update points in ScoreBoard
-        ScoreBoard.updatePoints(this);
+        plugin.scoreBoardManager.updatePoints(this);
     }
 
     /**

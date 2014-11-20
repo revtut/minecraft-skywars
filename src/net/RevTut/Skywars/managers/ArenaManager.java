@@ -10,7 +10,6 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.ScoreBoard;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -321,8 +320,8 @@ public class ArenaManager {
         plugin.arenaManager.hideToServer(player, true);
 
         // Update scoreboard
-        ScoreBoard.updateAlive(arena);
-        ScoreBoard.updateDeath(arena);
+        plugin.scoreBoardManager.updateAlive(arena);
+        plugin.scoreBoardManager.updateDeath(arena);
 
         if (checkArena) {
             // Check if game already started
@@ -502,8 +501,8 @@ public class ArenaManager {
         playerDat.resetGameKills();
 
         // Update scoreboard
-        ScoreBoard.updateAlive(arena);
-        ScoreBoard.updateDeath(arena);
+        plugin.scoreBoardManager.updateAlive(arena);
+        plugin.scoreBoardManager.updateDeath(arena);
 
         return true;
     }
@@ -657,7 +656,8 @@ public class ArenaManager {
      * @param toPlayerToo true if hide all server to player
      */
     public void hideToServer(Player player, boolean toPlayerToo) {
-        for (Player alvo : Bukkit.getOnlinePlayers()) {
+        Player[] players = Bukkit.getOnlinePlayers().clone();
+        for (Player alvo : players) {
             alvo.hidePlayer(player);
             if (toPlayerToo)
                 player.hidePlayer(alvo);
@@ -671,7 +671,8 @@ public class ArenaManager {
      * @param toPlayerToo true if unhide all server to player
      */
     public void unhideToServer(Player player, boolean toPlayerToo) {
-        for (Player alvo : Bukkit.getOnlinePlayers()) {
+        Player[] players = Bukkit.getOnlinePlayers().clone();
+        for (Player alvo : players) {
             alvo.showPlayer(player);
             if (toPlayerToo)
                 player.showPlayer(alvo);

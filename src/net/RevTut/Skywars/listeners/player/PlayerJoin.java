@@ -5,7 +5,6 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
 import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.utils.ScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +25,7 @@ import java.util.UUID;
 public class PlayerJoin implements Listener {
 
     /**
-     * Main class
+     * Main class{}
      */
     private final Main plugin;
 
@@ -49,27 +48,36 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
+
         // Mensagem Entrada
         e.setJoinMessage(null);
-        // Tab List
-        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+
         // ScoreBoard
-        Scoreboard board = ScoreBoard.getScoreBoardByPlayer(p.getUniqueId());
-        if (board == null)
-            board = ScoreBoard.showScoreBoard(p);
-        // NameTag
-        NameTagAPI.setNameTag(board, p, true);
-        // Hide to Server
-        plugin.arenaManager.hideToServer(p, true);
+        plugin.scoreBoardManager.createScoreBoard(p);
+
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
+                // Tab List
+                TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+
+                // Scoreboard e NameTag
+                final Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(uuid);
+                if(board != null){
+                    p.setScoreboard(board);
+                    NameTagAPI.setNameTag(board, p, true);
+                }
+
+                // Hide to Server
+                plugin.arenaManager.hideToServer(p, true);
+
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
+
                 // Config Player
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
                     public void run() {
                         // PlayerDat
@@ -97,10 +105,10 @@ public class PlayerJoin implements Listener {
                             plugin.arenaManager.createNewArena();
                         }
                         // Update points in ScoreBoard
-                        ScoreBoard.updatePoints(playerDat);
+                        plugin.scoreBoardManager.updatePoints(playerDat);
                     }
-                }, 1L);
+                });
             }
-        }, 1L);
+        }, 5L);
     }
 }

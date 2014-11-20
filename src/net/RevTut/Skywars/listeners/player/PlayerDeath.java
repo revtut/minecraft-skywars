@@ -8,7 +8,6 @@ import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.ScoreBoard;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -111,8 +110,8 @@ public class PlayerDeath implements Listener {
         }
 
         // Scoreboard update alive players and dead
-        ScoreBoard.updateAlive(alvoArena);
-        ScoreBoard.updateDeath(alvoArena);
+        plugin.scoreBoardManager.updateAlive(alvoArena);
+        plugin.scoreBoardManager.updateDeath(alvoArena);
 
         // Messages & Title
         TitleAPI.sendTimings(alvo, 5, 60, 5);

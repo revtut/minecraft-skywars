@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.libraries.nametag;
 
-import net.RevTut.Skywars.utils.ScoreBoard;
+import net.RevTut.Skywars.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -23,6 +23,11 @@ import org.bukkit.scoreboard.Team;
  * @version 1.0
  */
 public class NameTagAPI implements Listener {
+
+    /**
+     * Main class
+     */
+    public static Main plugin = null;
 
     /**
      * Hide name tag of a player.
@@ -64,10 +69,15 @@ public class NameTagAPI implements Listener {
      * @param perPlayerScoreBoard if multiple ScoreBoards
      */
     public static void setNameTag(Scoreboard board, Player p, boolean perPlayerScoreBoard) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside NameTagAPI!");
+            return;
+        }
         if (perPlayerScoreBoard) {
             Scoreboard alvoBoard;
-            for (Player alvo : Bukkit.getOnlinePlayers()) {
-                alvoBoard = ScoreBoard.getScoreBoardByPlayer(alvo.getUniqueId());
+            Player[] players = Bukkit.getOnlinePlayers().clone();
+            for (Player alvo : players) {
+                alvoBoard = plugin.scoreBoardManager.getScoreBoardByPlayer(alvo.getUniqueId());
                 if (alvoBoard != null)
                     setNameTag(alvoBoard, p); // Adicionar "Player" a ScoreBoard do Alvo
                 setNameTag(board, alvo); // Adicionar "Alvo" a ScoreBoard do Player
