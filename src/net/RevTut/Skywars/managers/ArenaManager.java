@@ -445,26 +445,6 @@ public class ArenaManager {
         if (posArena == -1)
             return false;
 
-        long minDuration = Integer.MAX_VALUE;
-        long maxDuration = Integer.MIN_VALUE;
-        long totalDuration = 0;
-        int numberIterations = 100;
-        for(int k = 0; k < numberIterations; k++) {
-            long startTime = System.nanoTime();
-
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime)/1000;
-            if(duration < minDuration)
-                minDuration = duration;
-            if(duration > maxDuration)
-                maxDuration = duration;
-            totalDuration += duration;
-            System.out.println("[" + k + "] " + duration + "ms");
-        }
-        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
-
         Arena arena = arenas.get(posArena);
 
         // Add it to the arena
@@ -492,7 +472,7 @@ public class ArenaManager {
         }
 
         // Teleport To Lobby
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        final Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null)
             return false;
         player.teleport(arena.getArenaLocation().getLobbyLocation());
@@ -505,24 +485,43 @@ public class ArenaManager {
         TitleAPI.sendTitle(player, plugin.titleMessage);
         TitleAPI.sendSubTitle(player, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
 
+        // Unhide to Arena
+        plugin.arenaManager.unhideToArena(player, true);
+
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
 
-        // Unhide to Arena
-        plugin.arenaManager.unhideToArena(player, true);
-
         // Config Player
-        if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)) {
+        if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0))
             System.out.println("Error while configuring the player.");
-            return false;
-        }
+
         // Reset game kills
         playerDat.resetGameKills();
 
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
         plugin.scoreBoardManager.updateDeath(arena);
+
+        long minDuration = Integer.MAX_VALUE;
+        long maxDuration = Integer.MIN_VALUE;
+        long totalDuration = 0;
+        int numberIterations = 100;
+        for(int k = 0; k < numberIterations; k++) {
+            long startTime = System.nanoTime();
+
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime)/1000;
+            if(duration < minDuration)
+                minDuration = duration;
+            if(duration > maxDuration)
+                maxDuration = duration;
+            totalDuration += duration;
+            System.out.println("[" + k + "] " + duration + "ms");
+        }
+        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
+        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
+        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
 
         return true;
     }
