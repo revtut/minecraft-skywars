@@ -52,34 +52,8 @@ public class PlayerJoin implements Listener {
         // Mensagem Entrada
         e.setJoinMessage(null);
 
-        long minDuration = Integer.MAX_VALUE;
-        long maxDuration = Integer.MIN_VALUE;
-        long totalDuration = 0;
-        int numberIterations = 100;
-        for(int i = 0; i < numberIterations; i++) {
-            long startTime = System.nanoTime();
-            /*
-                START METHOD
-             */
-
-            // ScoreBoard
-            plugin.scoreBoardManager.createScoreBoard(p);
-
-            /*
-                END METHOD
-             */
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime)/1000;
-            if(duration < minDuration)
-                minDuration = duration;
-            if(duration > maxDuration)
-                maxDuration = duration;
-            totalDuration += duration;
-            System.out.println("[" + i + "] " + duration + "ms");
-        }
-        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
+        // ScoreBoard
+        plugin.scoreBoardManager.createScoreBoard(p);
 
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
@@ -111,21 +85,24 @@ public class PlayerJoin implements Listener {
                         if (playerDat == null) {
                             System.out.println("PlayerDat is null on join!");
                             /** Send him to Hub. Error in playerDat */
-                            return;
+                            //return;
                         }
+
                         // Add to Arena
                         if (!plugin.arenaManager.addPlayer(playerDat)) {
                             System.out.println("Could not add the player to an Arena on join!");
                             /** Send him to Hub. No arena available */
-                            return;
+                            //return;
                         }
+
                         // Arena
                         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
                             System.out.println("Player's Arena is null on join!");
                             /** Send him to Hub. Error in arena */
-                            return;
+                            //return;
                         }
+
                         // New Arena if Needed
                         if (plugin.arenaManager.getNumberAvailableArenas() <= 1) {
                             plugin.arenaManager.createNewArena();

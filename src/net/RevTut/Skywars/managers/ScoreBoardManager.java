@@ -52,7 +52,7 @@ public class ScoreBoardManager {
         if (board != null)
             return;
 
-        // Create new Scoreboard
+        // Create Scoreboard
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
@@ -72,7 +72,10 @@ public class ScoreBoardManager {
                                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                                     @Override
                                     public void run() {
+                                        // Display slot
                                         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+                                        // Display name
                                         objective.setDisplayName("§7► §3Sky Wars §7◄");
 
                                         // Alive
@@ -158,8 +161,8 @@ public class ScoreBoardManager {
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null)
             return;
-        int points = playerDat.getPoints();
-        Scoreboard board = scoreBoards.get(player.getUniqueId());
+        final int points = playerDat.getPoints();
+        final Scoreboard board = scoreBoards.get(player.getUniqueId());
         if (board == null)
             return;
         Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
