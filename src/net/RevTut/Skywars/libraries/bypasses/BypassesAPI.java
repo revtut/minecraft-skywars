@@ -22,8 +22,8 @@ public class BypassesAPI {
      * @param player player to bypass respawn menu
      */
     public static void respawnBypass(Player player) {
-        PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
-        EntityPlayer cPlayer = ((CraftPlayer) player).getHandle(); // Gets the EntityPlayer class
+        final PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
+        final EntityPlayer cPlayer = ((CraftPlayer) player).getHandle(); // Gets the EntityPlayer class
         cPlayer.playerConnection.a(in); // Handles the rest of it
     }
 

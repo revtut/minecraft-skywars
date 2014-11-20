@@ -91,53 +91,13 @@ public class PlayerDeath implements Listener {
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
                     public void run() {
+                        // Drop items in the location where player died
+                        for(ItemStack itemStack : e.getDrops())
+                            alvo.getWorld().dropItemNaturally(alvo.getLocation(), itemStack);
+                        e.getDrops().clear();
 
-                        long minDuration = Integer.MAX_VALUE;
-                        long maxDuration = Integer.MIN_VALUE;
-                        long totalDuration = 0;
-                        int numberIterations = 1;
-                        for(int k = 0; k < numberIterations; k++) {
-                            long startTime = System.nanoTime();
-
-                            // Drop items in the location where player died
-                            for(ItemStack itemStack : e.getDrops())
-                                alvo.getWorld().dropItemNaturally(alvo.getLocation(), itemStack);
-                            e.getDrops().clear();
-
-                            long endTime = System.nanoTime();
-                            long duration = (endTime - startTime)/1000;
-                            if(duration < minDuration)
-                                minDuration = duration;
-                            if(duration > maxDuration)
-                                maxDuration = duration;
-                            totalDuration += duration;
-                            System.out.println("[" + k + "] " + duration + "ms");
-                        }
-                        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-                        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-                        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
-                        minDuration = Integer.MAX_VALUE;
-                        maxDuration = Integer.MIN_VALUE;
-                        totalDuration = 0;
-                        numberIterations = 1;
-                        for(int k = 0; k < numberIterations; k++) {
-                            long startTime = System.nanoTime();
-
-                            // Bypass respawn screen
-                            BypassesAPI.respawnBypass(alvo);
-
-                            long endTime = System.nanoTime();
-                            long duration = (endTime - startTime)/1000;
-                            if(duration < minDuration)
-                                minDuration = duration;
-                            if(duration > maxDuration)
-                                maxDuration = duration;
-                            totalDuration += duration;
-                            System.out.println("[" + k + "] " + duration + "ms");
-                        }
-                        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-                        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-                        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
+                        // Bypass respawn screen
+                        BypassesAPI.respawnBypass(alvo);
 
                         // Config Player
                         if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0))
