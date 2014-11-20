@@ -13,11 +13,11 @@ public enum ArenaStatus {
     /**
      * Waiting for new players to join the game
      */
-    LOBBY(60),
+    LOBBY(10),
     /**
      * Waiting for game start. No players can join now.
      */
-    PREGAME(30),
+    PREGAME(10),
     /**
      * Players are already playing the game.
      */

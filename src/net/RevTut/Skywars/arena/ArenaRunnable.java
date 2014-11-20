@@ -73,7 +73,7 @@ public class ArenaRunnable implements Runnable {
     @Override
     public void run() {
         int remainingTime;
-        for (Arena arena : plugin.arenaManager.getArenas()) {
+        for (final Arena arena : plugin.arenaManager.getArenas()) {
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
                 continue;
@@ -140,45 +140,80 @@ public class ArenaRunnable implements Runnable {
     public void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
             alvo.setLevel(remainingTime);
             switch (remainingTime) {
                 case 10:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b10"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b10"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 5:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§45"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§45"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 4:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c4"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c4"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 3:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 2:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e2"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e2"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 1:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a1"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a1"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 0:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§2GO"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§2GO"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
                     break;
             }
@@ -193,78 +228,123 @@ public class ArenaRunnable implements Runnable {
      */
     public void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+        for (final PlayerDat alvoDat : arena.getPlayers()) {
+            final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
             switch (remainingTime) {
                 case 60:
-                    TitleAPI.sendTimings(alvo, 20, 60, 20);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
-                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 20, 60, 20);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
+                        }
+                    });
                     break;
                 case 10:
-                    TitleAPI.sendTimings(alvo, 20, 60, 20);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§210"));
-                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 20, 60, 20);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§210"));
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Segundos Restantes"));
+                        }
+                    });
                     break;
                 case 5:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a5"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a5"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 4:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e4"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e4"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 3:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 2:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c2"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c2"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 1:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§41"));
-                    TitleAPI.sendSubTitle(alvo, "");
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            TitleAPI.sendTimings(alvo, 5, 20, 5);
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§41"));
+                            TitleAPI.sendSubTitle(alvo, "");
+                        }
+                    });
                     break;
                 case 0:
-                    ArenaDat arenaDat = arena.getArenaDat();
+                    final ArenaDat arenaDat = arena.getArenaDat();
                     if (arenaDat == null)
                         return;
                     if (arenaDat.getWinner().equals("NULL")) {
-                        TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4TEMPO ESGOTADO"));
-                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
+                        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                TitleAPI.sendTimings(alvo, 5, 60, 5);
+                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4TEMPO ESGOTADO"));
+                                TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
+                            }
+                        });
                     } else {
-                        // Points earned
-                        int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
-                        alvoDat.addPoints(poinsEarned);
-                        // Title timings
-                        TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                        if (winner != null){
-                            // Title
-                            if (winner.getUniqueId().equals(alvo.getUniqueId())) {
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
-                                alvoDat.addWin(); // Add win
+                        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                            @Override
+                            public void run() {
                                 // Points earned
-                                poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
+                                int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
                                 alvoDat.addPoints(poinsEarned);
-                            } else
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
-                            // Subtitle
-                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Vencedor: " + winner.getName()));
-                        }
-                        else{
-                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
-                            TitleAPI.sendSubTitle(alvo, "");
-                        }
+                                // Title timings
+                                TitleAPI.sendTimings(alvo, 5, 60, 5);
+                                Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
+                                if (winner != null){
+                                    // Title
+                                    if (winner.getUniqueId().equals(alvo.getUniqueId())) {
+                                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
+                                        alvoDat.addWin(); // Add win
+                                        // Points earned
+                                        poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
+                                        alvoDat.addPoints(poinsEarned);
+                                    } else
+                                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
+                                    // Subtitle
+                                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Vencedor: " + winner.getName()));
+                                }
+                                else{
+                                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
+                                    TitleAPI.sendSubTitle(alvo, "");
+                                }
+                            }
+                        });
                     }
                     alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
                     break;
@@ -493,7 +573,7 @@ public class ArenaRunnable implements Runnable {
         // Remove players and add them to new arena
         int i = 0;
         for (final PlayerDat alvoDat : arena.getPlayers()) {
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
                 @Override
                 public void run() {
                     plugin.arenaManager.removePlayer(alvoDat, false);

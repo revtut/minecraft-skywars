@@ -242,13 +242,13 @@ public class ArenaManager {
         }
 
         // MySQL Tasks
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 // PlayerDat
                 plugin.mysql.updateMySQLArenaDat(arenaDat);
             }
-        }, 1);
+        });
 
         // New Arena if Needed
         if (getNumberAvailableArenas() <= 1) {
@@ -292,7 +292,7 @@ public class ArenaManager {
      * @return true it was successful when removing it
      * @see PlayerDat
      */
-    public boolean removePlayer(PlayerDat playerDat, boolean checkArena) {
+    public boolean removePlayer(final PlayerDat playerDat, boolean checkArena) {
         final Arena arena = getArenaByPlayer(playerDat);
         if (arena == null) {
             System.out.println("Arena is null when removing a player!");
@@ -300,7 +300,7 @@ public class ArenaManager {
         }
 
         // ArenaDat
-        ArenaDat arenaDat = arena.getArenaDat();
+        final ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
             System.out.println("ArenaDat is null when removing a player!");
             return false;
