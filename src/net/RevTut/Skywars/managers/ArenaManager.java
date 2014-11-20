@@ -445,6 +445,26 @@ public class ArenaManager {
         if (posArena == -1)
             return false;
 
+        long minDuration = Integer.MAX_VALUE;
+        long maxDuration = Integer.MIN_VALUE;
+        long totalDuration = 0;
+        int numberIterations = 100;
+        for(int k = 0; k < numberIterations; k++) {
+            long startTime = System.nanoTime();
+
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime)/1000;
+            if(duration < minDuration)
+                minDuration = duration;
+            if(duration > maxDuration)
+                maxDuration = duration;
+            totalDuration += duration;
+            System.out.println("[" + k + "] " + duration + "ms");
+        }
+        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
+        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
+        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
+
         Arena arena = arenas.get(posArena);
 
         // Add it to the arena
