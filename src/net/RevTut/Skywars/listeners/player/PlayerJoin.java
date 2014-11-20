@@ -52,8 +52,34 @@ public class PlayerJoin implements Listener {
         // Mensagem Entrada
         e.setJoinMessage(null);
 
-        // ScoreBoard
-        plugin.scoreBoardManager.createScoreBoard(p);
+        long minDuration = Integer.MAX_VALUE;
+        long maxDuration = Integer.MIN_VALUE;
+        long totalDuration = 0;
+        int numberIterations = 100;
+        for(int i = 0; i < numberIterations; i++) {
+            long startTime = System.nanoTime();
+            /*
+                START METHOD
+             */
+
+            // ScoreBoard
+            plugin.scoreBoardManager.createScoreBoard(p);
+
+            /*
+                END METHOD
+             */
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime)/1000;
+            if(duration < minDuration)
+                minDuration = duration;
+            if(duration > maxDuration)
+                maxDuration = duration;
+            totalDuration += duration;
+            System.out.println("[" + i + "] " + duration + "ms");
+        }
+        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
+        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
+        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
 
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();

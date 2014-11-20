@@ -27,11 +27,6 @@ public class ScoreBoardManager {
     private final Main plugin;
 
     /**
-     * Scoreboard manager of the server
-     */
-    //private ScoreboardManager manager = Bukkit.getScoreboardManager();
-
-    /**
      * Map with all the scoreboards of the players
      */
     private final Map<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
@@ -58,44 +53,56 @@ public class ScoreBoardManager {
             return;
 
         // Create new Scoreboard
-        final ScoreboardManager manager = Bukkit.getScoreboardManager();
-        final Scoreboard newBoard = manager.getNewScoreboard();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                // Register new objective
-                final Objective objective = newBoard.registerNewObjective("test", "dummy");
-                // Setup scoreboard
+                // Create scoreboard manager
+                final ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-                        objective.setDisplayName("§7► §3Sky Wars §7◄");
+                        // New scoreboard
+                        final Scoreboard newBoard = scoreboardManager.getNewScoreboard();
+                        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                // Register new objective
+                                final Objective objective = newBoard.registerNewObjective("test", "dummy");
+                                // Setup scoreboard
+                                Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+                                        objective.setDisplayName("§7► §3Sky Wars §7◄");
 
-                        // Alive
-                        final Score scoreAlive = objective.getScore("§aAlive:");
-                        scoreAlive.setScore(0);
+                                        // Alive
+                                        final Score scoreAlive = objective.getScore("§aAlive:");
+                                        scoreAlive.setScore(0);
 
-                        // Dead
-                        final Score scoreDead = objective.getScore("§cDead:");
-                        scoreDead.setScore(0);
+                                        // Dead
+                                        final Score scoreDead = objective.getScore("§cDead:");
+                                        scoreDead.setScore(0);
 
-                        // Points
-                        final Score scorePoints = objective.getScore("§7Points:");
-                        scorePoints.setScore(0);
+                                        // Points
+                                        final Score scorePoints = objective.getScore("§7Points:");
+                                        scorePoints.setScore(0);
 
-                        // Scoreboard footer
-                        final Score separador = objective.getScore("§3----------");
-                        separador.setScore(-1);
+                                        // Scoreboard footer
+                                        final Score separador = objective.getScore("§3----------");
+                                        separador.setScore(-1);
 
-                        // Advertisement
-                        final Score website = objective.getScore("§7Website:");
-                        website.setScore(-2);
-                        final Score site = objective.getScore("§3revtut.net");
-                        site.setScore(-3);
+                                        // Advertisement
+                                        final Score website = objective.getScore("§7Website:");
+                                        website.setScore(-2);
+                                        final Score site = objective.getScore("§3revtut.net");
+                                        site.setScore(-3);
 
-                        // Add to the map
-                        scoreBoards.put(p.getUniqueId(), newBoard);
+                                        // Add to the map
+                                        scoreBoards.put(p.getUniqueId(), newBoard);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }
