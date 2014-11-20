@@ -3,8 +3,6 @@ package net.RevTut.Skywars.listeners.player;
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,12 +64,6 @@ public class PlayerRespawn implements Listener {
             return;
         // Set respawn location
         e.setRespawnLocation(deadSpawn);
-
-        // Config Player
-        if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-            System.out.println("Error while configuring the player.");
-            return;
-        }
     }
 
 }
