@@ -52,6 +52,9 @@ public class PlayerJoin implements Listener {
         // Mensagem Entrada
         e.setJoinMessage(null);
 
+        // Scoreboard
+        plugin.scoreBoardManager.createScoreBoard(p);
+
         // MySQL Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
@@ -60,12 +63,9 @@ public class PlayerJoin implements Listener {
                 // Tab List
                 TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
 
-                // Scoreboard
-                plugin.scoreBoardManager.createScoreBoard(p);
-
                 // NameTag
-                final Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(uuid);
-                if(board != null){
+                Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(uuid);
+                if (board != null) {
                     p.setScoreboard(board);
                     NameTagAPI.setNameTag(board, p, true);
                 }
@@ -101,7 +101,12 @@ public class PlayerJoin implements Listener {
 
                 // New Arena if Needed
                 if (plugin.arenaManager.getNumberAvailableArenas() <= 1) {
-                    plugin.arenaManager.createNewArena();
+                    Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            plugin.arenaManager.createNewArena();
+                        }
+                    });
                 }
                 // Update points in ScoreBoard
                 plugin.scoreBoardManager.updatePoints(playerDat);

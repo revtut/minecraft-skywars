@@ -459,7 +459,7 @@ public class ArenaManager {
      * @param arena     the arena where to add the playerDat
      * @return wether it it was successful when adding the playerDat or not
      */
-    public boolean addPlayer(PlayerDat playerDat, Arena arena) {
+    public boolean addPlayer(PlayerDat playerDat, final Arena arena) {
         if (getArenaByPlayer(playerDat) != null)
             return false;
 
@@ -475,7 +475,12 @@ public class ArenaManager {
         final Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null)
             return false;
-        player.teleport(arena.getArenaLocation().getLobbyLocation());
+        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.teleport(arena.getArenaLocation().getLobbyLocation());
+            }
+        });
 
         // Add Player To Arena
         arena.getPlayers().add(playerDat);
@@ -502,26 +507,6 @@ public class ArenaManager {
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
         plugin.scoreBoardManager.updateDeath(arena);
-
-        long minDuration = Integer.MAX_VALUE;
-        long maxDuration = Integer.MIN_VALUE;
-        long totalDuration = 0;
-        int numberIterations = 100;
-        for(int k = 0; k < numberIterations; k++) {
-            long startTime = System.nanoTime();
-
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime)/1000;
-            if(duration < minDuration)
-                minDuration = duration;
-            if(duration > maxDuration)
-                maxDuration = duration;
-            totalDuration += duration;
-            System.out.println("[" + k + "] " + duration + "ms");
-        }
-        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
 
         return true;
     }
