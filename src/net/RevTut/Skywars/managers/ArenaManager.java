@@ -660,8 +660,7 @@ public class ArenaManager {
      * @param toPlayerToo true if hide all server to player
      */
     public void hideToServer(Player player, boolean toPlayerToo) {
-        Player[] players = Bukkit.getOnlinePlayers().clone();
-        for (Player alvo : players) {
+        for (Player alvo : Bukkit.getOnlinePlayers()) {
             alvo.hidePlayer(player);
             if (toPlayerToo)
                 player.hidePlayer(alvo);
@@ -675,8 +674,7 @@ public class ArenaManager {
      * @param toPlayerToo true if unhide all server to player
      */
     public void unhideToServer(Player player, boolean toPlayerToo) {
-        Player[] players = Bukkit.getOnlinePlayers().clone();
-        for (Player alvo : players) {
+        for (Player alvo : Bukkit.getOnlinePlayers()) {
             alvo.showPlayer(player);
             if (toPlayerToo)
                 player.showPlayer(alvo);

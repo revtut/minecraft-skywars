@@ -4,6 +4,7 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaRunnable;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
+import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.listeners.block.BlockBreak;
@@ -211,6 +212,7 @@ public class Main extends JavaPlugin {
 
         /* Set Main Classes */
         AppearanceAPI.plugin = this;
+        BypassesAPI.plugin = this;
         NameTagAPI.plugin = this;
         PlayerDat.plugin = this;
 

@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.libraries.bypasses;
 
+import net.RevTut.Skywars.Main;
 import net.minecraft.server.v1_7_R4.EntityPlayer;
 import net.minecraft.server.v1_7_R4.EnumClientCommand;
 import net.minecraft.server.v1_7_R4.PacketPlayInClientCommand;
@@ -15,6 +16,11 @@ import org.bukkit.entity.Player;
  * @version 1.0
  */
 public class BypassesAPI {
+
+    /**
+     * Main class
+     */
+    public static Main plugin = null;
 
     /**
      * Bypass player respawn screen.

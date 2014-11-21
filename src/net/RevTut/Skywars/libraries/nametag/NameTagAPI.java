@@ -75,8 +75,7 @@ public class NameTagAPI implements Listener {
         }
         if (perPlayerScoreBoard) {
             Scoreboard alvoBoard;
-            Player[] players = Bukkit.getOnlinePlayers().clone();
-            for (Player alvo : players) {
+            for (Player alvo : Bukkit.getOnlinePlayers()) {
                 alvoBoard = plugin.scoreBoardManager.getScoreBoardByPlayer(alvo.getUniqueId());
                 if (alvoBoard != null)
                     setNameTag(alvoBoard, p); // Adicionar "Player" a ScoreBoard do Alvo
