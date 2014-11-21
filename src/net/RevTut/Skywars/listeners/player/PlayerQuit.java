@@ -1,6 +1,8 @@
 package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,7 +52,16 @@ public class PlayerQuit implements Listener {
             System.out.println("Error while updating PlayerDat on quit as it is NULL!");
             return;
         }
-        plugin.playerManager.removePlayerDat(playerDat); // Remove playerDat
+
+        // Arena
+        final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if (arena != null)
+            if(arena.getStatus() == ArenaStatus.INGAME)
+                playerDat.addPoints(plugin.pointsPerWin); // Remove points because left before endgame
+
+
+        // Remove playerDat
+        plugin.playerManager.removePlayerDat(playerDat);
 
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true)) {
