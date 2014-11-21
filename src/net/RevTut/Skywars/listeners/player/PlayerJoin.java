@@ -58,31 +58,7 @@ public class PlayerJoin implements Listener {
         // Scoreboard
         plugin.scoreBoardManager.createScoreBoard(p);
 
-        // NameTag
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // Scoreboard
-                Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());
-                if (board != null) {
-                    p.setScoreboard(board);
-                    NameTagAPI.setNameTag(board, p, true);
-                }
-
-                // PlayerDat
-                final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
-                if (playerDat == null) {
-                    System.out.println("PlayerDat is null on join!");
-                    /** Send him to Hub. Error in playerDat */
-                    return;
-                }
-
-                // Update points in ScoreBoard
-                plugin.scoreBoardManager.updatePoints(playerDat);
-            }
-        }, 10);
-
-        // ASync Tasks
+        // Tasks
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
@@ -124,6 +100,31 @@ public class PlayerJoin implements Listener {
                             plugin.arenaManager.createNewArena();
                         }
                     });
+
+
+                // NameTag
+                Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        // Scoreboard
+                        Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());
+                        if (board != null) {
+                            p.setScoreboard(board);
+                            NameTagAPI.setNameTag(board, p, true);
+                        }
+
+                        // PlayerDat
+                        final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
+                        if (playerDat == null) {
+                            System.out.println("PlayerDat is null on join!");
+                            /** Send him to Hub. Error in playerDat */
+                            return;
+                        }
+
+                        // Update points in ScoreBoard
+                        plugin.scoreBoardManager.updatePoints(playerDat);
+                    }
+                }, 10);
             }
         });
     }

@@ -57,7 +57,7 @@ public class PlayerQuit implements Listener {
         final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (arena != null)
             if(arena.getStatus() == ArenaStatus.INGAME)
-                playerDat.addPoints(plugin.pointsPerWin); // Remove points because left before endgame
+                playerDat.addPoints(0 - plugin.pointsPerWin); // Remove points because left before endgame
 
 
         // Remove playerDat
