@@ -20,10 +20,12 @@ import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Random;
 
 /**
@@ -182,32 +184,6 @@ public class Main extends JavaPlugin {
             return;
         }
 
-        long minDuration = Integer.MAX_VALUE;
-        long maxDuration = Integer.MIN_VALUE;
-        long totalDuration = 0;
-        int numberIterations = 1;
-        for(int k = 0; k < numberIterations; k++) {
-            long startTime = System.nanoTime();
-
-
-
-
-
-
-
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime)/1000;
-            if(duration < minDuration)
-                minDuration = duration;
-            if(duration > maxDuration)
-                maxDuration = duration;
-            totalDuration += duration;
-            System.out.println("[" + k + "] " + duration + "ms");
-        }
-        System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-        System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-        System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
-
         /* Arena Runnable */
         ArenaRunnable task = new ArenaRunnable(this);
         task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
@@ -220,6 +196,9 @@ public class Main extends JavaPlugin {
         BypassesAPI.plugin = this;
         NameTagAPI.plugin = this;
         PlayerDat.plugin = this;
+
+        /* Register Plugin Messages */
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         /* Register Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -276,7 +255,7 @@ public class Main extends JavaPlugin {
             } catch (IOException e) {
                 System.out.println("Error while creating config.yml. Reason: " + e.getMessage());
             }
-            if (!copy(getResource("config.yml"), config))
+            if (!copyFile(getResource("config.yml"), config))
                 return false;
         }
         /* MySQL File */
@@ -290,7 +269,7 @@ public class Main extends JavaPlugin {
             } catch (IOException e) {
                 System.out.println("Error while creating mysql.yml. Reason: " + e.getMessage());
             }
-            if (!copy(getResource("mysql.yml"), mysqlConf))
+            if (!copyFile(getResource("mysql.yml"), mysqlConf))
                 return false;
         }
         return true;
@@ -303,7 +282,7 @@ public class Main extends JavaPlugin {
      * @param file file to copy to
      * @return true if successfull
      */
-    private boolean copy(final InputStream in, final File file) {
+    private boolean copyFile(final InputStream in, final File file) {
         try {
             final OutputStream out = new FileOutputStream(file);
             final byte[] buf = new byte[1024];
@@ -347,5 +326,44 @@ public class Main extends JavaPlugin {
         mysql.createMySQL();
 
         return true;
+    }
+
+    /**
+     * Connect a player to a server
+     *
+     * @param player player to send
+     * @param server server to connect
+     */
+    public void connectServer(Player player, String server) {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+
+        try {
+            out.writeUTF("Connect");
+            out.writeUTF(server);
+            out.writeUTF(player.getName());
+        } catch (IOException e) {
+            System.out.println("Error while sending player to " + server);
+            System.out.println(e.getMessage());
+        }
+
+        player.sendPluginMessage(this, "BungeeCord", b.toByteArray());
+    }
+
+    /**
+     * Check if MySQL connection is opened, if not it tries to open it
+     */
+    public void checkMySQL() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+            public void run() {
+                try {
+                    mysql.getConnection().createStatement().executeQuery("SELECT 1;");
+                } catch (SQLException e) {
+                    System.out.println("MySQL connection is closed!");
+                    mysql.openConnection();
+                }
+
+            }
+        }, 1200, 1200);
     }
 }

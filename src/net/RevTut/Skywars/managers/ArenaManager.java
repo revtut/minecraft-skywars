@@ -339,10 +339,12 @@ public class ArenaManager {
                         if (!removePlayer(alvoDat, false)) {
                             System.out.println("Error while removing PlayerDat from arena on quit!");
                             /** Send him to Hub. Error while removing him from the arena */
+                            plugin.connectServer(alvo, "hub");
                         }
                         if (!addPlayer(alvoDat)) {
                             System.out.println("Could not add the player to an Arena when not enough players in arena!");
                             /** Send him to Hub. No arena available */
+                            plugin.connectServer(alvo, "hub");
                         }
                     }
                     // Config arena dat
@@ -468,18 +470,21 @@ public class ArenaManager {
         if (getArenaByPlayer(playerDat) != null)
             return false;
 
+        // Player
+        final Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null)
+            return false;
+
         // ArenaDat
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
             System.out.println("ArenaDat is null when trying to add a player!");
             /** Send him to Hub. Error in arena */
+            plugin.connectServer(player, "hub");
             return false;
         }
 
         // Teleport To Lobby
-        final Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if (player == null)
-            return false;
         Bukkit.getScheduler().runTask(plugin, new Runnable() {
             @Override
             public void run() {

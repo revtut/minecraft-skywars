@@ -74,6 +74,7 @@ public class PlayerJoin implements Listener {
                 if (playerDat == null) {
                     System.out.println("PlayerDat is null on join!");
                     /** Send him to Hub. Error in playerDat */
+                    plugin.connectServer(p, "hub");
                     return;
                 }
 
@@ -81,6 +82,7 @@ public class PlayerJoin implements Listener {
                 if (!plugin.arenaManager.addPlayer(playerDat)) {
                     System.out.println("Could not add the player to an Arena on join!");
                     /** Send him to Hub. No arena available */
+                    plugin.connectServer(p, "hub");
                     return;
                 }
 
@@ -89,6 +91,7 @@ public class PlayerJoin implements Listener {
                 if (arena == null) {
                     System.out.println("Player's Arena is null on join!");
                     /** Send him to Hub. Error in arena */
+                    plugin.connectServer(p, "hub");
                     return;
                 }
 
@@ -118,6 +121,7 @@ public class PlayerJoin implements Listener {
                         if (playerDat == null) {
                             System.out.println("PlayerDat is null on join!");
                             /** Send him to Hub. Error in playerDat */
+                            plugin.connectServer(p, "hub");
                             return;
                         }
 

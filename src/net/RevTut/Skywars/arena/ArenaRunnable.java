@@ -580,6 +580,9 @@ public class ArenaRunnable implements Runnable {
                     // Add to new arena
                     if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {
                         /** Send him to Hub. Error while adding to arena */
+                        Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                        if(alvo != null)
+                            plugin.connectServer(alvo, "hub");
                         System.out.println("Could not add player to the new arena.");
                     }
                 }
