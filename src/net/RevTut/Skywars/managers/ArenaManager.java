@@ -338,12 +338,12 @@ public class ArenaManager {
                             continue;
                         if (!removePlayer(alvoDat, false)) {
                             System.out.println("Error while removing PlayerDat from arena on quit!");
-                            /** Send him to Hub. Error while removing him from the arena */
+                            // Send him to Hub. Error while removing him from the arena
                             plugin.connectServer(alvo, "hub");
                         }
                         if (!addPlayer(alvoDat)) {
                             System.out.println("Could not add the player to an Arena when not enough players in arena!");
-                            /** Send him to Hub. No arena available */
+                            // Send him to Hub. No arena available
                             plugin.connectServer(alvo, "hub");
                         }
                     }
@@ -479,7 +479,7 @@ public class ArenaManager {
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
             System.out.println("ArenaDat is null when trying to add a player!");
-            /** Send him to Hub. Error in arena */
+            // Send him to Hub. Error in arena
             plugin.connectServer(player, "hub");
             return false;
         }
