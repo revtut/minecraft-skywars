@@ -458,7 +458,7 @@ public class ArenaRunnable implements Runnable {
         // Loop all the players
         for (final PlayerDat alvoDat : arena.getPlayers()) {
             int i = 0;
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
             // Config Player
@@ -472,6 +472,7 @@ public class ArenaRunnable implements Runnable {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
+                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §aPodes agora abrir os baus!");
                     alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
                 }
             }, 25);

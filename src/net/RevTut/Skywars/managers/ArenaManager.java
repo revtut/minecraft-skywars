@@ -56,7 +56,7 @@ public class ArenaManager {
     /**
      * Minimum players for the game
      */
-    public final int minPlayers = 1;
+    public final int minPlayers = 8;
 
     /**
      * Minimum players for lobby time be reduced

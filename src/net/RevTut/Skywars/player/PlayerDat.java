@@ -204,6 +204,8 @@ public class PlayerDat {
             return;
         }
         this.points += points;
+        if(this.points < 0)
+            this.points = 0;
         // Player
         Player player = Bukkit.getPlayer(uuid);
         if(player == null)
