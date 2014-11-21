@@ -182,13 +182,18 @@ public class Main extends JavaPlugin {
             return;
         }
 
-
         long minDuration = Integer.MAX_VALUE;
         long maxDuration = Integer.MIN_VALUE;
         long totalDuration = 0;
         int numberIterations = 1;
         for(int k = 0; k < numberIterations; k++) {
             long startTime = System.nanoTime();
+
+
+
+
+
+
 
             long endTime = System.nanoTime();
             long duration = (endTime - startTime)/1000;

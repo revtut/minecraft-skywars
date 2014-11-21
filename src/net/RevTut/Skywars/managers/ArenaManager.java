@@ -76,10 +76,11 @@ public class ArenaManager {
      * @see Arena
      */
     public boolean createNewArena() {
+
         // Arena Number
         int arenaNumber = nextArenaNumber();
 
-        String mapName = addNewMap(arenaNumber);
+        String mapName= addNewMap(arenaNumber);
         if (mapName == null)
             return false;
 
@@ -269,7 +270,7 @@ public class ArenaManager {
      * @return true it was successful when removing it
      * @see Arena
      */
-    private boolean removeMap(Arena arena) {
+    private boolean removeMap(final Arena arena) {
         // Unload of the World
         if (!WorldAPI.unloadWorld(arena.getMapName())) {
             System.out.println("Error while unloading world " + arena.getMapName());
@@ -379,7 +380,7 @@ public class ArenaManager {
      * @param arenaNumber the arena which will use the new map
      * @return the name of the map
      */
-    private String addNewMap(int arenaNumber) {
+    private String addNewMap(final int arenaNumber) {
         // Current Directory
         String currentDir = System.getProperty("user.dir");
         // Source Directory
@@ -389,18 +390,22 @@ public class ArenaManager {
             return null;
         }
         int posWorld = new Random().nextInt(listWorlds.length);
-        String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
+        final String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
         // Target Directory
-        String mapName = listWorlds[posWorld] + "_" + arenaNumber;
-        String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+        final String mapName = listWorlds[posWorld] + "_" + arenaNumber;
+        final String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+
 
         // Copy World
         WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
         // Load World
         if (!WorldAPI.loadWorld(mapName)) {
             System.out.println("Error while creating a new arena! World is null!");
-            return null;
+            Arena arena = getArenaByNumber(arenaNumber);
+            if (arena != null)
+                removeArena(arena);
         }
+
         return mapName;
     }
 

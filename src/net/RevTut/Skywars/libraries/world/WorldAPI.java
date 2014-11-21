@@ -28,7 +28,8 @@ public class WorldAPI {
     public static boolean loadWorld(String worldName) {
         // World Creator
         WorldCreator creator = new WorldCreator(worldName);
-        World world = Bukkit.createWorld(creator);
+        creator.generateStructures(false);
+        World world = creator.createWorld();
         // Check if it is not Null
         return world != null;
     }
