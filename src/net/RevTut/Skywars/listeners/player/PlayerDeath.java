@@ -146,8 +146,10 @@ public class PlayerDeath implements Listener {
             if(alvoArena.getAlivePlayers().size() == 1){
                 // Winner Dat
                 PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
-                if (winnerDat != null)
+                if (winnerDat != null){
                     arenaDat.setWinner(winnerDat.getUUID().toString());
+                    winnerDat.setStatus(PlayerStatus.WAITING); // Set status so he cannot die
+                }
             }
             // Set Remaining Time
             alvoArena.setRemainingTime(0);

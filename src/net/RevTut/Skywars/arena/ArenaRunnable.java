@@ -9,6 +9,7 @@ import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -497,7 +498,8 @@ public class ArenaRunnable implements Runnable {
         }
 
         // Remove players and add them to new arena
-        for (final PlayerDat alvoDat : arena.getPlayers()) {
+        List<PlayerDat> players = new ArrayList<PlayerDat>(arena.getPlayers());
+        for (final PlayerDat alvoDat : players) {
             plugin.arenaManager.removePlayer(alvoDat, false);
             // Add to new arena
             if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {

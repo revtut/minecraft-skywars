@@ -200,7 +200,8 @@ public class PlayerChest implements Listener {
      * @param world world of the locations to be removed
      */
     public void clearLocationsFromWorld(World world){
-        for(Location loc : locChests)
+        List<Location> chestsLocations = new ArrayList<Location>(locChests);
+        for(Location loc : chestsLocations)
             if(loc.getWorld().equals(world))
                 locChests.remove(loc);
     }

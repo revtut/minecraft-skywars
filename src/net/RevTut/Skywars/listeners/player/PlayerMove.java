@@ -92,6 +92,8 @@ public class PlayerMove implements Listener {
             }
             // Check if near a player
             for(PlayerDat alvoDat : arena.getPlayers()){
+                if(alvoDat.getStatus() != PlayerStatus.ALIVE)
+                    continue;
                 Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
                 if(alvo == null)
                     continue;

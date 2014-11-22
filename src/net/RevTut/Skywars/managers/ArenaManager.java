@@ -300,7 +300,7 @@ public class ArenaManager {
      */
     private boolean removeMap(final Arena arena) {
         // Unload of the World
-        int attempts = 5; // number of attempts to unload the world
+        int attempts = 10; // number of attempts to unload the world
         boolean unloaded; // true if unloading was successfull
         do{
             unloaded = WorldAPI.unloadWorld(arena.getMapName());
