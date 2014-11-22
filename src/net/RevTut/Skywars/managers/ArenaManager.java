@@ -14,6 +14,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -171,9 +172,24 @@ public class ArenaManager {
                 spawnLocation.setYaw(locationAt.getYaw());
             }
 
-        Location temp = new Location(firstCorner.getWorld(), firstCorner.getX(), firstCorner.getY(), firstCorner.getZ());
-        firstCorner = new Location(temp.getWorld(), Math.min(temp.getX(), secondCorner.getX()), Math.min(temp.getY(), secondCorner.getY()), Math.min(temp.getZ(), secondCorner.getZ()));
-        secondCorner = new Location(temp.getWorld(), Math.max(temp.getX(), secondCorner.getX()), Math.max(temp.getY(), secondCorner.getY()), Math.max(temp.getZ(), secondCorner.getZ()));
+        World world = firstCorner.getWorld();
+        double xMin, xMax, zMin, zMax;
+        if(firstCorner.getX() < secondCorner.getX()){
+            xMin = firstCorner.getX();
+            xMax = secondCorner.getX();
+        }else{
+            xMin = secondCorner.getX();
+            xMax = firstCorner.getX();
+        }
+        if(firstCorner.getZ() < secondCorner.getZ()){
+            zMin = firstCorner.getZ();
+            zMax = secondCorner.getZ();
+        }else{
+            zMin = secondCorner.getZ();
+            zMax = firstCorner.getZ();
+        }
+        firstCorner = new Location(world, xMin, firstCorner.getY(), zMin);
+        secondCorner = new Location(world, xMax, secondCorner.getY(), zMax);
         return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
     }
 

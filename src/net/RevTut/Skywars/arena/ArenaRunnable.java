@@ -92,7 +92,7 @@ public class ArenaRunnable implements Runnable {
                 // Decrement remaining time
                 if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= plugin.arenaManager.minReduceTimePlayers) {
                     arena.sendMessage("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
-                    arena.setRemainingTime(31);
+                    remainingTime = 31;
                 }
                 arena.setRemainingTime(remainingTime - 1);
             } else {
