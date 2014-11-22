@@ -97,6 +97,8 @@ public class PlayerMove implements Listener {
                     continue;
                 if(alvo.getUniqueId() == player.getUniqueId())
                     continue;
+                if(alvo.getWorld() != player.getWorld())
+                    continue;
                 if(alvo.getLocation().distanceSquared(location) > 25)
                     continue;
                 Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ());

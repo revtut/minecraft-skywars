@@ -307,6 +307,10 @@ public class ArenaRunnable implements Runnable {
                     final ArenaDat arenaDat = arena.getArenaDat();
                     if (arenaDat == null)
                         return;
+                    // Points earned
+                    int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
+                    alvoDat.addPoints(poinsEarned);
+                    // Check winner
                     if (arenaDat.getWinner().equals("NULL")) {
                         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                             @Override
@@ -320,9 +324,6 @@ public class ArenaRunnable implements Runnable {
                         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                // Points earned
-                                int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
-                                alvoDat.addPoints(poinsEarned);
                                 // Title timings
                                 TitleAPI.sendTimings(alvo, 5, 60, 5);
                                 Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
@@ -332,7 +333,7 @@ public class ArenaRunnable implements Runnable {
                                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
                                         alvoDat.addWin(); // Add win
                                         // Points earned
-                                        poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
+                                        int poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
                                         alvoDat.addPoints(poinsEarned);
                                     } else
                                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
