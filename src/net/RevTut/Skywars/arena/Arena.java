@@ -92,14 +92,12 @@ public class Arena {
      * @param message message to be sent
      */
     public void sendMessage(String message) {
-        synchronized (players){
-            for (PlayerDat playerDat : players) {
-                Player player = Bukkit.getPlayer(playerDat.getUUID());
-                if (player == null)
-                    continue;
-                // Send message
-                player.sendMessage(message);
-            }
+        for (PlayerDat playerDat : players) {
+            Player player = Bukkit.getPlayer(playerDat.getUUID());
+            if (player == null)
+                continue;
+            // Send message
+            player.sendMessage(message);
         }
     }
 

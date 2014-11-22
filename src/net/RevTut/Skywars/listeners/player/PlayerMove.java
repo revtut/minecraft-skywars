@@ -108,10 +108,8 @@ public class PlayerMove implements Listener {
                     i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
                 player.teleport(safeLocation);
-                player.setAllowFlight(true);
                 player.setFlying(true);
             }
-            return;
         }
     }
 

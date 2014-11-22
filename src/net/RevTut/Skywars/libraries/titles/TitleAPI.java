@@ -1,7 +1,9 @@
 package net.RevTut.Skywars.libraries.titles;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
 import net.minecraft.util.io.netty.channel.Channel;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector.PacketTitle;
 
@@ -14,6 +16,11 @@ import org.spigotmc.ProtocolInjector.PacketTitle;
  * @version 1.0
  */
 public class TitleAPI {
+
+    /**
+     * Main class
+     */
+    public static Main plugin = null;
 
     /**
      * Version of Minecraft which might receive these packets
@@ -31,17 +38,26 @@ public class TitleAPI {
      * @param p     player to send the title
      * @param title json title to send
      */
-    public static void sendTitle(Player p, String title) {
-        if (!(getVersion(p) >= VERSION)) return;
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, title);
-            Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.TITLE, serialized);
-            ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-        } catch (final Exception e) {
-            e.printStackTrace();
+    public static void sendTitle(final Player p, final String title) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TitleAPI!");
+            return;
         }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(getVersion(p) >= VERSION)) return;
+                try {
+                    final Object handle = ReflectionAPI.getHandle(p);
+                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
+                    final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, title);
+                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.TITLE, serialized);
+                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -50,17 +66,26 @@ public class TitleAPI {
      * @param p        player to send the subtitle
      * @param subtitle json subtitle to send
      */
-    public static void sendSubTitle(Player p, String subtitle) {
-        if (!(getVersion(p) >= VERSION)) return;
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, subtitle);
-            Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.SUBTITLE, serialized);
-            ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-        } catch (final Exception e) {
-            e.printStackTrace();
+    public static void sendSubTitle(final Player p, final String subtitle) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TitleAPI!");
+            return;
         }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(getVersion(p) >= VERSION)) return;
+                try {
+                    final Object handle = ReflectionAPI.getHandle(p);
+                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
+                    final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, subtitle);
+                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.SUBTITLE, serialized);
+                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -71,16 +96,25 @@ public class TitleAPI {
      * @param stay    time the title should stay on screen
      * @param fadeOut time the title should take to fade out
      */
-    public static void sendTimings(Player p, int fadeIn, int stay, int fadeOut) {
-        if (!(getVersion(p) >= VERSION)) return;
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, int.class, int.class, int.class).newInstance(PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
-            ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-        } catch (final Exception e) {
-            e.printStackTrace();
+    public static void sendTimings(final Player p, final int fadeIn, final int stay, final int fadeOut) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TitleAPI!");
+            return;
         }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(getVersion(p) >= VERSION)) return;
+                try {
+                    final Object handle = ReflectionAPI.getHandle(p);
+                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
+                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, int.class, int.class, int.class).newInstance(PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
+                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -88,16 +122,25 @@ public class TitleAPI {
      *
      * @param p player to be reseted
      */
-    public static void reset(Player p) {
-        if (!(getVersion(p) >= VERSION)) return;
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.RESET);
-            ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-        } catch (final Exception e) {
-            e.printStackTrace();
+    public static void reset(final Player p) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TitleAPI!");
+            return;
         }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(getVersion(p) >= VERSION)) return;
+                try {
+                    final Object handle = ReflectionAPI.getHandle(p);
+                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
+                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.RESET);
+                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -105,16 +148,25 @@ public class TitleAPI {
      *
      * @param p player to be cleared
      */
-    public static void clear(Player p) {
-        if (!(getVersion(p) >= VERSION)) return;
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.CLEAR);
-            ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-        } catch (final Exception e) {
-            e.printStackTrace();
+    public static void clear(final Player p) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TitleAPI!");
+            return;
         }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(getVersion(p) >= VERSION)) return;
+                try {
+                    final Object handle = ReflectionAPI.getHandle(p);
+                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
+                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.CLEAR);
+                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**

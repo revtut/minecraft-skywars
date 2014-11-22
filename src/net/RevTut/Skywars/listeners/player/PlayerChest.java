@@ -4,6 +4,7 @@ import net.RevTut.Skywars.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
@@ -191,5 +192,16 @@ public class PlayerChest implements Listener {
             // Add to list
             itemStacks.add(itemStack);
         }
+    }
+
+    /**
+     * Removes the locations of already opened chests from the list
+     *
+     * @param world world of the locations to be removed
+     */
+    public void clearLocationsFromWorld(World world){
+        for(Location loc : locChests)
+            if(loc.getWorld().equals(world))
+                locChests.remove(loc);
     }
 }

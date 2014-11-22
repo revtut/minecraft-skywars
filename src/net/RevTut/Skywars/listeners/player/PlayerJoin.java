@@ -58,19 +58,23 @@ public class PlayerJoin implements Listener {
         // Scoreboard
         plugin.scoreBoardManager.createScoreBoard(p);
 
-        // Tasks
+        // Tab List
+        TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
+
         final UUID uuid = p.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                // Tab List
-                TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
-
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
+            }
+        });
 
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
                 // PlayerDat
-                final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(uuid);
+                final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
                 if (playerDat == null) {
                     System.out.println("PlayerDat is null on join!");
                     // Send him to Hub. Error in playerDat
@@ -97,39 +101,18 @@ public class PlayerJoin implements Listener {
 
                 // New Arena if Needed
                 if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
-                    Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            plugin.arenaManager.createNewArena();
-                        }
-                    });
+                    plugin.arenaManager.createNewArena();
 
+                // Scoreboard
+                Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());
+                if (board != null) {
+                    p.setScoreboard(board);
+                    NameTagAPI.setNameTag(board, p, true);
+                }
 
-                // NameTag
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        // Scoreboard
-                        Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());
-                        if (board != null) {
-                            p.setScoreboard(board);
-                            NameTagAPI.setNameTag(board, p, true);
-                        }
-
-                        // PlayerDat
-                        final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
-                        if (playerDat == null) {
-                            System.out.println("PlayerDat is null on join!");
-                            // Send him to Hub. Error in playerDat
-                            plugin.connectServer(p, "hub");
-                            return;
-                        }
-
-                        // Update points in ScoreBoard
-                        plugin.scoreBoardManager.updatePoints(playerDat);
-                    }
-                }, 20);
+                // Update points in ScoreBoard
+                plugin.scoreBoardManager.updatePoints(playerDat);
             }
-        });
+        }, 20);
     }
 }

@@ -1,8 +1,10 @@
 package net.RevTut.Skywars.libraries.tab;
 
+import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.IChatBaseComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector;
@@ -18,6 +20,11 @@ import org.spigotmc.ProtocolInjector;
 public class TabAPI {
 
     /**
+     * Main class
+     */
+    public static Main plugin = null;
+
+    /**
      * Version of Minecraft which might receive these packets
      */
     public static final int VERSION = 47;
@@ -29,12 +36,21 @@ public class TabAPI {
      * @param title  tab title
      * @param footer tab foot
      */
-    public static void setTab(Player p, String title, String footer) {
-        if (!(TitleAPI.getVersion(p) >= TabAPI.VERSION))
+    public static void setTab(final Player p, final String title, final String footer) {
+        if (null == plugin) {
+            System.out.println("Main plugin is null inside TabAPI!");
             return;
-        IChatBaseComponent tabTitle = ChatSerializer.a(title);
-        IChatBaseComponent tabFooter = ChatSerializer.a(footer);
-        ProtocolInjector.PacketTabHeader header = new ProtocolInjector.PacketTabHeader(tabTitle, tabFooter);
-        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(header);
+        }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!(TitleAPI.getVersion(p) >= TabAPI.VERSION))
+                    return;
+                IChatBaseComponent tabTitle = ChatSerializer.a(title);
+                IChatBaseComponent tabFooter = ChatSerializer.a(footer);
+                ProtocolInjector.PacketTabHeader header = new ProtocolInjector.PacketTabHeader(tabTitle, tabFooter);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(header);
+            }
+        });
     }
 }

@@ -57,17 +57,16 @@ public class PlayerQuit implements Listener {
         final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (arena != null)
             if(arena.getStatus() == ArenaStatus.INGAME)
-                playerDat.addPoints(0 - plugin.pointsPerWin); // Remove points because left before endgame
-
-
-        // Remove playerDat
-        plugin.playerManager.removePlayerDat(playerDat);
+                playerDat.addPoints(0 - plugin.pointsPerKill * (1 + arena.getPlayers().size()/plugin.arenaManager.maxPlayers)); // Remove points because left before endgame
 
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true)) {
             System.out.println("Error while removing PlayerDat from arena on quit!");
             return;
         }
+
+        // Remove playerDat
+        plugin.playerManager.removePlayerDat(playerDat);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override

@@ -7,6 +7,8 @@ import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
+import net.RevTut.Skywars.libraries.tab.TabAPI;
+import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.listeners.block.BlockBreak;
 import net.RevTut.Skywars.listeners.block.BlockPlace;
 import net.RevTut.Skywars.listeners.environment.ProjectileHit;
@@ -195,6 +197,8 @@ public class Main extends JavaPlugin {
         AppearanceAPI.plugin = this;
         BypassesAPI.plugin = this;
         NameTagAPI.plugin = this;
+        TabAPI.plugin = this;
+        TitleAPI.plugin = this;
         PlayerDat.plugin = this;
 
         /* Register Plugin Messages */

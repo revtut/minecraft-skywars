@@ -3,12 +3,14 @@ package net.RevTut.Skywars.listeners.player;
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
+import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -68,14 +70,28 @@ public class PlayerDeath implements Listener {
         }
 
         // Hacker
-        if (alvoArena.getKitManager().hacker.canRespawn(alvoDat, alvoArena))
+        if (alvoArena.getKitManager().hacker.canRespawn(alvoDat, alvoArena)){
+            // Bypass respawn
+            BypassesAPI.respawnBypass(alvo);
             return;
+        }
 
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
-        // Set status
-        alvoDat.setStatus(PlayerStatus.DEAD);
+        // Config Player
+        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
+            System.out.println("Error while configuring the player.");
+            return;
+        }
+
+        // Bypass respawn
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                BypassesAPI.respawnBypass(alvo);
+            }
+        }, 5);
 
         // Damager player
         final Player damager;
@@ -106,43 +122,35 @@ public class PlayerDeath implements Listener {
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Title
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    // Target
-                    TitleAPI.sendTimings(alvo, 5, 60, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
-                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Morto por " + damager.getName()));
-                    // Damager
-                    TitleAPI.sendTimings(damager, 5, 60, 5);
-                    TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON("§aMATASTE"));
-                    TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
-                }
-            });
+            // Target
+            TitleAPI.sendTimings(alvo, 5, 60, 5);
+            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Morto por " + damager.getName()));
+            // Damager
+            TitleAPI.sendTimings(damager, 5, 60, 5);
+            TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON("§aMATASTE"));
+            TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
         } else {
             // Message to arena
             alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Title
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    // Target
-                    TitleAPI.sendTimings(alvo, 5, 60, 5);
-                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
-                    TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(""));
-                }
-            });
+            // Target
+            TitleAPI.sendTimings(alvo, 5, 60, 5);
+            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(""));
         }
 
         // Check if game ended
-        if (alvoArena.getAlivePlayers().size() == 1) {
-            // Winner Dat
-            PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
-            if (winnerDat != null)
-                arenaDat.setWinner(winnerDat.getUUID().toString());
+        if (alvoArena.getAlivePlayers().size() <= 1) {
+            if(alvoArena.getAlivePlayers().size() == 1){
+                // Winner Dat
+                PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
+                if (winnerDat != null)
+                    arenaDat.setWinner(winnerDat.getUUID().toString());
+            }
             // Set Remaining Time
-            alvoArena.setRemainingTime(1);
+            alvoArena.setRemainingTime(0);
         }
 
         // Stats

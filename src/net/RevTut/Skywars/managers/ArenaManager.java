@@ -218,6 +218,10 @@ public class ArenaManager {
             }
         });
 
+        // Clear chests locations
+        World world = Bukkit.getWorld(arena.getMapName());
+        if(world != null)
+            plugin.playerChest.clearLocationsFromWorld(world);
 
         // Delete map
         if (!removeMap(arena))
@@ -271,6 +275,11 @@ public class ArenaManager {
         if (getNumberAvailableArenas() <= 1) {
             createNewArena();
         }
+
+        // Clear chests locations
+        World world = Bukkit.getWorld(arena.getMapName());
+        if(world != null)
+            plugin.playerChest.clearLocationsFromWorld(world);
 
         // Delete existing map
         if(!removeMap(arena))
@@ -344,12 +353,7 @@ public class ArenaManager {
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
 
         // Hide to Server
-        Bukkit.getScheduler().runTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.arenaManager.hideToServer(player, true);
-            }
-        });
+        plugin.arenaManager.hideToServer(player, true);
 
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
@@ -357,39 +361,37 @@ public class ArenaManager {
 
         if (checkArena) {
             // Check if game already started
-            if (arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME) {
-                if ((arena.getStatus() == ArenaStatus.INGAME && arena.getAlivePlayers().size() <= 1) || (arena.getStatus() == ArenaStatus.PREGAME && arena.getPlayers().size() <= 1)) {
-                    // Send message
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
-                    // Send remaining players to new arena
-                    List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
-                    for (PlayerDat alvoDat : arenaPlayers) {
-                        Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                        if (alvo == null)
-                            continue;
-                        if (!removePlayer(alvoDat, false)) {
-                            System.out.println("Error while removing PlayerDat from arena on quit!");
-                            // Send him to Hub. Error while removing him from the arena
-                            plugin.connectServer(alvo, "hub");
-                        }
-                        if (!addPlayer(alvoDat)) {
-                            System.out.println("Could not add the player to an Arena when not enough players in arena!");
-                            // Send him to Hub. No arena available
-                            plugin.connectServer(alvo, "hub");
-                        }
+            if ((arena.getStatus() == ArenaStatus.INGAME && arena.getAlivePlayers().size() <= 1) || (arena.getStatus() == ArenaStatus.PREGAME && arena.getPlayers().size() <= 1)) {
+                // Send message
+                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
+                // Send remaining players to new arena
+                List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
+                for (PlayerDat alvoDat : arenaPlayers) {
+                    Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                    if (alvo == null)
+                        continue;
+                    if (!removePlayer(alvoDat, false)) {
+                        System.out.println("Error while removing PlayerDat from arena on quit!");
+                        // Send him to Hub. Error while removing him from the arena
+                        plugin.connectServer(alvo, "hub");
                     }
-                    // Config arena dat
-                    arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
-                    arenaDat.setEndDate(new Date());
-                    arenaDat.setWinner("NULL");
-                    // Delete the arena
-                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            removeArena(arena);
-                        }
-                    }, 100);
+                    if (!addPlayer(alvoDat)) {
+                        System.out.println("Could not add the player to an Arena when not enough players in arena!");
+                        // Send him to Hub. No arena available
+                        plugin.connectServer(alvo, "hub");
+                    }
                 }
+                // Config arena dat
+                arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
+                arenaDat.setEndDate(new Date());
+                arenaDat.setWinner("NULL");
+                // Delete the arena
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        removeArena(arena);
+                    }
+                }, 100);
             } else if (arena.getStatus() == ArenaStatus.ENDGAME) {
                 if (arena.getAlivePlayers().size() < 1) {
                     // Delete the arena
@@ -516,12 +518,7 @@ public class ArenaManager {
         }
 
         // Teleport To Lobby
-        Bukkit.getScheduler().runTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                player.teleport(arena.getArenaLocation().getLobbyLocation());
-            }
-        });
+        player.teleport(arena.getArenaLocation().getLobbyLocation());
 
         // Add Player To Arena
         arena.getPlayers().add(playerDat);
@@ -532,12 +529,7 @@ public class ArenaManager {
         TitleAPI.sendSubTitle(player, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
 
         // Unhide to Arena
-        Bukkit.getScheduler().runTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.arenaManager.unhideToArena(player, true);
-            }
-        });
+        plugin.arenaManager.unhideToArena(player, true);
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
@@ -551,13 +543,8 @@ public class ArenaManager {
         playerDat.resetGameKills();
 
         // Update scoreboard
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.scoreBoardManager.updateAlive(arena);
-                plugin.scoreBoardManager.updateDeath(arena);
-            }
-        }, 20);
+        plugin.scoreBoardManager.updateAlive(arena);
+        plugin.scoreBoardManager.updateDeath(arena);
 
         return true;
     }
