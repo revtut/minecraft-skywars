@@ -348,7 +348,7 @@ public class ArenaManager {
         if (checkArena) {
             // Check if game already started
             if (arena.getStatus() == ArenaStatus.PREGAME || arena.getStatus() == ArenaStatus.INGAME) {
-                if (arena.getAlivePlayers().size() <= 1) {
+                if ((arena.getStatus() == ArenaStatus.INGAME && arena.getAlivePlayers().size() <= 1) || (arena.getStatus() == ArenaStatus.PREGAME && arena.getPlayers().size() <= 1)) {
                     // Send message
                     arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
                     // Send remaining players to new arena

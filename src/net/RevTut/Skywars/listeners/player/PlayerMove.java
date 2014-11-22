@@ -97,16 +97,15 @@ public class PlayerMove implements Listener {
                     continue;
                 if(alvo.getUniqueId() == player.getUniqueId())
                     continue;
-                if(alvo.getLocation().distanceSquared(location) > 5)
+                if(alvo.getLocation().distanceSquared(location) > 25)
                     continue;
-                Location alvoLocation = alvo.getLocation();
-                Location safeLocation = new Location(alvoLocation.getWorld(), alvoLocation.getX(), alvoLocation.getY() + 5, alvoLocation.getZ());
+                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ());
                 int i = 0;
                 do{
                     safeLocation.setY(safeLocation.getY() + i);
                     i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
-                alvo.teleport(safeLocation);
+                player.teleport(safeLocation);
             }
             return;
         }
