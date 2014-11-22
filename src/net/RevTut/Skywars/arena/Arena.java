@@ -92,8 +92,8 @@ public class Arena {
      * @param message message to be sent
      */
     public void sendMessage(String message) {
-        synchronized (this.getPlayers()){
-            for (PlayerDat playerDat : this.getPlayers()) {
+        synchronized (players){
+            for (PlayerDat playerDat : players) {
                 Player player = Bukkit.getPlayer(playerDat.getUUID());
                 if (player == null)
                     continue;

@@ -175,7 +175,7 @@ public class ConvertersAPI {
         String converted = "";
         for (int i = 0; i < list.size(); i++) {
             if (i < (list.size() - 1))
-                converted += list.get(i) + separator;
+                converted += list.get(i).replaceAll("'", "") + separator;
             else
                 converted += list.get(i);
         }

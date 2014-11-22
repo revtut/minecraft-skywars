@@ -142,7 +142,7 @@ public class PlayerDeath implements Listener {
             if (winnerDat != null)
                 arenaDat.setWinner(winnerDat.getUUID().toString());
             // Set Remaining Time
-            alvoArena.setRemainingTime(0);
+            alvoArena.setRemainingTime(1);
         }
 
         // Stats

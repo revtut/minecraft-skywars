@@ -272,11 +272,14 @@ public class ArenaManager {
             createNewArena();
         }
 
+        // Delete existing map
+        if(!removeMap(arena))
+            return false;
+
         // Remove From List
         arenas.remove(arena);
 
-        // Delete existing map
-        return removeMap(arena);
+        return true;
     }
 
     /**
@@ -288,10 +291,17 @@ public class ArenaManager {
      */
     private boolean removeMap(final Arena arena) {
         // Unload of the World
-        if (!WorldAPI.unloadWorld(arena.getMapName())) {
+        int attempts = 5; // number of attempts to unload the world
+        boolean unloaded; // true if unloading was successfull
+        do{
+            unloaded = WorldAPI.unloadWorld(arena.getMapName());
+            attempts--;
+        }while(!unloaded && attempts >= 0);
+        if(!unloaded){
             System.out.println("Error while unloading world " + arena.getMapName());
             return false;
         }
+
 
         // Remove Directory
         if (WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
@@ -547,7 +557,7 @@ public class ArenaManager {
                 plugin.scoreBoardManager.updateAlive(arena);
                 plugin.scoreBoardManager.updateDeath(arena);
             }
-        }, 10);
+        }, 20);
 
         return true;
     }

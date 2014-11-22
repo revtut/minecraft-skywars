@@ -112,16 +112,18 @@ public class ScoreBoardManager {
      * @param arena arena to update alive players
      */
     public void updateAlive(Arena arena) {
-        int alive = arena.getAlivePlayers().size();
-        for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
-                continue;
-            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-            if (board == null)
-                continue;
-            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-            objective.getScore("§aAlive:").setScore(alive);
+        synchronized (arena.getPlayers()){
+            int alive = arena.getAlivePlayers().size();
+            for (PlayerDat alvoDat : arena.getPlayers()) {
+                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                if (alvo == null)
+                    continue;
+                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+                if (board == null)
+                    continue;
+                Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+                objective.getScore("§aAlive:").setScore(alive);
+            }
         }
     }
 
@@ -132,16 +134,18 @@ public class ScoreBoardManager {
      * @param arena arena to update death players
      */
     public void updateDeath(Arena arena) {
-        int dead = arena.getDeadPlayers().size();
-        for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
-                continue;
-            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-            if (board == null)
-                continue;
-            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-            objective.getScore("§cDead:").setScore(dead);
+        synchronized (arena.getPlayers()){
+            int dead = arena.getDeadPlayers().size();
+            for (PlayerDat alvoDat : arena.getPlayers()) {
+                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                if (alvo == null)
+                    continue;
+                Scoreboard board = scoreBoards.get(alvo.getUniqueId());
+                if (board == null)
+                    continue;
+                Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+                objective.getScore("§cDead:").setScore(dead);
+            }
         }
     }
 
