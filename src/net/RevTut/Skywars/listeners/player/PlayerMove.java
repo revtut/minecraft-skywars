@@ -74,14 +74,6 @@ public class PlayerMove implements Listener {
             double x = location.getX();
             double z = location.getZ();
             // Check if he is outside the arena
-            if(x < minX && z < minZ){
-                Location safeLocation = new Location(location.getWorld(), location.getX() + 5, location.getY(), location.getZ() + 5);
-                player.teleport(safeLocation);
-            }
-            if(x > maxX && z > maxZ){
-                Location safeLocation = new Location(location.getWorld(), location.getX() - 5, location.getY(), location.getZ() - 5);
-                player.teleport(safeLocation);
-            }
             if(x < minX){
                 Location safeLocation = new Location(location.getWorld(), location.getX() + 5, location.getY(), location.getZ());
                 player.teleport(safeLocation);
@@ -112,6 +104,7 @@ public class PlayerMove implements Listener {
                 int i = 0;
                 do{
                     safeLocation.setY(safeLocation.getY() + i);
+                    i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
                 alvo.teleport(safeLocation);
             }

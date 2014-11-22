@@ -107,8 +107,8 @@ public class KitManager {
             ninja.kitNinja(player);
         else if(kit == Kit.TATICAL)
             tatical.kitTatical(player);
-        else if(kit == Kit.SCREAMER)
-            screamer.kitScreamer(player);
+        //else if(kit == Kit.SCREAMER)
+        //    screamer.kitScreamer(player);
         // Message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §aRecebeste o Kit " + ChatColor.stripColor(kit.getDisplayName())+ "!");
     }

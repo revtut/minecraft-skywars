@@ -133,7 +133,7 @@ public class ArenaManager {
                 }
                 // Check which location it is
                 if (message.equalsIgnoreCase("lobbyLocation")) {
-                    lobbyLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
+                    lobbyLocation = new Location(Bukkit.getWorlds().get(0), parsed[0], parsed[1], parsed[2]);
                 } else if (message.equalsIgnoreCase("deathspawnLocation")) {
                     deathSpawnLocation = new Location(Bukkit.getWorld(mapName), parsed[0], parsed[1], parsed[2]);
                 } else if (message.equalsIgnoreCase("firstCorner")) {
@@ -171,7 +171,7 @@ public class ArenaManager {
                 spawnLocation.setYaw(locationAt.getYaw());
             }
 
-        Location temp = firstCorner;
+        Location temp = new Location(firstCorner.getWorld(), firstCorner.getX(), firstCorner.getY(), firstCorner.getZ());
         firstCorner = new Location(temp.getWorld(), Math.min(temp.getX(), secondCorner.getX()), Math.min(temp.getY(), secondCorner.getY()), Math.min(temp.getZ(), secondCorner.getZ()));
         secondCorner = new Location(temp.getWorld(), Math.max(temp.getX(), secondCorner.getX()), Math.max(temp.getY(), secondCorner.getY()), Math.max(temp.getZ(), secondCorner.getZ()));
         return new ArenaLocation(lobbyLocation, deathSpawnLocation, firstCorner, secondCorner, spawnLocations);
@@ -309,7 +309,7 @@ public class ArenaManager {
 
         arena.getPlayers().remove(playerDat);
 
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        final Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (player == null)
             return false;
 
@@ -318,7 +318,12 @@ public class ArenaManager {
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
 
         // Hide to Server
-        plugin.arenaManager.hideToServer(player, true);
+        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.arenaManager.hideToServer(player, true);
+            }
+        });
 
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
@@ -501,7 +506,12 @@ public class ArenaManager {
         TitleAPI.sendSubTitle(player, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
 
         // Unhide to Arena
-        plugin.arenaManager.unhideToArena(player, true);
+        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.arenaManager.unhideToArena(player, true);
+            }
+        });
 
         // Message to arena
         arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
@@ -515,8 +525,13 @@ public class ArenaManager {
         playerDat.resetGameKills();
 
         // Update scoreboard
-        plugin.scoreBoardManager.updateAlive(arena);
-        plugin.scoreBoardManager.updateDeath(arena);
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.scoreBoardManager.updateAlive(arena);
+                plugin.scoreBoardManager.updateDeath(arena);
+            }
+        }, 10);
 
         return true;
     }

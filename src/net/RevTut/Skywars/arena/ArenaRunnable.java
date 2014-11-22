@@ -102,7 +102,7 @@ public class ArenaRunnable implements Runnable {
                     if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
                     else {
-                        arena.sendMessage("§7|§3SkyWars47| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
+                        arena.sendMessage("§7|§3SkyWars§7| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                     }
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
@@ -475,7 +475,7 @@ public class ArenaRunnable implements Runnable {
                     alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §aPodes agora abrir os baus!");
                     alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
                 }
-            }, 25);
+            }, 40);
             // Remove Glass
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
