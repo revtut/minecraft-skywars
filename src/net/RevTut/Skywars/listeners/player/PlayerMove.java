@@ -2,9 +2,13 @@ package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.Main;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaLocation;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,11 +57,66 @@ public class PlayerMove implements Listener {
             return;
         if (arena.getStatus() != ArenaStatus.INGAME)
             return;
-        if (playerDat.getStatus() != PlayerStatus.ALIVE)
+        // Alive
+        if (playerDat.getStatus() == PlayerStatus.ALIVE){
+            // Engineer
+            arena.getKitManager().engineer.landMineActivate(player);
             return;
-
-        // Engineer
-        arena.getKitManager().engineer.landMineActivate(player);
+        }
+        // Dead
+        if (playerDat.getStatus() == PlayerStatus.DEAD){
+            Location location = player.getLocation();
+            ArenaLocation arenaLocation = arena.getArenaLocation();
+            double minX = arenaLocation.getFirstCorner().getX();
+            double minZ = arenaLocation.getFirstCorner().getZ();
+            double maxX = arenaLocation.getSecondCorner().getX();
+            double maxZ = arenaLocation.getSecondCorner().getZ();
+            double x = location.getX();
+            double z = location.getZ();
+            // Check if he is outside the arena
+            if(x < minX && z < minZ){
+                Location safeLocation = new Location(location.getWorld(), location.getX() + 5, location.getY(), location.getZ() + 5);
+                player.teleport(safeLocation);
+            }
+            if(x > maxX && z > maxZ){
+                Location safeLocation = new Location(location.getWorld(), location.getX() - 5, location.getY(), location.getZ() - 5);
+                player.teleport(safeLocation);
+            }
+            if(x < minX){
+                Location safeLocation = new Location(location.getWorld(), location.getX() + 5, location.getY(), location.getZ());
+                player.teleport(safeLocation);
+            }
+            if(x > maxX){
+                Location safeLocation = new Location(location.getWorld(), location.getX() - 5, location.getY(), location.getZ());
+                player.teleport(safeLocation);
+            }
+            if(z < minZ){
+                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ() + 5);
+                player.teleport(safeLocation);
+            }
+            if(z > maxZ){
+                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ() - 5);
+                player.teleport(safeLocation);
+            }
+            // Check if near a player
+            for(PlayerDat alvoDat : arena.getPlayers()){
+                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                if(alvo == null)
+                    continue;
+                if(alvo.getUniqueId() == player.getUniqueId())
+                    continue;
+                if(alvo.getLocation().distanceSquared(location) > 5)
+                    continue;
+                Location alvoLocation = alvo.getLocation();
+                Location safeLocation = new Location(alvoLocation.getWorld(), alvoLocation.getX(), alvoLocation.getY() + 5, alvoLocation.getZ());
+                int i = 0;
+                do{
+                    safeLocation.setY(safeLocation.getY() + i);
+                }while(safeLocation.getBlock().getType() != Material.AIR);
+                alvo.teleport(safeLocation);
+            }
+            return;
+        }
     }
 
 }

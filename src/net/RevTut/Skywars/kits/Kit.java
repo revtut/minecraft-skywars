@@ -15,28 +15,28 @@ public enum Kit {
     /**
      * Engineer
      */
-    ENGINEER("§6Engineer", Material.IRON_BLOCK, 1000),
+    ENGINEER("§6Engineer", Material.IRON_BLOCK, 900),
     /**
      * Hacker
      */
-    HACKER("§6Hacker", Material.GOLD_NUGGET, 650),
+    HACKER("§6Hacker", Material.GOLD_NUGGET, 1200),
     /**
      * Ninja
      */
-    NINJA("§6Ninja", Material.FISHING_ROD, 600),
+    NINJA("§6Ninja", Material.FISHING_ROD, 650),
     /**
      * Tatical
      */
-    TATICAL("§6Tatical", Material.ENDER_PEARL, 750),
+    TATICAL("§6Tatical", Material.ENDER_PEARL, 800),
     /**
      * Guardian
      */
-    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 1200),
+    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 700);
 
     /**
      * Guardian
      */
-    SCREAMER("§6Screamer", Material.BONE, 1200);
+    //SCREAMER("§6Screamer", Material.BONE, 1200);
 
     /**
      * Displayname of the kit
