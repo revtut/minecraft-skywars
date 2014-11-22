@@ -161,7 +161,7 @@ public class MySQL {
             if (resultadoCore.next()) {
                 System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(3), NumberReports int(10));");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(02), NumberReports int(10));");
                 System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
@@ -170,7 +170,7 @@ public class MySQL {
             if (resultadoGameCore.next()) {
                 System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameCore + " (Player VARCHAR(100), PlayTime int(20), Wins int(20), Losses int(3), Kills int(20), Deaths int(3));");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameCore + " (Player VARCHAR(100), PlayTime int(20), Wins int(20), Losses int(20), Kills int(20), Deaths int(20));");
                 System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
@@ -179,7 +179,7 @@ public class MySQL {
             if (resultadoGameInfo.next()) {
                 System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), EndDate VARCHAR(100), InitialPlayers VARCHAR(250), GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), EndDate VARCHAR(100), InitialPlayers MEDIUMTEXT, GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
                 System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
         } catch (final SQLException e) {

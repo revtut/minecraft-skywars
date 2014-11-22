@@ -106,7 +106,7 @@ public class PlayerJoin implements Listener {
 
 
                 // NameTag
-                Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
                         // Scoreboard

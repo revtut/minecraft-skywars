@@ -101,13 +101,15 @@ public class PlayerMove implements Listener {
                     continue;
                 if(alvo.getLocation().distanceSquared(location) > 25)
                     continue;
-                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ());
+                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ(), location.getYaw(), location.getPitch());
                 int i = 0;
                 do{
                     safeLocation.setY(safeLocation.getY() + i);
                     i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
                 player.teleport(safeLocation);
+                player.setAllowFlight(true);
+                player.setFlying(true);
             }
             return;
         }

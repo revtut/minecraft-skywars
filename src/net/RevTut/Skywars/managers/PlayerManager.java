@@ -69,10 +69,12 @@ public class PlayerManager {
      * @return player dat of that UUID
      */
     public PlayerDat getPlayerDatByUUID(UUID uuid) {
-        for (PlayerDat alvoDat : playersDat)
-            if (alvoDat.getUUID() == uuid)
-                return alvoDat;
-        return null;
+        synchronized (playersDat) {
+            for (PlayerDat alvoDat : playersDat)
+                if (alvoDat.getUUID() == uuid)
+                    return alvoDat;
+            return null;
+        }
     }
 
     /**

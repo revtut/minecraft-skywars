@@ -137,12 +137,12 @@ public class PlayerDeath implements Listener {
 
         // Check if game ended
         if (alvoArena.getAlivePlayers().size() == 1) {
-            // Set Remaining Time
-            alvoArena.setRemainingTime(0);
             // Winner Dat
             PlayerDat winnerDat = alvoArena.getAlivePlayers().get(0);
             if (winnerDat != null)
                 arenaDat.setWinner(winnerDat.getUUID().toString());
+            // Set Remaining Time
+            alvoArena.setRemainingTime(0);
         }
 
         // Stats

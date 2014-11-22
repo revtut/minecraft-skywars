@@ -331,7 +331,8 @@ public class ArenaRunnable implements Runnable {
                                     // Title
                                     if (winner.getUniqueId().equals(alvo.getUniqueId())) {
                                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
-                                        alvoDat.addWin(); // Add win
+                                        // Add win
+                                        alvoDat.addWin();
                                         // Points earned
                                         int poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
                                         alvoDat.addPoints(poinsEarned);
@@ -480,7 +481,7 @@ public class ArenaRunnable implements Runnable {
             // Remove Glass
             Location alvoLocation = alvo.getLocation();
             while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
-                alvoLocation.setY(alvoLocation.getY() - 1);
+                alvoLocation.setY(alvoLocation.getY() - i);
                 i++;
             }
             alvoLocation.getBlock().setType(Material.AIR);
