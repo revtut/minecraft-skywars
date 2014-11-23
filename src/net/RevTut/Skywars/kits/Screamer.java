@@ -24,7 +24,7 @@ public class Screamer implements Listener {
         p.getInventory().addItem(ScreamerItem);
     }
 
-    public void pullPlayer(Player player, ItemStack itemStack, Projectile projectile) { // MAKES USE OF PROJECTILE HIT EVENT
+    public void pullPlayer(Player player, ItemStack itemStack) { // MAKES USE OF PROJECTILE HIT EVENT
         if (itemStack == null)
             return;
         if (itemStack.getType() == null)
