@@ -67,6 +67,41 @@ public class PlayerJoin implements Listener {
             public void run() {
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
+
+                Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        // PlayerDat
+                        final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
+                        if (playerDat == null) {
+                            System.out.println("PlayerDat is null on join!");
+                            // Send him to Hub. Error in playerDat
+                            plugin.connectServer(p, "hub");
+                            return;
+                        }
+
+                        // Add to Arena
+                        if (!plugin.arenaManager.addPlayer(playerDat)) {
+                            System.out.println("Could not add the player to an Arena on join!");
+                            // Send him to Hub. No arena available
+                            plugin.connectServer(p, "hub");
+                            return;
+                        }
+
+                        // Arena
+                        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+                        if (arena == null) {
+                            System.out.println("Player's Arena is null on join!");
+                            // Send him to Hub. Error in arena
+                            plugin.connectServer(p, "hub");
+                            return;
+                        }
+
+                        // New Arena if Needed
+                        if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
+                            plugin.arenaManager.createNewArena();
+                    }
+                });
             }
         });
 
@@ -81,27 +116,6 @@ public class PlayerJoin implements Listener {
                     plugin.connectServer(p, "hub");
                     return;
                 }
-
-                // Add to Arena
-                if (!plugin.arenaManager.addPlayer(playerDat)) {
-                    System.out.println("Could not add the player to an Arena on join!");
-                    // Send him to Hub. No arena available
-                    plugin.connectServer(p, "hub");
-                    return;
-                }
-
-                // Arena
-                Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-                if (arena == null) {
-                    System.out.println("Player's Arena is null on join!");
-                    // Send him to Hub. Error in arena
-                    plugin.connectServer(p, "hub");
-                    return;
-                }
-
-                // New Arena if Needed
-                if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
-                    plugin.arenaManager.createNewArena();
 
                 // Scoreboard
                 Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());

@@ -236,7 +236,6 @@ public class ArenaManager {
         String gameNumber = nextGameNumber();
         arena.setMapName(mapName);
         arena.setArenaDat(new ArenaDat());
-        arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
         arena.setStatus(ArenaStatus.LOBBY);
         arena.setKitManager(new KitManager());
         ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
@@ -400,7 +399,7 @@ public class ArenaManager {
                         public void run() {
                             removeArena(arena);
                         }
-                    }, 100);
+                    }, 600);
                 }
             }
         }

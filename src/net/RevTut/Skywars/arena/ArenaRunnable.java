@@ -486,7 +486,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     plugin.arenaManager.removeArena(arena);
                 }
-            }, 100);
+            }, 600);
         } else {
             newArena = arena; // Stay on the same arena
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -494,7 +494,7 @@ public class ArenaRunnable implements Runnable {
                 public void run() {
                     plugin.arenaManager.resetArena(arena);
                 }
-            }, 100);
+            }, 600);
         }
 
         // Remove players and add them to new arena

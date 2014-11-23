@@ -59,7 +59,7 @@ public class KillAura implements CommandExecutor, Listener{
                 final Villager villager = (Villager) online.getLocation().getWorld().spawnEntity(online.getLocation().subtract(3, 0, 3), EntityType.VILLAGER);
                 villager.setCustomName(online.getName());
                 villager.setCustomNameVisible(true);
-                villager.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1)):
+                villager.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1));
                 Bukkit.getScheduler().runTaskLater(this,new Runnable(){
                     @Override
                     public void run() {
