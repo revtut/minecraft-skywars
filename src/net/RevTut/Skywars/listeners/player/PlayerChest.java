@@ -167,7 +167,7 @@ public class PlayerChest implements Listener {
         // Block
         for (int i = 0; i < 15; i++) {
             int pos = plugin.rand.nextInt(materialBlock.length);
-            int quantidade = plugin.rand.nextInt(15) + 1;
+            int quantidade = plugin.rand.nextInt(15) + 5;
             // ItemStack
             ItemStack itemStack = new ItemStack(materialBlock[pos], quantidade);
             // Add to list
@@ -183,7 +183,7 @@ public class PlayerChest implements Listener {
             // Enchantment
             if (plugin.rand.nextFloat() < 0.80) {
                 pos = plugin.rand.nextInt(enchantOther.length);
-                Enchantment enchant = enchantWeapon[pos]; // Enchantment
+                Enchantment enchant = enchantOther[pos]; // Enchantment
                 if (enchant.canEnchantItem(itemStack)) {
                     quantidade = plugin.rand.nextInt(2) + 1; // Enchantment level
                     itemStack.addUnsafeEnchantment(enchant, quantidade);

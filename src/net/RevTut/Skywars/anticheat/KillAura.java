@@ -21,14 +21,14 @@ import org.bukkit.potion.PotionEffectType;
 public class KillAura implements CommandExecutor, Listener{
 
 
-    public void runKillAuraCheck() {
+    /*public void runKillAuraCheck() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aura");
             }
         },0, 20);
-    }
+    }*/
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e){
@@ -60,12 +60,12 @@ public class KillAura implements CommandExecutor, Listener{
                 villager.setCustomName(online.getName());
                 villager.setCustomNameVisible(true);
                 villager.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1));
-                Bukkit.getScheduler().runTaskLater(this,new Runnable(){
+                /*Bukkit.getScheduler().runTaskLater(this,new Runnable(){
                     @Override
                     public void run() {
                        villager.remove();
                     }
-                }, 10);
+                }, 10);*/
             }
         }
         return false;
