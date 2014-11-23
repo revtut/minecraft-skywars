@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * Arena Runnable.
@@ -329,7 +330,7 @@ public class ArenaRunnable implements Runnable {
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
         if (null == arenaDat) {
-            System.out.println("ArenaDat is null when changing from Lobby to PreGame!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when changing from Lobby to PreGame!");
             return;
         }
         // Message
@@ -339,7 +340,7 @@ public class ArenaRunnable implements Runnable {
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
         if (null == arenaLocation) {
-            System.out.println("Arena location is null when changing from Lobby to PreGame!");
+            plugin.getLogger().log(Level.SEVERE, "Arena location is null when changing from Lobby to PreGame!");
             return;
         }
         for (PlayerDat alvoDat : arena.getPlayers()) {
@@ -348,7 +349,7 @@ public class ArenaRunnable implements Runnable {
                 continue;
             // Config Player
             if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0)) {
-                System.out.println("Error while configuring the player.");
+                plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
                 continue;
             }
             // Give kit menu to the player
@@ -356,7 +357,7 @@ public class ArenaRunnable implements Runnable {
             // Teleport player
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null) {
-                System.out.println("Spawn location " + i + " is null when chaning from Lobby to PreGame");
+                plugin.getLogger().log(Level.WARNING, "Spawn location " + i + " is null when chaning from Lobby to PreGame");
                 continue;
             }
             arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
@@ -382,7 +383,7 @@ public class ArenaRunnable implements Runnable {
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
         if (null == arenaDat) {
-            System.out.println("ArenaDat is null when changing from PreGame to InGame!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when changing from PreGame to InGame!");
             return;
         }
         arenaDat.setStartDate(new Date()); // Set start date
@@ -395,7 +396,7 @@ public class ArenaRunnable implements Runnable {
                 continue;
             // Config Player
             if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.SURVIVAL, false, false, 0, 0, 20.0, 20, true, true, 0)) {
-                System.out.println("Error while configuring the player.");
+                plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
                 continue;
             }
             // Give the Kit
@@ -430,7 +431,7 @@ public class ArenaRunnable implements Runnable {
         // Arena Dat
         ArenaDat arenaDat = arena.getArenaDat();
         if (null == arenaDat) {
-            System.out.println("ArenaDat is null when changing from InGame to EndGame!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when changing from InGame to EndGame!");
             return;
         }
         arenaDat.setEndDate(new Date()); // Set end date
@@ -449,7 +450,7 @@ public class ArenaRunnable implements Runnable {
                 continue;
             // Config Player
             if (!plugin.playerManager.configPlayer(alvoDat, alvoDat.getStatus(), GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-                System.out.println("Error while configuring the player.");
+                plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
                 continue;
             }
             // Unhide
@@ -513,7 +514,7 @@ public class ArenaRunnable implements Runnable {
                 Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
                 if(alvo != null)
                     plugin.connectServer(alvo, "hub");
-                System.out.println("Could not add player to the new arena.");
+                plugin.getLogger().log(Level.WARNING, "Could not add player to the new arena.");
             }
         }
     }

@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * Player Join.
@@ -74,7 +75,7 @@ public class PlayerJoin implements Listener {
                         // PlayerDat
                         final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
                         if (playerDat == null) {
-                            System.out.println("PlayerDat is null on join!");
+                            plugin.getLogger().log(Level.WARNING, "PlayerDat is null on join!");
                             // Send him to Hub. Error in playerDat
                             plugin.connectServer(p, "hub");
                             return;
@@ -82,7 +83,7 @@ public class PlayerJoin implements Listener {
 
                         // Add to Arena
                         if (!plugin.arenaManager.addPlayer(playerDat)) {
-                            System.out.println("Could not add the player to an Arena on join!");
+                            plugin.getLogger().log(Level.WARNING, "Could not add the player to an Arena on join!");
                             // Send him to Hub. No arena available
                             plugin.connectServer(p, "hub");
                             return;
@@ -91,7 +92,7 @@ public class PlayerJoin implements Listener {
                         // Arena
                         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
-                            System.out.println("Player's Arena is null on join!");
+                            plugin.getLogger().log(Level.WARNING, "Player's Arena is null on join!");
                             // Send him to Hub. Error in arena
                             plugin.connectServer(p, "hub");
                             return;
@@ -111,7 +112,7 @@ public class PlayerJoin implements Listener {
                 // PlayerDat
                 final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
                 if (playerDat == null) {
-                    System.out.println("PlayerDat is null on join!");
+                    plugin.getLogger().log(Level.WARNING, "PlayerDat is null on join!");
                     // Send him to Hub. Error in playerDat
                     plugin.connectServer(p, "hub");
                     return;

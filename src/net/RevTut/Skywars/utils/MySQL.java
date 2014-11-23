@@ -10,6 +10,7 @@ import org.fusesource.jansi.Ansi;
 import java.sql.*;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * MySQL Object.
@@ -99,14 +100,14 @@ public class MySQL {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection("jdbc:mysql://" + this.hostname + ":" + this.port + "/" + this.database, this.username, this.password);
-            System.out.println("Successfully established the connection with MySQL!");
+            plugin.getLogger().log(Level.INFO, "Successfully established the connection with MySQL!");
             return true;
         } catch (final SQLException e) {
-            System.out.println("Error while trying to connect with MySQL! Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.SEVERE, "Error while trying to connect with MySQL! Reason: " + e.getMessage());
         } catch (final ClassNotFoundException e) {
-            System.out.println("JDBC Driver not found!");
+            plugin.getLogger().log(Level.SEVERE, "JDBC Driver not found!");
         }
-        System.out.println("Error while trying to connect with MySQL!");
+        plugin.getLogger().log(Level.SEVERE, "Error while trying to connect with MySQL!");
         Bukkit.shutdown();
         return false;
     }
@@ -120,7 +121,7 @@ public class MySQL {
         try {
             return this.connection.isClosed();
         } catch (final SQLException e) {
-            System.out.println("Error while trying to check the connection status. Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to check the connection status. Reason: " + e.getMessage());
         }
         return true;
     }
@@ -135,7 +136,7 @@ public class MySQL {
             this.connection.close();
             return true;
         } catch (final SQLException e) {
-            System.out.println("Error while trying to close the connection. Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to close the connection. Reason: " + e.getMessage());
             return false;
         }
     }
@@ -159,31 +160,31 @@ public class MySQL {
             /* Core - Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberReports */
             final ResultSet resultadoCore = connection.getMetaData().getTables(null, null, DBCore, null);
             if (resultadoCore.next()) {
-                System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
                 statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(02), NumberReports int(10));");
-                System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
             /* GameCore - Player, PlayTime, Wins, Losses, Kills, Deaths */
             final ResultSet resultadoGameCore = connection.getMetaData().getTables(null, null, DBGameCore, null);
             if (resultadoGameCore.next()) {
-                System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
                 statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameCore + " (Player VARCHAR(100), PlayTime int(20), Wins int(20), Losses int(20), Kills int(20), Deaths int(20));");
-                System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
             /* GameCore - GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents */
             final ResultSet resultadoGameInfo = connection.getMetaData().getTables(null, null, DBGameInfo, null);
             if (resultadoGameInfo.next()) {
-                System.out.println(Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
                 statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), EndDate VARCHAR(100), InitialPlayers MEDIUMTEXT, GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
-                System.out.println(Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
+                plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
         } catch (final SQLException e) {
-            System.out.println("Error while trying to create the MySQL. Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to create the MySQL. Reason: " + e.getMessage());
         }
     }
 
@@ -209,7 +210,7 @@ public class MySQL {
                 return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0));
             }
         } catch (final SQLException e) {
-            System.out.println("Error while trying to create PlayerDat! Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to create PlayerDat! Reason: " + e.getMessage());
             return false;
         }
     }
@@ -244,7 +245,7 @@ public class MySQL {
                 this.connection.createStatement().executeUpdate(gameUpdate);
             }
         } catch (final SQLException e) {
-            System.out.println("Error while trying to update the MySQL! Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to update the MySQL! Reason: " + e.getMessage());
             return false;
         }
         return true;
@@ -262,7 +263,7 @@ public class MySQL {
             final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "', '" + ConvertersAPI.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
             this.connection.createStatement().executeUpdate(infoCreate);
         } catch (final SQLException e) {
-            System.out.println("Error while trying to update the MySQL! Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to update the MySQL! Reason: " + e.getMessage());
             return false;
         }
         return true;
@@ -290,7 +291,7 @@ public class MySQL {
             }
             return lastGame;
         } catch (final SQLException e) {
-            System.out.println("Error while trying to get the last game number from the MySQL! Reason: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to get the last game number from the MySQL! Reason: " + e.getMessage());
             return null;
         }
     }

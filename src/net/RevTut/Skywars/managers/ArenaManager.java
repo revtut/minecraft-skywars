@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 /**
  * Arena Manager.
@@ -104,7 +105,7 @@ public class ArenaManager {
      */
     private ArenaLocation createArenaLocation(File file, String mapName) {
         if (!file.exists()) {
-            System.out.println("File with arena locations does not exists!");
+            plugin.getLogger().log(Level.SEVERE, "File with arena locations does not exists!");
             return null;
         }
         final FileConfiguration configLocations = YamlConfiguration.loadConfiguration(file);
@@ -146,24 +147,24 @@ public class ArenaManager {
         }
         // Max and Min Locations
         if (lobbyLocation == null) {
-            System.out.println("Lobby location is null!");
+            plugin.getLogger().log(Level.SEVERE, "Lobby location is null!");
             return null;
         }
         if (deathSpawnLocation == null) {
-            System.out.println("Death Spawn location is null!");
+            plugin.getLogger().log(Level.SEVERE, "Death Spawn location is null!");
             return null;
         }
         if (firstCorner == null) {
-            System.out.println("First Corner location is null!");
+            plugin.getLogger().log(Level.SEVERE, "First Corner location is null!");
             return null;
         }
         if (secondCorner == null) {
-            System.out.println("Second Corner location is null!");
+            plugin.getLogger().log(Level.SEVERE, "Second Corner location is null!");
             return null;
         }
         for (Location spawnLocation : spawnLocations)
             if (spawnLocation == null) {
-                System.out.println("One or more spawn locations are null!");
+                plugin.getLogger().log(Level.SEVERE, "One or more spawn locations are null!");
                 return null;
             }else{
                 // Change yaw and pitch of a location
@@ -205,7 +206,7 @@ public class ArenaManager {
         // ArenaDat
         final ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("ArenaDat is null when resetting the arena!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when resetting the arena!");
             return false;
         }
 
@@ -257,7 +258,7 @@ public class ArenaManager {
         // ArenaDat
         final ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("ArenaDat is null when resetting the arena!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when resetting the arena!");
             return false;
         }
 
@@ -306,7 +307,7 @@ public class ArenaManager {
             attempts--;
         }while(!unloaded && attempts >= 0);
         if(!unloaded){
-            System.out.println("Error while unloading world " + arena.getMapName());
+            plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName());
             return false;
         }
 
@@ -315,7 +316,7 @@ public class ArenaManager {
         if (WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
             return true;
 
-        System.out.println("Error while removing world directory " + arena.getMapName());
+        plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
         return false;
     }
 
@@ -330,14 +331,14 @@ public class ArenaManager {
     public boolean removePlayer(final PlayerDat playerDat, boolean checkArena) {
         final Arena arena = getArenaByPlayer(playerDat);
         if (arena == null) {
-            System.out.println("Arena is null when removing a player!");
+            plugin.getLogger().log(Level.SEVERE, "Arena is null when removing a player!");
             return false;
         }
 
         // ArenaDat
         final ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("ArenaDat is null when removing a player!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when removing a player!");
             return false;
         }
 
@@ -370,12 +371,12 @@ public class ArenaManager {
                     if (alvo == null)
                         continue;
                     if (!removePlayer(alvoDat, false)) {
-                        System.out.println("Error while removing PlayerDat from arena on quit!");
+                        plugin.getLogger().log(Level.WARNING, "Error while removing PlayerDat from arena on quit!");
                         // Send him to Hub. Error while removing him from the arena
                         plugin.connectServer(alvo, "hub");
                     }
                     if (!addPlayer(alvoDat)) {
-                        System.out.println("Could not add the player to an Arena when not enough players in arena!");
+                        plugin.getLogger().log(Level.WARNING, "Could not add the player to an Arena when not enough players in arena!");
                         // Send him to Hub. No arena available
                         plugin.connectServer(alvo, "hub");
                     }
@@ -420,7 +421,7 @@ public class ArenaManager {
         // Source Directory
         String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
         if (listWorlds == null) {
-            System.out.println("Worlds folder not found!");
+            plugin.getLogger().log(Level.WARNING, "Worlds folder not found!");
             return null;
         }
         int posWorld = new Random().nextInt(listWorlds.length);
@@ -434,7 +435,7 @@ public class ArenaManager {
         WorldAPI.copyDirectory(new File(srcPath), new File(trgPath));
         // Load World
         if (!WorldAPI.loadWorld(mapName)) {
-            System.out.println("Error while creating a new arena! World is null!");
+            plugin.getLogger().log(Level.SEVERE, "Error while creating a new arena! World is null!");
             Arena arena = getArenaByNumber(arenaNumber);
             if (arena != null)
                 removeArena(arena);
@@ -510,7 +511,7 @@ public class ArenaManager {
         // ArenaDat
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("ArenaDat is null when trying to add a player!");
+            plugin.getLogger().log(Level.SEVERE, "ArenaDat is null when trying to add a player!");
             // Send him to Hub. Error in arena
             plugin.connectServer(player, "hub");
             return false;
@@ -536,7 +537,7 @@ public class ArenaManager {
 
         // Config Player
         if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0))
-            System.out.println("Error while configuring the player.");
+            plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
 
         // Reset game kills
         playerDat.resetGameKills();
@@ -728,12 +729,12 @@ public class ArenaManager {
     public boolean hideToArena(Player player, boolean toPlayerToo) {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
-            System.out.println("Error while hiding player to arena because PlayerDat is null.");
+            plugin.getLogger().log(Level.WARNING, "Error while hiding player to arena because PlayerDat is null.");
             return false;
         }
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == arena) {
-            System.out.println("Error while hiding player to arena because Arena is null.");
+            plugin.getLogger().log(Level.SEVERE, "Error while hiding player to arena because Arena is null.");
             return false;
         }
         for (PlayerDat alvoDat : arena.getPlayers()) {
@@ -757,12 +758,12 @@ public class ArenaManager {
     public boolean unhideToArena(Player player, boolean toPlayerToo) {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
-            System.out.println("Error while unhiding player to arena because PlayerDat is null.");
+            plugin.getLogger().log(Level.WARNING, "Error while unhiding player to arena because PlayerDat is null.");
             return false;
         }
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == arena) {
-            System.out.println("Error while unhiding player to arena because Arena is null.");
+            plugin.getLogger().log(Level.SEVERE, "Error while unhiding player to arena because Arena is null.");
             return false;
         }
         for (PlayerDat alvoDat : arena.getPlayers()) {
@@ -786,12 +787,12 @@ public class ArenaManager {
     public boolean inSameArena(PlayerDat playerDat, PlayerDat alvoDat) {
         Arena playerArena = getArenaByPlayer(playerDat);
         if (null == playerArena) {
-            System.out.println("Error while checking if they are in the same arena because Player's Arena is null!");
+            plugin.getLogger().log(Level.SEVERE, "Error while checking if they are in the same arena because Player's Arena is null!");
             return false;
         }
         Arena alvoArena = getArenaByPlayer(alvoDat);
         if (null == alvoArena) {
-            System.out.println("Error while checking if they are in the same arena because Alvo's Arena is null!");
+            plugin.getLogger().log(Level.SEVERE, "Error while checking if they are in the same arena because Alvo's Arena is null!");
             return false;
         }
         return playerArena.getArenaNumber() == alvoArena.getArenaNumber();

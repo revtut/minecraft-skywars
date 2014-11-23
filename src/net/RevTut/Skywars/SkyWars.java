@@ -29,6 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Random;
+import java.util.logging.Level;
 
 /**
  * Main class.
@@ -156,33 +157,33 @@ public class SkyWars extends JavaPlugin {
     public void onEnable() {
         /* Create Files */
         if (!createFiles())
-            System.out.println("Error while trying to create the initial files.");
+            this.getLogger().log(Level.WARNING, "Error while trying to create the initial files.");
 
         /* Read Files */
         if (!readFiles())
-            System.out.println("Error while trying to read the files.");
+            this.getLogger().log(Level.WARNING, "Error while trying to read the files.");
 
         /* Create Initial Arenas */
         String lastGameNumber = mysql.lastGameNumber();
         if (lastGameNumber == null) {
-            System.out.println("Error while creating the initial arenas as last game number is null.");
+            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas as last game number is null.");
             return;
         }
         lastGameNumber = arenaManager.nextGameNumber(lastGameNumber);
         // Arena 1
         if (!arenaManager.createNewArena()) {
-            System.out.println("Error while creating the initial arenas.");
+            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas.");
             return;
         }
         Arena arena = arenaManager.getArenas().get(0);
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("Error while creating the initial arenas as arena dat is null.");
+            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas as arena dat is null.");
             return;
         }
         arenaDat.setGameNumber(lastGameNumber);
         if (!arenaManager.createNewArena()) {
-            System.out.println("Error while creating the initial arenas.");
+            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas.");
             return;
         }
 
@@ -239,7 +240,7 @@ public class SkyWars extends JavaPlugin {
     public void onDisable() {
         /* Close MySQL */
         if (!mysql.closeConnection())
-            System.out.println("Error while trying to close connection.");
+            this.getLogger().log(Level.WARNING, "Error while trying to close connection.");
     }
 
     /**
@@ -257,7 +258,7 @@ public class SkyWars extends JavaPlugin {
                 if (!config.createNewFile())
                     return false;
             } catch (IOException e) {
-                System.out.println("Error while creating config.yml. Reason: " + e.getMessage());
+                this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
             }
             if (!copyFile(getResource("config.yml"), config))
                 return false;
@@ -271,7 +272,7 @@ public class SkyWars extends JavaPlugin {
                 if (!mysqlConf.createNewFile())
                     return false;
             } catch (IOException e) {
-                System.out.println("Error while creating mysql.yml. Reason: " + e.getMessage());
+                this.getLogger().log(Level.WARNING, "Error while creating mysql.yml. Reason: " + e.getMessage());
             }
             if (!copyFile(getResource("mysql.yml"), mysqlConf))
                 return false;
@@ -347,8 +348,8 @@ public class SkyWars extends JavaPlugin {
             out.writeUTF(server);
             out.writeUTF(player.getName());
         } catch (IOException e) {
-            System.out.println("Error while sending player to " + server);
-            System.out.println(e.getMessage());
+            this.getLogger().log(Level.WARNING, "Error while sending player to " + server);
+            this.getLogger().log(Level.WARNING, e.getMessage());
         }
 
         player.sendPluginMessage(this, "BungeeCord", b.toByteArray());
@@ -363,7 +364,7 @@ public class SkyWars extends JavaPlugin {
                 try {
                     mysql.getConnection().createStatement().executeQuery("SELECT 1;");
                 } catch (SQLException e) {
-                    System.out.println("MySQL connection is closed!");
+                    getLogger().log(Level.WARNING, "MySQL connection is closed!");
                     mysql.openConnection();
                 }
 

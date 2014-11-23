@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.logging.Level;
+
 /**
  * Player Join.
  *
@@ -49,7 +51,7 @@ public class PlayerQuit implements Listener {
         // PlayerDat
         final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
         if (playerDat == null) {
-            System.out.println("Error while updating PlayerDat on quit as it is NULL!");
+            plugin.getLogger().log(Level.WARNING, "Error while updating PlayerDat on quit as it is NULL!");
             return;
         }
 
@@ -61,7 +63,7 @@ public class PlayerQuit implements Listener {
 
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true)) {
-            System.out.println("Error while removing PlayerDat from arena on quit!");
+            plugin.getLogger().log(Level.WARNING, "Error while removing PlayerDat from arena on quit!");
             return;
         }
 

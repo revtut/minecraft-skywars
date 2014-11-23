@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Appearance Library.
@@ -39,7 +41,7 @@ public class AppearanceAPI {
      */
     public static void launchFirework(final Player player, final int amount, final int delay) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside AppearanceAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside AppearanceAPI!");
             return;
         }
         for (int i = 0; i < amount; i++) {

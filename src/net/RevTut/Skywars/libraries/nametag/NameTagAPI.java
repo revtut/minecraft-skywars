@@ -14,6 +14,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Name Tag Library.
  *
@@ -70,7 +73,7 @@ public class NameTagAPI implements Listener {
      */
     public static void setNameTag(Scoreboard board, Player p, boolean perPlayerScoreBoard) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside NameTagAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside NameTagAPI!");
             return;
         }
         if (perPlayerScoreBoard) {

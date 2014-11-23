@@ -9,6 +9,9 @@ import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Tab List Library.
  *
@@ -38,7 +41,7 @@ public class TabAPI {
      */
     public static void setTab(final Player p, final String title, final String footer) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TabAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TabAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {

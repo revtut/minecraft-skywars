@@ -7,6 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector.PacketTitle;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Title Library.
  *
@@ -40,7 +43,7 @@ public class TitleAPI {
      */
     public static void sendTitle(final Player p, final String title) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TitleAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -68,7 +71,7 @@ public class TitleAPI {
      */
     public static void sendSubTitle(final Player p, final String subtitle) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TitleAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -98,7 +101,7 @@ public class TitleAPI {
      */
     public static void sendTimings(final Player p, final int fadeIn, final int stay, final int fadeOut) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TitleAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -124,7 +127,7 @@ public class TitleAPI {
      */
     public static void reset(final Player p) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TitleAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -150,7 +153,7 @@ public class TitleAPI {
      */
     public static void clear(final Player p) {
         if (null == plugin) {
-            System.out.println("Main plugin is null inside TitleAPI!");
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {

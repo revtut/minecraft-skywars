@@ -20,8 +20,8 @@ for(int k = 0; k < numberIterations; k++) {
     if(duration > maxDuration)
         maxDuration = duration;
     totalDuration += duration;
-    System.out.println("[" + k + "] " + duration + "ms");
+    this.getLogger().log(Level.WARNING, "[" + k + "] " + duration + "ms");
 }
-System.out.println("MAXIMUM DURATION: " + maxDuration + "ms");
-System.out.println("MINIMUM DURATION: " + minDuration + "ms");
-System.out.println("AVERAGE: " + (totalDuration / numberIterations) + "ms");
+this.getLogger().log(Level.WARNING, "MAXIMUM DURATION: " + maxDuration + "ms");
+this.getLogger().log(Level.WARNING, "MINIMUM DURATION: " + minDuration + "ms");
+this.getLogger().log(Level.WARNING, "AVERAGE: " + (totalDuration / numberIterations) + "ms");

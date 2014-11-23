@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * World Library.
@@ -94,8 +96,8 @@ public class WorldAPI {
                 fOutStream.close();
             }
         } catch (Exception e) {
-            System.out.println("Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
-            System.out.println(e.getMessage());
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
+            Logger.getLogger("Minecraft").log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -115,10 +117,10 @@ public class WorldAPI {
                         removeDirectory(c);
             }
             if(!dir.delete())
-                System.out.println("Error while trying to delete " + dir.getName() + ".");
+                Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to delete " + dir.getName() + ".");
         } catch (Exception e) {
-            System.out.println("Error while trying to delete " + dir.getAbsolutePath() + ".");
-            System.out.println(e.getMessage());
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to delete " + dir.getAbsolutePath() + ".");
+            Logger.getLogger("Minecraft").log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;

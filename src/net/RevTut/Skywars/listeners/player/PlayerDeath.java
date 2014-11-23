@@ -16,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.util.logging.Level;
+
 /**
  * Player Death.
  *
@@ -65,7 +67,7 @@ public class PlayerDeath implements Listener {
         // ArenaDat
         ArenaDat arenaDat = alvoArena.getArenaDat();
         if (arenaDat == null) {
-            System.out.println("ArenaDat is null when player dies!");
+            plugin.getLogger().log(Level.WARNING, "ArenaDat is null when player dies!");
             return;
         }
 
@@ -81,7 +83,7 @@ public class PlayerDeath implements Listener {
 
         // Config Player
         if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-            System.out.println("Error while configuring the player.");
+            plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
             return;
         }
 

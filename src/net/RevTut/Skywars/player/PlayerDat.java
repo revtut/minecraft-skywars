@@ -199,10 +199,6 @@ public class PlayerDat {
      * @param points points to add
      */
     public void addPoints(int points) {
-        if (null == plugin) {
-            System.out.println("Main plugin is null inside PlayerDat!");
-            return;
-        }
         this.points += points;
         if(this.points < 0)
             this.points = 0;
