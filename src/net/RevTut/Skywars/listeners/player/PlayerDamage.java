@@ -128,12 +128,13 @@ public class PlayerDamage implements Listener {
         if (alvoArena.getStatus() != ArenaStatus.INGAME) { // Check if game already started
             e.setCancelled(true);
             // Void damage
-            if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                Location lobbyLocation = alvoArena.getArenaLocation().getLobbyLocation();
-                if (lobbyLocation == null)
-                    return;
-                alvo.teleport(lobbyLocation); // Teleport to lobby
-            }
+            if(alvoArena.getStatus() != ArenaStatus.PREGAME)
+                if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                    Location lobbyLocation = alvoArena.getArenaLocation().getLobbyLocation();
+                    if (lobbyLocation == null)
+                        return;
+                    alvo.teleport(lobbyLocation); // Teleport to lobby
+                }
             return;
         }
         if (alvoDat.getStatus() != PlayerStatus.ALIVE) { // Check if target is alive

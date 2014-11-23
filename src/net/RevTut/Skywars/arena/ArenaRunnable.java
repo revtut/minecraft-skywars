@@ -198,6 +198,12 @@ public class ArenaRunnable implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+            // If payer is dead send him a message
+            if(alvoDat.getStatus() == PlayerStatus.DEAD)
+                if(remainingTime % 30 == 0){
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Não saias da arena! Um novo jogo irá começar em breve.");
+                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Se saires vais perder pontos...");
+                }
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimings(alvo, 20, 60, 20);
