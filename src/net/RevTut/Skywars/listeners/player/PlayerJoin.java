@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
@@ -27,14 +27,14 @@ public class PlayerJoin implements Listener {
     /**
      * Main class{}
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerJoin
      *
      * @param plugin main class
      */
-    public PlayerJoin(final Main plugin) {
+    public PlayerJoin(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

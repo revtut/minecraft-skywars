@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.managers;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaLocation;
@@ -38,14 +38,14 @@ public class ArenaManager {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of ArenaManager
      *
      * @param plugin main class
      */
-    public ArenaManager(final Main plugin) {
+    public ArenaManager(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

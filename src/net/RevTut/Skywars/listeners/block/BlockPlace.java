@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.block;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -23,14 +23,14 @@ public class BlockPlace implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of BlockPlace
      *
      * @param plugin main class
      */
-    public BlockPlace(final Main plugin) {
+    public BlockPlace(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

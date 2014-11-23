@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
 import net.RevTut.Skywars.arena.ArenaStatus;
@@ -27,14 +27,14 @@ public class PlayerMove implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerMove
      *
      * @param plugin main class
      */
-    public PlayerMove(final Main plugin) {
+    public PlayerMove(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

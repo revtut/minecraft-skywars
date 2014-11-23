@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -29,14 +29,14 @@ public class PlayerDamage implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerDamage
      *
      * @param plugin main class
      */
-    public PlayerDamage(final Main plugin) {
+    public PlayerDamage(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

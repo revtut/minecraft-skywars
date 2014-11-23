@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.libraries.appearance;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -23,7 +23,7 @@ public class AppearanceAPI {
     /**
      * Main class
      */
-    public static Main plugin = null;
+    public static SkyWars plugin = null;
 
     /**
      * Copy of random class

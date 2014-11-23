@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.utils;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -24,7 +24,7 @@ public class MySQL {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Hostname of the MySQL Database
@@ -81,7 +81,7 @@ public class MySQL {
      * @param username username of the MySQL
      * @param password password of the MySQL
      */
-    public MySQL(Main plugin, String hostname, String port, String database, String username, String password) {
+    public MySQL(SkyWars plugin, String hostname, String port, String database, String username, String password) {
         this.plugin = plugin;
         this.hostname = hostname;
         this.port = port;

@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -21,7 +21,7 @@ public class PlayerDat {
     /**
      * Main class
      */
-    public static Main plugin = null;
+    public static SkyWars plugin = null;
 
     /**
      * UUID of the player

@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,14 +28,14 @@ public class PlayerChest implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerChest
      *
      * @param plugin main class
      */
-    public PlayerChest(final Main plugin) {
+    public PlayerChest(final SkyWars plugin) {
         this.plugin = plugin;
         // Generate the random loot every 5 minutes
         Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {

@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.environment;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
@@ -22,14 +22,14 @@ public class ProjectileHit implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of ProjectileHit
      *
      * @param plugin main class
      */
-    public ProjectileHit(Main plugin) {
+    public ProjectileHit(SkyWars plugin) {
         this.plugin = plugin;
     }
 

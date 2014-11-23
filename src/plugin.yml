@@ -3,7 +3,7 @@
  description: RevTut Network SkyWars Plugin
  author: RevTut
  website: www.revtut.net
- main: net.revtut.skywars.SkyWars
+ main: net.RevTut.Skywars.SkyWars
 
 ############
 # COMANDOS #

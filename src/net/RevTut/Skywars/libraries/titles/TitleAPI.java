@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.libraries.titles;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ public class TitleAPI {
     /**
      * Main class
      */
-    public static Main plugin = null;
+    public static SkyWars plugin = null;
 
     /**
      * Version of Minecraft which might receive these packets

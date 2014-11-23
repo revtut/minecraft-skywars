@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.managers;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
@@ -24,14 +24,14 @@ public class PlayerManager {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerManager
      *
      * @param plugin main class
      */
-    public PlayerManager(final Main plugin) {
+    public PlayerManager(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

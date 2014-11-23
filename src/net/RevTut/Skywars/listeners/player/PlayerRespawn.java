@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Location;
@@ -22,14 +22,14 @@ public class PlayerRespawn implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerRespawn
      *
      * @param plugin main class
      */
-    public PlayerRespawn(final Main plugin) {
+    public PlayerRespawn(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

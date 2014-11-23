@@ -42,7 +42,7 @@ import java.util.Random;
  * @author Joao Silva
  * @version 1.0
  */
-public class Main extends JavaPlugin {
+public class SkyWars extends JavaPlugin {
     /**
      * Title message on join
      */

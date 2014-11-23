@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
@@ -29,14 +29,14 @@ public class PlayerDeath implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerDeath
      *
      * @param plugin main class
      */
-    public PlayerDeath(Main plugin) {
+    public PlayerDeath(SkyWars plugin) {
         this.plugin = plugin;
     }
 

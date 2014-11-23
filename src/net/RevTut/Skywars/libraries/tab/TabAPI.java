@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.libraries.tab;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.IChatBaseComponent;
@@ -22,7 +22,7 @@ public class TabAPI {
     /**
      * Main class
      */
-    public static Main plugin = null;
+    public static SkyWars plugin = null;
 
     /**
      * Version of Minecraft which might receive these packets

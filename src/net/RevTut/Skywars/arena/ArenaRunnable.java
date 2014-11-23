@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.arena;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
@@ -27,7 +27,7 @@ public class ArenaRunnable implements Runnable {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Runnable ID
@@ -39,7 +39,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param plugin the Main class
      */
-    public ArenaRunnable(Main plugin) {
+    public ArenaRunnable(SkyWars plugin) {
         this.plugin = plugin;
     }
 

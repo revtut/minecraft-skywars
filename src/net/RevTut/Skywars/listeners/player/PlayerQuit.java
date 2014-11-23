@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -23,14 +23,14 @@ public class PlayerQuit implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerQuit
      *
      * @param plugin main class
      */
-    public PlayerQuit(final Main plugin) {
+    public PlayerQuit(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

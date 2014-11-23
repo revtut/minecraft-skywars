@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.block;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -23,14 +23,14 @@ public class BlockBreak implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of BlockBreak
      *
      * @param plugin main class
      */
-    public BlockBreak(final Main plugin) {
+    public BlockBreak(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

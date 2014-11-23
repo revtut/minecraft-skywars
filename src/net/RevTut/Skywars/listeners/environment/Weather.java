@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.environment;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
@@ -20,14 +20,14 @@ public class Weather implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of Weather
      *
      * @param plugin main class
      */
-    public Weather(Main plugin) {
+    public Weather(SkyWars plugin) {
         this.plugin = plugin;
     }
 

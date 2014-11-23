@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.managers;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
@@ -24,7 +24,7 @@ public class ScoreBoardManager {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Map with all the scoreboards of the players
@@ -36,7 +36,7 @@ public class ScoreBoardManager {
      *
      * @param plugin main class
      */
-    public ScoreBoardManager(final Main plugin) {
+    public ScoreBoardManager(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

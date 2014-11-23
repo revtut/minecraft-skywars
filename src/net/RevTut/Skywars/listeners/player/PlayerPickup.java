@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.listeners.player;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -23,14 +23,14 @@ public class PlayerPickup implements Listener {
     /**
      * Main class
      */
-    private final Main plugin;
+    private final SkyWars plugin;
 
     /**
      * Constructor of PlayerPickup
      *
      * @param plugin main class
      */
-    public PlayerPickup(final Main plugin) {
+    public PlayerPickup(final SkyWars plugin) {
         this.plugin = plugin;
     }
 

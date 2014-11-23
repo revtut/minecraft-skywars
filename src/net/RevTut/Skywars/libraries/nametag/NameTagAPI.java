@@ -1,6 +1,6 @@
 package net.RevTut.Skywars.libraries.nametag;
 
-import net.RevTut.Skywars.Main;
+import net.RevTut.Skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -27,7 +27,7 @@ public class NameTagAPI implements Listener {
     /**
      * Main class
      */
-    public static Main plugin = null;
+    public static SkyWars plugin = null;
 
     /**
      * Hide name tag of a player.
