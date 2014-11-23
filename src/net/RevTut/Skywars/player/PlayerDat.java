@@ -211,7 +211,10 @@ public class PlayerDat {
         if(player == null)
             return;
         // Message
-        player.sendMessage("§6" + points + " pontos");
+        char signal = '+';
+        if(points < 0)
+            signal = '-';
+        player.sendMessage("§6" + signal + Math.abs(points) + " pontos");
         // Update points in ScoreBoard
         plugin.scoreBoardManager.updatePoints(this);
     }

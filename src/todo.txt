@@ -1,6 +1,4 @@
-- Reabrir conexão à MySQL quando a conexão é fechada.
-
-- Enviar jogadores para o Hub quando acontece algo que não era suposto acontecer.
+- Avisar os players para esperarem quando estao mortos pois um jogo ira comecar em breve. Avisar que sairem antes perdem creditos
 
 // EXTRA
 

@@ -45,12 +45,16 @@ public class BlockPlace implements Listener {
         Player player = e.getPlayer();
         // Player Dat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
-        if (playerDat == null)
+        if (playerDat == null){
+            e.setCancelled(true);
             return;
+        }
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-        if (null == arena)
+        if (null == arena){
+            e.setCancelled(true);
             return;
+        }
         if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);
         if (playerDat.getStatus() != PlayerStatus.ALIVE)

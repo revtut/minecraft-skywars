@@ -185,7 +185,7 @@ public class Arena {
     public List<PlayerDat> getAlivePlayers() {
         List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
         // Lobby
-        if (this.getStatus() == ArenaStatus.LOBBY)
+        if (this.status == ArenaStatus.LOBBY || this.status == ArenaStatus.PREGAME)
             return this.getPlayers();
         // Already ingame
         for (PlayerDat player : players)
