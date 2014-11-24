@@ -10,7 +10,6 @@ import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -81,11 +80,8 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
-        // Config Player
-        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-            plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
-            return;
-        }
+        // Set Status
+        alvoDat.setStatus(PlayerStatus.DEAD);
 
         // Bypass respawn
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {

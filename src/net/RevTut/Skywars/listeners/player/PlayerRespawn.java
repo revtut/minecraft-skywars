@@ -3,11 +3,15 @@ package net.RevTut.Skywars.listeners.player;
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
+
+import java.util.logging.Level;
 
 /**
  * Player Respawn.
@@ -50,6 +54,12 @@ public class PlayerRespawn implements Listener {
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (arena == null)
             return;
+
+        // Config Player
+        if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
+            plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
+            return;
+        }
 
         // Ninja
         Location locSpawn = arena.getKitManager().hacker.respawnPlayer(player, arena);
