@@ -93,7 +93,7 @@ public class PlayerDeath implements Listener {
             public void run() {
                 BypassesAPI.respawnBypass(alvo);
             }
-        }, 5);
+        }, 20);
 
         // Damager player
         final Player damager;

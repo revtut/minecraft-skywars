@@ -93,7 +93,8 @@ public class ArenaRunnable implements Runnable {
                     onEndGame(arena);
                 // Decrement remaining time
                 if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= plugin.arenaManager.minReduceTimePlayers) {
-                    arena.sendMessage("§7|§3SkyWars47| §6O minimo de jogadores foi atingido. O tempo foi reduzido.");
+                    arena.sendMessage("§7|§3SkyWars§7| §3" + plugin.arenaManager.minReduceTimePlayers + " §6jogadores estão na arena!");
+                    arena.sendMessage("§7|§3SkyWars§7| §6O tempo foi reduzido para §330 §6segundos. ");
                     remainingTime = 31;
                 }
                 arena.setRemainingTime(remainingTime - 1);
@@ -129,6 +130,26 @@ public class ArenaRunnable implements Runnable {
             if (alvo == null)
                 continue;
             alvo.setLevel(remainingTime);
+            switch (remainingTime) {
+                case 5:
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                    break;
+                case 4:
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                    break;
+                case 3:
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                    break;
+                case 2:
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                    break;
+                case 1:
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                    break;
+                case 0:
+                    alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
+                    break;
+            }
         }
     }
 
@@ -156,32 +177,37 @@ public class ArenaRunnable implements Runnable {
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§45"));
                     TitleAPI.sendSubTitle(alvo, "");
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 4:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c4"));
                     TitleAPI.sendSubTitle(alvo, "");
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 3:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
                     TitleAPI.sendSubTitle(alvo, "");
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 2:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e2"));
                     TitleAPI.sendSubTitle(alvo, "");
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 1:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a1"));
                     TitleAPI.sendSubTitle(alvo, "");
+                    alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 0:
                     TitleAPI.sendTimings(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§2GO"));
                     TitleAPI.sendSubTitle(alvo, "");
-                    alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 1);
+                    alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
                     break;
             }
         }
@@ -202,8 +228,8 @@ public class ArenaRunnable implements Runnable {
             // If payer is dead send him a message
             if(alvoDat.getStatus() == PlayerStatus.DEAD)
                 if(remainingTime % 30 == 0){
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Não saias da arena! Um novo jogo irá começar em breve.");
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Se saires vais perder pontos...");
+                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Nao saias da arena! Novo jogo em momentos.");
+                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Se saires vais perder pontos...");
                 }
             switch (remainingTime) {
                 case 60:
@@ -255,7 +281,7 @@ public class ArenaRunnable implements Runnable {
                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4TEMPO ESGOTADO"));
                         TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
                         // Sound
-                        alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 1);
+                        alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 10);
                     } else {
                         // Title timings
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
@@ -269,8 +295,13 @@ public class ArenaRunnable implements Runnable {
                                 // Points earned
                                 poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
                                 alvoDat.addPoints(poinsEarned);
-                            } else
+                                // Sound
+                                alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
+                            } else{
                                 TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
+                                // Sound
+                                alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
+                            }
                             // Subtitle
                             TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Vencedor: " + winner.getName()));
                         }

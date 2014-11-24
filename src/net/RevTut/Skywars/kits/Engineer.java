@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import net.RevTut.Skywars.listeners.player.PlayerDamage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,8 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Engineer Kit.
@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class Engineer{
 
-    public boolean force_dead;
+    public boolean force_dead = false;
 
     /**
      * List with all the mines in the arena
      */
-    private List<Location> landMinesList = new ArrayList<Location>();
+    private Map<Location, UUID> landMinesList = new HashMap<Location, UUID>();
 
     /**
      * Land Mine
@@ -73,9 +73,11 @@ public class Engineer{
             return;
         if (!block.getType().equals(Material.IRON_BLOCK))
             return;
-        if (!landMinesList.contains(block.getLocation()))
+        if (!landMinesList.containsKey(block.getLocation()))
             return;
         landMinesList.remove(block.getLocation());
+        // Add to last damager map
+        PlayerDamage.lastPlayerDamager.put(player.getUniqueId(), landMinesList.get(block.getLocation()));
         // Check if player must die
         if(force_dead)
             player.setHealth(1.0);
@@ -106,7 +108,7 @@ public class Engineer{
         if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Land Mine"))
             return;
         // Add to list of placed mines
-        landMinesList.add(location);
+        landMinesList.put(location, player.getUniqueId());
         // Send message
         player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias-te uma mina!");
     }
