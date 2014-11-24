@@ -48,6 +48,7 @@ public class WorldAPI {
             return false;
         world.setAutoSave(false);
         world.setKeepSpawnInMemory(false);
+        world.save();
 
         // Kick remaining players
         for (Player player : world.getPlayers())
