@@ -83,6 +83,10 @@ public class PlayerDeath implements Listener {
         // Set Status
         alvoDat.setStatus(PlayerStatus.DEAD);
 
+        // Scoreboard update alive players and dead
+        plugin.scoreBoardManager.updateAlive(alvoArena);
+        plugin.scoreBoardManager.updateDeath(alvoArena);
+
         // Bypass respawn
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
@@ -96,23 +100,20 @@ public class PlayerDeath implements Listener {
         PlayerDat damagerDat = null;
         if (PlayerDamage.lastPlayerDamager.containsKey(alvo.getUniqueId())) {
             damager = Bukkit.getPlayer(PlayerDamage.lastPlayerDamager.get(alvo.getUniqueId()));
-            if(damager == null)
-                return;
-            damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
-            if (damagerDat == null)
-                return;
-            Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
-            if (damagerArena == null)
-                return;
-            // Check if they are in the same arena
-            if (alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
-                return;
+            if(damager != null){
+                damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
+                if (damagerDat == null)
+                    return;
+                Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
+                if (damagerArena == null)
+                    return;
+                // Check if they are in the same arena
+                if (alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
+                    return;
+            }
+            PlayerDamage.lastPlayerDamager.remove(alvo.getUniqueId());
         }else
             damager = null;
-
-        // Scoreboard update alive players and dead
-        plugin.scoreBoardManager.updateAlive(alvoArena);
-        plugin.scoreBoardManager.updateDeath(alvoArena);
 
         // Messages
         if (damager != null) {

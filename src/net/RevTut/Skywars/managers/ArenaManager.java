@@ -8,6 +8,7 @@ import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.libraries.algebra.AlgebraAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.libraries.world.WorldAPI;
+import net.RevTut.Skywars.listeners.player.PlayerDamage;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.md_5.bungee.api.ChatColor;
@@ -358,6 +359,9 @@ public class ArenaManager {
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
         plugin.scoreBoardManager.updateDeath(arena);
+
+        // Remove from last damaged players
+        PlayerDamage.lastPlayerDamager.remove(player.getUniqueId());
 
         if (checkArena) {
             // Check if game already started
