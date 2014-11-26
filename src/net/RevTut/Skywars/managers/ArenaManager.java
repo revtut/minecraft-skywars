@@ -307,6 +307,16 @@ public class ArenaManager {
             unloaded = WorldAPI.unloadWorld(arena.getMapName());
             attempts--;
         }while(!unloaded && attempts >= 0);
+
+        // Tring to use NMS unload if needed
+        if(!unloaded){
+            attempts = 10;
+            do{
+                unloaded = WorldAPI.unloadWorldNMS(arena.getMapName());
+                attempts--;
+            }while(!unloaded && attempts >= 0);
+        }
+
         if(!unloaded){
             plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName());
             return false;
