@@ -1,14 +1,14 @@
 package net.RevTut.Skywars.anticheat;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by waxcoder on 23-11-2014.
@@ -16,17 +16,44 @@ import org.bukkit.entity.Player;
 
 public class Fly implements Listener {
 
+    private Map<String, Integer> antiHackFly = new HashMap();
+
     @EventHandler
     public void flyMove(PlayerMoveEvent e) {
-        if(e.getTo().getX() - e.getFrom().getX() > 1 || e.getFrom().getX() - e.getTo().getX() > 1 || e.getTo().getZ() - e.getFrom().getZ() > 1 || e.getFrom().getZ() - e.getTo().getZ() > 1) {
-            Location loc = e.getPlayer().getLocation();
-            if(loc.getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-                e.getPlayer().teleport(loc);
-                double vl = e.getFrom().distance(loc);
-                for(Player p : Bukkit.getOnlinePlayers()) {
-                    if(p.hasPermission("revtut.hack.fly")) {
-                        p.sendMessage("§7|§3SkyWars Anti§7| " + ChatColor.GRAY + "Jogador " + e.getPlayer().getName() + " esta a andar demasiado rápido VL: " + vl);
+        Location from = e.getFrom();
+        double fromX = from.getX();
+        double fromZ = from.getZ();
+        double fromY = from.getY();
+
+        Location to = e.getTo();
+        double toX = to.getX();
+        double toZ = to.getZ();
+        double toY = to.getY();
+
+        if ((fromX != toX) || (fromZ != toZ) || (fromY != toY))
+        {
+            Player p = e.getPlayer();
+            if (p.isOp()) {
+                return;
+            }
+            Location toLoc = e.getTo();
+            Location fromLoc = e.getFrom();
+            if ((toLoc.distance(fromLoc) > 6.0D) &&
+                    (!p.getGameMode().equals(GameMode.CREATIVE)))
+            {
+                if (p.getAllowFlight()) {
+                    return;
+                }
+                if (p.hasPermission("revtut.antihack.fly")) {
+                    return;
+                }
+                if (e.getPlayer().getVehicle() == null)
+                {
+                    if(this.antiHackFly.containsKey(p.getName())){
+                        this.antiHackFly.put(p.getName(), Integer.valueOf(0));
                     }
+                    this.antiHackFly.put(p.getName(),Integer.valueOf(((Integer)this.antiHackFly.get(p.getName())).intValue() + 1));
+                    p.kickPlayer("§4Foste kickado por uso de fly hack!");
                 }
             }
         }
