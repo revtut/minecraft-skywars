@@ -321,7 +321,6 @@ public enum Language {
      */
     TAGALOG("Tagalog", "fil_PH"),
 
-
     /**
      * Thailand Language
      */

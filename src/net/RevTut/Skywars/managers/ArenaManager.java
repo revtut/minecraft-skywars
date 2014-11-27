@@ -308,21 +308,10 @@ public class ArenaManager {
             attempts--;
         }while(!unloaded && attempts >= 0);
 
-        // Tring to use NMS unload if needed
-        if(!unloaded){
-            attempts = 5;
-            do{
-                unloaded = WorldAPI.unloadWorldNMS(arena.getMapName());
-                attempts--;
-                System.out.println("Unloaded: " + unloaded + " | Attempt: " + attempts);
-            }while(!unloaded && attempts >= 0);
-        }
-
         if(!unloaded){
             plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName());
             return false;
         }
-
 
         // Remove Directory
         if (WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))

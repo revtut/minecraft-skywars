@@ -2,6 +2,7 @@ package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.language.LanguageAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
 import net.RevTut.Skywars.player.PlayerDat;
@@ -68,6 +69,9 @@ public class PlayerJoin implements Listener {
             public void run() {
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
+
+                // Language of the player
+                LanguageAPI.saveLanguage(p);
 
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override

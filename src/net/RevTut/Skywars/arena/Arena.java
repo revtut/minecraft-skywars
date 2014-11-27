@@ -3,6 +3,7 @@ package net.RevTut.Skywars.arena;
 import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -91,13 +92,24 @@ public class Arena {
      *
      * @param message message to be sent
      */
-    public void sendMessage(String message) {
+    public void sendMessage(Message message) {
+        sendMessage(message, "");
+    }
+
+    /**
+     * Send a message to all the players in the arena
+     *
+     * @param message message to be sent
+     * @param args arguments of the message will be attached at the end of it
+     */
+    public void sendMessage(Message message, String args) {
         for (PlayerDat playerDat : players) {
             Player player = Bukkit.getPlayer(playerDat.getUUID());
             if (player == null)
                 continue;
             // Send message
-            player.sendMessage(message);
+            String translatedMessage = Message.getMessage(message, player);
+            player.sendMessage(translatedMessage + args);
         }
     }
 

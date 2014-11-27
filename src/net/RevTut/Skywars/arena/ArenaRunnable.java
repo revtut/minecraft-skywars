@@ -6,6 +6,7 @@ import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -93,8 +94,7 @@ public class ArenaRunnable implements Runnable {
                     onEndGame(arena);
                 // Decrement remaining time
                 if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= plugin.arenaManager.minReduceTimePlayers) {
-                    arena.sendMessage("§7|§3Sky Wars§7| §3" + plugin.arenaManager.minReduceTimePlayers + " §6jogadores estão na arena!");
-                    arena.sendMessage("§7|§3Sky Wars§7| §6O tempo foi reduzido para §330 §6segundos. ");
+                    arena.sendMessage(Message.MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED, "" + plugin.arenaManager.minReduceTimePlayers);
                     remainingTime = 31;
                 }
                 arena.setRemainingTime(remainingTime - 1);
@@ -105,7 +105,7 @@ public class ArenaRunnable implements Runnable {
                     if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
                     else {
-                        arena.sendMessage("§7|§3Sky Wars§7| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
+                        arena.sendMessage(Message.MININUM_PLAYERS_NOT_ACHIEVED, "" + plugin.arenaManager.minPlayers);
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                     }
                 else if (arena.getStatus() == ArenaStatus.PREGAME)
@@ -319,13 +319,13 @@ public class ArenaRunnable implements Runnable {
             if (arenaDat == null)
                 return;
             if (arenaDat.getWinner().equals("NULL")) {
-                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Tempo esgotado. Nao houve um vencedor.");
+                arena.sendMessage(Message.GAME_TIMEOUT);
             } else {
                 Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
                 if (null != winner) {
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo foi " + winner.getName());
+                    arena.sendMessage(Message.GAME_WINNER, winner.getName());
                 } else
-                    arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §aVencedor do jogo ja saiu do jogo.");
+                    arena.sendMessage(Message.GAME_WINNER, "se embora...");
             }
         }
     }
@@ -366,7 +366,7 @@ public class ArenaRunnable implements Runnable {
         }
         // Message
         String mapName = arena.getMapName().replace("" + arena.getArenaNumber(), "").replaceAll("_", " ");
-        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Mapa de Jogo: " + mapName);
+        arena.sendMessage(Message.GAME_MAP, mapName);
         // Send Players To Spawns
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();
@@ -468,7 +468,7 @@ public class ArenaRunnable implements Runnable {
         arenaDat.setEndDate(new Date()); // Set end date
         arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
         // Message Game Number
-        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Para reportar o jogo, anexe o ID: " + arenaDat.getGameNumber());
+        arena.sendMessage(Message.GAME_REPORT, arenaDat.getGameNumber());
         // Teleport to Center Location
         int i = 0;
         ArenaLocation arenaLocation = arena.getArenaLocation();

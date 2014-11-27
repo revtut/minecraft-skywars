@@ -4,6 +4,9 @@ import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +18,40 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class LanguageAPI {
+public final class LanguageAPI {
+
+    /**
+     * Map with all the languages of the players
+     */
+    private final static Map<UUID, Language> playerLanguage = new HashMap<UUID, Language>();
+
+    /**
+     * Save the language of a player to the map
+     *
+     * @param player player to save the language
+     * @return true if successfull;
+     */
+    public static boolean saveLanguage(Player player){
+        try {
+            Object playerMethod = ReflectionAPI.getMethod(player.getClass(), "getHandle").invoke(player, (Object[]) null);
+            Field field = ReflectionAPI.getField(playerMethod.getClass(), "locale");
+            field.setAccessible(true);
+
+            String lang = (String) field.get(playerMethod);
+            field.setAccessible(false);
+
+            Language language = getByCode(lang);
+            if(null == language)
+                return false;
+
+            playerLanguage.put(player.getUniqueId(), language);
+            return true;
+        } catch (Throwable t) {
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while getting player language in LanguageAPI!");
+            t.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Get the language of a player
@@ -24,18 +60,9 @@ public class LanguageAPI {
      * @return language of the player
      */
     public static Language getLanguage(Player player) {
-        try {
-            Object playerMethod = ReflectionAPI.getMethod(player.getClass(), "getHandle").invoke(player, (Object[]) null);
-            Field field = ReflectionAPI.getField(playerMethod.getClass(), "locale");
-            field.setAccessible(true);
-            String language = (String) field.get(playerMethod);
-            field.setAccessible(false);
-            return getByCode(language);
-        } catch (Throwable t) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while getting player language in LanguageAPI!");
-            t.printStackTrace();
+        if(!playerLanguage.containsKey(player.getUniqueId()))
             return null;
-        }
+        return playerLanguage.get(player.getUniqueId());
     }
 
     /**
