@@ -18,7 +18,10 @@ public enum Message {
     GAME_TIMEOUT,
     GAME_WINNER,
     MININUM_PLAYERS_NOT_ACHIEVED,
-    MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED;
+    MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED,
+    NOT_ENOUGH_PLAYERS_TO_CONTINUE,
+    PLAYER_JOINED_GAME,
+    PLAYER_LEFT_GAME;
 
     /**
      * Prefix of game messages
@@ -39,6 +42,12 @@ public enum Message {
                 return prefix + getMinimumPlayersNotAchieved(player);
             case MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED:
                 return prefix + getMinimumPlayersReduceTimeAchieved(player);
+            case NOT_ENOUGH_PLAYERS_TO_CONTINUE:
+                return prefix + getNotEnoughPlayersToContinue(player);
+            case PLAYER_JOINED_GAME:
+                return prefix + getPlayerJoinedGame(player);
+            case PLAYER_LEFT_GAME:
+                return prefix + getPlayerLeftGame(player);
             default:
                 return "";
         }
@@ -160,17 +169,17 @@ public enum Message {
 
         switch(language){
             case ENGLISH:
-                return "§4The minimum number of players has not been reached.\n§4Minimum players: §6";
+                return "§4The minimum number of players has not been reached.\n" + prefix + "§4Minimum players: §6";
             case FRENCH:
-                return "§4Le nombre minimum de joueurs n'a pas été atteint.\n§4Minimum de joueurs: §6";
+                return "§4Le nombre minimum de joueurs n'a pas été atteint.\n" + prefix + "§4Minimum de joueurs: §6";
             case GERMAN:
-                return "§4Die minimale anzahl von spielern noch nicht erreicht wurde.\n§4Minimale spieler: §6";
+                return "§4Die minimale anzahl von spielern noch nicht erreicht wurde.\n" + prefix + "§4Minimale spieler: §6";
             case PORTUGUESE_PT:
-                return "§4O numero minimo de jogadores nao foi alcançado.\n§4Minimo de jogadores: §6";
+                return "§4O numero minimo de jogadores nao foi alcançado.\n" + prefix + "§4Minimo de jogadores: §6";
             case PORTUGUESE_BR:
-                return "§4Nao foi atingido o numero minimo de jogadores.\n§4Jogadores minimos: §6";
+                return "§4Nao foi atingido o numero minimo de jogadores.\n" + prefix + "§4Jogadores minimos: §6";
             default:
-                return "§4The minimum number of players has not been reached.\n§4Minimum players: §6";
+                return "§4The minimum number of players has not been reached.\n" + prefix + "§4Minimum players: §6";
         }
     }
 
@@ -186,17 +195,95 @@ public enum Message {
 
         switch(language){
             case ENGLISH:
-                return "§6The time was reduced to §330 §6seconds.\n§6Number of players: §3";
+                return "§6The time was reduced to §330 §6seconds.\n" + prefix + "§6Number of players: §3";
             case FRENCH:
-                return "§6Le temps a été réduit à §330 §6secondes.\n§6Nombre de joueurs: §3";
+                return "§6Le temps a été réduit à §330 §6secondes.\n" + prefix + "§6Nombre de joueurs: §3";
             case GERMAN:
-                return "§6Die zeit wurde auf §330 §6sekunden reduziert.\n§6Anzahl der spieler: §3";
+                return "§6Die zeit wurde auf §330 §6sekunden reduziert.\n" + prefix + "§6Anzahl der spieler: §3";
             case PORTUGUESE_PT:
-                return "§6O tempo foi reduzido para §330 §6 segundos.\n§6Numero de jogadores: §3";
+                return "§6O tempo foi reduzido para §330 §6 segundos.\n" + prefix + "§6Numero de jogadores: §3";
             case PORTUGUESE_BR:
-                return "§6O tempo foi reduzido para §330 §6 segundos.\n§6Numero de jogadores: §3";
+                return "§6O tempo foi reduzido para §330 §6 segundos.\n" + prefix + "§6Numero de jogadores: §3";
             default:
-                return "§6The time was reduced to §330 §6seconds.\n§6Number of players: §3";
+                return "§6The time was reduced to §330 §6seconds.\n" + prefix + "§6Number of players: §3";
+        }
+    }
+
+    /**
+     * Not enough players to continue the game message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getNotEnoughPlayersToContinue(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4Assigned to a new arena due to insufficient players!";
+            case FRENCH:
+                return "§4Assigné à un nouvel aréna en raison de l'insuffisance des joueurs!";
+            case GERMAN:
+                return "§4Zu einer neuen arena zugeordnet aufgrund unzureichender spieler!";
+            case PORTUGUESE_PT:
+                return "§4Assignado a uma nova arena devido a jogadores insuficientes!";
+            case PORTUGUESE_BR:
+                return "§4Designado para uma nova arena, devido a insuficiencia de jogadores!";
+            default:
+                return "§4Assigned to a new arena due to insufficient players!";
+        }
+    }
+
+    /**
+     * Player left the game message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerLeftGame(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6Left the game ";
+            case FRENCH:
+                return "§6A quitté l'arène ";
+            case GERMAN:
+                return "§6Verließ die arena ";
+            case PORTUGUESE_PT:
+                return "§6Abandonou a arena ";
+            case PORTUGUESE_BR:
+                return "§6Saiu da arena ";
+            default:
+                return "§6Left the game ";
+        }
+    }
+
+    /**
+     * Player joined the game message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerJoinedGame(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6Joined the game ";
+            case FRENCH:
+                return "§6Entré dans l'arène ";
+            case GERMAN:
+                return "§6In die arena ";
+            case PORTUGUESE_PT:
+                return "§6Entrou na arena ";
+            case PORTUGUESE_BR:
+                return "§6Entrou na arena ";
+            default:
+                return "§6Joined the game ";
         }
     }
 }

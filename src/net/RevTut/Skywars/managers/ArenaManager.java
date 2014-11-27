@@ -11,6 +11,7 @@ import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.listeners.player.PlayerDamage;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.Message;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -350,7 +351,7 @@ public class ArenaManager {
             return false;
 
         // Message to arena
-        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 saiu da arena!");
+        arena.sendMessage(Message.PLAYER_LEFT_GAME, player.getDisplayName());
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
 
         // Hide to Server
@@ -367,7 +368,7 @@ public class ArenaManager {
             // Check if game already started
             if ((arena.getStatus() == ArenaStatus.INGAME && arena.getAlivePlayers().size() <= 1) || (arena.getStatus() == ArenaStatus.PREGAME && arena.getPlayers().size() <= 1)) {
                 // Send message
-                arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Asignando a uma nova arena devido a jogadores insuficientes!");
+                arena.sendMessage(Message.NOT_ENOUGH_PLAYERS_TO_CONTINUE);
                 // Send remaining players to new arena
                 List<PlayerDat> arenaPlayers = new ArrayList<PlayerDat>(arena.getPlayers()); // Avoid concurrent modifications
                 for (PlayerDat alvoDat : arenaPlayers) {
@@ -536,7 +537,7 @@ public class ArenaManager {
         plugin.arenaManager.unhideToArena(player, true);
 
         // Message to arena
-        arena.sendMessage("§7|" + "§3Sky Wars" + "§7| §6" + player.getDisplayName() + "§6 entrou na arena!");
+        arena.sendMessage(Message.PLAYER_JOINED_GAME, player.getDisplayName());
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
 
         // Config Player
