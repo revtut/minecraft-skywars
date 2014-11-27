@@ -301,16 +301,16 @@ public class ArenaManager {
      */
     private boolean removeMap(final Arena arena) {
         // Unload of the World
-        int attempts = 10; // number of attempts to unload the world
-        boolean unloaded = false; // true if unloading was successfull
-        //do{
-        //    unloaded = WorldAPI.unloadWorld(arena.getMapName());
-        //    attempts--;
-        //}while(!unloaded && attempts >= 0);
+        int attempts = 3; // number of attempts to unload the world
+        boolean unloaded; // true if unloading was successfull
+        do{
+            unloaded = WorldAPI.unloadWorld(arena.getMapName());
+            attempts--;
+        }while(!unloaded && attempts >= 0);
 
         // Tring to use NMS unload if needed
         if(!unloaded){
-            attempts = 10;
+            attempts = 5;
             do{
                 unloaded = WorldAPI.unloadWorldNMS(arena.getMapName());
                 attempts--;
