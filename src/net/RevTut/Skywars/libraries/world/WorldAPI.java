@@ -2,6 +2,7 @@ package net.RevTut.Skywars.libraries.world;
 
 import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.FallingBlock;
@@ -88,6 +89,10 @@ public class WorldAPI {
         for (Player player : world.getPlayers())
             player.kickPlayer("§4A resetar o mundo... nao e suposto estares aqui!");
 
+        // Unload all the chunks
+        for(Chunk chunk : world.getLoadedChunks())
+            world.unloadChunk(chunk);
+
         return Bukkit.unloadWorld(world, true);
     }
 
@@ -130,6 +135,10 @@ public class WorldAPI {
         for ( Player player : world.getPlayers() )
             player.kickPlayer("§4A resetar o mundo... nao e suposto estares aqui!");
 
+        // Unload all the chunks
+        for(Chunk chunk : world.getLoadedChunks())
+            world.unloadChunk(chunk);
+
         // Access fields in NMS
         try
         {
@@ -138,7 +147,7 @@ public class WorldAPI {
             Map<String, World> worlds = (Map<String, World>)f.get(Bukkit.getServer());
             worlds.remove(world.getName().toLowerCase());
             f.setAccessible(false);
-        } catch ( IllegalAccessException ex ) {
+        } catch (IllegalAccessException ex ) {
             return false;
         }
 

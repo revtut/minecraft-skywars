@@ -93,8 +93,8 @@ public class ArenaRunnable implements Runnable {
                     onEndGame(arena);
                 // Decrement remaining time
                 if (arena.getStatus() == ArenaStatus.LOBBY && remainingTime > 30 && arena.getPlayers().size() >= plugin.arenaManager.minReduceTimePlayers) {
-                    arena.sendMessage("§7|§3SkyWars§7| §3" + plugin.arenaManager.minReduceTimePlayers + " §6jogadores estão na arena!");
-                    arena.sendMessage("§7|§3SkyWars§7| §6O tempo foi reduzido para §330 §6segundos. ");
+                    arena.sendMessage("§7|§3Sky Wars§7| §3" + plugin.arenaManager.minReduceTimePlayers + " §6jogadores estão na arena!");
+                    arena.sendMessage("§7|§3Sky Wars§7| §6O tempo foi reduzido para §330 §6segundos. ");
                     remainingTime = 31;
                 }
                 arena.setRemainingTime(remainingTime - 1);
@@ -105,7 +105,7 @@ public class ArenaRunnable implements Runnable {
                     if (arena.getPlayers().size() >= plugin.arenaManager.minPlayers)
                         fromLobbyToPreGame(arena);
                     else {
-                        arena.sendMessage("§7|§3SkyWars§7| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
+                        arena.sendMessage("§7|§3Sky Wars§7| §4Minimo de " + plugin.arenaManager.minPlayers + " jogadores nao atingidos.");
                         arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                     }
                 else if (arena.getStatus() == ArenaStatus.PREGAME)

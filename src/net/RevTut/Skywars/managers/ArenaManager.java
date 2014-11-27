@@ -314,6 +314,7 @@ public class ArenaManager {
             do{
                 unloaded = WorldAPI.unloadWorldNMS(arena.getMapName());
                 attempts--;
+                System.out.println("Unloaded: " + unloaded + " | Attempt: " + attempts);
             }while(!unloaded && attempts >= 0);
         }
 

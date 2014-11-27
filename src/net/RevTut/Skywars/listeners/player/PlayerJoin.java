@@ -141,6 +141,6 @@ public class PlayerJoin implements Listener {
                 // Update points in ScoreBoard
                 plugin.scoreBoardManager.updatePoints(playerDat);
             }
-        }, 5);
+        }, 10);
     }
 }
