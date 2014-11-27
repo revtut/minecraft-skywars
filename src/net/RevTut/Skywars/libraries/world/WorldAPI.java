@@ -11,14 +11,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,31 +24,6 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class WorldAPI {
-
-    /**
-     * Map with the needed classes for working with worlds and NMS/OBC
-     */
-    public static final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-
-    /**
-     * Map with the needed methods for working with worlds and NMS/OBC
-     */
-    public static final HashMap<String, Method> methods = new HashMap<String, Method>();
-
-    /**
-     * Map with the needed fields for working with worlds and NMS/OBC
-     */
-    public static final HashMap<String, Field> fields = new HashMap<String, Field>();
-
-    /**
-     * Map with the files regions
-     */
-    private static HashMap regionfiles;
-
-    /**
-     *  Hashmap with the fields of the regions
-     */
-    private static Field rafField;
 
     /**
      * Load a new world to the server.
@@ -97,225 +65,6 @@ public class WorldAPI {
     }
 
     /**
-     * Unload a world from the server.
-     *
-     * @param worldName name of the world to load
-     * @return true if world was unloaded
-     */
-    public static boolean unloadWorldNMS(String worldName) {
-        // Bind region files
-        if(!bindRegionFiles())
-            return false;
-        // Force unload world
-        if(!forceUnloadWorld(worldName))
-            return false;
-        // Clear references to the world
-        if(!clearWorldReference(worldName))
-            return false;
-        // Unbind region files;
-        unbindRegionFiles();
-
-        return true;
-    }
-
-    /**
-     * Forces the unload of a world from the server.
-     *
-     * @param worldName name of the world to load
-     * @return true if world was unloaded
-     */
-    public static boolean forceUnloadWorld(String worldName)  {
-        World world = Bukkit.getWorld(worldName);
-        if (world == null)
-            return false;
-        world.setAutoSave(false);
-        world.setKeepSpawnInMemory(false);
-
-        // Kick remaining players
-        for ( Player player : world.getPlayers() )
-            player.kickPlayer("§4A resetar o mundo... nao e suposto estares aqui!");
-
-        // Unload all the chunks
-        for(Chunk chunk : world.getLoadedChunks())
-            world.unloadChunk(chunk);
-
-        // Access fields in NMS
-        try
-        {
-            Field f = fields.get("CraftServer.worlds");
-            f.setAccessible(true);
-            Map<String, World> worlds = (Map<String, World>)f.get(Bukkit.getServer());
-            worlds.remove(world.getName().toLowerCase());
-            f.setAccessible(false);
-        } catch (IllegalAccessException ex ) {
-            return false;
-        }
-
-        // Remove world from worlds list
-        Object minecraftServer = getMinecraftServer();
-        List<Object> worldList;
-        try {
-            worldList = (List<Object>) fields.get("MinecraftServer.worlds").get(minecraftServer);
-            int wid = worldList.indexOf(methods.get("CraftWorld.getHandle()").invoke(world));
-            if(wid > -1) {
-                worldList.remove(wid);
-            }
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        } catch (IllegalAccessException e) {
-            return false;
-        } catch (InvocationTargetException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Delete world references from the server
-     *
-     * @param worldName name of the world
-     * @return true if successfull
-     */
-    public static synchronized boolean clearWorldReference(String worldName) {
-        if (regionfiles == null)
-            return false;
-        if (rafField == null)
-            return false;
-
-        ArrayList<Object> removedKeys = new ArrayList<Object>();
-        try {
-            for (Object o : regionfiles.entrySet()) {
-                Map.Entry e = (Map.Entry) o;
-                File f = (File) e.getKey();
-                if (f.toString().startsWith("." + File.separator + worldName)) {
-                    try {
-                        RandomAccessFile raf = (RandomAccessFile) rafField.get(e.getValue());
-                        raf.close();
-                        removedKeys.add(f);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        return false;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Exception while removing world reference for '" + worldName + "' ReflectionAPI!");
-            e.printStackTrace();
-            return false;
-        }
-        for (Object key : removedKeys)
-            regionfiles.remove(key);
-        return true;
-    }
-
-    /**
-     * Bind region files and filds
-     */
-    public static boolean bindRegionFiles() {
-        try {
-            regionfiles = (HashMap) fields.get("RegionFileCache.regionsByFilename").get(null);
-            rafField = fields.get("RegionFile.dataFile");
-            return true;
-        } catch (Throwable t) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Error binding to region file cache ReflectionAPI!");
-            t.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * Unbind region files and filds
-     */
-    public static void unbindRegionFiles() {
-        regionfiles = null;
-        rafField = null;
-    }
-
-    /**
-     * Saves needed classes to work with worlds in a map
-     *
-     * @return true if successfull
-     */
-    public static boolean getWorldClasses() {
-        try {
-            // org.bukkit.craftbukkit
-            classes.put("CraftServer", ReflectionAPI.getOBCClass("CraftServer"));
-            classes.put("CraftWorld", ReflectionAPI.getOBCClass("CraftWorld"));
-            classes.put("CraftFallingSand", ReflectionAPI.getOBCClass("entity.CraftFallingSand"));
-            // net.minecraft.server
-            classes.put("MinecraftServer", ReflectionAPI.getNMSClass("MinecraftServer"));
-            classes.put("RegionFile", ReflectionAPI.getNMSClass("RegionFile"));
-            classes.put("RegionFileCache", ReflectionAPI.getNMSClass("RegionFileCache"));
-            classes.put("WorldData", ReflectionAPI.getNMSClass("WorldData"));
-            classes.put("WorldServer", ReflectionAPI.getNMSClass("WorldServer"));
-            classes.put("EntityFallingBlock", ReflectionAPI.getNMSClass("EntityFallingBlock"));
-            return true;
-        } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Could not aquire a required class in ReflectionAPI!");
-            return false;
-        }
-    }
-
-    /**
-     * Saves needed methods to work with worlds in a map
-     *
-     * @return true if successfull
-     */
-    public static boolean getWorldMethods() {
-        try {
-            // org.bukkit.craftbukkit
-            methods.put("CraftWorld.getHandle()", ReflectionAPI.getMethod(classes.get("CraftWorld"), "getHandle"));
-            methods.put("CraftServer.getServer()", ReflectionAPI.getMethod(classes.get("CraftServer"), "getServer"));
-            methods.put("CraftFallingSand.getHandle()", ReflectionAPI.getMethod(classes.get("CraftFallingSand"), "getHandle"));
-            // net.minecraft.server
-            return true;
-        } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Could not aquire a required method in ReflectionAPI!");
-            return false;
-        }
-    }
-
-    /**
-     * Saves needed fields to work with worlds in a map
-     *
-     * @return true if successfull
-     */
-    public static boolean getWorldFields() {
-        try {
-            fields.put("RegionFileCache.regionsByFilename", ReflectionAPI.getField(classes.get("RegionFileCache"), "a")); // obfuscated - regionsByFilename in RegionFileCache
-            fields.put("RegionFile.dataFile", ReflectionAPI.getField(classes.get("RegionFile"), "c")); // obfuscated - dataFile in RegionFile
-            fields.put("WorldData.seed", ReflectionAPI.getField(classes.get("WorldData"), "seed"));
-            fields.put("EntityFallingBlock.hurtEntities", ReflectionAPI.getField(classes.get("EntityFallingBlock"), "hurtEntities"));
-            fields.put("EntityFallingBlock.fallHurtAmount", ReflectionAPI.getField(classes.get("EntityFallingBlock"), "fallHurtAmount"));
-            fields.put("EntityFallingBlock.fallHurtMax", ReflectionAPI.getField(classes.get("EntityFallingBlock"), "fallHurtMax"));
-            fields.put("MinecraftServer.worlds", ReflectionAPI.getField(classes.get("MinecraftServer"), "worlds"));
-            fields.put("CraftServer.worlds", ReflectionAPI.getField(classes.get("CraftServer"), "worlds"));
-            fields.put("RegionFile.dataFile", ReflectionAPI.getField(classes.get("RegionFile"), "c"));
-            return true;
-        } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Could not find a field class in ReflectionAPI!");
-            return false;
-        }
-    }
-
-    /**
-     * Get the minecraft server object
-     *
-     * @return the mnecraft server object
-     */
-    public static Object getMinecraftServer() {
-        try {
-            return methods.get("CraftServer.getServer()").invoke(Bukkit.getServer());
-        } catch (IllegalArgumentException e) {
-            return null;
-        } catch (IllegalAccessException e) {
-            return null;
-        } catch (InvocationTargetException e) {
-            return null;
-        }
-    }
-
-    /**
      * Change damage of falling blocks
      *
      * @param block falling block to change damage
@@ -323,20 +72,34 @@ public class WorldAPI {
      * @param max max damge applied
      * @return true if successfull
      */
-    public static boolean setFallingBlockHurtEntities(FallingBlock block, float damage, int max) {
+    public static boolean changeFallingBlockDamage(FallingBlock block, float damage, int max) {
         try {
-            Object efb = methods.get("CraftFallingSand.getHandle()").invoke(block);
-            Field field = fields.get("EntityFallingBlock.hurtEntities");
+            // Falling block
+            Class classzz = ReflectionAPI.getOBCClass("entity.CraftFallingSand");
+            Object fallingBlock = ReflectionAPI.getMethod(classzz, "getHandle").invoke(block);
+
+            // Enable falling block damage
+            classzz = ReflectionAPI.getNMSClass("EntityFallingBlock");
+            Field field = ReflectionAPI.getField(classzz, "hurtEntities");
             field.setAccessible(true);
-            field.setBoolean(efb, true);
-            field = fields.get("EntityFallingBlock.fallHurtAmount");
+            field.setBoolean(fallingBlock, true);
+            field.setAccessible(false);
+
+            // Set the hurt amount of a falling block
+            field = ReflectionAPI.getField(classzz, "fallHurtAmount");
             field.setAccessible(true);
-            field.setFloat(efb, damage);
-            field = fields.get("EntityFallingBlock.fallHurtMax");
+            field.setFloat(fallingBlock, damage);
+            field.setAccessible(false);
+
+            // Set the maximum hurt amount of a falling block
+            field = ReflectionAPI.getField(classzz, "fallHurtMax");
             field.setAccessible(true);
-            field.setInt(efb, max);
+            field.setInt(fallingBlock, max);
+            field.setAccessible(false);
+
             return true;
         } catch (Exception e) {
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to ser damage of falling blocks in ReflectionAPI!");
             e.printStackTrace();
             return false;
         }
