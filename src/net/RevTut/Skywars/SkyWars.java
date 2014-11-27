@@ -9,7 +9,6 @@ import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
-import net.RevTut.Skywars.libraries.world.WorldAPI;
 import net.RevTut.Skywars.listeners.block.BlockBreak;
 import net.RevTut.Skywars.listeners.block.BlockPlace;
 import net.RevTut.Skywars.listeners.environment.ProjectileHit;
@@ -202,11 +201,6 @@ public class SkyWars extends JavaPlugin {
         TabAPI.plugin = this;
         TitleAPI.plugin = this;
         PlayerDat.plugin = this;
-
-        /* Initialize some reflection for world */
-        WorldAPI.getWorldClasses();
-        WorldAPI.getWorldMethods();
-        WorldAPI.getWorldFields();
 
         /* Register Plugin Messages */
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

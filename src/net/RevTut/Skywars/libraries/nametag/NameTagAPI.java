@@ -28,11 +28,6 @@ import java.util.logging.Logger;
 public final class NameTagAPI implements Listener {
 
     /**
-     * Constructor of NameTagAPI
-     */
-    private NameTagAPI() {}
-
-    /**
      * Main class
      */
     public static SkyWars plugin = null;
