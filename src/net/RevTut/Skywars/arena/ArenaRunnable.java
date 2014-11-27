@@ -436,7 +436,7 @@ public class ArenaRunnable implements Runnable {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §aPodes agora abrir os baus!");
+                    alvo.sendMessage(Message.getMessage(Message.ALLOWED_OPEN_CHESTS, alvo));
                     alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
                 }
             }, 40);

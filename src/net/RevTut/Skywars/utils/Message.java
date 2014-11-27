@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
  * @version 1.0
  */
 public enum Message {
+    ALLOWED_OPEN_CHESTS,
     GAME_MAP,
     GAME_REPORT,
     GAME_TIMEOUT,
@@ -30,6 +31,8 @@ public enum Message {
 
     public static String getMessage(Message message, Player player){
         switch (message){
+            case ALLOWED_OPEN_CHESTS:
+                return prefix + getAllowedOpenChests(player);
             case GAME_MAP:
                 return prefix + getGameMap(player);
             case GAME_REPORT:
@@ -50,6 +53,32 @@ public enum Message {
                 return prefix + getPlayerLeftGame(player);
             default:
                 return "";
+        }
+    }
+
+    /**
+     * Allowed to open chests message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getAllowedOpenChests(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§aYou may now open the chests!";
+            case FRENCH:
+                return "§aVous pouvez maintenant ouvrir les coffres!";
+            case GERMAN:
+                return "§aSie können jetzt die kisten!";
+            case PORTUGUESE_PT:
+                return "§aPodes agora abrir os baus!";
+            case PORTUGUESE_BR:
+                return "§aAgora voce pode abrir os baus!";
+            default:
+                return "§aYou may now open the chests!";
         }
     }
 
