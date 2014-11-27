@@ -23,7 +23,12 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class WorldAPI {
+public final class WorldAPI {
+
+    /**
+     * Constructor of WorldAPI
+     */
+    private WorldAPI() {}
 
     /**
      * Load a new world to the server.
