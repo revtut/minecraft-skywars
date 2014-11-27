@@ -101,6 +101,10 @@ public class PlayerJoin implements Listener {
                         // New Arena if Needed
                         if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
                             plugin.arenaManager.createNewArena();
+
+                        // Update ScoreBoard to player
+                        plugin.scoreBoardManager.updateAlive(arena);
+                        plugin.scoreBoardManager.updateDeath(arena);
                     }
                 });
             }

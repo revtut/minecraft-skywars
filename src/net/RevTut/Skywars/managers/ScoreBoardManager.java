@@ -114,15 +114,27 @@ public class ScoreBoardManager {
     public void updateAlive(Arena arena) {
         int alive = arena.getAlivePlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
-                continue;
-            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-            if (board == null)
-                continue;
-            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-            objective.getScore("§aAlive:").setScore(alive);
+            updateAlive(arena, alvoDat);
         }
+    }
+
+    /**
+     * Update alive players in the scoreboard of all the
+     * players which are on that arena
+     *
+     * @param arena arena to update alive players
+     * @param playerDat player to be updated
+     */
+    public void updateAlive(Arena arena, PlayerDat playerDat) {
+        int alive = arena.getAlivePlayers().size();
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null)
+            return;
+        Scoreboard board = scoreBoards.get(player.getUniqueId());
+        if (board == null)
+            return;
+        Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+        objective.getScore("§aAlive:").setScore(alive);
     }
 
     /**
@@ -134,15 +146,27 @@ public class ScoreBoardManager {
     public void updateDeath(Arena arena) {
         int dead = arena.getDeadPlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if (alvo == null)
-                continue;
-            Scoreboard board = scoreBoards.get(alvo.getUniqueId());
-            if (board == null)
-                continue;
-            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-            objective.getScore("§cDead:").setScore(dead);
+            updateDeath(arena, alvoDat);
         }
+    }
+
+    /**
+     * Update death players in the scoreboard of all the
+     * players which are on that arena
+     *
+     * @param arena arena to update death players
+     * @param playerDat player to be updated
+     */
+    public void updateDeath(Arena arena, PlayerDat playerDat) {
+        int dead = arena.getDeadPlayers().size();
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if (player == null)
+            return;
+        Scoreboard board = scoreBoards.get(player.getUniqueId());
+        if (board == null)
+            return;
+        Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
+        objective.getScore("§cDead:").setScore(dead);
     }
 
     /**
