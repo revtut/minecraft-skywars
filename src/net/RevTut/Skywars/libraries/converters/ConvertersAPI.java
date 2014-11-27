@@ -10,7 +10,12 @@ import java.util.List;
  * @author Joao Silva
  * @version 1.0
  */
-public class ConvertersAPI {
+public final class ConvertersAPI {
+
+    /**
+     * Constructor of ConvertersAPI
+     */
+    private ConvertersAPI() {}
 
     /**
      * Convert a text to JSON format

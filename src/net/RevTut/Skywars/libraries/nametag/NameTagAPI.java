@@ -25,7 +25,12 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class NameTagAPI implements Listener {
+public final class NameTagAPI implements Listener {
+
+    /**
+     * Constructor of NameTagAPI
+     */
+    private NameTagAPI() {}
 
     /**
      * Main class

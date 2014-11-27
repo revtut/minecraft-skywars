@@ -20,7 +20,12 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class AppearanceAPI {
+public final class AppearanceAPI {
+
+    /**
+     * Constructor of AppearanceAPI
+     */
+    private AppearanceAPI() {}
 
     /**
      * Main class

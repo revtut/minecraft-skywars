@@ -18,8 +18,13 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class TitleAPI {
+public final class TitleAPI {
 
+    /**
+     * Constructor of TitleAPI
+     */
+    private TitleAPI() {}
+    
     /**
      * Main class
      */

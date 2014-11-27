@@ -10,7 +10,12 @@ import org.bukkit.Location;
  * @author Joao Silva
  * @version 1.0
  */
-public class AlgebraAPI {
+public final class AlgebraAPI {
+
+    /**
+     * Constructor of AlgebraAPI
+     */
+    private AlgebraAPI() {}
 
     /**
      * Make a location look at another location, in other words, change the pitch/yaw in such manner that,

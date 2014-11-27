@@ -20,7 +20,12 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class TabAPI {
+public final class TabAPI {
+
+    /**
+     * Constructor of TabAPI
+     */
+    private TabAPI() {}
 
     /**
      * Main class
