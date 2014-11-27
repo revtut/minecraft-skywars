@@ -30,7 +30,12 @@ import java.util.logging.Logger;
  * @author Joao Silva
  * @version 1.0
  */
-public class WorldAPI {
+public final class WorldAPI {
+
+    /**
+     * Constructor of WorldAPI
+     */
+    private WorldAPI(){}
 
     /**
      * Map with the needed classes for working with worlds and NMS/OBC
@@ -329,12 +334,15 @@ public class WorldAPI {
             Field field = fields.get("EntityFallingBlock.hurtEntities");
             field.setAccessible(true);
             field.setBoolean(efb, true);
+            field.setAccessible(false);
             field = fields.get("EntityFallingBlock.fallHurtAmount");
             field.setAccessible(true);
             field.setFloat(efb, damage);
+            field.setAccessible(false);
             field = fields.get("EntityFallingBlock.fallHurtMax");
             field.setAccessible(true);
             field.setInt(efb, max);
+            field.setAccessible(false);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

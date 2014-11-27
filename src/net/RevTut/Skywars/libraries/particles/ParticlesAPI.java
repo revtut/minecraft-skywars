@@ -16,7 +16,12 @@ import java.util.Random;
  * @author WaxCoder
  * @version 1.0
  */
-public class ParticlesAPI {
+public final class ParticlesAPI {
+
+    /**
+     * Constructor of ParticlesAPI
+     */
+    private ParticlesAPI() {}
 
     /**
      * Random class

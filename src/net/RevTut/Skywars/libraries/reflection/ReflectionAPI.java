@@ -13,7 +13,12 @@ import java.lang.reflect.Method;
  * @author Joao Silva
  * @version 1.0
  */
-public class ReflectionAPI {
+public final class ReflectionAPI {
+
+    /**
+     * Constructor of ReflectionAPI
+     */
+    private ReflectionAPI() {}
 
     /**
      * Get version of Minecraft.

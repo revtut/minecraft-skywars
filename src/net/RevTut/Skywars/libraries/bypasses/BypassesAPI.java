@@ -15,7 +15,12 @@ import org.bukkit.entity.Player;
  * @author Joao Silva
  * @version 1.0
  */
-public class BypassesAPI {
+public final class BypassesAPI {
+
+    /**
+     * Constructor of BypassesAPI
+     */
+    private BypassesAPI() {}
 
     /**
      * Main class
