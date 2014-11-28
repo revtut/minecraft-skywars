@@ -14,7 +14,7 @@ public class Screamer implements Listener {
 
     private static ItemStack ScreamerItem = new ItemStack(Material.FIREBALL, 1);{
         ItemMeta ScreamerItemMeta = ScreamerItem.getItemMeta();
-        ScreamerItemMeta.setDisplayName("§3Scream!!");
+        ScreamerItemMeta.setDisplayName("§3Scream");
         ScreamerItem.setItemMeta(ScreamerItemMeta);
     }
 
@@ -35,7 +35,7 @@ public class Screamer implements Listener {
             return;
         if (!itemStack.getItemMeta().hasDisplayName())
             return;
-        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Scream!!"))
+        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase("§3Scream"))
             return;
 
 
