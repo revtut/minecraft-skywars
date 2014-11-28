@@ -2,6 +2,7 @@ package net.RevTut.Skywars.managers;
 
 import net.RevTut.Skywars.kits.*;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -110,7 +111,7 @@ public class KitManager {
         //else if(kit == Kit.SCREAMER)
         //    screamer.kitScreamer(player);
         // Message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §aRecebeste o Kit " + ChatColor.stripColor(kit.getDisplayName())+ "!");
+        player.sendMessage(Message.getMessage(Message.KIT_RECEIVED, player) + ChatColor.stripColor(kit.getDisplayName())+ "!");
     }
 
     /**
@@ -191,14 +192,14 @@ public class KitManager {
         player.closeInventory();
         // Check if player has not choose the kit already
         if(playerKit.containsKey(playerDat.getUUID())){
-            player.sendMessage("§7|" + "§3Sky Wars" + "§7| §4O teu kit ja foi escolhido!");
+            player.sendMessage(Message.getMessage(Message.KIT_ALREADY_CHOSEN, player));
             return;
         }
         // Choosen kit
         Kit kit = Kit.values()[position];
         // Check if player has enough points
         if(playerDat.getPoints() < kit.getCost()){
-            player.sendMessage("§7|" + "§3Sky Wars" + "§7| §4Pontos insuficientes para o kit!");
+            player.sendMessage(Message.getMessage(Message.NOT_ENOUGH_POINTS_FOR_KIT, player));
             return;
         }
         // Add to map
@@ -206,6 +207,6 @@ public class KitManager {
         // Decrease points
         playerDat.addPoints(0 - kit.getCost());
         // Message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Kit " + ChatColor.stripColor(kit.getDisplayName()) + " comprado!");
+        player.sendMessage(Message.getMessage(Message.KIT_BOUGHT, player) + ChatColor.stripColor(kit.getDisplayName()) + "!");
     }
 }

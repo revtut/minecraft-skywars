@@ -23,16 +23,22 @@ public enum Message {
     GAME_WINNER,
     GUARDIAN_ENABLED_SPEED,
     HACKER_RESPAWN,
+    KIT_ALREADY_CHOSEN,
+    KIT_BOUGHT,
+    KIT_RECEIVED,
     MININUM_PLAYERS_NOT_ACHIEVED,
     MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED,
     NOT_ENOUGH_PLAYERS_TO_CONTINUE,
+    NOT_ENOUGH_POINTS_FOR_KIT,
     PLAYER_ADVERTISE,
     PLAYER_ARENA_NULL,
     PLAYER_BAD_LANGUAGE,
     PLAYER_COOLDOWN_MESSAGES,
     PLAYER_DEAD_PREFIX,
+    PLAYER_DIED,
     PLAYER_DUPLICATED_MESSAGE,
     PLAYER_JOINED_GAME,
+    PLAYER_KILLED_BY,
     PLAYER_LEFT_GAME,
     PLAYER_PROFILE_ERROR,
     PLAYER_SPAM,
@@ -48,6 +54,13 @@ public enum Message {
      */
     private static String inspectorPrefix = "§7[§6Inspector§7]";
 
+    /**
+     * Send message to player in his language
+     *
+     * @param message message type to be sent
+     * @param player player to send the message
+     * @return translated message type
+     */
     public static String getMessage(Message message, Player player){
         switch (message){
             case ALLOWED_OPEN_CHESTS:
@@ -70,12 +83,20 @@ public enum Message {
                 return gamePrefix + getGuardianEnabledSpeed(player);
             case HACKER_RESPAWN:
                 return gamePrefix + getHackerRespawn(player);
+            case KIT_ALREADY_CHOSEN:
+                return gamePrefix + getKitAlreadyChosen(player);
+            case KIT_BOUGHT:
+                return gamePrefix + getKitBought(player);
+            case KIT_RECEIVED:
+                return gamePrefix + getKitReceived(player);
             case MININUM_PLAYERS_NOT_ACHIEVED:
                 return gamePrefix + getMinimumPlayersNotAchieved(player);
             case MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED:
                 return gamePrefix + getMinimumPlayersReduceTimeAchieved(player);
             case NOT_ENOUGH_PLAYERS_TO_CONTINUE:
                 return gamePrefix + getNotEnoughPlayersToContinue(player);
+            case NOT_ENOUGH_POINTS_FOR_KIT:
+                return gamePrefix + getNotEnoughPointsForKit(player);
             case PLAYER_ADVERTISE:
                 return inspectorPrefix + getPlayerAdvertise(player);
             case PLAYER_ARENA_NULL:
@@ -86,10 +107,14 @@ public enum Message {
                 return inspectorPrefix + getPlayerCooldownMessages(player);
             case PLAYER_DEAD_PREFIX:
                 return getPlayerDeadPrefix(player);
+            case PLAYER_DIED:
+                return gamePrefix + getPlayerDied(player);
             case PLAYER_DUPLICATED_MESSAGE:
                 return inspectorPrefix + getPlayerDuplicatedMessage(player);
             case PLAYER_JOINED_GAME:
                 return gamePrefix + getPlayerJoinedGame(player);
+            case PLAYER_KILLED_BY:
+                return gamePrefix + getPlayerKilledBy(player);
             case PLAYER_LEFT_GAME:
                 return gamePrefix + getPlayerLeftGame(player);
             case PLAYER_PROFILE_ERROR:
@@ -338,6 +363,84 @@ public enum Message {
     }
 
     /**
+     * Get kit already chosen message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getKitAlreadyChosen(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4You have already chosen your kit!";
+            case FRENCH:
+                return "§4Vous avez déjà choisi votre kit!";
+            case GERMAN:
+                return "§4Sie haben Ihre Kit gewählt!";
+            case PORTUGUESE_PT:
+                return "§4O teu kit ja foi escolhido!";
+            case PORTUGUESE_BR:
+                return "§4Você já escolheu o seu kit!";
+            default:
+                return "§4You have already chosen your kit!";
+            }
+    }
+
+    /**
+     * Get kit bought message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getKitBought(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6You have bought Kit ";
+            case FRENCH:
+                return "§6Vous avez acheté Kit ";
+            case GERMAN:
+                return "§6Sie haben Kit gekauft ";
+            case PORTUGUESE_PT:
+                return "§6Adquiriste o Kit ";
+            case PORTUGUESE_BR:
+                return "§6Você comprou o Kit ";
+            default:
+                return "§6You have bought Kit ";
+        }
+    }
+
+    /**
+     * Get kit received message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getKitReceived(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§aYou have received Kit ";
+            case FRENCH:
+                return "§aVous avez reçu Kit ";
+            case GERMAN:
+                return "§aSie haben Kit erhalten";
+            case PORTUGUESE_PT:
+                return "§aRecebeste o Kit ";
+            case PORTUGUESE_BR:
+                return "§aVocê recebeu o Kit ";
+            default:
+                return "§aYou have received Kit ";
+        }
+    }
+
+    /**
      * Get minimum players not achieved message
      *
      * @param player player to get the translated message
@@ -412,6 +515,32 @@ public enum Message {
                 return "§4Designado para uma nova arena, devido a insuficiencia de jogadores!";
             default:
                 return "§4Assigned to a new arena due to insufficient players!";
+        }
+    }
+
+    /**
+     * Get not enough points for kit message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getNotEnoughPointsForKit(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4You do not have enough points for the kit!";
+            case FRENCH:
+                return "§4Vous ne avez pas assez de points pour le kit!";
+            case GERMAN:
+                return "§4Sie haben nicht genug Punkte für das Kit!";
+            case PORTUGUESE_PT:
+                return "§4Pontos insuficientes para o kit!";
+            case PORTUGUESE_BR:
+                return "§4Você não tem pontos suficientes para o kit!";
+            default:
+                return "§4You do not have enough points for the kit!";
         }
     }
 
@@ -546,6 +675,32 @@ public enum Message {
     }
 
     /**
+     * Get player died message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerDied(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4Died: ";
+            case FRENCH:
+                return "§4Mort: ";
+            case GERMAN:
+                return "§4Verstorben: ";
+            case PORTUGUESE_PT:
+                return "§4Morreu: ";
+            case PORTUGUESE_BR:
+                return "§4Morreu: ";
+            default:
+                return "§4Died: ";
+        }
+    }
+
+    /**
      * Get player duplicated messages are not allowed message
      *
      * @param player player to get the translated message
@@ -620,6 +775,32 @@ public enum Message {
                 return "§6Entrou na arena ";
             default:
                 return "§6Joined the game ";
+        }
+    }
+
+    /**
+     * Get player killed by message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKilledBy(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4Killed By: ";
+            case FRENCH:
+                return "§4Mort Pour: ";
+            case GERMAN:
+                return "§4Tote Für: ";
+            case PORTUGUESE_PT:
+                return "§4Morto Por: ";
+            case PORTUGUESE_BR:
+                return "§4Morto Por: ";
+            default:
+                return "§4Killed By: ";
         }
     }
 

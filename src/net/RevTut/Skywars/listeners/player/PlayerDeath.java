@@ -8,6 +8,7 @@ import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.Message;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -118,7 +119,8 @@ public class PlayerDeath implements Listener {
         // Messages
         if (damager != null) {
             // Message to arena
-            alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " foi morto por " + damager.getName() + ".");
+            alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
+            alvoArena.sendMessage(Message.PLAYER_KILLED_BY, damager.getName());
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Title
             // Target
@@ -131,7 +133,7 @@ public class PlayerDeath implements Listener {
             TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
         } else {
             // Message to arena
-            alvoArena.sendMessage("§7|" + "§3Sky Wars" + "§7| §4" + alvo.getName() + " morreu.");
+            alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Title
             // Target
