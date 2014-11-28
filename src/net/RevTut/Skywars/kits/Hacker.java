@@ -5,6 +5,7 @@ import net.RevTut.Skywars.arena.ArenaLocation;
 import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -107,7 +108,7 @@ public class Hacker {
         // Play particle effects
         ParticlesAPI.helixPosY(spawnLocation);
         // Message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Uma nova oportunidade de viveres foi-te dada!");
+        player.sendMessage(Message.getMessage(Message.HACKER_RESPAWN, player));
         // Add to already respawned players
         respawnedPlayers.add(player.getUniqueId());
         toBeRespawnedPlayers.remove(player.getUniqueId());

@@ -5,6 +5,7 @@ import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
+import net.RevTut.Skywars.utils.Message;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -89,21 +90,21 @@ public class PlayerChat implements Listener {
         // PlayerDat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
-            player.sendMessage("§7[§6Inspetor§7] §4Ha um erro com o teu perfil! Reloga por favor.");
+            player.sendMessage(Message.getMessage(Message.PLAYER_PROFILE_ERROR, player));
             return;
         }
 
         // Arena
         Arena playerArena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == playerArena) {
-            player.sendMessage("§7[§6Inspetor§7] §4Nao te encontras em nenhuma arena! Reloga por favor.");
+            player.sendMessage(Message.getMessage(Message.PLAYER_ARENA_NULL, player));
             return;
         }
 
         // ArenaDat
         ArenaDat arenaDat = playerArena.getArenaDat();
         if (null == arenaDat) {
-            player.sendMessage("§7[§6Inspetor§7] §4Existe um erro na tua Arena! Reloga por favor.");
+            player.sendMessage(Message.getMessage(Message.PLAYER_ARENA_NULL, player));
             return;
         }
 
@@ -112,7 +113,7 @@ public class PlayerChat implements Listener {
             // Tempo passado desde a Ultima Mensagem
             final long diff = (System.currentTimeMillis() - cooldownMessage.get(player.getUniqueId())) / 1000;
             if (diff < 3) {
-                player.sendMessage("§7[§6Inspetor§7] §4Por favor espera 3 segundos entre mensagens.");
+                player.sendMessage(Message.getMessage(Message.PLAYER_COOLDOWN_MESSAGES, player));
                 e.setCancelled(true);
                 return;
             } else {
@@ -144,7 +145,7 @@ public class PlayerChat implements Listener {
             final Matcher matcherweb = web.matcher(mensagem);
             if (verificar)
                 if (matcherip.find() || matcherweb.find()) {
-                    player.sendMessage("§7[§6Inspetor§7] §4Publicidade é igual a banimento permanente!");
+                    player.sendMessage(Message.getMessage(Message.PLAYER_ADVERTISE, player));
                     return;
                 }
         }
@@ -153,7 +154,7 @@ public class PlayerChat implements Listener {
         if (!player.hasPermission("rev.badlanguage")) {
             for (final String block : blocked) {
                 if (mensagem_verificacoes.toLowerCase().contains(block.toLowerCase())) {
-                    player.sendMessage("§7[§6Inspetor§7] §4Por favor nao uses ma linguagem!");
+                    player.sendMessage(Message.getMessage(Message.PLAYER_BAD_LANGUAGE, player));
                     return;
                 }
             }
@@ -163,7 +164,7 @@ public class PlayerChat implements Listener {
         if (!player.hasPermission("rev.doublemsg")) {
             if (lastMessage.containsKey(player.getUniqueId())) {
                 if (lastMessage.get(player.getUniqueId()).equalsIgnoreCase(mensagem_verificacoes)) {
-                    player.sendMessage("§7[§6Inspetor§7] §4Nao podes mandar mensagens duplicadas!");
+                    player.sendMessage(Message.getMessage(Message.PLAYER_DUPLICATED_MESSAGE, player));
                     return;
                 } else
                     lastMessage.put(player.getUniqueId(), mensagem_verificacoes);
@@ -190,7 +191,7 @@ public class PlayerChat implements Listener {
                 if (Character.toLowerCase(primeira) == Character.toLowerCase(c)) {
                     numeroLetrasRepetidas++;
                     if (numeroLetrasRepetidas >= 4) {
-                        player.sendMessage("§7[§6Inspetor§7] §4Por favor nao faças spam!");
+                        player.sendMessage(Message.getMessage(Message.PLAYER_SPAM, player));
                         return;
                     }
                 } else {
@@ -222,9 +223,9 @@ public class PlayerChat implements Listener {
 
         // Formato da Mensagem
         if(playerDat.getStatus() == PlayerStatus.DEAD)
-            playerArena.sendMessage("§7|§4MORTO§7| " + player.getDisplayName() + " §6» §f" + mensagem);
+            playerArena.sendMessage(Message.PLAYER_DEAD_PREFIX, player.getDisplayName() + " §6» §f" + mensagem);
         else
-            playerArena.sendMessage(player.getDisplayName() + " §6» §f" + mensagem);
+            playerArena.sendMessage(Message.EMPTY_MESSAGE, player.getDisplayName() + " §6» §f" + mensagem);
         arenaDat.addGameChat(ChatColor.stripColor(player.getDisplayName() + " » " + mensagem)); // Add to chat log
     }
 }

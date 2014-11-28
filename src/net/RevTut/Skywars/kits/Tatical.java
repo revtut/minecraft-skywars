@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -86,7 +87,7 @@ public class Tatical {
         else
             player.getInventory().remove(itemStack);
         // Send message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Modo fantasma ativado por " + duration + " segundos!");
+        player.sendMessage(Message.getMessage(Message.TACTICAL_ENABLED_INVISIBILITY, player) + duration + "s!");
         return true;
     }
 }

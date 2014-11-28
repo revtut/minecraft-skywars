@@ -1,5 +1,6 @@
 package net.RevTut.Skywars.kits;
 
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class Guardian {
         else
             player.getInventory().remove(itemStack);
         // Send message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Ativaste o modo rage por " + duration + " segundos!");
+        player.sendMessage(Message.getMessage(Message.GUARDIAN_ENABLED_SPEED, player) + duration + "s!");
         return true;
     }
 

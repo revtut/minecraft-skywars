@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.listeners.player.PlayerDamage;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -110,6 +111,6 @@ public class Engineer{
         // Add to list of placed mines
         landMinesList.put(location, player.getUniqueId());
         // Send message
-        player.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Crias-te uma mina!");
+        player.sendMessage(Message.getMessage(Message.ENGINEER_PLACED_MINE, player));
     }
 }

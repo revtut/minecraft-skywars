@@ -228,8 +228,7 @@ public class ArenaRunnable implements Runnable {
             // If payer is dead send him a message
             if(alvoDat.getStatus() == PlayerStatus.DEAD)
                 if(remainingTime % 30 == 0){
-                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Nao saias da arena! Novo jogo em momentos.");
-                    alvo.sendMessage("§7|" + "§3Sky Wars" + "§7| §6Se saires vais perder pontos...");
+                    alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
                 }
             switch (remainingTime) {
                 case 60:
@@ -325,7 +324,7 @@ public class ArenaRunnable implements Runnable {
                 if (null != winner) {
                     arena.sendMessage(Message.GAME_WINNER, winner.getName());
                 } else
-                    arena.sendMessage(Message.GAME_WINNER, "se embora...");
+                    arena.sendMessage(Message.GAME_WINNER, "John Doe");
             }
         }
     }
