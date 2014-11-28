@@ -277,8 +277,8 @@ public class ArenaRunnable implements Runnable {
                     if (arenaDat.getWinner().equals("NULL")) {
                         // Titles
                         TitleAPI.sendTimings(alvo, 5, 60, 5);
-                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4TEMPO ESGOTADO"));
-                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7SEM VENCEDOR"));
+                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.TIME_OUT, alvo)));
+                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.NO_WINNER, alvo)));
                         // Sound
                         alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 10);
                     } else {
@@ -288,7 +288,7 @@ public class ArenaRunnable implements Runnable {
                         if (winner != null){
                             // Title
                             if (winner.getUniqueId().equals(alvo.getUniqueId())) {
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§aVENCESTE"));
+                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WON, alvo)));
                                 // Add win
                                 alvoDat.addWin();
                                 // Points earned
@@ -297,15 +297,15 @@ public class ArenaRunnable implements Runnable {
                                 // Sound
                                 alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
                             } else{
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
+                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
                                 // Sound
                                 alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
                             }
                             // Subtitle
-                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Vencedor: " + winner.getName()));
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo)));
                         }
                         else{
-                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4PERDESTE"));
+                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
                             TitleAPI.sendSubTitle(alvo, "");
                         }
                     }

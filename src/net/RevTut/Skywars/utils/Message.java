@@ -30,6 +30,7 @@ public enum Message {
     MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED,
     NOT_ENOUGH_PLAYERS_TO_CONTINUE,
     NOT_ENOUGH_POINTS_FOR_KIT,
+    NO_WINNER,
     PLAYER_ADVERTISE,
     PLAYER_ARENA_NULL,
     PLAYER_BAD_LANGUAGE,
@@ -42,7 +43,12 @@ public enum Message {
     PLAYER_LEFT_GAME,
     PLAYER_PROFILE_ERROR,
     PLAYER_SPAM,
-    TACTICAL_ENABLED_INVISIBILITY;
+    POINTS,
+    TACTICAL_ENABLED_INVISIBILITY,
+    TIME_OUT,
+    WINNER,
+    YOU_LOST,
+    YOU_WON;
 
     /**
      * Game prefix of messages
@@ -97,6 +103,8 @@ public enum Message {
                 return gamePrefix + getNotEnoughPlayersToContinue(player);
             case NOT_ENOUGH_POINTS_FOR_KIT:
                 return gamePrefix + getNotEnoughPointsForKit(player);
+            case NO_WINNER:
+                return getNoWinner(player);
             case PLAYER_ADVERTISE:
                 return inspectorPrefix + getPlayerAdvertise(player);
             case PLAYER_ARENA_NULL:
@@ -121,8 +129,18 @@ public enum Message {
                 return inspectorPrefix + getPlayerProfileError(player);
             case PLAYER_SPAM:
                 return inspectorPrefix + getPlayerSpam(player);
+            case POINTS:
+                return getPoints(player);
             case TACTICAL_ENABLED_INVISIBILITY:
                 return gamePrefix + getTaticalEnabledInvisibility(player);
+            case TIME_OUT:
+                return getTimeOut(player);
+            case WINNER:
+                return getWinner(player);
+            case YOU_LOST:
+                return getYouLost(player);
+            case YOU_WON:
+                return getYouWon(player);
             default:
                 return "";
         }
@@ -545,6 +563,32 @@ public enum Message {
     }
 
     /**
+     * Get no winner message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getNoWinner(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§7NO WINNER";
+            case FRENCH:
+                return "§7PAS DE GAGNANT";
+            case GERMAN:
+                return "§7NO WINNER";
+            case PORTUGUESE_PT:
+                return "§7SEM VENCEDOR";
+            case PORTUGUESE_BR:
+                return "§7SEM VENCEDOR";
+            default:
+                return "§7NO WINNER";
+        }
+    }
+
+    /**
      * Get player advertisement is not allowed message
      *
      * @param player player to get the translated message
@@ -857,6 +901,32 @@ public enum Message {
     }
 
     /**
+     * Get points message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPoints(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6Points: ";
+            case FRENCH:
+                return "§6Points: ";
+            case GERMAN:
+                return "§6Punkte: ";
+            case PORTUGUESE_PT:
+                return "§6Pontos: ";
+            case PORTUGUESE_BR:
+                return "§6Pontos: ";
+            default:
+                return "§6Points: ";
+        }
+    }
+
+    /**
      * Get tactical enabled invisibility message
      *
      * @param player player to get the translated message
@@ -879,6 +949,110 @@ public enum Message {
                 return "§6Você ativou o modo fantasma por ";
             default:
                 return "§6You have activated ghost mode for ";
+        }
+    }
+
+    /**
+     * Get time out message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getTimeOut(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4TIME OUT";
+            case FRENCH:
+                return "§4TEMPS LIBRE";
+            case GERMAN:
+                return "§4AUSZEIT";
+            case PORTUGUESE_PT:
+                return "§4TEMPO ESGOTADO";
+            case PORTUGUESE_BR:
+                return "§4TEMPO ESGOTADO";
+            default:
+                return "§4TIME OUT";
+        }
+    }
+
+    /**
+     * Get winner message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getWinner(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§7Winner: ";
+            case FRENCH:
+                return "§7Gagnant: ";
+            case GERMAN:
+                return "§7Sieger: ";
+            case PORTUGUESE_PT:
+                return "§7Vencedor: ";
+            case PORTUGUESE_BR:
+                return "§7Vencedor: ";
+            default:
+                return "§7Winner: ";
+        }
+    }
+
+    /**
+     * Get you lost message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getYouLost(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4YOU HAVE LOST";
+            case FRENCH:
+                return "§aVOUS AVEZ PERDU";
+            case GERMAN:
+                return "§4SIE VERLOREN";
+            case PORTUGUESE_PT:
+                return "§4PERDESTE";
+            case PORTUGUESE_BR:
+                return "§4VOCÊ PERDEU";
+            default:
+                return "§4YOU HAVE LOST";
+        }
+    }
+
+    /**
+     * Get you won message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getYouWon(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§aYOU HAVE WON";
+            case FRENCH:
+                return "§aVOUS AVEZ GAGNÉ";
+            case GERMAN:
+                return "§aDU HAST GEWONNEN";
+            case PORTUGUESE_PT:
+                return "§aVENCESTE";
+            case PORTUGUESE_BR:
+                return "§aVOCÊ VENCEU";
+            default:
+                return "§aYOU HAVE WON";
         }
     }
 }

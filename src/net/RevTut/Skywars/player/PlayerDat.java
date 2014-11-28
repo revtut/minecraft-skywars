@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.player;
 
 import net.RevTut.Skywars.SkyWars;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -210,7 +211,7 @@ public class PlayerDat {
         char signal = '+';
         if(points < 0)
             signal = '-';
-        player.sendMessage("§6" + signal + Math.abs(points) + " pontos");
+        player.sendMessage(Message.getMessage(Message.POINTS, player) + signal + Math.abs(points));
         // Update points in ScoreBoard
         plugin.scoreBoardManager.updatePoints(this);
     }
