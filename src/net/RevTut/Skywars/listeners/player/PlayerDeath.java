@@ -129,11 +129,11 @@ public class PlayerDeath implements Listener {
             // Title
             // Target
             TitleAPI.sendTimings(alvo, 5, 60, 5);
-            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
-            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7Morto por " + damager.getName()));
+            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON("§7" + ChatColor.stripColor(Message.getMessage(Message.PLAYER_KILLED_BY, alvo)) + damager.getName()));
             // Damager
             TitleAPI.sendTimings(damager, 5, 60, 5);
-            TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON("§aMATASTE"));
+            TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_KILLED, damager)));
             TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
         } else {
             // Message to arena
@@ -142,7 +142,7 @@ public class PlayerDeath implements Listener {
             // Title
             // Target
             TitleAPI.sendTimings(alvo, 5, 60, 5);
-            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§4MORRESTE"));
+            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
             TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(""));
         }
 

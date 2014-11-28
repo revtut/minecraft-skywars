@@ -13,7 +13,9 @@ import org.bukkit.entity.Player;
  * @version 1.0
  */
 public enum Message {
+    ALIVE,
     ALLOWED_OPEN_CHESTS,
+    DEAD,
     DONT_LEAVE_ARENA,
     EMPTY_MESSAGE,
     ENGINEER_PLACED_MINE,
@@ -44,9 +46,12 @@ public enum Message {
     PLAYER_PROFILE_ERROR,
     PLAYER_SPAM,
     POINTS,
+    SCOREBOARD_DEAD,
     TACTICAL_ENABLED_INVISIBILITY,
     TIME_OUT,
     WINNER,
+    YOU_DIED,
+    YOU_KILLED,
     YOU_LOST,
     YOU_WON;
 
@@ -69,8 +74,12 @@ public enum Message {
      */
     public static String getMessage(Message message, Player player){
         switch (message){
+            case ALIVE:
+                return getAlive(player);
             case ALLOWED_OPEN_CHESTS:
                 return gamePrefix + getAllowedOpenChests(player);
+            case DEAD:
+                return getDead(player);
             case DONT_LEAVE_ARENA:
                 return gamePrefix + getDontLeaveArena(player);
             case EMPTY_MESSAGE:
@@ -137,12 +146,42 @@ public enum Message {
                 return getTimeOut(player);
             case WINNER:
                 return getWinner(player);
+            case YOU_DIED:
+                return getYouDied(player);
+            case YOU_KILLED:
+                return getYouKilled(player);
             case YOU_LOST:
                 return getYouLost(player);
             case YOU_WON:
                 return getYouWon(player);
             default:
                 return "";
+        }
+    }
+
+    /**
+     * Get alive message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getAlive(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§aAlive: ";
+            case FRENCH:
+                return "§aVivant: ";
+            case GERMAN:
+                return "§aLebendig: ";
+            case PORTUGUESE_PT:
+                return "§aVivos: ";
+            case PORTUGUESE_BR:
+                return "§aVivos: ";
+            default:
+                return "§aAlive: ";
         }
     }
 
@@ -169,6 +208,32 @@ public enum Message {
                 return "§aAgora voce pode abrir os baús!";
             default:
                 return "§aYou may now open the chests!";
+        }
+    }
+
+    /**
+     * Get dead message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getDead(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§cDead: ";
+            case FRENCH:
+                return "§cMorts: ";
+            case GERMAN:
+                return "§cTote: ";
+            case PORTUGUESE_PT:
+                return "§cMortos: ";
+            case PORTUGUESE_BR:
+                return "§cMortos: ";
+            default:
+                return "§cDead: ";
         }
     }
 
@@ -1001,6 +1066,58 @@ public enum Message {
                 return "§7Vencedor: ";
             default:
                 return "§7Winner: ";
+        }
+    }
+
+    /**
+     * Get you died message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getYouDied(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4YOU HAVE DIED";
+            case FRENCH:
+                return "§aVOUS ÊTES MORTS";
+            case GERMAN:
+                return "§4GESTORBEN";
+            case PORTUGUESE_PT:
+                return "§4MORRESTE";
+            case PORTUGUESE_BR:
+                return "§4VOCÊ MORREU";
+            default:
+                return "§4YOU HAVE DIED";
+        }
+    }
+
+    /**
+     * Get you killed message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getYouKilled(Player player){
+        Language language = LanguageAPI.getLanguage(player);
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§aYOU HAVE KILLED";
+            case FRENCH:
+                return "§aVOUS AVEZ TUÉ";
+            case GERMAN:
+                return "§aSIE HABEN GETÖTET";
+            case PORTUGUESE_PT:
+                return "§aMATASTE";
+            case PORTUGUESE_BR:
+                return "§aVOCÊ MATOU";
+            default:
+                return "§aYOU HAVE KILLED";
         }
     }
 

@@ -56,7 +56,7 @@ public class PlayerInteract implements Listener {
             return;
 
         // Kit Menu
-        Inventory inventory = arena.getKitManager().createKitMenu(player.getItemInHand());
+        Inventory inventory = arena.getKitManager().createKitMenu(player.getItemInHand(), player);
         if(inventory != null)
             player.openInventory(inventory);
 

@@ -118,9 +118,10 @@ public class KitManager {
      * Open kit menu to a player
      *
      * @param itemStack item stack used by the player
+     * @param player player to create the menu
      * @return inventory menu with all kits
      */
-    public final Inventory createKitMenu(ItemStack itemStack) { // MAKES USE OF PLAYER INTERACT EVENT
+    public final Inventory createKitMenu(ItemStack itemStack, Player player) { // MAKES USE OF PLAYER INTERACT EVENT
         if (itemStack == null)
             return null;
         if (itemStack.getType() == null)
@@ -151,7 +152,7 @@ public class KitManager {
             inventorySize = 45;
         else
             inventorySize = 54;
-        Inventory inventory = Bukkit.createInventory(null, inventorySize, "§6Menu de Kits");
+        Inventory inventory = Bukkit.createInventory(null, inventorySize, "§6Kits");
 
         // Create Menu
         Kit kit;
@@ -161,7 +162,7 @@ public class KitManager {
             itemStack = new ItemStack(kit.getMaterial(), 1);
             itemMeta = itemStack.getItemMeta(); // ItemMeta
             itemMeta.setDisplayName(kit.getDisplayName()); // DisplayName
-            itemMeta.setLore(Arrays.asList("§7Custo: §b" + kit.getCost())); // Lore
+            itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + "§b" + kit.getCost())); // Lore
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
@@ -178,7 +179,7 @@ public class KitManager {
      * @param position position of the kit
      */
     public final void setKit(PlayerDat playerDat, Inventory inventory, int position){ // MAKES USE OF PLAYER INVENTORY CLICK EVENT
-        if(!inventory.getTitle().equalsIgnoreCase("§6Menu de Kits"))
+        if(!inventory.getTitle().equalsIgnoreCase("§6Kits"))
             return;
         if(position < 0)
             return;

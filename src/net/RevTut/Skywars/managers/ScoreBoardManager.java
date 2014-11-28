@@ -3,7 +3,9 @@ package net.RevTut.Skywars.managers;
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -74,15 +76,15 @@ public class ScoreBoardManager {
                                 objective.setDisplayName("§7► §3Sky Wars §7◄");
 
                                 // Alive
-                                final Score scoreAlive = objective.getScore("§aAlive:");
+                                final Score scoreAlive = objective.getScore(Message.getMessage(Message.ALIVE, p));
                                 scoreAlive.setScore(0);
 
                                 // Dead
-                                final Score scoreDead = objective.getScore("§cDead:");
+                                final Score scoreDead = objective.getScore(Message.getMessage(Message.DEAD, p));
                                 scoreDead.setScore(0);
 
                                 // Points
-                                final Score scorePoints = objective.getScore("§7Points:");
+                                final Score scorePoints = objective.getScore("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, p)));
                                 scorePoints.setScore(0);
 
                                 // Scoreboard footer
@@ -134,7 +136,7 @@ public class ScoreBoardManager {
         if (board == null)
             return;
         Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-        objective.getScore("§aAlive:").setScore(alive);
+        objective.getScore(Message.getMessage(Message.ALIVE, player)).setScore(alive);
     }
 
     /**
@@ -166,7 +168,7 @@ public class ScoreBoardManager {
         if (board == null)
             return;
         Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-        objective.getScore("§cDead:").setScore(dead);
+        objective.getScore(Message.getMessage(Message.DEAD, player)).setScore(dead);
     }
 
     /**
@@ -183,7 +185,7 @@ public class ScoreBoardManager {
         if (board == null)
             return;
         Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
-        objective.getScore("§7Points:").setScore(points);
+        objective.getScore("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player))).setScore(points);
     }
 
     /**
