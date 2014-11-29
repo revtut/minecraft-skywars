@@ -63,6 +63,17 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
+        // Arena
+        Arena alvoArena = plugin.arenaManager.getArenaByPlayer(alvoDat);
+        if (alvoArena == null) {
+            e.setCancelled(true);
+            return;
+        }
+        if (alvoArena.getStatus() != ArenaStatus.INGAME) { // Check if game already started
+            e.setCancelled(true);
+            return;
+        }
+
         // Damager
         Player damager = null;
         Entity entity = e.getDamager();
@@ -95,6 +106,13 @@ public class PlayerDamage implements Listener {
             e.setCancelled(true);
             return;
         }
+
+        // Lifestealer
+        double health = damager.getHealth() + alvoArena.getKitManager().lifestealer.stealLife(damagerDat, alvoArena, e.getDamage());
+        if(health > 20)
+            health = 20;
+        damager.setHealth(health);
+
         // Add to last damager map
         PlayerDamage.lastPlayerDamager.put(alvoDat.getUUID(), damagerDat.getUUID());
     }

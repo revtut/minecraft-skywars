@@ -67,8 +67,8 @@ public class Hacker {
     /**
      * Check if a player may respawn
      *
-     * @param playerDat player to check it can b respawned
-     * @param arena arena where player is currently playibg
+     * @param playerDat player to check it can be respawned
+     * @param arena arena where player is currently playing
      * @return true if player may respawn
      */
     public boolean canRespawn(PlayerDat playerDat, Arena arena){

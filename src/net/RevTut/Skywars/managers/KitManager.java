@@ -52,6 +52,11 @@ public class KitManager {
     public final Tatical tatical = new Tatical();
 
     /**
+     * Kit Lifestealer
+     */
+    public final Lifestealer lifestealer = new Lifestealer();
+
+    /**
      * Kit Screamer
      */
     public final Screamer screamer = new Screamer();
@@ -108,6 +113,8 @@ public class KitManager {
             ninja.kitNinja(player);
         else if(kit == Kit.TATICAL)
             tatical.kitTatical(player);
+        else if(kit == Kit.LIFESTEALER)
+            lifestealer.kitLifestealer(player);
         //else if(kit == Kit.SCREAMER)
         //    screamer.kitScreamer(player);
         // Message

@@ -23,18 +23,21 @@ public enum Kit {
     /**
      * Ninja
      */
-    NINJA("§6Ninja", Material.FISHING_ROD, 650),
+    NINJA("§6Ninja", Material.FISHING_ROD, 400),
     /**
      * Tatical
      */
-    TATICAL("§6Tatical", Material.ENDER_PEARL, 800),
+    TATICAL("§6Tatical", Material.ENDER_PEARL, 700),
     /**
      * Guardian
      */
-    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 700);
-
+    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 500),
     /**
-     * Guardian
+     * Lifestealer
+     */
+    LIFESTEALER("§6Lifestealer", Material.REDSTONE_WIRE, 1500);
+    /**
+     * Screamer
      */
     //SCREAMER("§6Screamer", Material.BONE, 1200);
 

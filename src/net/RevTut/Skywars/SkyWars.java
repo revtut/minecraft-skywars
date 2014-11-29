@@ -125,7 +125,7 @@ public class SkyWars extends JavaPlugin {
      * F = random percentage (between 0 - 50%)
      * Formula: PE = PW + PW * ( K / N ) + PW * F
      */
-    public final int pointsPerWin = 800;
+    public final int pointsPerWin = 1500;
 
     /**
      * Points earned per game played. This is not the final amount as it depends on a luck factor
@@ -137,7 +137,7 @@ public class SkyWars extends JavaPlugin {
      * F = random percentage (0 - 25%)
      * Formula: PE = PG + PG * ( K / N ) + PG * F
      */
-    public final int pointsPerGame = 200;
+    public final int pointsPerGame = 500;
 
     /**
      * Points earned per kill. This is not the final amount as it depends on a luck factor
@@ -149,7 +149,7 @@ public class SkyWars extends JavaPlugin {
      * F = random percentage (0 - 10%)
      * Formula: PE = PK + PK * (K / N) + PK * F
      */
-    public final int pointsPerKill = 50;
+    public final int pointsPerKill = 100;
 
     /**
      * Enable the plugin

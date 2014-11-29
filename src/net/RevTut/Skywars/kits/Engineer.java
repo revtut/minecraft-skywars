@@ -25,6 +25,9 @@ import java.util.UUID;
  */
 public class Engineer{
 
+    /**
+     * Enable force dead or not
+     */
     private final boolean force_dead = false;
 
     /**
@@ -78,7 +81,6 @@ public class Engineer{
             return;
         if (!landMinesList.containsKey(block.getLocation()))
             return;
-        landMinesList.remove(block.getLocation());
         // Add to last damager map
         PlayerDamage.lastPlayerDamager.put(player.getUniqueId(), landMinesList.get(block.getLocation()));
         // Check if player must die
@@ -87,6 +89,8 @@ public class Engineer{
         // Create Explosion
         block.setType(Material.AIR);
         block.getWorld().createExplosion(block.getLocation(), 5, false);
+        // Remove from list
+        landMinesList.remove(block.getLocation());
     }
 
     /**
