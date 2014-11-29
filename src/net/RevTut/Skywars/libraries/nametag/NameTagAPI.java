@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.libraries.nametag;
 
 import net.RevTut.Skywars.SkyWars;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -135,9 +136,7 @@ public final class NameTagAPI implements Listener {
         String name = prefix + p.getName();
         if (!p.getDisplayName().equals(name)) {
             p.setDisplayName(name);
-            if(name.length() > 16)
-                name = name.substring(0, 16);
-            p.setPlayerListName(name);
+            p.setPlayerListName(StringUtils.abbreviate(name, 16));
         }
     }
 

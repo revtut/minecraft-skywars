@@ -130,7 +130,7 @@ public class PlayerDeath implements Listener {
             // Target
             TitleAPI.sendTimings(alvo, 5, 60, 5);
             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
-            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WERE_KILLED_BY, alvo)) + damager.getName());
+            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WERE_KILLED_BY, alvo) + damager.getName()));
             // Damager
             TitleAPI.sendTimings(damager, 5, 60, 5);
             TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_KILLED, damager)));
