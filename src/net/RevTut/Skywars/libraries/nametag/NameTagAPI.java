@@ -1,7 +1,6 @@
 package net.RevTut.Skywars.libraries.nametag;
 
 import net.RevTut.Skywars.SkyWars;
-import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -100,28 +99,38 @@ public final class NameTagAPI implements Listener {
         String id = "DEFAULT";
         String prefix = "";
         String sufix = "";
-        if (p.hasPermission("rev.tag.vip")) {
-            id = "VIP";
-            prefix = "§a[VIP] ";
-        } else if (p.hasPermission("rev.tag.youtuber")) {
-            id = "YT";
-            prefix = "§b[YT] ";
+        if (p.hasPermission("rev.tag.ceo")) {
+            id = "CEO";
+            prefix = "§5[CEO] ";
+        } else if (p.hasPermission("rev.tag.admin")) {
+            id = "ADM";
+            prefix = "§4[ADM] ";
         } else if (p.hasPermission("rev.tag.developer")) {
             id = "DEV";
             prefix = "§6[DEV] ";
-        } else if (p.hasPermission("rev.tag.staff")) {
-            id = "STAFF";
-            prefix = "§2[STAFF] ";
         } else if (p.hasPermission("rev.tag.moderator")) {
             id = "MOD";
             prefix = "§1[MOD] ";
-        } else if (p.hasPermission("rev.tag.admin")) {
-            id = "ADMIN";
-            prefix = "§4[ADMIN] ";
-        } else if (p.hasPermission("rev.tag.ceo")) {
-            id = "CEO";
-            prefix = "§5[CEO] ";
+        } else if (p.hasPermission("rev.tag.staff")) {
+            id = "STF";
+            prefix = "§2[STF] ";
+        } else if (p.hasPermission("rev.tag.thaiberium")) {
+            id = "THB";
+            prefix = "§b[THB] ";
+        } else if (p.hasPermission("rev.tag.designer")) {
+            id = "DNZ";
+            prefix = "§e[DZN] ";
+        } else if (p.hasPermission("rev.tag.youtuber")) {
+            id = "YT";
+            prefix = "§9[YT] ";
+        } else if (p.hasPermission("rev.tag.vipplus")) {
+            id = "VIPPLUS";
+            prefix = "§a[VIP§6+§a] ";
+        } else if (p.hasPermission("rev.tag.vip")) {
+            id = "VIP";
+            prefix = "§a[VIP] ";
         }
+
         Team team = board.getTeam(id);
         if (team == null) {
             team = board.registerNewTeam(id);
@@ -132,11 +141,11 @@ public final class NameTagAPI implements Listener {
         }
         team.addPlayer(p);
 
-        // Display and tablist name
+        // Display name
         String name = prefix + p.getName();
         if (!p.getDisplayName().equals(name)) {
             p.setDisplayName(name);
-            p.setPlayerListName(StringUtils.abbreviate(name, 16));
+            //p.setPlayerListName(StringUtils.abbreviate(name, 16));
         }
     }
 
