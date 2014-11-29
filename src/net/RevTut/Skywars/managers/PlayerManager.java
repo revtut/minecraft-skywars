@@ -1,15 +1,14 @@
 package net.RevTut.Skywars.managers;
 
 import net.RevTut.Skywars.SkyWars;
+import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Player Manager.
@@ -41,6 +40,11 @@ public class PlayerManager {
     private final List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
 
     /**
+     * Map with player's language
+     */
+    private final Map<UUID, Language> playersLanguage = new HashMap<UUID, Language>();
+
+    /**
      * Add a new player dat to the server
      *
      * @param playerDat player dat to add to the server
@@ -54,6 +58,19 @@ public class PlayerManager {
     }
 
     /**
+     * Add a new player language to the player's languages map
+     *
+     * @param playerDat player dat to add to the language
+     * @param language language of the player
+     * @return true if successfull
+     */
+    public boolean addPlayerLanguage(PlayerDat playerDat, Language language) {
+        playersLanguage.put(playerDat.getUUID(), language);
+        return true;
+    }
+
+
+    /**
      * Removes a player dat from the server
      *
      * @param playerDat player dat to remove from the server
@@ -63,7 +80,16 @@ public class PlayerManager {
     }
 
     /**
-     * Get a player from a given UUID
+     * Removes a player dat from the server
+     *
+     * @param playerDat player dat to remove from the server
+     */
+    public void removePlayerLanguage(PlayerDat playerDat) {
+        playersLanguage.remove(playerDat.getUUID());
+    }
+
+    /**
+     * Get a player dat from a given UUID
      *
      * @param uuid uuid to get the player dat
      * @return player dat of that UUID
@@ -73,6 +99,18 @@ public class PlayerManager {
             if (alvoDat.getUUID() == uuid)
                 return alvoDat;
         return null;
+    }
+
+    /**
+     * Get a player language from a given UUID
+     *
+     * @param uuid uuid to get the player language
+     * @return player language of that UUID
+     */
+    public Language getPlayerLanguageByUUID(UUID uuid) {
+        if(!playersLanguage.containsKey(uuid))
+            return null;
+        return playersLanguage.get(uuid);
     }
 
     /**

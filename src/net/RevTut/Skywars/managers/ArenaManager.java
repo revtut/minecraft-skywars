@@ -351,7 +351,7 @@ public class ArenaManager {
             return false;
 
         // Message to arena
-        arena.sendMessage(Message.PLAYER_LEFT_GAME, player.getDisplayName());
+        arena.sendMessage(Message.PLAYER_LEFT_GAME, player.getDisplayName() + " §6(" + arena.getPlayers().size() + "/" + maxPlayers + ")");
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
 
         // Hide to Server
@@ -537,7 +537,7 @@ public class ArenaManager {
         plugin.arenaManager.unhideToArena(player, true);
 
         // Message to arena
-        arena.sendMessage(Message.PLAYER_JOINED_GAME, player.getDisplayName());
+        arena.sendMessage(Message.PLAYER_JOINED_GAME, player.getDisplayName() + " §6(" + arena.getPlayers().size() + "/" + maxPlayers + ")");
         arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
 
         // Config Player

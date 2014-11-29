@@ -131,10 +131,12 @@ public final class NameTagAPI implements Listener {
         }
         team.addPlayer(p);
 
-        // Display Name
+        // Display and tablist name
         String name = prefix + p.getName();
-        if (!p.getDisplayName().equals(name))
+        if (!p.getDisplayName().equals(name)) {
             p.setDisplayName(name);
+            p.setPlayerListName(name);
+        }
     }
 
     /**

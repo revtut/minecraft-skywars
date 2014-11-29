@@ -1,7 +1,7 @@
 package net.RevTut.Skywars.utils;
 
+import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.libraries.language.Language;
-import net.RevTut.Skywars.libraries.language.LanguageAPI;
 import org.bukkit.entity.Player;
 
 /**
@@ -54,6 +54,11 @@ public enum Message {
     YOU_KILLED,
     YOU_LOST,
     YOU_WON;
+
+    /**
+     * Main class
+     */
+    public static SkyWars plugin = null;
 
     /**
      * Game prefix of messages
@@ -165,7 +170,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getAlive(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -191,7 +196,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getAllowedOpenChests(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -217,7 +222,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getDead(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -243,7 +248,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getDontLeaveArena(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -269,7 +274,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getEngineerPlacedMine(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -295,7 +300,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getGameMap(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -321,7 +326,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getGameReport(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -347,7 +352,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getGameTimeout(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -373,7 +378,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getGameWinner(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -399,7 +404,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getGuardianEnabledSpeed(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -425,7 +430,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getHackerRespawn(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -451,7 +456,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getKitAlreadyChosen(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -477,7 +482,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getKitBought(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -503,7 +508,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getKitReceived(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -529,7 +534,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getMinimumPlayersNotAchieved(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -555,7 +560,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getMinimumPlayersReduceTimeAchieved(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -581,7 +586,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getNotEnoughPlayersToContinue(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -607,7 +612,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getNotEnoughPointsForKit(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -633,7 +638,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getNoWinner(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -659,7 +664,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerAdvertise(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -685,7 +690,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerArenaNull(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -711,7 +716,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerBadLanguage(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -737,7 +742,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerCooldownMessages(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -763,7 +768,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerDeadPrefix(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -789,7 +794,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerDied(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -815,7 +820,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerDuplicatedMessage(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -841,7 +846,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerLeftGame(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -867,7 +872,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerJoinedGame(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -893,7 +898,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerKilledBy(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -919,7 +924,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerProfileError(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -945,7 +950,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPlayerSpam(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -971,7 +976,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getPoints(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -997,7 +1002,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getTaticalEnabledInvisibility(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1023,7 +1028,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getTimeOut(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1049,7 +1054,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getWinner(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1075,7 +1080,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getYouDied(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1101,7 +1106,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getYouKilled(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1127,7 +1132,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getYouLost(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 
@@ -1153,7 +1158,7 @@ public enum Message {
      * @param player player to get the translated message
      */
     private static String getYouWon(Player player){
-        Language language = LanguageAPI.getLanguage(player);
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
         if(null == language)
             language = Language.ENGLISH;
 

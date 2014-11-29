@@ -47,64 +47,47 @@ public class ScoreBoardManager {
      * players scoreboards
      *
      * @param p player to create the scoreboard
+     * @return scoreboard of the player
      */
-    public void createScoreBoard(final Player p) {
-        // Check if user already has Scoreboard
-        Scoreboard board = getScoreBoardByPlayer(p.getUniqueId());
-        if (board != null)
-            return;
-
+    public Scoreboard createScoreBoard(final Player p) {
         // Create scoreboard manager
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                final ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-                Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        // New scoreboard
-                        final Scoreboard newBoard = scoreboardManager.getNewScoreboard();
-                        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                // Register new objective
-                                final Objective objective = newBoard.registerNewObjective("test", "dummy");
-                                // Display slot
-                                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        final ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+        // New scoreboard
+        final Scoreboard newBoard = scoreboardManager.getNewScoreboard();
+        // Register new objective
+        final Objective objective = newBoard.registerNewObjective("test", "dummy");
+        // Display slot
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-                                // Display name
-                                objective.setDisplayName("§7► §3Sky Wars §7◄");
+        // Display name
+        objective.setDisplayName("§7► §3Sky Wars §7◄");
 
-                                // Alive
-                                final Score scoreAlive = objective.getScore(Message.getMessage(Message.ALIVE, p));
-                                scoreAlive.setScore(0);
+        // Alive
+        final Score scoreAlive = objective.getScore(Message.getMessage(Message.ALIVE, p));
+        scoreAlive.setScore(0);
 
-                                // Dead
-                                final Score scoreDead = objective.getScore(Message.getMessage(Message.DEAD, p));
-                                scoreDead.setScore(0);
+        // Dead
+        final Score scoreDead = objective.getScore(Message.getMessage(Message.DEAD, p));
+        scoreDead.setScore(0);
 
-                                // Points
-                                final Score scorePoints = objective.getScore("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, p)));
-                                scorePoints.setScore(0);
+        // Points
+        final Score scorePoints = objective.getScore("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, p)));
+        scorePoints.setScore(0);
 
-                                // Scoreboard footer
-                                final Score separador = objective.getScore("§3----------");
-                                separador.setScore(-1);
+        // Scoreboard footer
+        final Score separador = objective.getScore("§3----------");
+        separador.setScore(-1);
 
-                                // Advertisement
-                                final Score website = objective.getScore("§7Website:");
-                                website.setScore(-2);
-                                final Score site = objective.getScore("§3revtut.net");
-                                site.setScore(-3);
+        // Advertisement
+        final Score website = objective.getScore("§7Website:");
+        website.setScore(-2);
+        final Score site = objective.getScore("§3revtut.net");
+        site.setScore(-3);
 
-                                // Add to the map
-                                scoreBoards.put(p.getUniqueId(), newBoard);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        // Add to the map
+        scoreBoards.put(p.getUniqueId(), newBoard);
+
+        return newBoard;
     }
 
     /**
@@ -114,7 +97,6 @@ public class ScoreBoardManager {
      * @param arena arena to update alive players
      */
     public void updateAlive(Arena arena) {
-        int alive = arena.getAlivePlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             updateAlive(arena, alvoDat);
         }
@@ -146,7 +128,6 @@ public class ScoreBoardManager {
      * @param arena arena to update death players
      */
     public void updateDeath(Arena arena) {
-        int dead = arena.getDeadPlayers().size();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             updateDeath(arena, alvoDat);
         }

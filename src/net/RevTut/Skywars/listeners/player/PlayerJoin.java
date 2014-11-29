@@ -2,6 +2,7 @@ package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.libraries.language.LanguageAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
 import net.RevTut.Skywars.libraries.tab.TabAPI;
@@ -57,9 +58,6 @@ public class PlayerJoin implements Listener {
         // Hide to Server
         plugin.arenaManager.hideToServer(p, true);
 
-        // Scoreboard
-        plugin.scoreBoardManager.createScoreBoard(p);
-
         // Tab List
         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
 
@@ -69,10 +67,6 @@ public class PlayerJoin implements Listener {
             public void run() {
                 // PlayerDat
                 plugin.mysql.createPlayerDat(uuid);
-
-                // Language of the player
-                if(!LanguageAPI.saveLanguage(p))
-                    plugin.getLogger().log(Level.WARNING, "Error while trying to get player language!");
 
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
@@ -114,6 +108,8 @@ public class PlayerJoin implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
+                // Scoreboard
+
                 // PlayerDat
                 final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
                 if (playerDat == null) {
@@ -132,12 +128,19 @@ public class PlayerJoin implements Listener {
                     return;
                 }
 
+                // Language of the player
+                Language language = LanguageAPI.getLanguage(p);
+                if(null == language)
+                    plugin.getLogger().log(Level.WARNING, "Player's language is null");
+                else
+                    plugin.playerManager.addPlayerLanguage(playerDat, language);
+
                 // Scoreboard
-                Scoreboard board = plugin.scoreBoardManager.getScoreBoardByPlayer(p.getUniqueId());
-                if (board != null) {
-                    p.setScoreboard(board);
-                    NameTagAPI.setNameTag(board, p, true);
-                }
+                Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);
+                p.setScoreboard(board);
+
+                // Nametag
+                NameTagAPI.setNameTag(board, p, true);
 
                 // Update ScoreBoard to player
                 plugin.scoreBoardManager.updateAlive(arena, playerDat);
@@ -146,6 +149,6 @@ public class PlayerJoin implements Listener {
                 // Update points in ScoreBoard
                 plugin.scoreBoardManager.updatePoints(playerDat);
             }
-        }, 10);
+        }, 20);
     }
 }

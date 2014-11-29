@@ -18,6 +18,7 @@ import net.RevTut.Skywars.managers.ArenaManager;
 import net.RevTut.Skywars.managers.PlayerManager;
 import net.RevTut.Skywars.managers.ScoreBoardManager;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.utils.Message;
 import net.RevTut.Skywars.utils.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -201,6 +202,7 @@ public class SkyWars extends JavaPlugin {
         TabAPI.plugin = this;
         TitleAPI.plugin = this;
         PlayerDat.plugin = this;
+        Message.plugin = this;
 
         /* Register Plugin Messages */
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
