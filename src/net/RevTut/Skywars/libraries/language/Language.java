@@ -11,9 +11,9 @@ package net.RevTut.Skywars.libraries.language;
 public enum Language {
 
     /**
-     * Australian English Language
+     * American Language
      */
-    AUSTRALIAN_ENGLISH("Australian English", "en_AU"),
+    AMERICAN("American", "en_US"),
 
     /**
      * Afrikaans Language
@@ -34,6 +34,11 @@ public enum Language {
      * Armenian Language
      */
     ARMENIAN("Հայերեն", "hy_AM"),
+
+    /**
+     * Australian English Language
+     */
+    AUSTRALIAN_ENGLISH("Australian English", "en_AU"),
 
     /**
      * Bulgarian Language

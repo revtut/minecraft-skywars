@@ -1,9 +1,10 @@
 package net.RevTut.Skywars.libraries.language;
 
-import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
+import net.minecraft.server.v1_7_R4.EntityPlayer;
+import net.minecraft.server.v1_7_R4.PlayerConnection;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -33,18 +34,27 @@ public final class LanguageAPI {
      */
     public static boolean saveLanguage(Player player){
         try {
-            Object playerMethod = ReflectionAPI.getMethod(player.getClass(), "getHandle").invoke(player, (Object[]) null);
+            CraftPlayer craftPlayer = (CraftPlayer) player;
+            EntityPlayer entityPlayer = craftPlayer.getHandle();
+            PlayerConnection playerConnection = entityPlayer.playerConnection;
+            System.out.println(entityPlayer.locale);
+
+
+            /*Object playerMethod = ReflectionAPI.getMethod(player.getClass(), "getHandle").invoke(player, (Object[]) null);
             Field field = ReflectionAPI.getField(playerMethod.getClass(), "locale");
-            field.setAccessible(true);
 
             String lang = (String) field.get(playerMethod);
             field.setAccessible(false);
+
+            System.out.println("Lang: " + lang);
 
             Language language = getByCode(lang);
             if(null == language)
                 return false;
 
-            playerLanguage.put(player.getUniqueId(), language);
+            System.out.println("Language: " + language.getName());
+
+            playerLanguage.put(player.getUniqueId(), language);*/
             return true;
         } catch (Throwable t) {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Error while getting player language in LanguageAPI!");

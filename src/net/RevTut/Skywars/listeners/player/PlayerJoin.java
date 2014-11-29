@@ -71,7 +71,8 @@ public class PlayerJoin implements Listener {
                 plugin.mysql.createPlayerDat(uuid);
 
                 // Language of the player
-                LanguageAPI.saveLanguage(p);
+                if(!LanguageAPI.saveLanguage(p))
+                    plugin.getLogger().log(Level.WARNING, "Error while trying to get player language!");
 
                 Bukkit.getScheduler().runTask(plugin, new Runnable() {
                     @Override
