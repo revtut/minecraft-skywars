@@ -300,7 +300,7 @@ public class ArenaRunnable implements Runnable {
                                 alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
                             }
                             // Subtitle
-                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo)));
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo)) + winner.getName());
                         }
                         else{
                             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));

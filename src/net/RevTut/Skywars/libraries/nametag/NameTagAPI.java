@@ -135,6 +135,8 @@ public final class NameTagAPI implements Listener {
         String name = prefix + p.getName();
         if (!p.getDisplayName().equals(name)) {
             p.setDisplayName(name);
+            if(name.length() > 16)
+                name = name.substring(0, 16);
             p.setPlayerListName(name);
         }
     }

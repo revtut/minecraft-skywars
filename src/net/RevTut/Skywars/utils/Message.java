@@ -53,6 +53,7 @@ public enum Message {
     YOU_DIED,
     YOU_KILLED,
     YOU_LOST,
+    YOU_WERE_KILLED_BY,
     YOU_WON;
 
     /**
@@ -157,6 +158,8 @@ public enum Message {
                 return getYouKilled(player);
             case YOU_LOST:
                 return getYouLost(player);
+            case YOU_WERE_KILLED_BY:
+                return getYouWereKilledBy(player);
             case YOU_WON:
                 return getYouWon(player);
             default:
@@ -1149,6 +1152,32 @@ public enum Message {
                 return "§4VOCÊ PERDEU";
             default:
                 return "§4YOU HAVE LOST";
+        }
+    }
+
+    /**
+     * Get player you were killed by message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getYouWereKilledBy(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§7Killed By: ";
+            case FRENCH:
+                return "§7Mort Pour: ";
+            case GERMAN:
+                return "§7Tote Für: ";
+            case PORTUGUESE_PT:
+                return "§7Morto Por: ";
+            case PORTUGUESE_BR:
+                return "§7Morto Por: ";
+            default:
+                return "§7Killed By: ";
         }
     }
 
