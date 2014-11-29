@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class Screamer implements Listener {
 
-    private static ItemStack ScreamerItem = new ItemStack(Material.FIREBALL, 1);{
+    private static final ItemStack ScreamerItem = new ItemStack(Material.FIREBALL, 1);{
         ItemMeta ScreamerItemMeta = ScreamerItem.getItemMeta();
         ScreamerItemMeta.setDisplayName("§3Scream");
         ScreamerItem.setItemMeta(ScreamerItemMeta);

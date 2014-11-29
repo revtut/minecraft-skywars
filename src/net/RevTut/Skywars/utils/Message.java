@@ -13,47 +13,209 @@ import org.bukkit.entity.Player;
  * @version 1.0
  */
 public enum Message {
+    /**
+     * Scoreboard - Alive
+     */
     ALIVE,
+
+    /**
+     * Players are now allowed to open chests
+     */
     ALLOWED_OPEN_CHESTS,
+
+    /**
+     * Scoreboard - Dead
+     */
     DEAD,
+
+    /**
+     * Tell the player to not leave the arena
+     */
     DONT_LEAVE_ARENA,
+
+    /**
+     * Empty message
+     */
     EMPTY_MESSAGE,
+
+    /**
+     * Engineer placed a mine
+     */
     ENGINEER_PLACED_MINE,
+
+    /**
+     * Current game map
+     */
     GAME_MAP,
+
+    /**
+     * Tell the player how to report the fame
+     */
     GAME_REPORT,
+
+    /**
+     * Game as timed out
+     */
     GAME_TIMEOUT,
+
+    /**
+     * Winner of the match
+     */
     GAME_WINNER,
+
+    /**
+     * Guardian enabled speed
+     */
     GUARDIAN_ENABLED_SPEED,
+
+    /**
+     * Hackr bypassed respawn death
+     */
     HACKER_RESPAWN,
+
+    /**
+     * Player has aleady chosen the kit
+     */
     KIT_ALREADY_CHOSEN,
+
+    /**
+     * Player has bought the kit
+     */
     KIT_BOUGHT,
+
+    /**
+     * Player received the kit
+     */
     KIT_RECEIVED,
+
+    /**
+     * Minimum players to start the game has not been achieved
+     */
     MININUM_PLAYERS_NOT_ACHIEVED,
+
+    /**
+     * Minimum players to reduce the time has been achieved
+     */
     MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED,
+
+    /**
+     * Not enough players to continue the match
+     */
     NOT_ENOUGH_PLAYERS_TO_CONTINUE,
+
+    /**
+     * Not enough points to buy the kit
+     */
     NOT_ENOUGH_POINTS_FOR_KIT,
+
+    /**
+     * No winner of the match
+     */
     NO_WINNER,
+
+    /**
+     * Player has tried to advertise
+     */
     PLAYER_ADVERTISE,
+
+    /**
+     * Player arena is null
+     */
     PLAYER_ARENA_NULL,
+
+    /**
+     * Player has tried to use bad language
+     */
     PLAYER_BAD_LANGUAGE,
+
+    /**
+     * Tell the player to wait between messages
+     */
     PLAYER_COOLDOWN_MESSAGES,
+
+    /**
+     * Prefix of a player when he is dead
+     */
     PLAYER_DEAD_PREFIX,
+
+    /**
+     * Player has died
+     */
     PLAYER_DIED,
+
+    /**
+     * Player tried to sent duplicated messages
+     */
     PLAYER_DUPLICATED_MESSAGE,
+
+    /**
+     * Player has joined the game
+     */
     PLAYER_JOINED_GAME,
+
+    /**
+     * Player was killed by someone
+     */
     PLAYER_KILLED_BY,
+
+    /**
+     * Player has left the game
+     */
     PLAYER_LEFT_GAME,
+
+    /**
+     * There is an error with the player's profile
+     */
     PLAYER_PROFILE_ERROR,
+
+    /**
+     * Player tried to spam
+     */
     PLAYER_SPAM,
+
+    /**
+     * Points of the player
+     */
     POINTS,
-    SCOREBOARD_DEAD,
+
+    /**
+     * Tactical has enabled invisibility
+     */
     TACTICAL_ENABLED_INVISIBILITY,
+
+    /**
+     * Game time out
+     */
     TIME_OUT,
+
+    /**
+     * Winner of the match
+     */
     WINNER,
+
+    /**
+     * You have died message
+     */
     YOU_DIED,
+
+    /**
+     * You have killed message
+     */
     YOU_KILLED,
+
+    /**
+     * You have lost message
+     */
     YOU_LOST,
+
+    /**
+     * You were killed by someone message
+     */
     YOU_WERE_KILLED_BY,
+
+    /**
+     * You have won message
+     */
     YOU_WON;
 
     /**
@@ -64,12 +226,12 @@ public enum Message {
     /**
      * Game prefix of messages
      */
-    private static String gamePrefix = "§7[§3Sky Wars§7] ";
+    private static final String gamePrefix = "§7[§3Sky Wars§7] ";
 
     /**
      * Inspector prefix of messages
      */
-    private static String inspectorPrefix = "§7[§6Inspector§7]";
+    private static final String inspectorPrefix = "§7[§6Inspector§7]";
 
     /**
      * Send message to player in his language

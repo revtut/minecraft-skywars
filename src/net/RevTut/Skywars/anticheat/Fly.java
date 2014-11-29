@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class Fly implements Listener {
 
-    private Map<String, Integer> antiHackFly = new HashMap();
+    private final Map<String, Integer> antiHackFly = new HashMap();
 
     @EventHandler
     public void flyMove(PlayerMoveEvent e) {
@@ -50,9 +50,9 @@ public class Fly implements Listener {
                 if (e.getPlayer().getVehicle() == null)
                 {
                     if(this.antiHackFly.containsKey(p.getName())){
-                        this.antiHackFly.put(p.getName(), Integer.valueOf(0));
+                        this.antiHackFly.put(p.getName(), 0);
                     }
-                    this.antiHackFly.put(p.getName(),Integer.valueOf(((Integer)this.antiHackFly.get(p.getName())).intValue() + 1));
+                    this.antiHackFly.put(p.getName(), ((Integer) this.antiHackFly.get(p.getName())).intValue() + 1);
                     p.kickPlayer("§4Foste kickado por uso de fly hack!");
                 }
             }

@@ -43,7 +43,7 @@ public enum Language {
     /**
      * Bulgarian Language
      */
-    BULGARIAN("Български", "bg_BG"),
+    BULGARIAN("Bulgarian", "bg_BG"),
 
     /**
      * Canadan English Language
@@ -128,7 +128,7 @@ public enum Language {
     /**
      * Georgian Language
      */
-    GEORGIAN("ქართული", "ka_GE"),
+    GEORGIAN("Georgian", "ka_GE"),
 
     /**
      * German Language
@@ -154,12 +154,12 @@ public enum Language {
     /**
      * Icelandic Language
      */
-    ICELANDIC("Íslenska", "is_IS"),
+    ICELANDIC("Icelandic", "is_IS"),
 
     /**
      * Indian Language
      */
-    INDIAN("अंग्रेज़ी", "hi_IN"),
+    INDIAN("Indian", "hi_IN"),
 
     /**
      * Indonesia Language
@@ -189,7 +189,7 @@ public enum Language {
     /**
      * Kyrgyzstan Language
      */
-    KYRGYZSTAN("अंग्रेज़ी", "ky_KG"),
+    KYRGYZSTAN("Kyrgyzstan", "ky_KG"),
 
     /**
      * Letzebuergesch Language
@@ -289,12 +289,12 @@ public enum Language {
     /**
      * Russian Language
      */
-    RUSSIAN("Русский", "ru_RU"),
+    RUSSIAN("Russian", "ru_RU"),
 
     /**
      * Serbian Language
      */
-    SERBIAN("Српски", "sr_SP"),
+    SERBIAN("Serbian", "sr_SP"),
 
     /**
      * Slovakia Language
@@ -304,7 +304,7 @@ public enum Language {
     /**
      * Slovenian Language
      */
-    SLOVENIAN("Slovenščina", "sl_SI"),
+    SLOVENIAN("Slovenian", "sl_SI"),
 
     /**
      * Simplified Chinese Language
@@ -334,7 +334,7 @@ public enum Language {
     /**
      * Traditional Chinese Language
      */
-    TRADITIONAL_CHINESE("繁體中文", "zh_TW"),
+    TRADITIONAL_CHINESE("Traditional Chinese", "zh_TW"),
 
     /**
      * Turkish Language
@@ -344,7 +344,7 @@ public enum Language {
     /**
      * Ukrainian Language
      */
-    UKRAINIAN("Українська", "uk_UA"),
+    UKRAINIAN("Ukrainian", "uk_UA"),
 
     /**
      * Uruguay Spanish Language
@@ -364,12 +364,12 @@ public enum Language {
     /**
      * Name of the language
      */
-    private String name;
+    private final String name;
 
     /**
      * Code of the language
      */
-    private String code;
+    private final String code;
 
     /**
      * Constructor of Language

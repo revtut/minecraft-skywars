@@ -25,17 +25,17 @@ import java.util.UUID;
  */
 public class Engineer{
 
-    public boolean force_dead = false;
+    private final boolean force_dead = false;
 
     /**
      * List with all the mines in the arena
      */
-    private Map<Location, UUID> landMinesList = new HashMap<Location, UUID>();
+    private final Map<Location, UUID> landMinesList = new HashMap<Location, UUID>();
 
     /**
      * Land Mine
      */
-    private ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
+    private final ItemStack mine = new ItemStack(Material.IRON_BLOCK, 2);
 
     {
         ItemMeta mineMeta = mine.getItemMeta();
@@ -46,7 +46,7 @@ public class Engineer{
     /**
      * Iron ChestPlate
      */
-    private ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
+    private final ItemStack ironChestPlate = new ItemStack(Material.IRON_CHESTPLATE, 1);
 
     {
         ironChestPlate.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);

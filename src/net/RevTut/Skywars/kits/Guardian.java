@@ -23,7 +23,7 @@ public class Guardian {
     /**
      * Rage mode activator
      */
-    private ItemStack rageTear = new ItemStack(Material.GHAST_TEAR, 2);
+    private final ItemStack rageTear = new ItemStack(Material.GHAST_TEAR, 2);
     {
         ItemMeta enderPearlMeta = rageTear.getItemMeta();
         enderPearlMeta.setDisplayName("§3Guardian Rage");
@@ -33,7 +33,7 @@ public class Guardian {
     /**
      * Iron Boots
      */
-    private ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
+    private final ItemStack ironBoots = new ItemStack(Material.IRON_BOOTS, 1);
     {
         ironBoots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
     }

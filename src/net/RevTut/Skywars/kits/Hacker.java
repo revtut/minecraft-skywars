@@ -46,7 +46,7 @@ public class Hacker {
     /**
      * Black Leather Helmet
      */
-    private ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+    private final ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
 
     {
         // Set helmet's color

@@ -123,7 +123,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena which is on lobby
      */
-    public void onLobby(Arena arena) {
+    private void onLobby(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
@@ -160,7 +160,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena which is on pre game
      */
-    public void onPreGame(Arena arena) {
+    private void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
@@ -219,7 +219,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena which is in game
      */
-    public void onInGame(Arena arena) {
+    private void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
         for (final PlayerDat alvoDat : arena.getPlayers()) {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
@@ -332,7 +332,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena which is on end game
      */
-    public void onEndGame(Arena arena) {
+    private void onEndGame(Arena arena) {
         // Launch Firework
         ArenaDat arenaDat = arena.getArenaDat();
         if (arenaDat == null)
@@ -352,7 +352,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena to switch
      */
-    public void fromLobbyToPreGame(Arena arena) {
+    private void fromLobbyToPreGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.PREGAME);
         // Arena Dat
@@ -405,7 +405,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena to switch
      */
-    public void fromPreGameToInGame(Arena arena) {
+    private void fromPreGameToInGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.INGAME);
         // Arena Dat
@@ -453,7 +453,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena to switch
      */
-    public void fromInGameToEndGame(Arena arena) {
+    private void fromInGameToEndGame(Arena arena) {
         // Change Status
         arena.setStatus(ArenaStatus.ENDGAME);
         // Arena Dat
@@ -501,7 +501,7 @@ public class ArenaRunnable implements Runnable {
      *
      * @param arena arena to switch
      */
-    public void fromEndGameToLobby(final Arena arena) {
+    private void fromEndGameToLobby(final Arena arena) {
         // Check if we can transfer this players to a new arena
         List<Arena> arenasAvailable = plugin.arenaManager.getAvailableArenas();
         Arena arenaMove = null;

@@ -35,7 +35,7 @@ public final class TabAPI {
     /**
      * Version of Minecraft which might receive these packets
      */
-    public static final int VERSION = 47;
+    private static final int VERSION = 47;
 
     /**
      * Set the tab list of a player.

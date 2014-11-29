@@ -33,7 +33,7 @@ public final class TitleAPI {
     /**
      * Version of Minecraft which might receive these packets
      */
-    public static final int VERSION = 47;
+    private static final int VERSION = 47;
 
     /**
      * NMS Class

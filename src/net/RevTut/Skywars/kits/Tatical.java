@@ -24,7 +24,7 @@ public class Tatical {
     /**
      * Invisible Ender Pearls
      */
-    private ItemStack invisibleEnder = new ItemStack(Material.ENDER_PEARL, 2);
+    private final ItemStack invisibleEnder = new ItemStack(Material.ENDER_PEARL, 2);
     {
         ItemMeta enderPearlMeta = invisibleEnder.getItemMeta();
         enderPearlMeta.setDisplayName("§3Tatical Phantom");
@@ -34,7 +34,7 @@ public class Tatical {
     /**
      * Leather ChestPlate
      */
-    private ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+    private final ItemStack leatherChestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
 
     {
         // Set chesplate's color
