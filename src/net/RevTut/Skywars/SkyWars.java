@@ -1,8 +1,6 @@
 package net.RevTut.Skywars;
 
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaDat;
-import net.RevTut.Skywars.arena.ArenaRunnable;
+import net.RevTut.Skywars.arena.*;
 import net.RevTut.Skywars.libraries.actionbar.ActionBarAPI;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
@@ -189,9 +187,15 @@ public class SkyWars extends JavaPlugin {
             return;
         }
 
-        /* Arena Runnable */
-        ArenaRunnable task = new ArenaRunnable(this);
-        task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, 20, 20));
+        /* Arena Runnables */
+        ArenaLobby taskLobby = new ArenaLobby(this);
+        ArenaLobby.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskLobby, 20, 20));
+        ArenaPreGame taskPreGame = new ArenaPreGame(this);
+        ArenaPreGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskPreGame, 20, 20));
+        ArenaInGame taskInGame = new ArenaInGame(this);
+        ArenaInGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskInGame, 20, 20));
+        ArenaEndGame taskEndGame = new ArenaEndGame(this);
+        ArenaEndGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskEndGame, 20, 20));
 
         /* Player Chest */
         playerChest = new PlayerChest(this);

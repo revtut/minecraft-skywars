@@ -2,8 +2,6 @@ package net.RevTut.Skywars.listeners.player;
 
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.libraries.actionbar.ActionBarAPI;
-import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.libraries.language.LanguageAPI;
 import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
@@ -53,8 +51,6 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
-
-        ActionBarAPI.sendActionBar(p, ConvertersAPI.convertToJSON("§aWelcome RevTut!"));
 
         // Mensagem Entrada
         e.setJoinMessage(null);
