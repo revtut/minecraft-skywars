@@ -35,7 +35,7 @@ public enum Kit {
     /**
      * Lifestealer
      */
-    LIFESTEALER("§6Lifestealer", Material.REDSTONE_WIRE, 1500);
+    LIFESTEALER("§6Lifestealer", Material.REDSTONE, 1500);
     /**
      * Screamer
      */
