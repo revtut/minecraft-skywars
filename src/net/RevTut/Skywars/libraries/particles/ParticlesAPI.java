@@ -1,9 +1,10 @@
 package net.RevTut.Skywars.libraries.particles;
 
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
+import net.minecraft.server.v1_8_R1.EnumParticle;
+import net.minecraft.server.v1_8_R1.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -40,7 +41,7 @@ public final class ParticlesAPI {
         for(double y = 0; y <= 50; y+=0.05) {
             double x = radius * Math.cos(y);
             double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles("fireworksSpark", (float) (loc.getX() + x), (float) (loc.getY() + y ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.FLAME, true, (float) (loc.getX() + x), (float) (loc.getY() + y ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
             for(Player online : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer)online).getHandle().playerConnection.sendPacket(packet);
             }
@@ -58,7 +59,7 @@ public final class ParticlesAPI {
         for (double y = 0; y <= 50; y += 0.05) {
             double x = radius * Math.cos(y);
             double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), (float) (loc.getX() + y), (float) (loc.getY() + x ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), true, (float) (loc.getX() + y), (float) (loc.getY() + x ), (float) (loc.getZ() + z), 0, 0, 0, 0, 1);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
@@ -75,7 +76,7 @@ public final class ParticlesAPI {
         for (double y = 0; y <= 50; y += 0.05) {
             double x = radius * Math.cos(y);
             double z = radius * Math.sin(y);
-            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), (float) (location.getX() + y), (float) (location.getY() + x ), (float) (location.getZ() + z), 0, 0, 0, 0, 1);
+            PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(randomParticles(), true, (float) (location.getX() + y), (float) (location.getY() + x ), (float) (location.getZ() + z), 0, 0, 0, 0, 1);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
             }
@@ -84,21 +85,21 @@ public final class ParticlesAPI {
 
     /**
      * Make a random particle
-     * @return return null
+     * @return particle effect
      */
-    private static String randomParticles() {
+    private static EnumParticle randomParticles() {
         int rint = r.nextInt(5) + 1;
         if(rint == 1)
-            return "fireworksSpark";
+            return EnumParticle.FIREWORKS_SPARK;
         else if(rint == 2)
-            return "happyVillager";
+            return EnumParticle.VILLAGER_HAPPY;
         else if(rint == 3)
-            return "witchMagic";
+            return EnumParticle.SPELL_WITCH;
         else if(rint == 4)
-            return "flame";
+            return EnumParticle.FLAME;
         else if(rint == 5) {
-            return "blockcrack_152_0";
+            return EnumParticle.BLOCK_CRACK;
         }
-        return "fireworksSpark";
+        return EnumParticle.FIREWORKS_SPARK;
     }
 }

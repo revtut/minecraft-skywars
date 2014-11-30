@@ -169,42 +169,42 @@ public class ArenaRunnable implements Runnable {
             alvo.setLevel(remainingTime);
             switch (remainingTime) {
                 case 10:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b10"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 5:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§45"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 4:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c4"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 3:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 2:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e2"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 1:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a1"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.NOTE_PIANO, 1, 10);
                     break;
                 case 0:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§2GO"));
                     TitleAPI.sendSubTitle(alvo, "");
                     alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
@@ -232,35 +232,35 @@ public class ArenaRunnable implements Runnable {
                 }
             switch (remainingTime) {
                 case 60:
-                    TitleAPI.sendTimings(alvo, 20, 60, 20);
+                    TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
                     break;
                 case 10:
-                    TitleAPI.sendTimings(alvo, 20, 60, 20);
+                    TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§210"));
                     break;
                 case 5:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§a5"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 4:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§e4"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 3:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§63"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 2:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§c2"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 1:
-                    TitleAPI.sendTimings(alvo, 5, 20, 5);
+                    TitleAPI.sendTimes(alvo, 5, 20, 5);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§41"));
                     TitleAPI.sendSubTitle(alvo, "");
                     break;
@@ -274,14 +274,14 @@ public class ArenaRunnable implements Runnable {
                     // Check winner
                     if (arenaDat.getWinner().equals("NULL")) {
                         // Titles
-                        TitleAPI.sendTimings(alvo, 5, 60, 5);
+                        TitleAPI.sendTimes(alvo, 5, 60, 5);
                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.TIME_OUT, alvo)));
                         TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.NO_WINNER, alvo)));
                         // Sound
                         alvo.playSound(alvo.getLocation(), Sound.EXPLODE, 1, 10);
                     } else {
                         // Title timings
-                        TitleAPI.sendTimings(alvo, 5, 60, 5);
+                        TitleAPI.sendTimes(alvo, 5, 60, 5);
                         Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
                         if (winner != null){
                             // Title

@@ -3,6 +3,7 @@ package net.RevTut.Skywars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.arena.ArenaRunnable;
+import net.RevTut.Skywars.libraries.actionbar.ActionBarAPI;
 import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
 import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
@@ -196,6 +197,7 @@ public class SkyWars extends JavaPlugin {
         playerChest = new PlayerChest(this);
 
         /* Set Main Classes */
+        ActionBarAPI.plugin = this;
         AppearanceAPI.plugin = this;
         BypassesAPI.plugin = this;
         NameTagAPI.plugin = this;
@@ -369,7 +371,6 @@ public class SkyWars extends JavaPlugin {
                     getLogger().log(Level.WARNING, "MySQL connection is closed!");
                     mysql.openConnection();
                 }
-
             }
         }, 1200, 1200);
     }

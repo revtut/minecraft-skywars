@@ -25,7 +25,7 @@ public final class ReflectionAPI {
      *
      * @return version of the game
      */
-    private static String getVersion() {
+    private static String getMinecraftVersion() {
         String name = Bukkit.getServer().getClass().getPackage().getName();
         return name.substring(name.lastIndexOf('.') + 1) + ".";
     }
@@ -37,7 +37,7 @@ public final class ReflectionAPI {
      * @return nms class
      */
     public static Class<?> getNMSClass(String className) {
-        String fullName = "net.minecraft.server." + getVersion() + className;
+        String fullName = "net.minecraft.server." + getMinecraftVersion() + className;
         Class<?> clazz = null;
         try {
             clazz = Class.forName(fullName);
@@ -54,7 +54,7 @@ public final class ReflectionAPI {
      * @return craftBukkit class
      */
     public static Class<?> getOBCClass(String className) {
-        String fullName = "org.bukkit.craftbukkit." + getVersion() + className;
+        String fullName = "org.bukkit.craftbukkit." + getMinecraftVersion() + className;
         Class<?> clazz = null;
         try {
             clazz = Class.forName(fullName);
@@ -62,21 +62,6 @@ public final class ReflectionAPI {
             e.printStackTrace();
         }
         return clazz;
-    }
-
-    /**
-     * Get a object handle.
-     *
-     * @param obj object to get the handle
-     * @return object handle
-     */
-    public static Object getHandle(Object obj) {
-        try {
-            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, new Object[0]);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**
@@ -111,6 +96,21 @@ public final class ReflectionAPI {
                 m.setAccessible(true);
                 return m;
             }
+        }
+        return null;
+    }
+
+    /**
+     * Get a object handle.
+     *
+     * @param obj object to get the handle
+     * @return object handle
+     */
+    public static Object getHandle(Object obj) {
+        try {
+            return getMethod(obj.getClass(), "getHandle", new Class[0]).invoke(obj, new Object[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

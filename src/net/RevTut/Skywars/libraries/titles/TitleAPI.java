@@ -1,11 +1,13 @@
 package net.RevTut.Skywars.libraries.titles;
 
 import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
-import net.minecraft.util.io.netty.channel.Channel;
+import net.minecraft.server.v1_8_R1.ChatSerializer;
+import net.minecraft.server.v1_8_R1.EnumTitleAction;
+import net.minecraft.server.v1_8_R1.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector.PacketTitle;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,11 +38,6 @@ public final class TitleAPI {
     private static final int VERSION = 47;
 
     /**
-     * NMS Class
-     */
-    private static final Class<?> nmsChatSerializer = ReflectionAPI.getNMSClass("ChatSerializer");
-
-    /**
      * Send a title to a player.
      *
      * @param p     player to send the title
@@ -54,16 +51,11 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(getVersion(p) >= VERSION)) return;
-                try {
-                    final Object handle = ReflectionAPI.getHandle(p);
-                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-                    final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, title);
-                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.TITLE, serialized);
-                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                if (VERSION != VERSION)
+                    return;
+                IChatBaseComponent titleSerializer = ChatSerializer.a(title);
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.TITLE, titleSerializer);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
     }
@@ -82,29 +74,24 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(getVersion(p) >= VERSION)) return;
-                try {
-                    final Object handle = ReflectionAPI.getHandle(p);
-                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-                    final Object serialized = ReflectionAPI.getMethod(nmsChatSerializer, "a", String.class).invoke(null, subtitle);
-                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, ReflectionAPI.getNMSClass("IChatBaseComponent")).newInstance(PacketTitle.Action.SUBTITLE, serialized);
-                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                if (VERSION != VERSION)
+                    return;
+                IChatBaseComponent subTitleSerializer = ChatSerializer.a(subtitle);
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subTitleSerializer);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
     }
 
     /**
-     * Set the title timings.
+     * Set the title times.
      *
-     * @param p       player to update the timings
+     * @param p       player to update the times
      * @param fadeIn  time the title should take to fade in
      * @param stay    time the title should stay on screen
      * @param fadeOut time the title should take to fade out
      */
-    public static void sendTimings(final Player p, final int fadeIn, final int stay, final int fadeOut) {
+    public static void sendTimes(final Player p, final int fadeIn, final int stay, final int fadeOut) {
         if (null == plugin) {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
@@ -112,15 +99,10 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(getVersion(p) >= VERSION)) return;
-                try {
-                    final Object handle = ReflectionAPI.getHandle(p);
-                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class, int.class, int.class, int.class).newInstance(PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
-                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                if (VERSION != VERSION)
+                    return;
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
     }
@@ -138,15 +120,10 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(getVersion(p) >= VERSION)) return;
-                try {
-                    final Object handle = ReflectionAPI.getHandle(p);
-                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.RESET);
-                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                if (VERSION != VERSION)
+                    return;
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.RESET, null);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
     }
@@ -164,36 +141,11 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(getVersion(p) >= VERSION)) return;
-                try {
-                    final Object handle = ReflectionAPI.getHandle(p);
-                    final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-                    Object packet = PacketTitle.class.getConstructor(PacketTitle.Action.class).newInstance(PacketTitle.Action.CLEAR);
-                    ReflectionAPI.getMethod(connection.getClass(), "sendPacket").invoke(connection, packet);
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+                if (VERSION != VERSION)
+                    return;
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.CLEAR, null);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
-    }
-
-    /**
-     * Get the version of a player.
-     *
-     * @param p player to get the Minecraft version
-     * @return game version number
-     */
-    public static int getVersion(Player p) {
-        try {
-            final Object handle = ReflectionAPI.getHandle(p);
-            final Object connection = ReflectionAPI.getField(handle.getClass(), "playerConnection").get(handle);
-            final Object network = ReflectionAPI.getField(connection.getClass(), "networkManager").get(connection);
-            final Object channel = ReflectionAPI.getField(network.getClass(), "m").get(network);
-            final Object version = ReflectionAPI.getMethod(network.getClass(), "getVersion", Channel.class).invoke(network, channel);
-            return (Integer) version;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }

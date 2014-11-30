@@ -1,14 +1,14 @@
 package net.RevTut.Skywars.libraries.tab;
 
 import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.titles.TitleAPI;
-import net.minecraft.server.v1_7_R4.ChatSerializer;
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.ChatSerializer;
+import net.minecraft.server.v1_8_R1.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,12 +52,26 @@ public final class TabAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (!(TitleAPI.getVersion(p) >= TabAPI.VERSION))
+                if (VERSION != VERSION)
                     return;
                 IChatBaseComponent tabTitle = ChatSerializer.a(title);
                 IChatBaseComponent tabFooter = ChatSerializer.a(footer);
-                ProtocolInjector.PacketTabHeader header = new ProtocolInjector.PacketTabHeader(tabTitle, tabFooter);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(header);
+                PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
+
+                try {
+                    Field headerField = packet.getClass().getDeclaredField("a");
+                    headerField.setAccessible(true);
+                    headerField.set(packet, tabTitle);
+                    headerField.setAccessible(!headerField.isAccessible());
+
+                    Field footerField = packet.getClass().getDeclaredField("b");
+                    footerField.setAccessible(true);
+                    footerField.set(packet, tabFooter);
+                    footerField.setAccessible(!footerField.isAccessible());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
         });
     }

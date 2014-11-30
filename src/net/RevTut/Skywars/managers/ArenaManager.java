@@ -12,11 +12,7 @@ import net.RevTut.Skywars.listeners.player.PlayerDamage;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Message;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -529,7 +525,7 @@ public class ArenaManager {
         arena.getPlayers().add(playerDat);
 
         // Title
-        TitleAPI.sendTimings(player, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
+        TitleAPI.sendTimes(player, plugin.fadeIn, plugin.timeOnScreen, plugin.fadeOut);
         TitleAPI.sendTitle(player, plugin.titleMessage);
         TitleAPI.sendSubTitle(player, plugin.subTitleMessage.replace("%gamenumber%", arena.getArenaDat().getGameNumber()));
 

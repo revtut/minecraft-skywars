@@ -1,8 +1,6 @@
 package net.RevTut.Skywars.libraries.language;
 
 import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -25,26 +23,12 @@ public final class LanguageAPI {
     private LanguageAPI() {}
 
     /**
-     * Get the language of a player using Bukkit methods
+     * Get the language of a player
      *
      * @param player player to get the language
      * @return language of the player
      */
     public static Language getLanguage(Player player){
-        CraftPlayer craftPlayer = (CraftPlayer) player;
-        EntityPlayer entityPlayer = craftPlayer.getHandle();
-        String lang = entityPlayer.locale;
-
-        return getByCode(lang);
-    }
-
-    /**
-     * Get the language of a player using Reflection
-     *
-     * @param player player to get the language
-     * @return language of the player
-     */
-    public static Language getLanguageNMS(Player player){
         try {
             Object playerMethod = ReflectionAPI.getMethod(player.getClass(), "getHandle").invoke(player, (Object[]) null);
             Field field = ReflectionAPI.getField(playerMethod.getClass(), "locale");

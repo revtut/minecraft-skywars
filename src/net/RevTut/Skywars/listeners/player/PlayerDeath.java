@@ -9,8 +9,8 @@ import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Message;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -128,11 +128,11 @@ public class PlayerDeath implements Listener {
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Title
             // Target
-            TitleAPI.sendTimings(alvo, 5, 60, 5);
+            TitleAPI.sendTimes(alvo, 5, 60, 5);
             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
             TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WERE_KILLED_BY, alvo) + damager.getName()));
             // Damager
-            TitleAPI.sendTimings(damager, 5, 60, 5);
+            TitleAPI.sendTimes(damager, 5, 60, 5);
             TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_KILLED, damager)));
             TitleAPI.sendSubTitle(damager, ConvertersAPI.convertToJSON("§7" + alvo.getName()));
         } else {
@@ -141,7 +141,7 @@ public class PlayerDeath implements Listener {
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
             // Title
             // Target
-            TitleAPI.sendTimings(alvo, 5, 60, 5);
+            TitleAPI.sendTimes(alvo, 5, 60, 5);
             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
             TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(""));
         }
