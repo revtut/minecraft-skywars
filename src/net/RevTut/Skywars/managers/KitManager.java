@@ -1,20 +1,21 @@
 package net.RevTut.Skywars.managers;
 
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.kits.*;
 import net.RevTut.Skywars.player.PlayerDat;
+import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Kit Manager.
@@ -73,6 +74,17 @@ public class KitManager {
     }
 
     /**
+     * Compass
+     */
+    private final ItemStack compass = new ItemStack(Material.COMPASS, 1);
+
+    {
+        ItemMeta compassMeta = compass.getItemMeta();
+        compassMeta.setDisplayName("§6TARGET");
+        compass.setItemMeta(compassMeta);
+    }
+
+    /**
      * Map with players and choosen kit
      */
     public final Map<UUID, Kit> playerKit = new HashMap<UUID, Kit>();
@@ -90,6 +102,18 @@ public class KitManager {
     }
 
     /**
+     * Give the kit menu item to player
+     *
+     * @param playerDat player to give the menu item
+     */
+    public final void giveCompassItem(PlayerDat playerDat){
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null)
+            return;
+        player.getInventory().setItem(8, compass);
+    }
+
+    /**
      * Give the choosen player's kit to him
      *
      * @param playerDat player to give the choosen kit
@@ -98,9 +122,11 @@ public class KitManager {
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if(player == null)
             return;
+
         // Check if player bought kit
         if(!playerKit.containsKey(playerDat.getUUID()))
             return;
+
         // Kit
         Kit kit = playerKit.get(playerDat.getUUID());
         if(kit == Kit.ENGINEER)
@@ -117,18 +143,19 @@ public class KitManager {
             lifestealer.kitLifestealer(player);
         //else if(kit == Kit.SCREAMER)
         //    screamer.kitScreamer(player);
+
         // Message
         player.sendMessage(Message.getMessage(Message.KIT_RECEIVED, player) + ChatColor.stripColor(kit.getDisplayName())+ "!");
     }
 
     /**
-     * Open kit menu to a player
+     * Create kit menu to a player
      *
+     * @param playerDat player to create the menu
      * @param itemStack item stack used by the player
-     * @param player player to create the menu
      * @return inventory menu with all kits
      */
-    public final Inventory createKitMenu(ItemStack itemStack, Player player) { // MAKES USE OF PLAYER INTERACT EVENT
+    public final Inventory createKitMenu(PlayerDat playerDat, ItemStack itemStack) { // MAKES USE OF PLAYER INTERACT EVENT
         if (itemStack == null)
             return null;
         if (itemStack.getType() == null)
@@ -140,6 +167,11 @@ public class KitManager {
         if (!itemStack.getItemMeta().hasDisplayName())
             return null;
         if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(kitMenuItem.getItemMeta().getDisplayName()))
+            return null;
+
+        // Player
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null)
             return null;
 
         // All the kits
@@ -170,6 +202,68 @@ public class KitManager {
             itemMeta = itemStack.getItemMeta(); // ItemMeta
             itemMeta.setDisplayName(kit.getDisplayName()); // DisplayName
             itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + "§b" + kit.getCost())); // Lore
+            itemStack.setItemMeta(itemMeta); // Set iteMeta
+            inventory.setItem(i , itemStack);
+        }
+
+        return inventory;
+    }
+
+    /**
+     * Open compass menu to a player
+     *
+     * @param itemStack item stack used by the player
+     * @param playerDat player to create the menu
+     * @param arena arena where player is currently playing
+     * @return inventory menu with all kits
+     */
+    public final Inventory createCompassMenu(ItemStack itemStack, PlayerDat playerDat, Arena arena) { // MAKES USE OF PLAYER INTERACT EVENT
+        if(arena.getStatus() != ArenaStatus.INGAME)
+            return null;
+        if(playerDat.getStatus() == PlayerStatus.ALIVE)
+            return null;
+        if (itemStack == null)
+            return null;
+        if (itemStack.getType() == null)
+            return null;
+        if (itemStack.getType() != compass.getType())
+            return null;
+        if (!itemStack.hasItemMeta())
+            return null;
+        if (!itemStack.getItemMeta().hasDisplayName())
+            return null;
+
+
+        // All the kits
+        List<PlayerDat> alivePlayers = arena.getAlivePlayers();
+
+        // Size of Inventory
+        int inventorySize;
+        if(alivePlayers.size() <= 9)
+            inventorySize = 9;
+        else if(alivePlayers.size() <= 18)
+            inventorySize = 18;
+        else if(alivePlayers.size() <= 27)
+            inventorySize = 27;
+        else if(alivePlayers.size() <= 36)
+            inventorySize = 36;
+        else if(alivePlayers.size() <= 45)
+            inventorySize = 45;
+        else
+            inventorySize = 54;
+        Inventory inventory = Bukkit.createInventory(null, inventorySize, "§6Players");
+
+        // Create Menu
+        ItemMeta itemMeta;
+        for(int i = 0; i < alivePlayers.size(); i++){
+            PlayerDat alvoDat = alivePlayers.get(i);
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(null == alvo)
+                continue;
+
+            itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+            itemMeta = itemStack.getItemMeta(); // ItemMeta
+            itemMeta.setDisplayName(alvo.getDisplayName()); // DisplayName
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
@@ -216,5 +310,59 @@ public class KitManager {
         playerDat.addPoints(0 - kit.getCost());
         // Message
         player.sendMessage(Message.getMessage(Message.KIT_BOUGHT, player) + ChatColor.stripColor(kit.getDisplayName()) + "!");
+    }
+
+    /**
+     * Set the kit of a player. Checks if player has enough points to buy it and if player
+     * has not choosen the kit yet
+     *
+     * @param playerDat player to set the kit
+     * @param arena arena player is currently playing
+     * @param inventory inventory of the player
+     * @param position position of the kit
+     */
+    public final void compassTeleport(PlayerDat playerDat, Arena arena, Inventory inventory, int position){ // MAKES USE OF PLAYER INVENTORY CLICK EVENT
+        if(!inventory.getTitle().equalsIgnoreCase("§6Players"))
+            return;
+        if(position < 0)
+            return;
+        List<PlayerDat> alivePlayers = arena.getAlivePlayers();
+        if(position >= alivePlayers.size())
+            return;
+
+        // Player
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(player == null)
+            return;
+
+        // Close Inventory
+        player.closeInventory();
+
+        // Head of player
+        ItemStack itemStack = inventory.getItem(position);
+        if(null == itemStack)
+            return;
+        if (!itemStack.hasItemMeta())
+            return;
+        if (!itemStack.getItemMeta().hasDisplayName())
+            return;
+
+        String targetName = ChatColor.stripColor(itemStack.getItemMeta().getDisplayName());
+
+        // Target player
+        Player target = Bukkit.getPlayer(targetName);
+        if(null == target)
+            return;
+
+        // Teleport to the target
+        Location targetLocation = target.getLocation();
+        Location safeLocation = new Location(targetLocation.getWorld(), targetLocation.getX(), targetLocation.getY() + 5, targetLocation.getZ(), targetLocation.getYaw(), targetLocation.getPitch());
+        int i = 0;
+        do{
+            safeLocation.setY(safeLocation.getY() + i);
+            i++;
+        }while(safeLocation.getBlock().getType() != Material.AIR);
+        player.teleport(safeLocation);
+        player.setFlying(true);
     }
 }

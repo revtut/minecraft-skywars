@@ -56,7 +56,7 @@ public class PlayerInteract implements Listener {
             return;
 
         // Kit Menu
-        Inventory inventory = arena.getKitManager().createKitMenu(player.getItemInHand(), player);
+        Inventory inventory = arena.getKitManager().createKitMenu(playerDat, player.getItemInHand());
         if(inventory != null)
             player.openInventory(inventory);
 
@@ -69,6 +69,11 @@ public class PlayerInteract implements Listener {
             e.setCancelled(true);
             return;
         }
+
+        // Compass Menu
+        inventory = arena.getKitManager().createCompassMenu(player.getItemInHand(), playerDat, arena);
+        if(inventory != null)
+            player.openInventory(inventory);
 
         // Chest interact
         plugin.playerChest.onChestInteract(e.getClickedBlock());

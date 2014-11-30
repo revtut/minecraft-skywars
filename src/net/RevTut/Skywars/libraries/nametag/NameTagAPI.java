@@ -123,9 +123,6 @@ public final class NameTagAPI implements Listener {
         } else if (p.hasPermission("rev.tag.youtuber")) {
             id = "YT";
             prefix = "§9[YT] ";
-        } else if (p.hasPermission("rev.tag.vipplus")) {
-            id = "VIPPLUS";
-            prefix = "§a[VIP§6+§a] ";
         } else if (p.hasPermission("rev.tag.vip")) {
             id = "VIP";
             prefix = "§a[VIP] ";

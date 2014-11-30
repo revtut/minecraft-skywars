@@ -1,6 +1,8 @@
 package net.RevTut.Skywars.libraries.algebra;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 /**
  * Algebra Library.
@@ -58,4 +60,46 @@ public final class AlgebraAPI {
         return location;
     }
 
+    /**
+     * Get the closest player to a given player
+     *
+     * @param player player to get the closest player
+     * @return closest player
+     */
+    public static Player closestPlayer(Player player) {
+        Player closest = null;
+        double minDistance = Integer.MAX_VALUE;
+        for(Player alvo : Bukkit.getOnlinePlayers()) {
+            if(alvo.getUniqueId().equals(player.getUniqueId()))
+                continue;
+
+            if(alvo.getWorld() != player.getWorld())
+                continue;
+
+            double distance = distanceBetween(player.getLocation(), alvo.getLocation());
+
+            if(distance < minDistance){
+                minDistance = distance;
+                closest = alvo;
+            }
+        }
+        return closest;
+    }
+
+    /**
+     * Distance between two locations in meters
+     *
+     * @param initial initial location
+     * @param target target location
+     * @return distance in meters
+     */
+    public static double distanceBetween(Location initial, Location target) {
+        int xI = initial.getBlockX(), xF = target.getBlockX();
+        int yI = initial.getBlockY(), yF = target.getBlockY();
+        int zI = initial.getBlockZ(), zF = target.getBlockZ();
+
+        int deltaX = xF - xI, deltaY = yF - yI, deltaZ = zF - zI;
+
+        return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
+    }
 }

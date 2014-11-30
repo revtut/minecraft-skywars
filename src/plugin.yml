@@ -1,5 +1,5 @@
  name: SkyWars
- version: 0.1
+ version: 1.0
  description: RevTut Network SkyWars Plugin
  author: RevTut
  website: www.revtut.net
@@ -25,17 +25,23 @@
   rev.tag.vip:
     description: Permission to VIP tag
     default: op
-  rev.tag.youtube:
-    description: Permission to YOUTUBE tag
+  rev.tag.youtuber:
+    description: Permission to YOUTUBER tag
     default: op
-  rev.tag.developer:
-    description: Permission to DEVELOPER tag
+  rev.tag.designer:
+    description: Permission to DESIGNER tag
+    default: op
+  rev.tag.thaiberium:
+    description: Permission to THAIBERIUM tag
     default: op
   rev.tag.staff:
     description: Permission to STAFF tag
     default: op
   rev.tag.moderator:
     description: Permission to MODERATOR tag
+    default: op
+  rev.tag.developer:
+    description: Permission to DEVELOPER tag
     default: op
   rev.tag.admin:
     description: Permission to ADMIN tag

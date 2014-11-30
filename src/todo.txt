@@ -1,5 +1,3 @@
-- Avisar os players para esperarem quando estao mortos pois um jogo ira comecar em breve. Avisar que sairem antes perdem creditos
-
 // EXTRA
 
 // Measur time of some method
@@ -25,3 +23,17 @@ for(int k = 0; k < numberIterations; k++) {
 this.getLogger().log(Level.WARNING, "MAXIMUM DURATION: " + maxDuration + "ms");
 this.getLogger().log(Level.WARNING, "MINIMUM DURATION: " + minDuration + "ms");
 this.getLogger().log(Level.WARNING, "AVERAGE: " + (totalDuration / numberIterations) + "ms");
+
+            String message = "§7[";
+            int numberBars = (remainingTime  * 37) / ArenaStatus.LOBBY.getTime();
+            for(int i = 0; i < numberBars; i++)
+                message += "§a|";
+            for(int i = 0; i < 37 - numberBars; i++)
+                message += "§7|";
+            message += " §a" + remainingTime + " ";
+            for(int i = 0; i < 37 - numberBars; i++)
+                message += "§7|";
+            for(int i = 0; i < numberBars; i++)
+                message += "§a|";
+            message += "§7]";
+            ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON(message));

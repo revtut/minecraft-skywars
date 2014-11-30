@@ -1,16 +1,16 @@
 package net.RevTut.Skywars.arena;
 
 import net.RevTut.Skywars.SkyWars;
+import net.RevTut.Skywars.libraries.algebra.AlgebraAPI;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
 import net.RevTut.Skywars.libraries.titles.TitleAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Message;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
 import java.util.UUID;
@@ -108,6 +108,26 @@ public class ArenaInGame implements Runnable {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
                 continue;
+
+            // Set compass target
+            Player closest = AlgebraAPI.closestPlayer(alvo);
+            if(null != closest){
+                alvo.setCompassTarget(closest.getLocation());
+
+                for(ItemStack itemStack : alvo.getInventory().getContents()) {
+                    if(null == itemStack)
+                        continue;
+
+                    if(!itemStack.getType().equals(Material.COMPASS))
+                        continue;
+
+                    double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
+
+                    ItemMeta compassMeta = itemStack.getItemMeta();
+                    compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + distance + "m");
+                    itemStack.setItemMeta(compassMeta);
+                }
+            }
 
             // Send message to dead players
             if(alvoDat.getStatus() == PlayerStatus.DEAD)

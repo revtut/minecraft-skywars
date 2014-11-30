@@ -213,6 +213,7 @@ public class ArenaPreGame implements Runnable {
 
             // Give the Kit
             arena.getKitManager().giveChoosenKit(alvoDat);
+            arena.getKitManager().giveCompassItem(alvoDat);
 
             // Remove Glass
             int i = 0;
