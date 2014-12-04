@@ -88,9 +88,6 @@ public class PlayerDeath implements Listener {
             return;
         }
 
-        // Give the compass
-        alvoArena.getKitManager().giveCompassItem(alvoDat);
-
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);

@@ -64,6 +64,9 @@ public class PlayerRespawn implements Listener {
             return;
         // Set respawn location
         e.setRespawnLocation(deadSpawn);
+
+        // Give the compass
+        arena.getKitManager().giveCompassItem(playerDat);
     }
 
 }

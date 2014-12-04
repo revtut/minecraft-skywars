@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -122,9 +123,10 @@ public class ArenaInGame implements Runnable {
                         continue;
 
                     double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
                     ItemMeta compassMeta = itemStack.getItemMeta();
-                    compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + distance + "m");
+                    compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
                     itemStack.setItemMeta(compassMeta);
                 }
             }
