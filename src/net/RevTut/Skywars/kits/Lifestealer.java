@@ -42,7 +42,7 @@ public class Lifestealer {
      * @param p player to give the kit
      */
     public void kitLifestealer(Player p) {
-        p.getInventory().setChestplate(leatherHelmet);
+        p.getInventory().setHelmet(leatherHelmet);
     }
 
     /**
