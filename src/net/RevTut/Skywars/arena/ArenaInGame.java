@@ -218,7 +218,7 @@ public class ArenaInGame implements Runnable {
                             }
 
                             // Subtitle
-                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo)) + winner.getName());
+                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo) + winner.getName()));
 
                             // Chat message
                             alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winner.getName());
