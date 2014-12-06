@@ -3,6 +3,7 @@ package net.RevTut.Skywars.listeners.player;
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.player.PlayerDat;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +48,7 @@ public class PlayerRespawn implements Listener {
         if (playerDat == null)
             return;
         // Arena
-        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (arena == null)
             return;
 
@@ -66,7 +67,12 @@ public class PlayerRespawn implements Listener {
         e.setRespawnLocation(deadSpawn);
 
         // Give the compass
-        arena.getKitManager().giveCompassItem(playerDat);
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                arena.getKitManager().giveCompassItem(playerDat);
+            }
+        }, 20);
     }
 
 }

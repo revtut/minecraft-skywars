@@ -111,7 +111,7 @@ public class ArenaInGame implements Runnable {
                 continue;
 
             // Set compass target
-            Player closest = AlgebraAPI.closestPlayer(alvo);
+            Player closest = AlgebraAPI.closestPlayer(arena, alvo);
             if(null != closest){
                 alvo.setCompassTarget(closest.getLocation());
 

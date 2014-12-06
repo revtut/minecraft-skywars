@@ -1,5 +1,7 @@
 package net.RevTut.Skywars.libraries.algebra;
 
+import net.RevTut.Skywars.arena.Arena;
+import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -66,10 +68,14 @@ public final class AlgebraAPI {
      * @param player player to get the closest player
      * @return closest player
      */
-    public static Player closestPlayer(Player player) {
+    public static Player closestPlayer(Arena arena, Player player) {
         Player closest = null;
         double minDistance = Integer.MAX_VALUE;
-        for(Player alvo : Bukkit.getOnlinePlayers()) {
+        for(PlayerDat alvoDat : arena.getAlivePlayers()) {
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(null == alvo)
+                continue;
+
             if(alvo.getUniqueId().equals(player.getUniqueId()))
                 continue;
 

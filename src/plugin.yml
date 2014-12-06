@@ -1,15 +1,15 @@
- name: SkyWars
- version: 1.0
- description: RevTut Network SkyWars Plugin
- author: RevTut
- website: www.revtut.net
- main: net.RevTut.Skywars.SkyWars
+name: SkyWars
+version: 1.0
+description: RevTut Network SkyWars Plugin
+author: RevTut
+website: www.revtut.net
+main: net.RevTut.Skywars.SkyWars
 
 ############
 # COMANDOS #
 ############
 
- commands:
+commands:
 
 # Appearance
   firework:
@@ -20,7 +20,7 @@
 # PERMISSOES #
 ##############
 
- permissions:
+permissions:
 # Tags
   rev.tag.vip:
     description: Permission to VIP tag

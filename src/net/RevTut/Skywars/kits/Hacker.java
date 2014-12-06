@@ -2,7 +2,6 @@ package net.RevTut.Skywars.kits;
 
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaLocation;
-import net.RevTut.Skywars.libraries.particles.ParticlesAPI;
 import net.RevTut.Skywars.managers.KitManager;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.utils.Message;
@@ -105,8 +104,6 @@ public class Hacker {
         Location spawnLocation = spawnLocations.get(rand.nextInt(spawnLocations.size()));
         if (spawnLocation == null)
             return null;
-        // Play particle effects
-        ParticlesAPI.helixPosY(spawnLocation);
         // Message
         player.sendMessage(Message.getMessage(Message.HACKER_RESPAWN, player));
         // Add to already respawned players
