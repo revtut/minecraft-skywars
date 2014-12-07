@@ -218,7 +218,7 @@ public class ArenaPreGame implements Runnable {
             // Remove Glass
             int i = 0;
             Location alvoLocation = alvo.getLocation();
-            while (alvoLocation.getBlock().getType() != Material.GLASS && i < 3) {
+            while (alvoLocation.getBlock().getType() != Material.GLASS && (alvoLocation.getBlock().getType() != Material.STAINED_GLASS) && i < 3) {
                 alvoLocation.setY(alvoLocation.getY() - i);
                 i++;
             }

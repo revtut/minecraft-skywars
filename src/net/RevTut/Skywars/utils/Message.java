@@ -350,6 +350,8 @@ public enum Message {
                 return "§aVivos: ";
             case PORTUGUESE_BR:
                 return "§aVivos: ";
+            case SPANISH:
+                return "§aVivo: ";
             default:
                 return "§aAlive: ";
         }
@@ -375,7 +377,9 @@ public enum Message {
             case PORTUGUESE_PT:
                 return "§aPodes agora abrir os baús!";
             case PORTUGUESE_BR:
-                return "§aAgora voce pode abrir os baús!";
+                return "§aAgora você pode abrir os baús!";
+            case SPANISH:
+                return "§aAhora puede abrir los cofres!";
             default:
                 return "§aYou may now open the chests!";
         }
@@ -402,6 +406,8 @@ public enum Message {
                 return "§cMortos: ";
             case PORTUGUESE_BR:
                 return "§cMortos: ";
+            case SPANISH:
+                return "§cMuerto: ";
             default:
                 return "§cDead: ";
         }
@@ -428,6 +434,8 @@ public enum Message {
                 return "§6Não saias da arena, um novo jogo em breve!\n" + gamePrefix + "§6Se saires agora, vais perder pontos...";
             case PORTUGUESE_BR:
                 return "§6Não deixes a arena, um novo jogo em breve!\n" + gamePrefix + "§6Se você sair agora, irá perder pontos...";
+            case SPANISH:
+                return "§6No deje la arena, el nuevo juego se iniciará pronto!\n" + gamePrefix + "§6Si te vas ahora, perderá puntos ...";
             default:
                 return "§6Do not leave the arena, a new game will start soon!\n" + gamePrefix + "§6If you leave now, you will lose points...";
         }
@@ -454,6 +462,8 @@ public enum Message {
                 return "§6Colocaste-te uma mina!";
             case PORTUGUESE_BR:
                 return "§6Você colocou uma mina!";
+            case SPANISH:
+                return "§6Has colocado una mina!";
             default:
                 return "§6You have placed a mine!";
         }
@@ -480,6 +490,8 @@ public enum Message {
                 return "§6Mapa de Jogo: ";
             case PORTUGUESE_BR:
                 return "§6Mapa do Jogo: ";
+            case SPANISH:
+                return "§6Mapa del Juego: ";
             default:
                 return "§6Game Map: ";
         }
@@ -506,6 +518,8 @@ public enum Message {
                 return "§6Para reportares o jogo, anexa o ID: ";
             case PORTUGUESE_BR:
                 return "§6Para denunciares o jogo, coloca o ID: ";
+            case SPANISH:
+                return "§6Para reportar el juego, atar la ID: ";
             default:
                 return "§6To report the game, attach the ID: ";
         }
@@ -532,6 +546,8 @@ public enum Message {
                 return "§4Tempo esgotado. Nao houve um vencedor.";
             case PORTUGUESE_BR:
                 return "§4Tempo esgotado. Nao houve um vencedor.";
+            case SPANISH:
+                return "§4Se acabó el tiempo. No hubo ganador.";
             default:
                 return "§4Time out. There was no winner.";
         }
@@ -557,7 +573,9 @@ public enum Message {
             case PORTUGUESE_PT:
                 return "§aO vencedor do partida foi: ";
             case PORTUGUESE_BR:
-                return "§4O vencedor do jogo foi: ";
+                return "§aO vencedor do jogo foi: ";
+            case SPANISH:
+                return "§aEl ganador del juego fue: ";
             default:
                 return "§aThe winner of the match was: ";
         }
@@ -584,6 +602,8 @@ public enum Message {
                 return "§6Ativaste o modo de fúria por ";
             case PORTUGUESE_BR:
                 return "§6Você ativou o modo de fúria por ";
+            case SPANISH:
+                return "§6Se activa el modo de rabia por ";
             default:
                 return "§6You have activated rage mode for ";
         }
@@ -610,6 +630,8 @@ public enum Message {
                 return "§6Hackeaste a morte e ressuscitaste!";
             case PORTUGUESE_BR:
                 return "§6Você hackeou a morte e ressuscitou!";
+            case SPANISH:
+                return "§6Has hackeado la muerte y resucitado!";
             default:
                 return "§6You have hacked the death and respawned!";
         }
@@ -636,6 +658,8 @@ public enum Message {
                 return "§4O teu kit ja foi escolhido!";
             case PORTUGUESE_BR:
                 return "§4Você já escolheu o seu kit!";
+            case SPANISH:
+                return "§4Usted ya ha elegido su kit!";
             default:
                 return "§4You have already chosen your kit!";
             }
@@ -662,6 +686,8 @@ public enum Message {
                 return "§6Adquiriste o Kit ";
             case PORTUGUESE_BR:
                 return "§6Você comprou o Kit ";
+            case SPANISH:
+                return "§6Usted ha comprado el Kit ";
             default:
                 return "§6You have bought Kit ";
         }
@@ -688,6 +714,8 @@ public enum Message {
                 return "§aRecebeste o Kit ";
             case PORTUGUESE_BR:
                 return "§aVocê recebeu o Kit ";
+            case SPANISH:
+                return "§aHa recibido Kit ";
             default:
                 return "§aYou have received Kit ";
         }
@@ -714,6 +742,8 @@ public enum Message {
                 return "§4O numero minimo de jogadores nao foi alcançado.\n" + gamePrefix + "§4Minimo de jogadores: §6";
             case PORTUGUESE_BR:
                 return "§4Nao foi atingido o numero minimo de jogadores.\n" + gamePrefix + "§4Jogadores minimos: §6";
+            case SPANISH:
+                return "§4No se ha alcanzado el número mínimo de jugadores.\n" + gamePrefix + "§4Jugadores mínimos: §6";
             default:
                 return "§4The minimum number of players has not been reached.\n" + gamePrefix + "§4Minimum players: §6";
         }
@@ -737,9 +767,11 @@ public enum Message {
             case GERMAN:
                 return "§6Die zeit wurde auf §330 §6sekunden reduziert.\n" + gamePrefix + "§6Anzahl der spieler: §3";
             case PORTUGUESE_PT:
-                return "§6O tempo foi reduzido para §330 §6 segundos.\n" + gamePrefix + "§6Numero de jogadores: §3";
+                return "§6O tempo foi reduzido para §330 §6segundos.\n" + gamePrefix + "§6Numero de jogadores: §3";
             case PORTUGUESE_BR:
-                return "§6O tempo foi reduzido para §330 §6 segundos.\n" + gamePrefix + "§6Numero de jogadores: §3";
+                return "§6O tempo foi reduzido para §330 §6segundos.\n" + gamePrefix + "§6Numero de jogadores: §3";
+            case SPANISH:
+                return "§6El tiempo se redujo a §330 §6segundos.\n" + gamePrefix + "§6Número de jugadores: §3";
             default:
                 return "§6The time was reduced to §330 §6seconds.\n" + gamePrefix + "§6Number of players: §3";
         }
@@ -766,6 +798,8 @@ public enum Message {
                 return "§4Assignado a uma nova arena devido a jogadores insuficientes!";
             case PORTUGUESE_BR:
                 return "§4Designado para uma nova arena, devido a insuficiencia de jogadores!";
+            case SPANISH:
+                return "§4Asignado a una nueva arena debido a la insuficiencia de los jugadores!";
             default:
                 return "§4Assigned to a new arena due to insufficient players!";
         }
@@ -792,6 +826,8 @@ public enum Message {
                 return "§4Pontos insuficientes para o kit!";
             case PORTUGUESE_BR:
                 return "§4Você não tem pontos suficientes para o kit!";
+            case SPANISH:
+                return "§4Usted no tiene suficientes puntos para el kit!";
             default:
                 return "§4You do not have enough points for the kit!";
         }
@@ -818,6 +854,8 @@ public enum Message {
                 return "§7SEM VENCEDOR";
             case PORTUGUESE_BR:
                 return "§7SEM VENCEDOR";
+            case SPANISH:
+                return "§7NO GANADOR";
             default:
                 return "§7NO WINNER";
         }
@@ -844,6 +882,8 @@ public enum Message {
                 return "§4Publicidade é igual a banimento permanente!";
             case PORTUGUESE_BR:
                 return "§4Publicidade irá levá-lo a um banimento permanente!";
+            case SPANISH:
+                return "§4Publicidad le llevará a una prohibición permanente!";
             default:
                 return "§4Advertisement will lead you to a permanent ban!";
         }
@@ -870,6 +910,8 @@ public enum Message {
                 return "§4Não te encontras em nenhuma arena! Reloga por favor.";
             case PORTUGUESE_BR:
                 return "§4Você não se encontra em nenhuma arena! Relogue por favor.";
+            case SPANISH:
+                return "§4Usted no está en cualquier arena! Relog favor.";
             default:
                 return "§4You are not in any arena! Relog please.";
         }
@@ -896,6 +938,8 @@ public enum Message {
                 return "§4Por favor não uses má linguagem!";
             case PORTUGUESE_BR:
                 return "§4Por favor não use linguagem ruim!";
+            case SPANISH:
+                return "§4Por favor, no use malas palabras!";
             default:
                 return "§4Please do not use bad language!";
         }
@@ -922,6 +966,8 @@ public enum Message {
                 return "§4Por favor espere 3 segundos entre mensagens.";
             case PORTUGUESE_BR:
                 return "§4Você tem que 3 segundos esperar entre mensagens.";
+            case SPANISH:
+                return "§4Tienes que esperar 3 segundos entre mensajes.";
             default:
                 return "§4You have to wait for 3 seconds between messages.";
         }
@@ -948,6 +994,8 @@ public enum Message {
                 return "§7|§4MORTO§7| ";
             case PORTUGUESE_BR:
                 return "§7|§4MORTO§7| ";
+            case SPANISH:
+                return "§7|§4MUERTO§7| ";
             default:
                 return "§7|§4DEAD§7| ";
         }
@@ -974,6 +1022,8 @@ public enum Message {
                 return "§4Morreu: ";
             case PORTUGUESE_BR:
                 return "§4Morreu: ";
+            case SPANISH:
+                return "§4Murió: ";
             default:
                 return "§4Died: ";
         }
@@ -1000,6 +1050,8 @@ public enum Message {
                 return "§4Não podes mandar mensagens duplicadas!";
             case PORTUGUESE_BR:
                 return "§4Você não pode mandar mensagens duplicadas!";
+            case SPANISH:
+                return "§4No puede enviar mensajes duplicados!";
             default:
                 return "§4You can not send duplicated messages!";
         }
@@ -1026,6 +1078,8 @@ public enum Message {
                 return "§6Abandonou a arena ";
             case PORTUGUESE_BR:
                 return "§6Saiu da arena ";
+            case SPANISH:
+                return "§6Ha dejado el juego ";
             default:
                 return "§6Left the game ";
         }
@@ -1052,6 +1106,8 @@ public enum Message {
                 return "§6Entrou na arena ";
             case PORTUGUESE_BR:
                 return "§6Entrou na arena ";
+            case SPANISH:
+                return "§6Se unió al juego ";
             default:
                 return "§6Joined the game ";
         }
@@ -1078,6 +1134,8 @@ public enum Message {
                 return "§4Morto Por: ";
             case PORTUGUESE_BR:
                 return "§4Morto Por: ";
+            case SPANISH:
+                return "§4Matado Por: ";
             default:
                 return "§4Killed By: ";
         }
@@ -1104,6 +1162,8 @@ public enum Message {
                 return "§4Há um erro com o teu perfil! Reloga por favor.";
             case PORTUGUESE_BR:
                 return "§4Houve um erro com o seu perfil! Relogue por favor.";
+            case SPANISH:
+                return "§4Hay un error con tu perfil! Relog favor.";
             default:
                 return "§4There is an error with your profile! Relog please.";
         }
@@ -1130,6 +1190,8 @@ public enum Message {
                 return "§4Por favor nao faças spam!";
             case PORTUGUESE_BR:
                 return "§4Por favor nao faça spam!";
+            case SPANISH:
+                return "§4Por favor, no spam!";
             default:
                 return "§4Please do not spam!";
         }
@@ -1156,6 +1218,8 @@ public enum Message {
                 return "§6Pontos: ";
             case PORTUGUESE_BR:
                 return "§6Pontos: ";
+            case SPANISH:
+                return "§6Puntos: ";
             default:
                 return "§6Points: ";
         }
@@ -1182,6 +1246,8 @@ public enum Message {
                 return "§6Ativaste o modo fantasma por ";
             case PORTUGUESE_BR:
                 return "§6Você ativou o modo fantasma por ";
+            case SPANISH:
+                return "§6Ha activado el modo de fantasma por ";
             default:
                 return "§6You have activated ghost mode for ";
         }
@@ -1208,6 +1274,8 @@ public enum Message {
                 return "§4TEMPO ESGOTADO";
             case PORTUGUESE_BR:
                 return "§4TEMPO ESGOTADO";
+            case SPANISH:
+                return "§4SE ACABÓ EL TIEMPO";
             default:
                 return "§4TIME OUT";
         }
@@ -1234,6 +1302,8 @@ public enum Message {
                 return "§7Vencedor: ";
             case PORTUGUESE_BR:
                 return "§7Vencedor: ";
+            case SPANISH:
+                return "§7:Ganador: ";
             default:
                 return "§7Winner: ";
         }
@@ -1260,6 +1330,8 @@ public enum Message {
                 return "§4MORRESTE";
             case PORTUGUESE_BR:
                 return "§4VOCÊ MORREU";
+            case SPANISH:
+                return "§4USTED HA MORRIDO";
             default:
                 return "§4YOU HAVE DIED";
         }
@@ -1286,6 +1358,8 @@ public enum Message {
                 return "§aMATASTE";
             case PORTUGUESE_BR:
                 return "§aVOCÊ MATOU";
+            case SPANISH:
+                return "§aUSTED HA MATADO";
             default:
                 return "§aYOU HAVE KILLED";
         }
@@ -1312,6 +1386,8 @@ public enum Message {
                 return "§4PERDESTE";
             case PORTUGUESE_BR:
                 return "§4VOCÊ PERDEU";
+            case SPANISH:
+                return "§4USTED HA PERDIDO";
             default:
                 return "§4YOU HAVE LOST";
         }
@@ -1338,6 +1414,8 @@ public enum Message {
                 return "§7Morto Por: ";
             case PORTUGUESE_BR:
                 return "§7Morto Por: ";
+            case SPANISH:
+                return "§7Muerto Por: ";
             default:
                 return "§7Killed By: ";
         }
@@ -1364,6 +1442,8 @@ public enum Message {
                 return "§aVENCESTE";
             case PORTUGUESE_BR:
                 return "§aVOCÊ VENCEU";
+            case SPANISH:
+                return "§aUSTED HA GANADO";
             default:
                 return "§aYOU HAVE WON";
         }

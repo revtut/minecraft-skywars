@@ -72,7 +72,7 @@ public class PlayerRespawn implements Listener {
             public void run() {
                 arena.getKitManager().giveCompassItem(playerDat);
             }
-        }, 20);
+        }, 60);
     }
 
 }
