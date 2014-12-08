@@ -3,6 +3,7 @@ package net.RevTut.Skywars.managers;
 import net.RevTut.Skywars.arena.Arena;
 import net.RevTut.Skywars.arena.ArenaStatus;
 import net.RevTut.Skywars.kits.*;
+import net.RevTut.Skywars.libraries.algebra.AlgebraAPI;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import net.RevTut.Skywars.utils.Message;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -234,6 +236,10 @@ public class KitManager {
         if (!itemStack.getItemMeta().hasDisplayName())
             return null;
 
+        Player player = Bukkit.getPlayer(playerDat.getUUID());
+        if(null == player)
+            return null;
+
 
         // All the kits
         List<PlayerDat> alivePlayers = arena.getAlivePlayers();
@@ -256,15 +262,19 @@ public class KitManager {
 
         // Create Menu
         ItemMeta itemMeta;
+        double distance;
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
         for(int i = 0; i < alivePlayers.size(); i++){
             PlayerDat alvoDat = alivePlayers.get(i);
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if(null == alvo)
                 continue;
 
+            distance = AlgebraAPI.distanceBetween(player.getLocation(), alvo.getLocation());
+
             itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
             itemMeta = itemStack.getItemMeta(); // ItemMeta
-            itemMeta.setDisplayName(alvo.getDisplayName()); // DisplayName
+            itemMeta.setDisplayName(alvo.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
@@ -348,10 +358,16 @@ public class KitManager {
         if (!itemStack.getItemMeta().hasDisplayName())
             return;
 
-        String targetName = ChatColor.stripColor(itemStack.getItemMeta().getDisplayName());
+        Player target = null;
+        for(PlayerDat alvoDat : arena.getAlivePlayers()) {
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if(itemStack.getItemMeta().getDisplayName().contains(alvo.getDisplayName())) {
+                target = alvo;
+                break;
+            }
+        }
 
         // Target player
-        Player target = Bukkit.getPlayer(targetName);
         if(null == target)
             return;
 
