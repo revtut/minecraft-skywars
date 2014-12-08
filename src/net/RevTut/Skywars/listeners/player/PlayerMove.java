@@ -85,7 +85,8 @@ public class PlayerMove implements Listener {
                     i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
                 alvo.teleport(safeLocation);
-                alvo.setFlying(true);
+                if(alvo.getAllowFlight())
+                    alvo.setFlying(true);
             }
             return;
         }
@@ -139,7 +140,8 @@ public class PlayerMove implements Listener {
                     i++;
                 }while(safeLocation.getBlock().getType() != Material.AIR);
                 player.teleport(safeLocation);
-                player.setFlying(true);
+                if(player.getAllowFlight())
+                    player.setFlying(true);
             }
         }
     }
