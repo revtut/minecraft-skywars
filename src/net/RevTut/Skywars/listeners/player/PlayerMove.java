@@ -51,18 +51,45 @@ public class PlayerMove implements Listener {
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (playerDat == null)
             return;
+
         // Arena
         Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == arena)
             return;
         if (arena.getStatus() != ArenaStatus.INGAME)
             return;
+
         // Alive
         if (playerDat.getStatus() == PlayerStatus.ALIVE){
             // Engineer
             arena.getKitManager().engineer.landMineActivate(player);
+
+            // Check if there is near players
+            for(PlayerDat alvoDat : arena.getPlayers()){
+                if(alvoDat.getStatus() != PlayerStatus.DEAD)
+                    continue;
+                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                if(alvo == null)
+                    continue;
+                Location location = alvo.getLocation();
+                if(alvo.getUniqueId() == player.getUniqueId())
+                    continue;
+                if(alvo.getWorld() != player.getWorld())
+                    continue;
+                if(player.getLocation().distanceSquared(location) > 25)
+                    continue;
+                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ(), location.getYaw(), location.getPitch());
+                int i = 0;
+                do{
+                    safeLocation.setY(safeLocation.getY() + i);
+                    i++;
+                }while(safeLocation.getBlock().getType() != Material.AIR);
+                alvo.teleport(safeLocation);
+                alvo.setFlying(true);
+            }
             return;
         }
+
         // Dead
         if (playerDat.getStatus() == PlayerStatus.DEAD){
             Location location = player.getLocation();
@@ -73,6 +100,7 @@ public class PlayerMove implements Listener {
             double maxZ = arenaLocation.getSecondCorner().getZ();
             double x = location.getX();
             double z = location.getZ();
+
             // Check if he is outside the arena
             if(x < minX){
                 Location safeLocation = new Location(location.getWorld(), location.getX() + 5, location.getY(), location.getZ());
@@ -90,7 +118,8 @@ public class PlayerMove implements Listener {
                 Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ() - 5);
                 player.teleport(safeLocation);
             }
-            // Check if near a player
+
+            // Check if he is near a player
             for(PlayerDat alvoDat : arena.getPlayers()){
                 if(alvoDat.getStatus() != PlayerStatus.ALIVE)
                     continue;
