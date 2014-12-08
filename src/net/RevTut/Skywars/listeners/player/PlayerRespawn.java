@@ -47,6 +47,7 @@ public class PlayerRespawn implements Listener {
         final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (playerDat == null)
             return;
+
         // Arena
         final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (arena == null)
@@ -63,6 +64,7 @@ public class PlayerRespawn implements Listener {
         Location deadSpawn = arena.getArenaLocation().getDeathSpawnLocation();
         if (deadSpawn == null)
             return;
+
         // Set respawn location
         e.setRespawnLocation(deadSpawn);
 
@@ -72,7 +74,7 @@ public class PlayerRespawn implements Listener {
             public void run() {
                 arena.getKitManager().giveCompassItem(playerDat);
             }
-        }, 60);
+        }, 20);
     }
 
 }

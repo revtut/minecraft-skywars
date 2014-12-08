@@ -82,23 +82,23 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
-        // Config Player
-        if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0)) {
-            plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
-            return;
-        }
-
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);
 
-        // Bypass respawn
+        // Set as dead player
+        alvoDat.setStatus(PlayerStatus.DEAD);
+
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
+                // Respawn
                 BypassesAPI.respawnBypass(alvo);
+                // Config Player
+                if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0))
+                    plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
             }
-        }, 20);
+        }, 5);
 
         // Damager player
         final Player damager;
@@ -170,6 +170,5 @@ public class PlayerDeath implements Listener {
         damagerDat.addPoints(poinsEarned);
         // Add kill
         damagerDat.addKill();
-
     }
 }

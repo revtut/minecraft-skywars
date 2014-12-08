@@ -67,13 +67,15 @@ public class PlayerInteract implements Listener {
         }
         if (playerDat.getStatus() != PlayerStatus.ALIVE) {
             e.setCancelled(true);
+
+            // Compass Menu
+            if(playerDat.getStatus() != PlayerStatus.WAITING) {
+                inventory = arena.getKitManager().createCompassMenu(player.getItemInHand(), playerDat, arena);
+                if(inventory != null)
+                    player.openInventory(inventory);
+            }
             return;
         }
-
-        // Compass Menu
-        inventory = arena.getKitManager().createCompassMenu(player.getItemInHand(), playerDat, arena);
-        if(inventory != null)
-            player.openInventory(inventory);
 
         // Chest interact
         plugin.playerChest.onChestInteract(e.getClickedBlock());

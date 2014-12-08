@@ -110,6 +110,7 @@ public class KitManager {
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if(player == null)
             return;
+
         player.getInventory().setItem(8, compass);
     }
 

@@ -65,6 +65,7 @@ public final class AlgebraAPI {
     /**
      * Get the closest player to a given player
      *
+     * @param arena arena where player is currently playing
      * @param player player to get the closest player
      * @return closest player
      */

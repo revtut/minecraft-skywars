@@ -435,7 +435,7 @@ public enum Message {
             case PORTUGUESE_BR:
                 return "§6Não deixes a arena, um novo jogo em breve!\n" + gamePrefix + "§6Se você sair agora, irá perder pontos...";
             case SPANISH:
-                return "§6No deje la arena, el nuevo juego se iniciará pronto!\n" + gamePrefix + "§6Si te vas ahora, perderá puntos ...";
+                return "§6No deje la arena, el nuevo juego se iniciará pronto!\n" + gamePrefix + "§6Si te vas ahora, perderá puntos...";
             default:
                 return "§6Do not leave the arena, a new game will start soon!\n" + gamePrefix + "§6If you leave now, you will lose points...";
         }
@@ -1303,7 +1303,7 @@ public enum Message {
             case PORTUGUESE_BR:
                 return "§7Vencedor: ";
             case SPANISH:
-                return "§7:Ganador: ";
+                return "§7Ganador: ";
             default:
                 return "§7Winner: ";
         }
