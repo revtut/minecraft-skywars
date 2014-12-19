@@ -163,6 +163,9 @@ public class SkyWars extends JavaPlugin {
         if (!readFiles())
             this.getLogger().log(Level.WARNING, "Error while trying to read the files.");
 
+        /* Check MySQL Task */
+        checkMySQL();
+
         /* Create Initial Arenas */
         String lastGameNumber = mysql.lastGameNumber();
         if (lastGameNumber == null) {
@@ -267,6 +270,7 @@ public class SkyWars extends JavaPlugin {
                     return false;
             } catch (IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
+                return false;
             }
             if (!copyFile(getResource("config.yml"), config))
                 return false;
@@ -281,6 +285,7 @@ public class SkyWars extends JavaPlugin {
                     return false;
             } catch (IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating mysql.yml. Reason: " + e.getMessage());
+                return false;
             }
             if (!copyFile(getResource("mysql.yml"), mysqlConf))
                 return false;
@@ -362,6 +367,7 @@ public class SkyWars extends JavaPlugin {
 
         player.sendPluginMessage(this, "BungeeCord", b.toByteArray());
     }
+
 
     /**
      * Check if MySQL connection is opened, if not it tries to open it

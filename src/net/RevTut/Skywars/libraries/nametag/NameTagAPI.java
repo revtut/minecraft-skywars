@@ -116,16 +116,22 @@ public final class NameTagAPI implements Listener {
             prefix = "§2[STF] ";
         } else if (p.hasPermission("rev.tag.thaiberium")) {
             id = "THB";
-            prefix = "§b[THB] ";
+            prefix = "§3[THB] ";
         } else if (p.hasPermission("rev.tag.designer")) {
             id = "DNZ";
-            prefix = "§e[DZN] ";
+            prefix = "§6[DZN] ";
         } else if (p.hasPermission("rev.tag.youtuber")) {
             id = "YT";
             prefix = "§9[YT] ";
+        } else if (p.hasPermission("rev.tag.vipstar")) {
+            id = "VIPSTAR";
+            prefix = "§b[VIP★] ";
+        } else if (p.hasPermission("rev.tag.vipplus")) {
+            id = "VIPPLUS";
+            prefix = "§a[VIP+] ";
         } else if (p.hasPermission("rev.tag.vip")) {
             id = "VIP";
-            prefix = "§a[VIP] ";
+            prefix = "§e[VIP] ";
         }
 
         Team team = board.getTeam(id);

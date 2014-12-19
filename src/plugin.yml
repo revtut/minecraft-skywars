@@ -25,6 +25,12 @@ permissions:
   rev.tag.vip:
     description: Permission to VIP tag
     default: op
+  rev.tag.vipplus:
+    description: Permission to VIP+ tag
+    default: op
+  rev.tag.vipstar:
+    description: Permission to VIP* tag
+    default: op
   rev.tag.youtuber:
     description: Permission to YOUTUBER tag
     default: op
