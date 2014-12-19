@@ -28,7 +28,7 @@ import java.util.logging.Level;
 public class PlayerJoin implements Listener {
 
     /**
-     * Main class{}
+     * Main class
      */
     private final SkyWars plugin;
 

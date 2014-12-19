@@ -1,0 +1,5 @@
+Hostname: localhost
+Database: revtut
+Username: root
+Password: admin
+Port: '3306'
