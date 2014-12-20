@@ -213,7 +213,7 @@ public class ArenaManager {
             @Override
             public void run() {
                 // PlayerDat
-                plugin.mysql.updateMySQLArenaDat(arenaDat);
+                plugin.mysql.updateArenaDat(arenaDat);
             }
         });
 
@@ -265,7 +265,7 @@ public class ArenaManager {
             @Override
             public void run() {
                 // PlayerDat
-                plugin.mysql.updateMySQLArenaDat(arenaDat);
+                plugin.mysql.updateArenaDat(arenaDat);
             }
         });
 

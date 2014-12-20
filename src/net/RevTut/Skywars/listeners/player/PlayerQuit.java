@@ -81,7 +81,7 @@ public class PlayerQuit implements Listener {
             @Override
             public void run() {
                 // MySQL Tasks
-                plugin.mysql.updateMySQLPlayerDat(playerDat);
+                plugin.mysql.updatePlayerDat(playerDat);
             }
         });
     }

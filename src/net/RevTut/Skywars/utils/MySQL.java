@@ -222,7 +222,7 @@ public class MySQL {
      * @return true if successfull
      * @see PlayerDat
      */
-    public boolean updateMySQLPlayerDat(PlayerDat playerDat) {
+    public boolean updatePlayerDat(PlayerDat playerDat) {
         try {
             // Update Core
             final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + playerDat.getUUID() + "';";
@@ -258,7 +258,7 @@ public class MySQL {
      * @return true if successfull
      * @see ArenaDat
      */
-    public boolean updateMySQLArenaDat(ArenaDat arenaDat) {
+    public boolean updateArenaDat(ArenaDat arenaDat) {
         try {
             final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "', '" + ConvertersAPI.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
             this.connection.createStatement().executeUpdate(infoCreate);
