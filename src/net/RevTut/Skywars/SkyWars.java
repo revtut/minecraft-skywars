@@ -231,6 +231,7 @@ public class SkyWars extends JavaPlugin {
         pm.registerEvents(new PlayerBucketEmpty(this), this);
         pm.registerEvents(new PlayerBucketFill(this), this);
         pm.registerEvents(new PlayerChat(this), this);
+        pm.registerEvents(new PlayerCommand(this), this);
         pm.registerEvents(new PlayerDamage(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new PlayerDrop(this), this);

@@ -129,6 +129,16 @@ public enum Message {
     PLAYER_BAD_LANGUAGE,
 
     /**
+     * Player may not execute that command
+     */
+    PLAYER_BLOCKED_COMMAND,
+
+    /**
+     * Tell the player to wait between commands
+     */
+    PLAYER_COOLDOWN_COMMANDS,
+
+    /**
      * Tell the player to wait between messages
      */
     PLAYER_COOLDOWN_MESSAGES,
@@ -172,6 +182,11 @@ public enum Message {
      * Player tried to spam
      */
     PLAYER_SPAM,
+
+    /**
+     * Player tried to execute a non-existing command
+     */
+    PLAYER_UNKNOWN_COMMAND,
 
     /**
      * Points of the player
@@ -288,6 +303,10 @@ public enum Message {
                 return inspectorPrefix + getPlayerArenaNull(player);
             case PLAYER_BAD_LANGUAGE:
                 return inspectorPrefix + getPlayerBadLanguage(player);
+            case PLAYER_BLOCKED_COMMAND:
+                return inspectorPrefix + getPlayerBlockedCommand(player);
+            case PLAYER_COOLDOWN_COMMANDS:
+                return inspectorPrefix + getPlayerCooldownCommands(player);
             case PLAYER_COOLDOWN_MESSAGES:
                 return inspectorPrefix + getPlayerCooldownMessages(player);
             case PLAYER_DEAD_PREFIX:
@@ -306,6 +325,8 @@ public enum Message {
                 return inspectorPrefix + getPlayerProfileError(player);
             case PLAYER_SPAM:
                 return inspectorPrefix + getPlayerSpam(player);
+            case PLAYER_UNKNOWN_COMMAND:
+                return inspectorPrefix + getPlayerUnknownCommand(player);
             case POINTS:
                 return getPoints(player);
             case TACTICAL_ENABLED_INVISIBILITY:
@@ -946,6 +967,62 @@ public enum Message {
     }
 
     /**
+     * Get player blocked command message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerBlockedCommand(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4Whooo! Many available commands, but not this one...";
+            case FRENCH:
+                return "§4Whooo! Beaucoup de commandes disponibles, mais pas celui-ci...";
+            case GERMAN:
+                return "§4Whooo! Viele verfügbaren Befehle, aber nicht diese...";
+            case PORTUGUESE_PT:
+                return "§4Whooo! Tantos comandos disponíveis, mas não este...";
+            case PORTUGUESE_BR:
+                return "§4Whooo! Muitos comandos disponíveis, mas não este...";
+            case SPANISH:
+                return "§4Whooo! Muchos de los comandos disponibles, pero no ésta...";
+            default:
+                return "§4Whooo! Many available commands, but not this one...";
+        }
+    }
+
+    /**
+     * Get player cooldown between commands message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerCooldownCommands(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4You have to wait for 3 seconds between commands.";
+            case FRENCH:
+                return "§4Se il vous plaît attendre 3 secondes entre les commands.";
+            case GERMAN:
+                return "§4Bitte warten Sie 3 Sekunden zwischen Befehle.";
+            case PORTUGUESE_PT:
+                return "§4Por favor espere 3 segundos entre comands.";
+            case PORTUGUESE_BR:
+                return "§4Você tem que 3 segundos esperar entre comandos.";
+            case SPANISH:
+                return "§4Tienes que esperar 3 segundos entre comandos.";
+            default:
+                return "§4You have to wait for 3 seconds between commands.";
+        }
+    }
+
+    /**
      * Get player cooldown between messages message
      *
      * @param player player to get the translated message
@@ -1194,6 +1271,34 @@ public enum Message {
                 return "§4Por favor, no spam!";
             default:
                 return "§4Please do not spam!";
+        }
+    }
+
+    /**
+     * Get player unknown command message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerUnknownCommand(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4Whooo! Many available commands, but not this one...";
+            case FRENCH:
+                return "§4Whooo! Beaucoup de commandes disponibles, mais pas celui-ci...";
+            case GERMAN:
+                return "§4Whooo! Viele verfügbaren Befehle, aber nicht diese...";
+            case PORTUGUESE_PT:
+                return "§4Whooo! Tantos comandos disponíveis, mas não este...";
+            case PORTUGUESE_BR:
+                return "§4Whooo! Muitos comandos disponíveis, mas não este...";
+            case SPANISH:
+                return "§4Whooo! Muchos de los comandos disponibles, pero no ésta...";
+            default:
+                return "§4Whooo! Many available commands, but not this one...";
         }
     }
 

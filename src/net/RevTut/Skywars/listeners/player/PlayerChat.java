@@ -211,8 +211,8 @@ public class PlayerChat implements Listener {
             }
         }
 
+        // Add to cooldown list
         if (!player.hasPermission("rev.cooldownbp")) {
-            /** Adicionar ao Cooldown **/
             cooldownMessage.put(player.getUniqueId(), System.currentTimeMillis());
         }
 
