@@ -3,11 +3,11 @@ package net.RevTut.Skywars.listeners.player;
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.help.HelpTopic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,16 +82,15 @@ public class PlayerCommand implements Listener {
         }
 
         // Unknown command
-        String cmd = e.getMessage().split(" ")[0];
-        HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(cmd);
-        if (topic == null) {
+        Command comando = Bukkit.getServer().getPluginCommand(e.getMessage().split(" ")[0]);
+        if (comando == null) {
             player.sendMessage(Message.getMessage(Message.PLAYER_UNKNOWN_COMMAND, player));
             e.setCancelled(true);
             return;
         }
 
         // Permission for the command
-        if (!Bukkit.getServer().getPluginCommand(cmd).testPermissionSilent(player)) {
+        if (!comando.testPermissionSilent(player)) {
             player.sendMessage(Message.getMessage(Message.PLAYER_BLOCKED_COMMAND, player));
             e.setCancelled(true);
             return;
