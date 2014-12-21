@@ -155,6 +155,16 @@ public class SkyWars extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        /* Set Main Classes */
+        ActionBarAPI.plugin = this;
+        AppearanceAPI.plugin = this;
+        BypassesAPI.plugin = this;
+        NameTagAPI.plugin = this;
+        TabAPI.plugin = this;
+        TitleAPI.plugin = this;
+        PlayerDat.plugin = this;
+        Message.plugin = this;
+
         /* Create Files */
         if (!createFiles())
             this.getLogger().log(Level.WARNING, "Error while trying to create the initial files.");
@@ -202,16 +212,6 @@ public class SkyWars extends JavaPlugin {
 
         /* Player Chest */
         playerChest = new PlayerChest(this);
-
-        /* Set Main Classes */
-        ActionBarAPI.plugin = this;
-        AppearanceAPI.plugin = this;
-        BypassesAPI.plugin = this;
-        NameTagAPI.plugin = this;
-        TabAPI.plugin = this;
-        TitleAPI.plugin = this;
-        PlayerDat.plugin = this;
-        Message.plugin = this;
 
         /* Register Plugin Messages */
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
