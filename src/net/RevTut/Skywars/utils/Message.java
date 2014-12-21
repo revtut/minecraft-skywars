@@ -164,6 +164,36 @@ public enum Message {
     PLAYER_JOINED_GAME,
 
     /**
+     * Player fifth kill
+     */
+    PLAYER_KILL_FIFTH,
+
+    /**
+     * Player second kill
+     */
+    PLAYER_KILL_SECOND,
+
+    /**
+     * Player seven kill
+     */
+    PLAYER_KILL_SEVENTH,
+
+    /**
+     * Player tenth kill
+     */
+    PLAYER_KILL_TENTH,
+
+    /**
+     * Player third kill
+     */
+    PLAYER_KILL_THIRD,
+
+    /**
+     * Player unbelievable kill
+     */
+    PLAYER_KILL_UNBELIEVABLE,
+
+    /**
      * Player was killed by someone
      */
     PLAYER_KILLED_BY,
@@ -317,6 +347,18 @@ public enum Message {
                 return inspectorPrefix + getPlayerDuplicatedMessage(player);
             case PLAYER_JOINED_GAME:
                 return gamePrefix + getPlayerJoinedGame(player);
+            case PLAYER_KILL_FIFTH:
+                return gamePrefix + getPlayerKillFifth(player);
+            case PLAYER_KILL_SECOND:
+                return gamePrefix + getPlayerKillSecond(player);
+            case PLAYER_KILL_SEVENTH:
+                return gamePrefix + getPlayerKillSeventh(player);
+            case PLAYER_KILL_TENTH:
+                return gamePrefix + getPlayerKillTenth(player);
+            case PLAYER_KILL_THIRD:
+                return gamePrefix + getPlayerKillThird(player);
+            case PLAYER_KILL_UNBELIEVABLE:
+                return gamePrefix + getPlayerKillUnbelievable(player);
             case PLAYER_KILLED_BY:
                 return gamePrefix + getPlayerKilledBy(player);
             case PLAYER_LEFT_GAME:
@@ -1187,6 +1229,174 @@ public enum Message {
                 return "§6Se unió al juego ";
             default:
                 return "§6Joined the game ";
+        }
+    }
+
+    /**
+     * Get player fifth kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillFifth(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6§lFIFTH KILL! OMG!!!!!";
+            case FRENCH:
+                return "§6§lCINQUIÈME MORT! OMG !!!!!";
+            case GERMAN:
+                return "§6§lFÜNFTE KILL! OH MEIN GOTT!!!!!";
+            case PORTUGUESE_PT:
+                return "§6§lQUINTA MATANÇA! MEU DEUS!!!!!";
+            case PORTUGUESE_BR:
+                return "§6§lQUINTA MATANÇA! MEU DEUS!!!!!";
+            case SPANISH:
+                return "§6§lQUINTA MATANZA! DIOS MIO!!!!!";
+            default:
+                return "§6§lFIFTH KILL! OMG!!!!!";
+        }
+    }
+
+    /**
+     * Get player second kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillSecond(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6Second kill!";
+            case FRENCH:
+                return "§6Deuxième mort!";
+            case GERMAN:
+                return "§6Zweiter Sieg!";
+            case PORTUGUESE_PT:
+                return "§6Segunda matança!";
+            case PORTUGUESE_BR:
+                return "§6Segunda matança!";
+            case SPANISH:
+                return "§6Segundo matanza!";
+            default:
+                return "§6Second kill!";
+        }
+    }
+
+    /**
+     * Get player seventh kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillSeventh(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§b§lDOMINATING WITH SEVEN KILLS!!!!";
+            case FRENCH:
+                return "§b§lDOMINANT AVEC SEPT MORTS!!!!";
+            case GERMAN:
+                return "§b§lDOMINIERT WIRD MIT SIEBEN KILLS!!!!";
+            case PORTUGUESE_PT:
+                return "§b§lA DOMINAR COM SETE MATANÇAS!!!!";
+            case PORTUGUESE_BR:
+                return "§b§lA DOMINAR COM SETE MATANÇAS!!!!";
+            case SPANISH:
+                return "§b§lDOMINANDO CON SIETE MATANZAS!!!!";
+            default:
+                return "§b§lDOMINATING WITH SEVEN KILLS!!!!";
+        }
+    }
+
+    /**
+     * Get player tenth kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillTenth(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§a§lTHIS IS GOD LIKE! TENTH KILL!!!!!!";
+            case FRENCH:
+                return "§a§lCE EST DIEU! KILL DIXIÈME!!!!!!";
+            case GERMAN:
+                return "§a§lDIES IST WIE GOTT! ZEHNTE KILL!!!!!!";
+            case PORTUGUESE_PT:
+                return "§a§lISTO É COMO DEUS! DÉCIMA MATANÇA!!!!!!";
+            case PORTUGUESE_BR:
+                return "§a§lISTO É COMO DEUS! DÉCIMA MATANÇA!!!!!!";
+            case SPANISH:
+                return "§a§lESTO ES COMO DIOS! DÉCIMO MATANZA!!!!!!";
+            default:
+                return "§a§lTHIS IS GOD LIKE! TENTH KILL!!!!!!";
+        }
+    }
+
+    /**
+     * Get player third kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillThird(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§6Third kill! This player is good!";
+            case FRENCH:
+                return "§6Troisième kill! Ce joueur est bon!";
+            case GERMAN:
+                return "§6Drittens töten! Dieser Spieler ist gut!";
+            case PORTUGUESE_PT:
+                return "§6Terceira matança! Este jogador é bom!";
+            case PORTUGUESE_BR:
+                return "§6Terceira matança! Este jogador é bom!";
+            case SPANISH:
+                return "§6Tercer kill! Este jugador es bueno!";
+            default:
+                return "§6Third kill! This player is good!";
+        }
+    }
+
+    /**
+     * Get player unbelievable kill message
+     *
+     * @param player player to get the translated message
+     */
+    private static String getPlayerKillUnbelievable(Player player){
+        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
+        if(null == language)
+            language = Language.ENGLISH;
+
+        switch(language){
+            case ENGLISH:
+                return "§4§k@ §e§lUNBELIEVABLE! HE IS §4§lUNSTOPPABLE§e§l!!!! §4§k@";
+            case FRENCH:
+                return "§4§k@ §e§lINCROYABLE! IL EST §4§lIMPARABLE§e§l!!!! §4§k@";
+            case GERMAN:
+                return "§4§k@ §e§lUNGLAUBLICH! ER IST NICHT §4§lAUFZUHALTEN§e§l!!!! §4§k@";
+            case PORTUGUESE_PT:
+                return "§4§k@ §e§lINACREDITÁVEL! ELE É §4§lIMPARÁVEL§e§l!!!! §4§k@";
+            case PORTUGUESE_BR:
+                return "§4§k@ §e§lINACREDITÁVEL! ELE É §4§lIMPARÁVEL§e§l!!!! §4§k@";
+            case SPANISH:
+                return "§4§k@ §e§lINCREÍBLE! ÉL ES §4§lIMPARABLE§e§l!!!! §4§k@";
+            default:
+                return "§4§k@ §e§lUNBELIEVABLE! HE IS §4§lUNSTOPPABLE§e§l!!!! §4§k@";
         }
     }
 
