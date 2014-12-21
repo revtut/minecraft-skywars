@@ -55,3 +55,23 @@ permissions:
   rev.tag.ceo:
     description: Permission to CEO tag
     default: op
+
+# Chat
+  rev.advertisment:
+    description: Permission to advertise
+    default: op
+  rev.badlanguage:
+    description: Permission to use bad language
+    default: op
+  rev.capslock:
+    description: Permission to chat in capslock
+    default: op
+  rev.cooldownbp:
+    description: Permission to bypass cooldown between messages and commands
+    default: op
+  rev.doublemsg:
+    description: Permission to send double messages
+    default: op
+  rev.msgcolors:
+    description: Permission to chat with colors
+    default: op
