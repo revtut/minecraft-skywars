@@ -1,6 +1,7 @@
 package net.RevTut.Skywars.player;
 
 import net.RevTut.Skywars.SkyWars;
+import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,6 +29,11 @@ public class PlayerDat {
      * UUID of the player
      */
     private final UUID uuid;
+
+    /**
+     * Language of the player
+     */
+    private Language language;
 
     /**
      * Points of the player
@@ -74,11 +80,13 @@ public class PlayerDat {
      */
     private PlayerStatus status;
 
+
     /**
      * Constructor of PlayerDat
      *
      * @param uuid      uuid of the player
      * @param lastLogin last login of the player
+     * @param language  language of the player
      * @param playTime  play time of the player
      * @param points    total points of the player
      * @param wins      wins in this game of the player
@@ -86,9 +94,10 @@ public class PlayerDat {
      * @param kills     kills in this game of the player
      * @param deaths    deaths in this game of the player
      */
-    public PlayerDat(UUID uuid, Date lastLogin, long playTime, int points, int wins, int losses, int kills, int deaths) {
+    public PlayerDat(UUID uuid, Date lastLogin, Language language, long playTime, int points, int wins, int losses, int kills, int deaths) {
         this.uuid = uuid;
         this.lastLogin = lastLogin;
+        this.language = language;
         this.playTime = playTime;
         this.points = points;
         this.wins = wins;
@@ -107,6 +116,13 @@ public class PlayerDat {
     public UUID getUUID() {
         return uuid;
     }
+
+    /**
+     * Get the language of the player dat
+     *
+     * @return language of the player dat
+     */
+    public Language getLanguage() { return language; }
 
     /**
      * Get the play time of the player dat.
@@ -183,6 +199,14 @@ public class PlayerDat {
     public PlayerStatus getStatus() {
         return status;
     }
+
+    /**
+     * Set the language of the player dat
+     *
+     * @param language new language of the player dat
+     * @see Language
+     */
+    public void setLanguage(Language language) { this.language = language; }
 
     /**
      * Set the status of the player dat

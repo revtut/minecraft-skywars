@@ -108,8 +108,6 @@ public class PlayerJoin implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
-                // Scoreboard
-
                 // PlayerDat
                 final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
                 if (playerDat == null) {
@@ -133,7 +131,7 @@ public class PlayerJoin implements Listener {
                 if(null == language)
                     plugin.getLogger().log(Level.WARNING, "Player's language is null");
                 else
-                    plugin.playerManager.addPlayerLanguage(playerDat, language);
+                    playerDat.setLanguage(language);
 
                 // Scoreboard
                 Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);

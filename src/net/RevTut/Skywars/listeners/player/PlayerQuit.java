@@ -71,9 +71,6 @@ public class PlayerQuit implements Listener {
         if(!plugin.scoreBoardManager.removePlayerScoreBoard(p))
             plugin.getLogger().log(Level.WARNING, "Error while removing player's scoreboard as it is null!");
 
-        // Remove language
-        plugin.playerManager.removePlayerLanguage(playerDat);
-
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);
 

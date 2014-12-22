@@ -2,6 +2,7 @@ package net.RevTut.Skywars.utils;
 
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.libraries.language.Language;
+import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
 
 /**
@@ -286,107 +287,113 @@ public enum Message {
      * @return translated message type
      */
     public static String getMessage(Message message, Player player){
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
+        if(playerDat == null)
+            return "";
+
+        Language language = playerDat.getLanguage();
+
         switch (message){
             case ALIVE:
-                return getAlive(player);
+                return getAlive(language);
             case ALLOWED_OPEN_CHESTS:
-                return gamePrefix + getAllowedOpenChests(player);
+                return gamePrefix + getAllowedOpenChests(language);
             case DEAD:
-                return getDead(player);
+                return getDead(language);
             case DONT_LEAVE_ARENA:
-                return gamePrefix + getDontLeaveArena(player);
+                return gamePrefix + getDontLeaveArena(language);
             case EMPTY_MESSAGE:
                 return "";
             case ENGINEER_PLACED_MINE:
-                return gamePrefix + getEngineerPlacedMine(player);
+                return gamePrefix + getEngineerPlacedMine(language);
             case GAME_MAP:
-                return gamePrefix + getGameMap(player);
+                return gamePrefix + getGameMap(language);
             case GAME_REPORT:
-                return gamePrefix + getGameReport(player);
+                return gamePrefix + getGameReport(language);
             case GAME_TIMEOUT:
-                return gamePrefix + getGameTimeout(player);
+                return gamePrefix + getGameTimeout(language);
             case GAME_WINNER:
-                return gamePrefix + getGameWinner(player);
+                return gamePrefix + getGameWinner(language);
             case GUARDIAN_ENABLED_SPEED:
-                return gamePrefix + getGuardianEnabledSpeed(player);
+                return gamePrefix + getGuardianEnabledSpeed(language);
             case HACKER_RESPAWN:
-                return gamePrefix + getHackerRespawn(player);
+                return gamePrefix + getHackerRespawn(language);
             case KIT_ALREADY_CHOSEN:
-                return gamePrefix + getKitAlreadyChosen(player);
+                return gamePrefix + getKitAlreadyChosen(language);
             case KIT_BOUGHT:
-                return gamePrefix + getKitBought(player);
+                return gamePrefix + getKitBought(language);
             case KIT_RECEIVED:
-                return gamePrefix + getKitReceived(player);
+                return gamePrefix + getKitReceived(language);
             case MININUM_PLAYERS_NOT_ACHIEVED:
-                return gamePrefix + getMinimumPlayersNotAchieved(player);
+                return gamePrefix + getMinimumPlayersNotAchieved(language);
             case MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED:
-                return gamePrefix + getMinimumPlayersReduceTimeAchieved(player);
+                return gamePrefix + getMinimumPlayersReduceTimeAchieved(language);
             case NOT_ENOUGH_PLAYERS_TO_CONTINUE:
-                return gamePrefix + getNotEnoughPlayersToContinue(player);
+                return gamePrefix + getNotEnoughPlayersToContinue(language);
             case NOT_ENOUGH_POINTS_FOR_KIT:
-                return gamePrefix + getNotEnoughPointsForKit(player);
+                return gamePrefix + getNotEnoughPointsForKit(language);
             case NO_WINNER:
-                return getNoWinner(player);
+                return getNoWinner(language);
             case PLAYER_ADVERTISE:
-                return inspectorPrefix + getPlayerAdvertise(player);
+                return inspectorPrefix + getPlayerAdvertise(language);
             case PLAYER_ARENA_NULL:
-                return inspectorPrefix + getPlayerArenaNull(player);
+                return inspectorPrefix + getPlayerArenaNull(language);
             case PLAYER_BAD_LANGUAGE:
-                return inspectorPrefix + getPlayerBadLanguage(player);
+                return inspectorPrefix + getPlayerBadLanguage(language);
             case PLAYER_BLOCKED_COMMAND:
-                return inspectorPrefix + getPlayerBlockedCommand(player);
+                return inspectorPrefix + getPlayerBlockedCommand(language);
             case PLAYER_COOLDOWN_COMMANDS:
-                return inspectorPrefix + getPlayerCooldownCommands(player);
+                return inspectorPrefix + getPlayerCooldownCommands(language);
             case PLAYER_COOLDOWN_MESSAGES:
-                return inspectorPrefix + getPlayerCooldownMessages(player);
+                return inspectorPrefix + getPlayerCooldownMessages(language);
             case PLAYER_DEAD_PREFIX:
-                return getPlayerDeadPrefix(player);
+                return getPlayerDeadPrefix(language);
             case PLAYER_DIED:
-                return gamePrefix + getPlayerDied(player);
+                return gamePrefix + getPlayerDied(language);
             case PLAYER_DUPLICATED_MESSAGE:
-                return inspectorPrefix + getPlayerDuplicatedMessage(player);
+                return inspectorPrefix + getPlayerDuplicatedMessage(language);
             case PLAYER_JOINED_GAME:
-                return gamePrefix + getPlayerJoinedGame(player);
+                return gamePrefix + getPlayerJoinedGame(language);
             case PLAYER_KILL_FIFTH:
-                return gamePrefix + getPlayerKillFifth(player);
+                return gamePrefix + getPlayerKillFifth(language);
             case PLAYER_KILL_SECOND:
-                return gamePrefix + getPlayerKillSecond(player);
+                return gamePrefix + getPlayerKillSecond(language);
             case PLAYER_KILL_SEVENTH:
-                return gamePrefix + getPlayerKillSeventh(player);
+                return gamePrefix + getPlayerKillSeventh(language);
             case PLAYER_KILL_TENTH:
-                return gamePrefix + getPlayerKillTenth(player);
+                return gamePrefix + getPlayerKillTenth(language);
             case PLAYER_KILL_THIRD:
-                return gamePrefix + getPlayerKillThird(player);
+                return gamePrefix + getPlayerKillThird(language);
             case PLAYER_KILL_UNBELIEVABLE:
-                return gamePrefix + getPlayerKillUnbelievable(player);
+                return gamePrefix + getPlayerKillUnbelievable(language);
             case PLAYER_KILLED_BY:
-                return gamePrefix + getPlayerKilledBy(player);
+                return gamePrefix + getPlayerKilledBy(language);
             case PLAYER_LEFT_GAME:
-                return gamePrefix + getPlayerLeftGame(player);
+                return gamePrefix + getPlayerLeftGame(language);
             case PLAYER_PROFILE_ERROR:
-                return inspectorPrefix + getPlayerProfileError(player);
+                return inspectorPrefix + getPlayerProfileError(language);
             case PLAYER_SPAM:
-                return inspectorPrefix + getPlayerSpam(player);
+                return inspectorPrefix + getPlayerSpam(language);
             case PLAYER_UNKNOWN_COMMAND:
-                return inspectorPrefix + getPlayerUnknownCommand(player);
+                return inspectorPrefix + getPlayerUnknownCommand(language);
             case POINTS:
-                return getPoints(player);
+                return getPoints(language);
             case TACTICAL_ENABLED_INVISIBILITY:
-                return gamePrefix + getTaticalEnabledInvisibility(player);
+                return gamePrefix + getTaticalEnabledInvisibility(language);
             case TIME_OUT:
-                return getTimeOut(player);
+                return getTimeOut(language);
             case WINNER:
-                return getWinner(player);
+                return getWinner(language);
             case YOU_DIED:
-                return getYouDied(player);
+                return getYouDied(language);
             case YOU_KILLED:
-                return getYouKilled(player);
+                return getYouKilled(language);
             case YOU_LOST:
-                return getYouLost(player);
+                return getYouLost(language);
             case YOU_WERE_KILLED_BY:
-                return getYouWereKilledBy(player);
+                return getYouWereKilledBy(language);
             case YOU_WON:
-                return getYouWon(player);
+                return getYouWon(language);
             default:
                 return "";
         }
@@ -395,13 +402,10 @@ public enum Message {
     /**
      * Get alive message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getAlive(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getAlive(Language language){
         switch(language){
             case ENGLISH:
                 return "§aAlive: ";
@@ -423,13 +427,10 @@ public enum Message {
     /**
      * Get allowed to open chests message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getAllowedOpenChests(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getAllowedOpenChests(Language language){
         switch(language){
             case ENGLISH:
                 return "§aYou may now open the chests!";
@@ -451,13 +452,10 @@ public enum Message {
     /**
      * Get dead message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getDead(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getDead(Language language){
         switch(language){
             case ENGLISH:
                 return "§cDead: ";
@@ -479,13 +477,10 @@ public enum Message {
     /**
      * Get dont leave the arena message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getDontLeaveArena(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getDontLeaveArena(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Do not leave the arena, a new game will start soon!\n" + gamePrefix + "§6If you leave now, you will lose points...";
@@ -507,13 +502,10 @@ public enum Message {
     /**
      * Get engineer placed a mine message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getEngineerPlacedMine(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getEngineerPlacedMine(Language language){
         switch(language){
             case ENGLISH:
                 return "§6You have placed a mine!";
@@ -535,13 +527,10 @@ public enum Message {
     /**
      * Get game map message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getGameMap(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getGameMap(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Game Map: ";
@@ -563,13 +552,10 @@ public enum Message {
     /**
      * Get game report message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getGameReport(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getGameReport(Language language){
         switch(language){
             case ENGLISH:
                 return "§6To report the game, attach the ID: ";
@@ -591,13 +577,10 @@ public enum Message {
     /**
      * Get game timeout message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getGameTimeout(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getGameTimeout(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Time out. There was no winner.";
@@ -619,13 +602,10 @@ public enum Message {
     /**
      * Get game winner message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getGameWinner(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getGameWinner(Language language){
         switch(language){
             case ENGLISH:
                 return "§aThe winner of the match was: ";
@@ -647,13 +627,10 @@ public enum Message {
     /**
      * Get guardian enabled speed message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getGuardianEnabledSpeed(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getGuardianEnabledSpeed(Language language){
         switch(language){
             case ENGLISH:
                 return "§6You have activated rage mode for ";
@@ -675,13 +652,10 @@ public enum Message {
     /**
      * Get hacker respawn message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getHackerRespawn(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getHackerRespawn(Language language){
         switch(language){
             case ENGLISH:
                 return "§6You have hacked the death and respawned!";
@@ -703,13 +677,10 @@ public enum Message {
     /**
      * Get kit already chosen message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getKitAlreadyChosen(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getKitAlreadyChosen(Language language){
         switch(language){
             case ENGLISH:
                 return "§4You have already chosen your kit!";
@@ -731,13 +702,10 @@ public enum Message {
     /**
      * Get kit bought message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getKitBought(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getKitBought(Language language){
         switch(language){
             case ENGLISH:
                 return "§6You have bought Kit ";
@@ -759,13 +727,10 @@ public enum Message {
     /**
      * Get kit received message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getKitReceived(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getKitReceived(Language language){
         switch(language){
             case ENGLISH:
                 return "§aYou have received Kit ";
@@ -787,13 +752,10 @@ public enum Message {
     /**
      * Get minimum players not achieved message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getMinimumPlayersNotAchieved(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getMinimumPlayersNotAchieved(Language language){
         switch(language){
             case ENGLISH:
                 return "§4The minimum number of players has not been reached.\n" + gamePrefix + "§4Minimum players: §6";
@@ -815,13 +777,10 @@ public enum Message {
     /**
      * Get minimum players to reduce time message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getMinimumPlayersReduceTimeAchieved(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getMinimumPlayersReduceTimeAchieved(Language language){
         switch(language){
             case ENGLISH:
                 return "§6The time was reduced to §330 §6seconds.\n" + gamePrefix + "§6Number of players: §3";
@@ -843,13 +802,10 @@ public enum Message {
     /**
      * Get not enough players to continue the game message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getNotEnoughPlayersToContinue(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getNotEnoughPlayersToContinue(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Assigned to a new arena due to insufficient players!";
@@ -871,13 +827,10 @@ public enum Message {
     /**
      * Get not enough points for kit message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getNotEnoughPointsForKit(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getNotEnoughPointsForKit(Language language){
         switch(language){
             case ENGLISH:
                 return "§4You do not have enough points for the kit!";
@@ -899,14 +852,11 @@ public enum Message {
     /**
      * Get no winner message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getNoWinner(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
-        switch(language){
+    private static String getNoWinner(Language language){
+          switch(language){
             case ENGLISH:
                 return "§7NO WINNER";
             case FRENCH:
@@ -927,13 +877,10 @@ public enum Message {
     /**
      * Get player advertisement is not allowed message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerAdvertise(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerAdvertise(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Advertisement will lead you to a permanent ban!";
@@ -955,13 +902,10 @@ public enum Message {
     /**
      * Get player's arena is null message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerArenaNull(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerArenaNull(Language language){
         switch(language){
             case ENGLISH:
                 return "§4You are not in any arena! Relog please.";
@@ -983,13 +927,10 @@ public enum Message {
     /**
      * Get player bad language message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerBadLanguage(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerBadLanguage(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Please do not use bad language!";
@@ -1011,13 +952,10 @@ public enum Message {
     /**
      * Get player blocked command message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerBlockedCommand(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerBlockedCommand(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Whooo! Many available commands, but not this one...";
@@ -1039,14 +977,11 @@ public enum Message {
     /**
      * Get player cooldown between commands message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerCooldownCommands(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
-        switch(language){
+    private static String getPlayerCooldownCommands(Language language){
+         switch(language){
             case ENGLISH:
                 return "§4You have to wait for 3 seconds between commands.";
             case FRENCH:
@@ -1067,13 +1002,10 @@ public enum Message {
     /**
      * Get player cooldown between messages message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerCooldownMessages(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerCooldownMessages(Language language){
         switch(language){
             case ENGLISH:
                 return "§4You have to wait for 3 seconds between messages.";
@@ -1095,13 +1027,10 @@ public enum Message {
     /**
      * Get player dead prefix
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerDeadPrefix(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerDeadPrefix(Language language){
         switch(language){
             case ENGLISH:
                 return "§7|§4DEAD§7| ";
@@ -1123,13 +1052,10 @@ public enum Message {
     /**
      * Get player died message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerDied(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerDied(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Died: ";
@@ -1151,13 +1077,10 @@ public enum Message {
     /**
      * Get player duplicated messages are not allowed message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerDuplicatedMessage(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerDuplicatedMessage(Language language){
         switch(language){
             case ENGLISH:
                 return "§4You can not send duplicated messages!";
@@ -1179,13 +1102,10 @@ public enum Message {
     /**
      * Get player left the game message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerLeftGame(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerLeftGame(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Left the game ";
@@ -1207,13 +1127,10 @@ public enum Message {
     /**
      * Get player joined the game message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerJoinedGame(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerJoinedGame(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Joined the game ";
@@ -1235,14 +1152,11 @@ public enum Message {
     /**
      * Get player fifth kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillFifth(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
-        switch(language){
+    private static String getPlayerKillFifth(Language language){
+         switch(language){
             case ENGLISH:
                 return "§6§lFIFTH KILL! OMG!!!!!";
             case FRENCH:
@@ -1263,13 +1177,10 @@ public enum Message {
     /**
      * Get player second kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillSecond(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKillSecond(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Second kill!";
@@ -1291,13 +1202,10 @@ public enum Message {
     /**
      * Get player seventh kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillSeventh(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKillSeventh(Language language){
         switch(language){
             case ENGLISH:
                 return "§b§lDOMINATING WITH SEVEN KILLS!!!!";
@@ -1319,13 +1227,10 @@ public enum Message {
     /**
      * Get player tenth kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillTenth(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKillTenth(Language language){
         switch(language){
             case ENGLISH:
                 return "§a§lTHIS IS GOD LIKE! TENTH KILL!!!!!!";
@@ -1347,13 +1252,10 @@ public enum Message {
     /**
      * Get player third kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillThird(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKillThird(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Third kill! This player is good!";
@@ -1375,13 +1277,10 @@ public enum Message {
     /**
      * Get player unbelievable kill message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKillUnbelievable(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKillUnbelievable(Language language){
         switch(language){
             case ENGLISH:
                 return "§4§k@ §e§lUNBELIEVABLE! HE IS §4§lUNSTOPPABLE§e§l!!!! §4§k@";
@@ -1390,11 +1289,11 @@ public enum Message {
             case GERMAN:
                 return "§4§k@ §e§lUNGLAUBLICH! ER IST NICHT §4§lAUFZUHALTEN§e§l!!!! §4§k@";
             case PORTUGUESE_PT:
-                return "§4§k@ §e§lINACREDITÁVEL! ELE É §4§lIMPARÁVEL§e§l!!!! §4§k@";
+                return "§4§k@ §e§lINACREDITAVEL! ELE É §4§lIMPARAVEL§e§l!!!! §4§k@";
             case PORTUGUESE_BR:
-                return "§4§k@ §e§lINACREDITÁVEL! ELE É §4§lIMPARÁVEL§e§l!!!! §4§k@";
+                return "§4§k@ §e§lINACREDITAVEL! ELE É §4§lIMPARAVEL§e§l!!!! §4§k@";
             case SPANISH:
-                return "§4§k@ §e§lINCREÍBLE! ÉL ES §4§lIMPARABLE§e§l!!!! §4§k@";
+                return "§4§k@ §e§lINCREIBLE! ÉL ES §4§lIMPARABLE§e§l!!!! §4§k@";
             default:
                 return "§4§k@ §e§lUNBELIEVABLE! HE IS §4§lUNSTOPPABLE§e§l!!!! §4§k@";
         }
@@ -1403,13 +1302,10 @@ public enum Message {
     /**
      * Get player killed by message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerKilledBy(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerKilledBy(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Killed By: ";
@@ -1431,13 +1327,10 @@ public enum Message {
     /**
      * Get player profile error message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerProfileError(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerProfileError(Language language){
         switch(language){
             case ENGLISH:
                 return "§4There is an error with your profile! Relog please.";
@@ -1459,13 +1352,10 @@ public enum Message {
     /**
      * Get player spam is not allowed message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerSpam(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerSpam(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Please do not spam!";
@@ -1487,13 +1377,10 @@ public enum Message {
     /**
      * Get player unknown command message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPlayerUnknownCommand(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPlayerUnknownCommand(Language language){
         switch(language){
             case ENGLISH:
                 return "§4Whooo! Many available commands, but not this one...";
@@ -1515,13 +1402,10 @@ public enum Message {
     /**
      * Get points message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getPoints(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getPoints(Language language){
         switch(language){
             case ENGLISH:
                 return "§6Points: ";
@@ -1543,13 +1427,10 @@ public enum Message {
     /**
      * Get tactical enabled invisibility message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getTaticalEnabledInvisibility(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getTaticalEnabledInvisibility(Language language){
         switch(language){
             case ENGLISH:
                 return "§6You have activated ghost mode for ";
@@ -1571,13 +1452,10 @@ public enum Message {
     /**
      * Get time out message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getTimeOut(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getTimeOut(Language language){
         switch(language){
             case ENGLISH:
                 return "§4TIME OUT";
@@ -1599,13 +1477,10 @@ public enum Message {
     /**
      * Get winner message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getWinner(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getWinner(Language language){
         switch(language){
             case ENGLISH:
                 return "§7Winner: ";
@@ -1627,13 +1502,10 @@ public enum Message {
     /**
      * Get you died message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getYouDied(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getYouDied(Language language){
         switch(language){
             case ENGLISH:
                 return "§4YOU HAVE DIED";
@@ -1655,13 +1527,10 @@ public enum Message {
     /**
      * Get you killed message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getYouKilled(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getYouKilled(Language language){
         switch(language){
             case ENGLISH:
                 return "§aYOU HAVE KILLED";
@@ -1683,13 +1552,10 @@ public enum Message {
     /**
      * Get you lost message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getYouLost(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getYouLost(Language language){
         switch(language){
             case ENGLISH:
                 return "§4YOU HAVE LOST";
@@ -1711,13 +1577,10 @@ public enum Message {
     /**
      * Get player you were killed by message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getYouWereKilledBy(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getYouWereKilledBy(Language language){
         switch(language){
             case ENGLISH:
                 return "§7Killed By: ";
@@ -1739,13 +1602,10 @@ public enum Message {
     /**
      * Get you won message
      *
-     * @param player player to get the translated message
+     * @param language language to get the translation
+     * @return translated message
      */
-    private static String getYouWon(Player player){
-        Language language = plugin.playerManager.getPlayerLanguageByUUID(player.getUniqueId());
-        if(null == language)
-            language = Language.ENGLISH;
-
+    private static String getYouWon(Language language){
         switch(language){
             case ENGLISH:
                 return "§aYOU HAVE WON";

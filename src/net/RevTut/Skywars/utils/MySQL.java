@@ -3,6 +3,7 @@ package net.RevTut.Skywars.utils;
 import net.RevTut.Skywars.SkyWars;
 import net.RevTut.Skywars.arena.ArenaDat;
 import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
+import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
@@ -202,12 +203,12 @@ public class MySQL {
             final ResultSet resultGame = this.connection.createStatement().executeQuery(gameStatement);
             if (resultGame.next()) {
                 if (resultCore.next()) {
-                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
+                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), Language.ENGLISH, resultGame.getLong("PlayTime"), resultCore.getInt("Points"), resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
                 } else {
-                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
+                    return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), Language.ENGLISH, resultGame.getLong("PlayTime"), 0, resultGame.getInt("Wins"), resultGame.getInt("Losses"), resultGame.getInt("Kills"), resultGame.getInt("Deaths")));
                 }
             } else {
-                return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), 0, 0, 0, 0, 0, 0));
+                return plugin.playerManager.addPlayerDat(new PlayerDat(uuid, new Date(), Language.ENGLISH, 0, 0, 0, 0, 0, 0));
             }
         } catch (final SQLException e) {
             plugin.getLogger().log(Level.WARNING, "Error while trying to create PlayerDat! Reason: " + e.getMessage());

@@ -1,7 +1,6 @@
 package net.RevTut.Skywars.managers;
 
 import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.language.Language;
 import net.RevTut.Skywars.player.PlayerDat;
 import net.RevTut.Skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
@@ -40,11 +39,6 @@ public class PlayerManager {
     private final List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
 
     /**
-     * Map with player's language
-     */
-    private final Map<UUID, Language> playersLanguage = new HashMap<UUID, Language>();
-
-    /**
      * Add a new player dat to the server
      *
      * @param playerDat player dat to add to the server
@@ -58,34 +52,12 @@ public class PlayerManager {
     }
 
     /**
-     * Add a new player language to the player's languages map
-     *
-     * @param playerDat player dat to add to the language
-     * @param language language of the player
-     * @return true if successfull
-     */
-    public boolean addPlayerLanguage(PlayerDat playerDat, Language language) {
-        playersLanguage.put(playerDat.getUUID(), language);
-        return true;
-    }
-
-
-    /**
      * Removes a player dat from the server
      *
      * @param playerDat player dat to remove from the server
      */
     public void removePlayerDat(PlayerDat playerDat) {
         playersDat.remove(playerDat);
-    }
-
-    /**
-     * Removes a player dat from the server
-     *
-     * @param playerDat player dat to remove from the server
-     */
-    public void removePlayerLanguage(PlayerDat playerDat) {
-        playersLanguage.remove(playerDat.getUUID());
     }
 
     /**
@@ -99,18 +71,6 @@ public class PlayerManager {
             if (alvoDat.getUUID() == uuid)
                 return alvoDat;
         return null;
-    }
-
-    /**
-     * Get a player language from a given UUID
-     *
-     * @param uuid uuid to get the player language
-     * @return player language of that UUID
-     */
-    public Language getPlayerLanguageByUUID(UUID uuid) {
-        if(!playersLanguage.containsKey(uuid))
-            return null;
-        return playersLanguage.get(uuid);
     }
 
     /**
