@@ -158,12 +158,12 @@ public class MySQL {
         try {
             Statement statementCreation = connection.createStatement();
 
-            /* Core - Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberReports */
+            /* Core - Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports */
             final ResultSet resultadoCore = connection.getMetaData().getTables(null, null, DBCore, null);
             if (resultadoCore.next()) {
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(02), NumberReports int(10));");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(20), NumberMutes int(20), NumberReports int(10));");
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
@@ -232,7 +232,7 @@ public class MySQL {
                 final String coreUpdate = "UPDATE " + DBCore + " SET Points = " + playerDat.getPoints() + " WHERE Player = '" + playerDat.getUUID() + "';";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             } else {
-                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 0, 0, " + playerDat.getPoints() + ", 0, 1, 0, 0);";
+                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 0, 0, " + playerDat.getPoints() + ", 0, 1, 0, 0, 0);";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             }
             // Update Game
