@@ -82,12 +82,12 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
+        // Set as dead player
+        alvoDat.setStatus(PlayerStatus.DEAD);
+
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);
-
-        // Set as dead player
-        alvoDat.setStatus(PlayerStatus.DEAD);
 
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
