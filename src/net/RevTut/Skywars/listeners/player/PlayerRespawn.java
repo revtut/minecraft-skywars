@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
  *
  * <P>Controls the respawn event.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class PlayerRespawn implements Listener {

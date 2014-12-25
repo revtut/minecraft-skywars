@@ -24,7 +24,7 @@ import java.util.logging.Level;
  *
  * <P>Controls the death event.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class PlayerDeath implements Listener {

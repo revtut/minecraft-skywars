@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
  *
  * <P>Kit Guardian can increase speed two times for seconds and have anti-fall damage boots</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Guardian {

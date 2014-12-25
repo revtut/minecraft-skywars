@@ -14,7 +14,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
  *
  * <P>Controls the projectile hits.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class ProjectileHit implements Listener {

@@ -22,7 +22,7 @@ import java.util.UUID;
  *
  * <P>Kit Hacker will alow a player to respawn one time if he is killed.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Hacker {

@@ -20,7 +20,7 @@ import java.util.UUID;
  *
  * <P>Kit Engineer with land mines. Will explode when a player step on them.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Engineer{

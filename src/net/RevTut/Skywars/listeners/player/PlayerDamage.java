@@ -21,7 +21,7 @@ import java.util.UUID;
  *
  * <P>Controls the damage event.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class PlayerDamage implements Listener {

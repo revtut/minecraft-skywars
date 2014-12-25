@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
  *
  * <P>Kit Tactical may become invisible two times for ten secons.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Tatical {

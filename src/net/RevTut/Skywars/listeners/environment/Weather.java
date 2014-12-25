@@ -12,7 +12,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
  *
  * <P>Controls the weather events.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Weather implements Listener {

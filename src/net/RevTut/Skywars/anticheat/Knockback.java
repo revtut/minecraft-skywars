@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 /**
- * Created by waxcoder on 01-11-2014.
+ * Created by João Silva on 01-11-2014.
  */
 
 public class Knockback implements Listener {

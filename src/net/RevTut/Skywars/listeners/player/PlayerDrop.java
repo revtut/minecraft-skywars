@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
  *
  * <P>Controls the drop item event.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class PlayerDrop implements Listener {

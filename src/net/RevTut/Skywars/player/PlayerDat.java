@@ -17,7 +17,6 @@ import java.util.UUID;
  * @author Joao Silva
  * @version 1.0
  */
-
 public class PlayerDat {
 
     /**
@@ -31,24 +30,24 @@ public class PlayerDat {
     private final UUID uuid;
 
     /**
-     * Language of the player
-     */
-    private Language language;
-
-    /**
-     * Points of the player
-     */
-    private int points;
-
-    /**
      * Last login of the player
      */
     private final Date lastLogin;
 
     /**
+     * Language of the player
+     */
+    private Language language;
+
+    /**
      * Playtime of the player in this game
      */
     private final long playTime;
+
+    /**
+     * Points of the player
+     */
+    private int points;
 
     /**
      * Number of wins

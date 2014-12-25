@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * Created by waxcoder on 22-11-2014.
+ * Created by João Silva on 22-11-2014.
  */
 
 public class KillAura implements CommandExecutor, Listener{

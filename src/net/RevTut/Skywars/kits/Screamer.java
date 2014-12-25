@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * Created by waxcoder on 18-11-2014.
+ * Created by João Silva on 18-11-2014.
  */
 public class Screamer implements Listener {
 

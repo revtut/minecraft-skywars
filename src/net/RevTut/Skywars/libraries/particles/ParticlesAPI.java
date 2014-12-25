@@ -14,7 +14,7 @@ import java.util.Random;
  *
  * <P>Help make particles with simple methods</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public final class ParticlesAPI {

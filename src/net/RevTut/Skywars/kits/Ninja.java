@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
  *
  * <P>Kit Ninja with fishing rod which may be used to climb walls and pulls him over.</P>
  *
- * @author WaxCoder
+ * @author João Silva
  * @version 1.0
  */
 public class Ninja {
