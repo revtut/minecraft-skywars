@@ -70,7 +70,7 @@ public enum Message {
     GUARDIAN_ENABLED_SPEED,
 
     /**
-     * Hackr bypassed respawn death
+     * Hacker bypassed respawn death
      */
     HACKER_RESPAWN,
 
