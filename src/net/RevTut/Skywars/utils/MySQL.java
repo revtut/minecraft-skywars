@@ -163,7 +163,7 @@ public class MySQL {
             if (resultadoCore.next()) {
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player VARCHAR(100), PlayTime int(20), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(20), NumberBans int(3), NumberJoins int(20), NumberKicks int(20), NumberMutes int(20), NumberReports int(10));");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBCore + " (Player CHAR(36), PlayTime int(10), PlayersVisible TINYINT(1), Chat TINYINT(1), Points int(16), NumberBans int(4), NumberJoins int(16), NumberKicks int(4), NumberMutes int(4), NumberReports int(4));");
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 

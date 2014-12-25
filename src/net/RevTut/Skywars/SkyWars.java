@@ -220,7 +220,7 @@ public class SkyWars extends JavaPlugin {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         /* Libraries */
         pm.registerEvents(new NameTagAPI(), this);
-        /* Listeners  */
+        /* Listeners */
         // Block
         pm.registerEvents(new BlockBreak(this), this);
         pm.registerEvents(new BlockPlace(this), this);
