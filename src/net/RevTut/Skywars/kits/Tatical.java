@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.kits;
+package net.revtut.skywars.kits;
 
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.libraries.language;
+package net.revtut.skywars.libraries.language;
 
 /**
  * Languages Enum.

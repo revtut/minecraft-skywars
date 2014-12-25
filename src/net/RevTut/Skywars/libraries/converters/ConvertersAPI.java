@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.libraries.converters;
+package net.revtut.skywars.libraries.converters;
 
 import java.util.List;
 

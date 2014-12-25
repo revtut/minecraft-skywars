@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.anticheat;
+package net.revtut.skywars.anticheat;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

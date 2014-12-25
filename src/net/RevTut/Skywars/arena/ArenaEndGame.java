@@ -1,8 +1,8 @@
-package net.RevTut.Skywars.arena;
+package net.revtut.skywars.arena;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.appearance.AppearanceAPI;
-import net.RevTut.Skywars.player.PlayerDat;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.libraries.appearance.AppearanceAPI;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

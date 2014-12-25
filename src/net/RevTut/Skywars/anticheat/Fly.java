@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.anticheat;
+package net.revtut.skywars.anticheat;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

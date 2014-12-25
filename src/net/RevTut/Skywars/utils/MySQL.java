@@ -1,10 +1,10 @@
-package net.RevTut.Skywars.utils;
+package net.revtut.skywars.utils;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.ArenaDat;
-import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
-import net.RevTut.Skywars.libraries.language.Language;
-import net.RevTut.Skywars.player.PlayerDat;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.ArenaDat;
+import net.revtut.skywars.libraries.converters.ConvertersAPI;
+import net.revtut.skywars.libraries.language.Language;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
 
@@ -257,7 +257,7 @@ public class MySQL {
      *
      * @param arenaDat arena dat to be inserted on MySQL
      * @return true if successfull
-     * @see ArenaDat
+     * @see net.revtut.skywars.arena.ArenaDat
      */
     public boolean updateArenaDat(ArenaDat arenaDat) {
         try {

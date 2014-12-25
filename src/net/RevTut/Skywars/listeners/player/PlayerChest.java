@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,8 +1,8 @@
-package net.RevTut.Skywars.managers;
+package net.revtut.skywars.managers;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

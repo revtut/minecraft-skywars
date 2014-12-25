@@ -1,11 +1,11 @@
-package net.RevTut.Skywars.arena;
+package net.revtut.skywars.arena;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
-import net.RevTut.Skywars.libraries.titles.TitleAPI;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.libraries.converters.ConvertersAPI;
+import net.revtut.skywars.libraries.titles.TitleAPI;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 

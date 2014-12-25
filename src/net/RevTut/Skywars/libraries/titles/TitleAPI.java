@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.libraries.titles;
+package net.revtut.skywars.libraries.titles;
 
-import net.RevTut.Skywars.SkyWars;
+import net.revtut.skywars.SkyWars;
 import net.minecraft.server.v1_8_R1.ChatSerializer;
 import net.minecraft.server.v1_8_R1.EnumTitleAction;
 import net.minecraft.server.v1_8_R1.IChatBaseComponent;

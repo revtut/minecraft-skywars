@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.listeners.environment;
+package net.revtut.skywars.listeners.environment;
 
-import net.RevTut.Skywars.SkyWars;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;

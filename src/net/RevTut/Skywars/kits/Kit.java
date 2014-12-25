@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.kits;
+package net.revtut.skywars.kits;
 
 import org.bukkit.Material;
 

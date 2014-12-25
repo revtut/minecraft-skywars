@@ -1,8 +1,8 @@
-package net.RevTut.Skywars.player;
+package net.revtut.skywars.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.libraries.language.Language;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.libraries.language.Language;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

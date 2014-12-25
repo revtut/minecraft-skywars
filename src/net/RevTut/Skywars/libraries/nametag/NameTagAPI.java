@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.libraries.nametag;
+package net.revtut.skywars.libraries.nametag;
 
-import net.RevTut.Skywars.SkyWars;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

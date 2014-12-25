@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.libraries.reflection;
+package net.revtut.skywars.libraries.reflection;
 
 import org.bukkit.Bukkit;
 

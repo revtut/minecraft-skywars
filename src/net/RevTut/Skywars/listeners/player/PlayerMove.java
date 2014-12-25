@@ -1,11 +1,11 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaLocation;
-import net.RevTut.Skywars.arena.ArenaStatus;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaLocation;
+import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

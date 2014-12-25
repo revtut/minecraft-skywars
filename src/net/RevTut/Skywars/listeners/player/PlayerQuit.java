@@ -1,9 +1,9 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaStatus;
-import net.RevTut.Skywars.player.PlayerDat;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

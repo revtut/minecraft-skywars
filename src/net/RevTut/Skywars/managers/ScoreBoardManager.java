@@ -1,9 +1,9 @@
-package net.RevTut.Skywars.managers;
+package net.revtut.skywars.managers;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

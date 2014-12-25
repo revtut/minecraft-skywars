@@ -1,10 +1,10 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaStatus;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -50,7 +50,7 @@ public class PlayerDamage implements Listener {
      *
      * @param e entity damage by entity event
      * @see EntityDamageByEntityEvent
-     * @see PlayerStatus
+     * @see net.revtut.skywars.player.PlayerStatus
      */
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent e) {

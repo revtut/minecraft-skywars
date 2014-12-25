@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.libraries.particles;
+package net.revtut.skywars.libraries.particles;
 
 import net.minecraft.server.v1_8_R1.EnumParticle;
 import net.minecraft.server.v1_8_R1.PacketPlayOutWorldParticles;

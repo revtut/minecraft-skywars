@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.libraries.appearance;
+package net.revtut.skywars.libraries.appearance;
 
-import net.RevTut.Skywars.SkyWars;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;

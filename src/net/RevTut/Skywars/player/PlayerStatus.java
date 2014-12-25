@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.player;
+package net.revtut.skywars.player;
 
 /**
  * Player Status Enum.

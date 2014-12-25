@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.libraries.language;
+package net.revtut.skywars.libraries.language;
 
-import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
+import net.revtut.skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;

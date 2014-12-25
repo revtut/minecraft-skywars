@@ -1,17 +1,17 @@
-package net.RevTut.Skywars.managers;
+package net.revtut.skywars.managers;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaDat;
-import net.RevTut.Skywars.arena.ArenaLocation;
-import net.RevTut.Skywars.arena.ArenaStatus;
-import net.RevTut.Skywars.libraries.algebra.AlgebraAPI;
-import net.RevTut.Skywars.libraries.titles.TitleAPI;
-import net.RevTut.Skywars.libraries.world.WorldAPI;
-import net.RevTut.Skywars.listeners.player.PlayerDamage;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaDat;
+import net.revtut.skywars.arena.ArenaLocation;
+import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.libraries.algebra.AlgebraAPI;
+import net.revtut.skywars.libraries.titles.TitleAPI;
+import net.revtut.skywars.libraries.world.WorldAPI;
+import net.revtut.skywars.listeners.player.PlayerDamage;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -324,7 +324,7 @@ public class ArenaManager {
      * @param playerDat  playerDat to be removed
      * @param checkArena check if arena has minimum players to continue the game
      * @return true it was successful when removing it
-     * @see PlayerDat
+     * @see net.revtut.skywars.player.PlayerDat
      */
     public boolean removePlayer(final PlayerDat playerDat, boolean checkArena) {
         final Arena arena = getArenaByPlayer(playerDat);

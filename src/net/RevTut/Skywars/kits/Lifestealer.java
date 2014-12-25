@@ -1,8 +1,8 @@
-package net.RevTut.Skywars.kits;
+package net.revtut.skywars.kits;
 
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.managers.KitManager;
-import net.RevTut.Skywars.player.PlayerDat;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.managers.KitManager;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

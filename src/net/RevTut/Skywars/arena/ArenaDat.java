@@ -1,4 +1,4 @@
-package net.RevTut.Skywars.arena;
+package net.revtut.skywars.arena;
 
 import java.util.ArrayList;
 import java.util.Date;

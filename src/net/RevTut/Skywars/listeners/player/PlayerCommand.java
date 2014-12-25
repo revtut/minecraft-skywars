@@ -1,7 +1,7 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;

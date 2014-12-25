@@ -1,14 +1,14 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.arena.ArenaDat;
-import net.RevTut.Skywars.libraries.bypasses.BypassesAPI;
-import net.RevTut.Skywars.libraries.converters.ConvertersAPI;
-import net.RevTut.Skywars.libraries.titles.TitleAPI;
-import net.RevTut.Skywars.player.PlayerDat;
-import net.RevTut.Skywars.player.PlayerStatus;
-import net.RevTut.Skywars.utils.Message;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaDat;
+import net.revtut.skywars.libraries.bypasses.BypassesAPI;
+import net.revtut.skywars.libraries.converters.ConvertersAPI;
+import net.revtut.skywars.libraries.titles.TitleAPI;
+import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
+import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

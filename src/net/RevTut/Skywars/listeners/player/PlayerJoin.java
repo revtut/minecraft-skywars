@@ -1,12 +1,12 @@
-package net.RevTut.Skywars.listeners.player;
+package net.revtut.skywars.listeners.player;
 
-import net.RevTut.Skywars.SkyWars;
-import net.RevTut.Skywars.arena.Arena;
-import net.RevTut.Skywars.libraries.language.Language;
-import net.RevTut.Skywars.libraries.language.LanguageAPI;
-import net.RevTut.Skywars.libraries.nametag.NameTagAPI;
-import net.RevTut.Skywars.libraries.tab.TabAPI;
-import net.RevTut.Skywars.player.PlayerDat;
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.libraries.language.Language;
+import net.revtut.skywars.libraries.language.LanguageAPI;
+import net.revtut.skywars.libraries.nametag.NameTagAPI;
+import net.revtut.skywars.libraries.tab.TabAPI;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

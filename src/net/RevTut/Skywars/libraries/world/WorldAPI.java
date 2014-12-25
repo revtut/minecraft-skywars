@@ -1,6 +1,6 @@
-package net.RevTut.Skywars.libraries.world;
+package net.revtut.skywars.libraries.world;
 
-import net.RevTut.Skywars.libraries.reflection.ReflectionAPI;
+import net.revtut.skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
