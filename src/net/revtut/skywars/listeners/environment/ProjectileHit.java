@@ -1,8 +1,8 @@
 package net.revtut.skywars.listeners.environment;
 
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;

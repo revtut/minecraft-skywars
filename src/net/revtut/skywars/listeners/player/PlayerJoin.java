@@ -1,9 +1,9 @@
 package net.revtut.skywars.listeners.player;
 
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.libraries.language.LanguageAPI;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.libraries.language.Language;
+import net.revtut.skywars.libraries.language.LanguageAPI;
 import net.revtut.skywars.libraries.nametag.NameTagAPI;
 import net.revtut.skywars.libraries.tab.TabAPI;
 import net.revtut.skywars.player.PlayerDat;

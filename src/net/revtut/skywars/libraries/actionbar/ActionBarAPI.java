@@ -1,9 +1,9 @@
 package net.revtut.skywars.libraries.actionbar;
 
-import net.revtut.skywars.SkyWars;
 import net.minecraft.server.v1_8_R1.ChatSerializer;
 import net.minecraft.server.v1_8_R1.IChatBaseComponent;
 import net.minecraft.server.v1_8_R1.PacketPlayOutChat;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;

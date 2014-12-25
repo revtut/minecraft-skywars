@@ -1,7 +1,7 @@
 package net.revtut.skywars.libraries.algebra;
 
-import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

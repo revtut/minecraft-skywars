@@ -1,9 +1,9 @@
 package net.revtut.skywars.listeners.player;
 
 import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
-import net.revtut.skywars.arena.Arena;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +45,8 @@ public class PlayerQuit implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         final Player p = e.getPlayer();
-        // Mensagem Entrada
+
+        // Mensagem Saida
         e.setQuitMessage(null);
 
         // PlayerDat

@@ -1,12 +1,12 @@
 package net.revtut.skywars.managers;
 
+import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.kits.*;
+import net.revtut.skywars.libraries.algebra.AlgebraAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
-import net.revtut.skywars.arena.Arena;
-import net.revtut.skywars.kits.*;
-import net.revtut.skywars.libraries.algebra.AlgebraAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

@@ -1,13 +1,15 @@
 package net.revtut.skywars.managers;
 
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Player Manager.

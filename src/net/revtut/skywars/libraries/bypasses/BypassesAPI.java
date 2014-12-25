@@ -1,9 +1,9 @@
 package net.revtut.skywars.libraries.bypasses;
 
-import net.revtut.skywars.SkyWars;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
 import net.minecraft.server.v1_8_R1.EnumClientCommand;
 import net.minecraft.server.v1_8_R1.PacketPlayInClientCommand;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 

@@ -1,11 +1,11 @@
 package net.revtut.skywars.listeners.player;
 
 import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
-import net.revtut.skywars.arena.Arena;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
