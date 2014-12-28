@@ -3,11 +3,11 @@ package net.revtut.skywars.listeners.player;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.help.HelpTopic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,16 +82,9 @@ public class PlayerCommand implements Listener {
         }
 
         // Unknown command
-        Command comando = Bukkit.getServer().getPluginCommand(e.getMessage().split(" ")[0]);
-        if (comando == null) {
+        HelpTopic helpTopic = Bukkit.getHelpMap().getHelpTopic(e.getMessage());
+        if (helpTopic == null) {
             player.sendMessage(Message.getMessage(Message.PLAYER_UNKNOWN_COMMAND, player));
-            e.setCancelled(true);
-            return;
-        }
-
-        // Permission for the command
-        if (!comando.testPermissionSilent(player)) {
-            player.sendMessage(Message.getMessage(Message.PLAYER_BLOCKED_COMMAND, player));
             e.setCancelled(true);
             return;
         }
