@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -261,7 +262,7 @@ public class KitManager {
         Inventory inventory = Bukkit.createInventory(null, inventorySize, "§6Players");
 
         // Create Menu
-        ItemMeta itemMeta;
+        SkullMeta skullMeta;
         double distance;
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         for(int i = 0; i < alivePlayers.size(); i++){
@@ -273,9 +274,10 @@ public class KitManager {
             distance = AlgebraAPI.distanceBetween(player.getLocation(), alvo.getLocation());
 
             itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-            itemMeta = itemStack.getItemMeta(); // ItemMeta
-            itemMeta.setDisplayName(alvo.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
-            itemStack.setItemMeta(itemMeta); // Set iteMeta
+            skullMeta = (SkullMeta) itemStack.getItemMeta(); // ItemMeta
+            skullMeta.setOwner(alvo.getName()); // Owner
+            skullMeta.setDisplayName(alvo.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
+            itemStack.setItemMeta(skullMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
 
