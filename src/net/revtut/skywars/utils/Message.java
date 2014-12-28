@@ -989,7 +989,7 @@ public enum Message {
             case GERMAN:
                 return "§4Bitte warten Sie 3 Sekunden zwischen Befehle.";
             case PORTUGUESE_PT:
-                return "§4Por favor espere 3 segundos entre comands.";
+                return "§4Por favor espera 3 segundos entre comands.";
             case PORTUGUESE_BR:
                 return "§4Você tem que 3 segundos esperar entre comandos.";
             case SPANISH:
