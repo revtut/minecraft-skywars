@@ -232,7 +232,7 @@ public class MySQL {
                 final String coreUpdate = "UPDATE " + DBCore + " SET Points = " + playerDat.getPoints() + " WHERE Player = '" + playerDat.getUUID() + "';";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             } else {
-                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 0, 0, " + playerDat.getPoints() + ", 0, 1, 0, 0, 0);";
+                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 1, 1, " + playerDat.getPoints() + ", 0, 1, 0, 0, 0);";
                 this.connection.createStatement().executeUpdate(coreUpdate);
             }
             // Update Game
