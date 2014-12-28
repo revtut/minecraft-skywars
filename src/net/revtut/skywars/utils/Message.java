@@ -277,7 +277,7 @@ public enum Message {
     /**
      * Inspector prefix of messages
      */
-    private static final String inspectorPrefix = "§7[§6Inspector§7]";
+    private static final String inspectorPrefix = "§7[§6Inspector§7] ";
 
     /**
      * Send message to player in his language
