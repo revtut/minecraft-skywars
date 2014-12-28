@@ -159,12 +159,10 @@ public final class ConvertersAPI {
      */
     public static String convertSecondsToDHMS(long sec) {
 
+        long days = sec / (60 * 60 * 24);
+        long hours = sec / (60 * 60);
+        long minutes = sec / (60);
         long seconds = sec % 60;
-        long minutes = convertSecondsToMinutes(seconds);
-        long hours = convertMinutesToHours(minutes);
-        long days = convertHoursToDays(hours);
-        minutes = minutes % 60;
-        hours = hours % 60;
 
         return days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
     }
