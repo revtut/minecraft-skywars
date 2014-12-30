@@ -362,7 +362,7 @@ public class ArenaManager {
 
         if (checkArena) {
             // Check if game already started
-            if ((arena.getStatus() == ArenaStatus.INGAME && arena.getAlivePlayers().size() <= 1) || (arena.getStatus() == ArenaStatus.PREGAME && arena.getPlayers().size() <= 1)) {
+            if ((arena.getStatus() == ArenaStatus.INGAME || arena.getStatus() == ArenaStatus.PREGAME) && arena.getAlivePlayers().size() <= 1) {
                 // Send message
                 arena.sendMessage(Message.NOT_ENOUGH_PLAYERS_TO_CONTINUE);
                 // Send remaining players to new arena
