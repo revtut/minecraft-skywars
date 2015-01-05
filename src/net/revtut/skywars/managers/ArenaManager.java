@@ -742,13 +742,7 @@ public class ArenaManager {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (null == alvo)
                 continue;
-
-            if (alvoDat.getStatus() == PlayerStatus.ALIVE){
-                alvo.hidePlayer(player);
-            } else {
-                player.showPlayer(alvo);
-            }
-
+            alvo.hidePlayer(player);
             if (toPlayerToo)
                 player.hidePlayer(alvo);
         }
@@ -778,6 +772,40 @@ public class ArenaManager {
             if (null == alvo)
                 continue;
             alvo.showPlayer(player);
+            if (toPlayerToo)
+                player.showPlayer(alvo);
+        }
+        return true;
+    }
+
+    /**
+     * Show player to all spectators
+     *
+     * @param player      player to unhide to the arena
+     * @param toPlayerToo true if show all spectators in the arena to player
+     * @return true if sucessfully hided to the players in the arena
+     */
+    public boolean showToSpectators(Player player, boolean toPlayerToo) {
+        PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
+        if (null == playerDat) {
+            plugin.getLogger().log(Level.WARNING, "Error while hiding player to arena because PlayerDat is null.");
+            return false;
+        }
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if (null == arena) {
+            plugin.getLogger().log(Level.SEVERE, "Error while hiding player to arena because Arena is null.");
+            return false;
+        }
+        for (PlayerDat alvoDat : arena.getPlayers()) {
+            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+            if (null == alvo)
+                continue;
+
+            if(alvoDat.getStatus() == PlayerStatus.ALIVE)
+                continue;
+
+            alvo.showPlayer(player);
+
             if (toPlayerToo)
                 player.showPlayer(alvo);
         }

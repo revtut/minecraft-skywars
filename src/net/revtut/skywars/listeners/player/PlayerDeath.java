@@ -87,6 +87,9 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
+        // Show to spectators
+        plugin.arenaManager.showToSpectators(alvo, true);
+
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);
