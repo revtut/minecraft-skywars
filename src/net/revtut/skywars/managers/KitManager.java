@@ -1,24 +1,20 @@
 package net.revtut.skywars.managers;
 
-import net.revtut.skywars.arena.Arena;
-import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.kits.*;
-import net.revtut.skywars.libraries.algebra.AlgebraAPI;
 import net.revtut.skywars.player.PlayerDat;
-import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Kit Manager.
@@ -227,77 +223,6 @@ public class KitManager {
     }
 
     /**
-     * Open compass menu to a player
-     *
-     * @param itemStack item stack used by the player
-     * @param playerDat player to create the menu
-     * @param arena arena where player is currently playing
-     * @return inventory menu with all kits
-     */
-    public final Inventory createCompassMenu(ItemStack itemStack, PlayerDat playerDat, Arena arena) { // MAKES USE OF PLAYER INTERACT EVENT
-        if(arena.getStatus() != ArenaStatus.INGAME)
-            return null;
-        if(playerDat.getStatus() == PlayerStatus.ALIVE)
-            return null;
-        if (itemStack == null)
-            return null;
-        if (itemStack.getType() == null)
-            return null;
-        if (itemStack.getType() != compass.getType())
-            return null;
-        if (!itemStack.hasItemMeta())
-            return null;
-        if (!itemStack.getItemMeta().hasDisplayName())
-            return null;
-
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if(null == player)
-            return null;
-
-
-        // All the kits
-        List<PlayerDat> alivePlayers = arena.getAlivePlayers();
-
-        // Size of Inventory
-        int inventorySize;
-        if(alivePlayers.size() <= 9)
-            inventorySize = 9;
-        else if(alivePlayers.size() <= 18)
-            inventorySize = 18;
-        else if(alivePlayers.size() <= 27)
-            inventorySize = 27;
-        else if(alivePlayers.size() <= 36)
-            inventorySize = 36;
-        else if(alivePlayers.size() <= 45)
-            inventorySize = 45;
-        else
-            inventorySize = 54;
-        Inventory inventory = Bukkit.createInventory(null, inventorySize, "§6Players");
-
-        // Create Menu
-        SkullMeta skullMeta;
-        double distance;
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        for(int i = 0; i < alivePlayers.size(); i++){
-            PlayerDat alvoDat = alivePlayers.get(i);
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(null == alvo)
-                continue;
-
-            distance = AlgebraAPI.distanceBetween(player.getLocation(), alvo.getLocation());
-
-            itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-            skullMeta = (SkullMeta) itemStack.getItemMeta(); // ItemMeta
-            skullMeta.setOwner(alvo.getName()); // Owner
-            skullMeta.setDisplayName(alvo.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
-            itemStack.setItemMeta(skullMeta); // Set iteMeta
-            inventory.setItem(i , itemStack);
-        }
-
-        return inventory;
-    }
-
-    /**
      * Set the kit of a player. Checks if player has enough points to buy it and if player
      * has not choosen the kit yet
      *
@@ -336,59 +261,5 @@ public class KitManager {
         playerDat.addPoints(0 - kit.getCost());
         // Message
         player.sendMessage(Message.getMessage(Message.KIT_BOUGHT, player) + ChatColor.stripColor(kit.getDisplayName()) + "!");
-    }
-
-    /**
-     * Set the kit of a player. Checks if player has enough points to buy it and if player
-     * has not choosen the kit yet
-     *
-     * @param playerDat player to set the kit
-     * @param arena arena player is currently playing
-     * @param inventory inventory of the player
-     * @param position position of the kit
-     */
-    public final void compassTeleport(PlayerDat playerDat, Arena arena, Inventory inventory, int position){ // MAKES USE OF PLAYER INVENTORY CLICK EVENT
-        if(!inventory.getTitle().equalsIgnoreCase("§6Players"))
-            return;
-        if(position < 0)
-            return;
-        List<PlayerDat> alivePlayers = arena.getAlivePlayers();
-        if(position >= alivePlayers.size())
-            return;
-
-        // Player
-        Player player = Bukkit.getPlayer(playerDat.getUUID());
-        if(player == null)
-            return;
-
-        // Close Inventory
-        player.closeInventory();
-
-        // Head of player
-        ItemStack itemStack = inventory.getItem(position);
-        if(null == itemStack)
-            return;
-        if (!itemStack.hasItemMeta())
-            return;
-        if (!itemStack.getItemMeta().hasDisplayName())
-            return;
-
-        Player target = null;
-        for(PlayerDat alvoDat : arena.getAlivePlayers()) {
-            Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-            if(itemStack.getItemMeta().getDisplayName().contains(alvo.getDisplayName())) {
-                target = alvo;
-                break;
-            }
-        }
-
-        // Target player
-        if(null == target)
-            return;
-
-        // Teleport to the target
-        Location targetLocation = target.getLocation();
-        player.teleport(targetLocation);
-        player.setFlying(true);
     }
 }

@@ -804,6 +804,9 @@ public class ArenaManager {
             if(alvoDat.getStatus() == PlayerStatus.ALIVE)
                 continue;
 
+            if(alvoDat.getStatus() == PlayerStatus.WAITING)
+                continue;
+
             alvo.showPlayer(player);
 
             if (toPlayerToo)

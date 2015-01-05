@@ -3,7 +3,6 @@ package net.revtut.skywars.listeners.player;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.player.PlayerDat;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -67,14 +66,6 @@ public class PlayerRespawn implements Listener {
 
         // Set respawn location
         e.setRespawnLocation(deadSpawn);
-
-        // Give the compass
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                arena.getKitManager().giveCompassItem(playerDat);
-            }
-        }, 20);
     }
 
 }

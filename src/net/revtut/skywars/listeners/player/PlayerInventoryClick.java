@@ -55,9 +55,6 @@ public class PlayerInventoryClick implements Listener {
         // Kit Menu
         arena.getKitManager().setKit(playerDat, e.getInventory(), e.getSlot());
 
-        // Compass Menu
-        arena.getKitManager().compassTeleport(playerDat, arena, e.getInventory(), e.getSlot());
-
         // Check status
         if (arena.getStatus() != ArenaStatus.INGAME)
             e.setCancelled(true);

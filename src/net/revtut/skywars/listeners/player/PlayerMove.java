@@ -6,9 +6,7 @@ import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,38 +56,6 @@ public class PlayerMove implements Listener {
             return;
         if (arena.getStatus() != ArenaStatus.INGAME)
             return;
-
-        // Alive
-        if (playerDat.getStatus() == PlayerStatus.ALIVE){
-            // Engineer
-            arena.getKitManager().engineer.landMineActivate(player);
-
-            // Check if there is near players
-            for(PlayerDat alvoDat : arena.getPlayers()){
-                if(alvoDat.getStatus() != PlayerStatus.DEAD)
-                    continue;
-                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                if(alvo == null)
-                    continue;
-                Location location = alvo.getLocation();
-                if(alvo.getUniqueId() == player.getUniqueId())
-                    continue;
-                if(alvo.getWorld() != player.getWorld())
-                    continue;
-                if(player.getLocation().distanceSquared(location) > 25)
-                    continue;
-                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ(), location.getYaw(), location.getPitch());
-                int i = 0;
-                do{
-                    safeLocation.setY(safeLocation.getY() + i);
-                    i++;
-                }while(safeLocation.getBlock().getType() != Material.AIR);
-                alvo.teleport(safeLocation);
-                if(alvo.getAllowFlight())
-                    alvo.setFlying(true);
-            }
-            return;
-        }
 
         // Dead
         if (playerDat.getStatus() == PlayerStatus.DEAD){

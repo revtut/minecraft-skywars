@@ -65,15 +65,9 @@ public class PlayerInteract implements Listener {
             e.setCancelled(true);
             return;
         }
+
         if (playerDat.getStatus() != PlayerStatus.ALIVE) {
             e.setCancelled(true);
-
-            // Compass Menu
-            if(playerDat.getStatus() != PlayerStatus.WAITING) {
-                inventory = arena.getKitManager().createCompassMenu(player.getItemInHand(), playerDat, arena);
-                if(inventory != null)
-                    player.openInventory(inventory);
-            }
             return;
         }
 

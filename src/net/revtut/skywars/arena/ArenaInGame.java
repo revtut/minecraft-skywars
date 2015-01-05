@@ -1,6 +1,7 @@
 package net.revtut.skywars.arena;
 
 import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.algebra.AlgebraAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.titles.TitleAPI;
@@ -110,9 +111,15 @@ public class ArenaInGame implements Runnable {
             if (alvo == null)
                 continue;
 
-            // Set compass target
             Player closest = AlgebraAPI.closestPlayer(arena, alvo);
-            if(null != closest){
+            if(null == closest)
+                continue;
+
+            double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+            // Set compass target
+            if(alvoDat.getStatus() == PlayerStatus.ALIVE) { // Player is alive, change compass
                 alvo.setCompassTarget(closest.getLocation());
 
                 for(ItemStack itemStack : alvo.getInventory().getContents()) {
@@ -122,19 +129,19 @@ public class ArenaInGame implements Runnable {
                     if(!itemStack.getType().equals(Material.COMPASS))
                         continue;
 
-                    double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
-                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
                     ItemMeta compassMeta = itemStack.getItemMeta();
                     compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
                     itemStack.setItemMeta(compassMeta);
+                    break;
                 }
-            }
+            } else if (alvoDat.getStatus() == PlayerStatus.DEAD || alvoDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
+                ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
 
-            // Send message to dead players
-            if(alvoDat.getStatus() == PlayerStatus.DEAD)
+                // Send message to spectator players
                 if(remainingTime % 30 == 0)
                     alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
+            }
 
             switch (remainingTime) {
                 case 60:
