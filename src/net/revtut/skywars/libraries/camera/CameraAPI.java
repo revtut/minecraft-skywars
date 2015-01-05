@@ -55,4 +55,25 @@ public final class CameraAPI {
             }
         });
     }
+
+    /**
+     * Reset the camera of a player.
+     *
+     * @param player player to be reseated the camera
+     */
+    public static void resetCamera(final Player player) {
+        if (null == plugin) {
+            Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside CameraAPI!");
+            return;
+        }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (VERSION != VERSION)
+                    return;
+                PacketPlayOutCamera camera = new PacketPlayOutCamera((Entity) player);
+                ((CraftPlayer)player).getHandle().playerConnection.sendPacket(camera);
+            }
+        });
+    }
 }

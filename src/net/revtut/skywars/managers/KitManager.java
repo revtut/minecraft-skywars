@@ -295,14 +295,14 @@ public class KitManager {
             inventory.setItem(i , itemStack);
         }
 
-        // Add own head
+        // Add his own head
         distance = AlgebraAPI.distanceBetween(player.getLocation(), player.getLocation());
         itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
         skullMeta = (SkullMeta) itemStack.getItemMeta(); // ItemMeta
         skullMeta.setOwner(player.getName()); // Owner
         skullMeta.setDisplayName(player.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
         itemStack.setItemMeta(skullMeta); // Set iteMeta
-        inventory.setItem(alivePlayers.size() , itemStack);
+        inventory.setItem(alivePlayers.size(), itemStack);
 
         return inventory;
     }

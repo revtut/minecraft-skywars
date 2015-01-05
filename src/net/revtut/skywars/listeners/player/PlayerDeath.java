@@ -97,7 +97,7 @@ public class PlayerDeath implements Listener {
                 // Respawn
                 BypassesAPI.respawnBypass(alvo);
                 // Restore camera
-                CameraAPI.sendCamera(alvo, alvo);
+                CameraAPI.resetCamera(alvo);
             }
         }, 60);
 
