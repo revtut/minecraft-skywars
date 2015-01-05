@@ -742,7 +742,13 @@ public class ArenaManager {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (null == alvo)
                 continue;
-            alvo.hidePlayer(player);
+
+            if (alvoDat.getStatus() == PlayerStatus.ALIVE){
+                alvo.hidePlayer(player);
+            } else {
+                player.showPlayer(alvo);
+            }
+
             if (toPlayerToo)
                 player.hidePlayer(alvo);
         }

@@ -80,12 +80,12 @@ public class PlayerDeath implements Listener {
             return;
         }
 
-        // Hide to Arena
-        plugin.arenaManager.hideToArena(alvo, false);
-
         // Update player
         alvoDat.setStatus(PlayerStatus.DEAD);
         alvo.setGameMode(GameMode.SPECTATOR);
+
+        // Hide to Arena
+        plugin.arenaManager.hideToArena(alvo, false);
 
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
@@ -122,9 +122,6 @@ public class PlayerDeath implements Listener {
 
         // Messages
         if (damager != null) {
-            // Send him damager camera
-            CameraAPI.sendCamera(alvo, damager);
-
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
             alvoArena.sendMessage(Message.PLAYER_KILLED_BY, damager.getName());
@@ -167,6 +164,8 @@ public class PlayerDeath implements Listener {
                     arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " unbelievable kill!")); // Add to event log
                     break;
             }
+            // Send his damager camera
+            CameraAPI.sendCamera(alvo, damager);
             // Title
             // Target
             TitleAPI.sendTimes(alvo, 5, 60, 5);
