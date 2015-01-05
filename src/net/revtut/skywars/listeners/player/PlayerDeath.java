@@ -1,5 +1,7 @@
 package net.revtut.skywars.listeners.player;
 
+import net.minecraft.server.v1_8_R1.Entity;
+import net.minecraft.server.v1_8_R1.PacketPlayOutCamera;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
@@ -12,6 +14,7 @@ import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -82,8 +85,9 @@ public class PlayerDeath implements Listener {
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
-        // Set as dead player
+        // Update player
         alvoDat.setStatus(PlayerStatus.DEAD);
+        alvo.setGameMode(GameMode.SPECTATOR);
 
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(alvoArena);
@@ -94,11 +98,11 @@ public class PlayerDeath implements Listener {
             public void run() {
                 // Respawn
                 BypassesAPI.respawnBypass(alvo);
-                // Config Player
-                if (!plugin.playerManager.configPlayer(alvoDat, PlayerStatus.DEAD, GameMode.ADVENTURE, true, true, 0, 0, 20.0, 20, true, true, 0))
-                    plugin.getLogger().log(Level.WARNING, "Error while configuring the player.");
+                // Restore camera
+                PacketPlayOutCamera damagerCamera = new PacketPlayOutCamera((Entity) alvo);
+                ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(damagerCamera);
             }
-        }, 5);
+        }, 60);
 
         // Damager player
         Player damager = null;
@@ -121,6 +125,10 @@ public class PlayerDeath implements Listener {
 
         // Messages
         if (damager != null) {
+            // Send him damager camera
+            PacketPlayOutCamera damagerCamera = new PacketPlayOutCamera((Entity) damager);
+            ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(damagerCamera);
+
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
             alvoArena.sendMessage(Message.PLAYER_KILLED_BY, damager.getName());

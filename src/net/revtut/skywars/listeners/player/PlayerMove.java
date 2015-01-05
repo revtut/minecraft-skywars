@@ -119,30 +119,6 @@ public class PlayerMove implements Listener {
                 Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ() - 5);
                 player.teleport(safeLocation);
             }
-
-            // Check if he is near a player
-            for(PlayerDat alvoDat : arena.getPlayers()){
-                if(alvoDat.getStatus() != PlayerStatus.ALIVE)
-                    continue;
-                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
-                if(alvo == null)
-                    continue;
-                if(alvo.getUniqueId() == player.getUniqueId())
-                    continue;
-                if(alvo.getWorld() != player.getWorld())
-                    continue;
-                if(alvo.getLocation().distanceSquared(location) > 25)
-                    continue;
-                Location safeLocation = new Location(location.getWorld(), location.getX(), location.getY() + 5, location.getZ(), location.getYaw(), location.getPitch());
-                int i = 0;
-                do{
-                    safeLocation.setY(safeLocation.getY() + i);
-                    i++;
-                }while(safeLocation.getBlock().getType() != Material.AIR);
-                player.teleport(safeLocation);
-                if(player.getAllowFlight())
-                    player.setFlying(true);
-            }
         }
     }
 
