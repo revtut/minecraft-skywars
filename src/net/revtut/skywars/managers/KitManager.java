@@ -32,39 +32,52 @@ import java.util.*;
 public class KitManager {
 
     /**
+     * Constructor of KitManager
+     */
+    public KitManager() {
+        engineer = new Engineer();
+        guardian = new Guardian();
+        hacker = new Hacker();
+        ninja = new Ninja();
+        tatical = new Tatical();
+        lifestealer = new Lifestealer();
+        screamer = new Screamer();
+    }
+
+    /**
      * Kit Engineer
      */
-    public final Engineer engineer = new Engineer() ;
+    public final Engineer engineer;
 
     /**
      * Kit Guardian
      */
-    public final Guardian guardian = new Guardian();
+    public final Guardian guardian;
 
     /**
      * Kit Hacker
      */
-    public final Hacker hacker = new Hacker();
+    public final Hacker hacker;
 
     /**
      * Kit Ninja
      */
-    public final Ninja ninja = new Ninja();
+    public final Ninja ninja;
 
     /**
      * Kit Tatical
      */
-    public final Tatical tatical = new Tatical();
+    public final Tatical tatical;
 
     /**
      * Kit Lifestealer
      */
-    public final Lifestealer lifestealer = new Lifestealer();
+    public final Lifestealer lifestealer;
 
     /**
      * Kit Screamer
      */
-    public final Screamer screamer = new Screamer();
+    public final Screamer screamer;
 
     /**
      * Kit Menu Item

@@ -22,7 +22,7 @@ public class Lifestealer {
     /**
      * Percentage of life stealed
      */
-    private final double lifeStealedPercent = 0.20;
+    private final double lifeStealedPercent = 0.05;
 
     /**
      * Red Leather Helmet
