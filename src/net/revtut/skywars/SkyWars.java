@@ -4,6 +4,7 @@ import net.revtut.skywars.arena.*;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
+import net.revtut.skywars.libraries.camera.CameraAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.nametag.NameTagAPI;
 import net.revtut.skywars.libraries.tab.TabAPI;
@@ -159,6 +160,7 @@ public class SkyWars extends JavaPlugin {
         ActionBarAPI.plugin = this;
         AppearanceAPI.plugin = this;
         BypassesAPI.plugin = this;
+        CameraAPI.plugin = this;
         NameTagAPI.plugin = this;
         TabAPI.plugin = this;
         TitleAPI.plugin = this;

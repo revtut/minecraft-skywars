@@ -4,6 +4,7 @@ import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.kits.*;
 import net.revtut.skywars.libraries.algebra.AlgebraAPI;
+import net.revtut.skywars.libraries.camera.CameraAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
@@ -247,15 +248,15 @@ public class KitManager {
 
         // Size of Inventory
         int inventorySize;
-        if(alivePlayers.size() <= 9)
+        if(alivePlayers.size() + 1 <= 9)
             inventorySize = 9;
-        else if(alivePlayers.size() <= 18)
+        else if(alivePlayers.size() + 1 <= 18)
             inventorySize = 18;
-        else if(alivePlayers.size() <= 27)
+        else if(alivePlayers.size() + 1 <= 27)
             inventorySize = 27;
-        else if(alivePlayers.size() <= 36)
+        else if(alivePlayers.size() + 1 <= 36)
             inventorySize = 36;
-        else if(alivePlayers.size() <= 45)
+        else if(alivePlayers.size() + 1 <= 45)
             inventorySize = 45;
         else
             inventorySize = 54;
@@ -280,6 +281,15 @@ public class KitManager {
             itemStack.setItemMeta(skullMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
+
+        // Add own head
+        distance = AlgebraAPI.distanceBetween(player.getLocation(), player.getLocation());
+        itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+        skullMeta = (SkullMeta) itemStack.getItemMeta(); // ItemMeta
+        skullMeta.setOwner(player.getName()); // Owner
+        skullMeta.setDisplayName(player.getDisplayName() + " (" +  decimalFormat.format(distance) + "m)"); // DisplayName
+        itemStack.setItemMeta(skullMeta); // Set iteMeta
+        inventory.setItem(alivePlayers.size() , itemStack);
 
         return inventory;
     }
@@ -373,15 +383,12 @@ public class KitManager {
         if(null == target)
             return;
 
+        // Send Camera
+        CameraAPI.sendCamera(player, target);
+
         // Teleport to the target
         Location targetLocation = target.getLocation();
-        Location safeLocation = new Location(targetLocation.getWorld(), targetLocation.getX(), targetLocation.getY() + 5, targetLocation.getZ(), targetLocation.getYaw(), targetLocation.getPitch());
-        int i = 0;
-        do{
-            safeLocation.setY(safeLocation.getY() + i);
-            i++;
-        }while(safeLocation.getBlock().getType() != Material.AIR);
-        player.teleport(safeLocation);
+        player.teleport(targetLocation);
         player.setFlying(true);
     }
 }

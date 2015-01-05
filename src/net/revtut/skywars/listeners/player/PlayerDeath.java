@@ -1,11 +1,10 @@
 package net.revtut.skywars.listeners.player;
 
-import net.minecraft.server.v1_8_R1.Entity;
-import net.minecraft.server.v1_8_R1.PacketPlayOutCamera;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
+import net.revtut.skywars.libraries.camera.CameraAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
@@ -14,7 +13,6 @@ import net.revtut.skywars.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -99,8 +97,7 @@ public class PlayerDeath implements Listener {
                 // Respawn
                 BypassesAPI.respawnBypass(alvo);
                 // Restore camera
-                PacketPlayOutCamera damagerCamera = new PacketPlayOutCamera((Entity) alvo);
-                ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(damagerCamera);
+                CameraAPI.sendCamera(alvo, alvo);
             }
         }, 60);
 
@@ -126,8 +123,7 @@ public class PlayerDeath implements Listener {
         // Messages
         if (damager != null) {
             // Send him damager camera
-            PacketPlayOutCamera damagerCamera = new PacketPlayOutCamera((Entity) damager);
-            ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(damagerCamera);
+            CameraAPI.sendCamera(alvo, damager);
 
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
