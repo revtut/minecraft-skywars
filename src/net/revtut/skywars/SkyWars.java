@@ -275,6 +275,7 @@ public class SkyWars extends JavaPlugin {
             if (!copyFile(getResource("config.yml"), config))
                 return false;
         }
+
         /* MySQL File */
         final File mysqlConf = new File(getDataFolder() + File.separator + "mysql.yml");
         if (!mysqlConf.exists()) {
