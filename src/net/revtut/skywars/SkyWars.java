@@ -175,9 +175,6 @@ public class SkyWars extends JavaPlugin {
         if (!readFiles())
             this.getLogger().log(Level.WARNING, "Error while trying to read the files.");
 
-        /* Check MySQL Task */
-        checkMySQL();
-
         /* Create Initial Arenas */
         String lastGameNumber = mysql.lastGameNumber();
         if (lastGameNumber == null) {
@@ -336,6 +333,7 @@ public class SkyWars extends JavaPlugin {
         // Tab
         tabTitle = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabTitle").replaceAll("&", "§")));
         tabFooter = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabFooter").replaceAll("&", "§")));
+
         /* MySQL File */
         final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
         final FileConfiguration mysqlConf = YamlConfiguration.loadConfiguration(mysqlFile);
@@ -343,6 +341,8 @@ public class SkyWars extends JavaPlugin {
         if (!mysql.openConnection())
             return false;
         mysql.createMySQL();
+        // Check MySQL Task
+        checkMySQL();
 
         return true;
     }
