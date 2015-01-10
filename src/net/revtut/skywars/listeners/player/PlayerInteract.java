@@ -8,6 +8,7 @@ import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -55,10 +56,12 @@ public class PlayerInteract implements Listener {
         if (null == arena)
             return;
 
-        // Kit Menu
-        Inventory inventory = arena.getKitManager().createKitMenu(playerDat, player.getItemInHand());
-        if(inventory != null)
-            player.openInventory(inventory);
+        if(e.getAction() != Action.PHYSICAL) {
+            // Kit Menu
+            Inventory inventory = arena.getKitManager().createKitMenu(playerDat, player.getItemInHand());
+            if(inventory != null)
+                player.openInventory(inventory);
+        }
 
         // Check status
         if (arena.getStatus() != ArenaStatus.INGAME) {
@@ -71,15 +74,17 @@ public class PlayerInteract implements Listener {
             return;
         }
 
-        // Chest interact
-        plugin.playerChest.onChestInteract(e.getClickedBlock());
+        if(e.getAction() != Action.PHYSICAL) {
+            // Chest interact
+            plugin.playerChest.onChestInteract(e.getClickedBlock());
 
-        // Guardian
-        if(arena.getKitManager().guardian.setSpeed(player, e.getAction(), player.getItemInHand(), 10))
-            e.setCancelled(true);
-        // Tactical
-        if(arena.getKitManager().tatical.setInvisible(player, e.getAction(), player.getItemInHand(), 10))
-            e.setCancelled(true);
+            // Guardian
+            if(arena.getKitManager().guardian.setSpeed(player, e.getAction(), player.getItemInHand(), 10))
+                e.setCancelled(true);
+            // Tactical
+            if(arena.getKitManager().tatical.setInvisible(player, e.getAction(), player.getItemInHand(), 10))
+                e.setCancelled(true);
+        }
     }
 
 }
