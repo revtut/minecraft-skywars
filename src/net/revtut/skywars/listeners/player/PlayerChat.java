@@ -90,6 +90,7 @@ public class PlayerChat implements Listener {
         // PlayerDat
         PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(player.getUniqueId());
         if (null == playerDat) {
+            e.setCancelled(true);
             player.sendMessage(Message.getMessage(Message.PLAYER_PROFILE_ERROR, player));
             return;
         }
@@ -97,6 +98,7 @@ public class PlayerChat implements Listener {
         // Arena
         Arena playerArena = plugin.arenaManager.getArenaByPlayer(playerDat);
         if (null == playerArena) {
+            e.setCancelled(true);
             player.sendMessage(Message.getMessage(Message.PLAYER_ARENA_NULL, player));
             return;
         }
@@ -104,6 +106,7 @@ public class PlayerChat implements Listener {
         // ArenaDat
         ArenaDat arenaDat = playerArena.getArenaDat();
         if (null == arenaDat) {
+            e.setCancelled(true);
             player.sendMessage(Message.getMessage(Message.PLAYER_ARENA_NULL, player));
             return;
         }
@@ -113,8 +116,8 @@ public class PlayerChat implements Listener {
             // Tempo passado desde a Ultima Mensagem
             final long diff = (System.currentTimeMillis() - cooldownMessage.get(player.getUniqueId())) / 1000;
             if (diff < 3) {
-                player.sendMessage(Message.getMessage(Message.PLAYER_COOLDOWN_MESSAGES, player));
                 e.setCancelled(true);
+                player.sendMessage(Message.getMessage(Message.PLAYER_COOLDOWN_MESSAGES, player));
                 return;
             } else {
                 cooldownMessage.remove(player.getUniqueId());
@@ -145,6 +148,7 @@ public class PlayerChat implements Listener {
             final Matcher matcherweb = web.matcher(mensagem);
             if (verificar)
                 if (matcherip.find() || matcherweb.find()) {
+                    e.setCancelled(true);
                     player.sendMessage(Message.getMessage(Message.PLAYER_ADVERTISE, player));
                     return;
                 }
@@ -154,6 +158,7 @@ public class PlayerChat implements Listener {
         if (!player.hasPermission("rev.badlanguage")) {
             for (final String block : blocked) {
                 if (mensagem_verificacoes.toLowerCase().contains(block.toLowerCase())) {
+                    e.setCancelled(true);
                     player.sendMessage(Message.getMessage(Message.PLAYER_BAD_LANGUAGE, player));
                     return;
                 }
@@ -191,6 +196,7 @@ public class PlayerChat implements Listener {
                 if (Character.toLowerCase(primeira) == Character.toLowerCase(c)) {
                     numeroLetrasRepetidas++;
                     if (numeroLetrasRepetidas >= 4) {
+                        e.setCancelled(true);
                         player.sendMessage(Message.getMessage(Message.PLAYER_SPAM, player));
                         return;
                     }
