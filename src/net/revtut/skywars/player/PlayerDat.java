@@ -222,7 +222,7 @@ public class PlayerDat {
      *
      * @param points points to add
      */
-    public void addPoints(int points) {
+    public void addPoints(final int points) {
         this.points += points;
         if(this.points < 0)
             this.points = 0;
@@ -237,6 +237,14 @@ public class PlayerDat {
         player.sendMessage(Message.getMessage(Message.POINTS, player) + signal + Math.abs(points));
         // Update points in ScoreBoard
         plugin.scoreBoardManager.updatePoints(this);
+        // Update in MySQL
+        final PlayerDat playerDat = this;
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                plugin.mysql.addPoints(playerDat, points);
+            }
+        });
     }
 
     /**

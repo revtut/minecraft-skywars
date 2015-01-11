@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -172,7 +174,7 @@ public class MySQL {
             if (resultadoGameCore.next()) {
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameCore + " (Player VARCHAR(100), PlayTime int(20), Wins int(20), Losses int(20), Kills int(20), Deaths int(20));");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameCore + " (Player CHAR(36), PlayTime int(10), Wins int(16), Losses int(16), Kills int(16), Deaths int(16));");
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameCore + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
 
@@ -181,7 +183,7 @@ public class MySQL {
             if (resultadoGameInfo.next()) {
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.GREEN).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Encontrada!");
             } else {
-                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(100), Winner VARCHAR(100), StartDate VARCHAR(100), EndDate VARCHAR(100), InitialPlayers MEDIUMTEXT, GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
+                statementCreation.executeUpdate("CREATE TABLE IF NOT EXISTS " + DBGameInfo + " (GameNumber VARCHAR(64), Winner CHAR(36), StartDate VARCHAR(20), EndDate VARCHAR(20), InitialPlayers MEDIUMTEXT, GameChat MEDIUMTEXT, GameEvents MEDIUMTEXT);");
                 plugin.getLogger().log(Level.INFO, Ansi.ansi().fg(Ansi.Color.YELLOW).bold() + DBGameInfo + ":" + Ansi.ansi().fg(Ansi.Color.WHITE).boldOff() + " Criada!");
             }
         } catch (final SQLException e) {
@@ -217,6 +219,38 @@ public class MySQL {
     }
 
     /**
+     * Add points in MySQL to a player
+     *
+     * @param playerDat player dat to be added points on MySQL
+     * @param points points to be added
+     * @return true if successfull
+     * @see PlayerDat
+     */
+    public boolean addPoints(PlayerDat playerDat, int points) {
+        try {
+            // Update Points
+            final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + playerDat.getUUID() + "';";
+            final ResultSet resultCore = this.connection.createStatement().executeQuery(coreStatement);
+            if (resultCore.next()) {
+                int previousPoints = resultCore.getInt("Points");
+                previousPoints += points;
+                if(previousPoints < 0)
+                    previousPoints = 0;
+
+                final String coreUpdate = "UPDATE " + DBCore + " SET Points = " + previousPoints + " WHERE Player = '" + playerDat.getUUID() + "';";
+                this.connection.createStatement().executeUpdate(coreUpdate);
+            } else {
+                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 1, 1, " + playerDat.getPoints() + ", 0, 1, 0, 0, 0);";
+                this.connection.createStatement().executeUpdate(coreUpdate);
+            }
+        } catch (final SQLException e) {
+            plugin.getLogger().log(Level.WARNING, "Error while trying to update the MySQL! Reason: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Update the information on MySQL of a player
      *
      * @param playerDat player dat to be updated on MySQL
@@ -225,25 +259,15 @@ public class MySQL {
      */
     public boolean updatePlayerDat(PlayerDat playerDat) {
         try {
-            // Update Core
-            final String coreStatement = "SELECT * FROM " + DBCore + " WHERE Player = '" + playerDat.getUUID() + "';";
-            final ResultSet resultCore = this.connection.createStatement().executeQuery(coreStatement);
-            if (resultCore.next()) {
-                final String coreUpdate = "UPDATE " + DBCore + " SET Points = " + playerDat.getPoints() + " WHERE Player = '" + playerDat.getUUID() + "';";
-                this.connection.createStatement().executeUpdate(coreUpdate);
+            // Update Game Core
+            final String gameCoreStatement = "SELECT * FROM " + DBGameCore + " WHERE Player = '" + playerDat.getUUID() + "'";
+            final ResultSet resultGameCore = this.connection.createStatement().executeQuery(gameCoreStatement);
+            if (resultGameCore.next()) {
+                final String gameCoreUpdate = "UPDATE " + DBGameCore + " SET PlayTime = " + playerDat.getPlayTime() + ", Wins = " + playerDat.getWins() + ", Losses = " + playerDat.getLosses() + ", Kills = " + playerDat.getKills() + ", Deaths = " + playerDat.getDeaths() + " WHERE Player = '" + playerDat.getUUID() + "';";
+                this.connection.createStatement().executeUpdate(gameCoreUpdate);
             } else {
-                final String coreUpdate = "INSERT INTO " + DBCore + " (Player, PlayTime, PlayersVisible, Chat, Points, NumberBans, NumberJoins, NumberKicks, NumberMutes, NumberReports) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", 1, 1, " + playerDat.getPoints() + ", 0, 1, 0, 0, 0);";
-                this.connection.createStatement().executeUpdate(coreUpdate);
-            }
-            // Update Game
-            final String gameStatement = "SELECT * FROM " + DBGameCore + " WHERE Player = '" + playerDat.getUUID() + "'";
-            final ResultSet resultGame = this.connection.createStatement().executeQuery(gameStatement);
-            if (resultGame.next()) {
-                final String gameUpdate = "UPDATE " + DBGameCore + " SET PlayTime = " + playerDat.getPlayTime() + ", Wins = " + playerDat.getWins() + ", Losses = " + playerDat.getLosses() + ", Kills = " + playerDat.getKills() + ", Deaths = " + playerDat.getDeaths() + " WHERE Player = '" + playerDat.getUUID() + "';";
-                this.connection.createStatement().executeUpdate(gameUpdate);
-            } else {
-                final String gameUpdate = "INSERT INTO " + DBGameCore + " (Player, PlayTime, Wins, Losses, Kills, Deaths) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", " + playerDat.getWins() + ", " + playerDat.getLosses() + ", " + playerDat.getKills() + ", " + playerDat.getDeaths() + ");";
-                this.connection.createStatement().executeUpdate(gameUpdate);
+                final String gameCoreUpdate = "INSERT INTO " + DBGameCore + " (Player, PlayTime, Wins, Losses, Kills, Deaths) VALUES ('" + playerDat.getUUID() + "', " + playerDat.getPlayTime() + ", " + playerDat.getWins() + ", " + playerDat.getLosses() + ", " + playerDat.getKills() + ", " + playerDat.getDeaths() + ");";
+                this.connection.createStatement().executeUpdate(gameCoreUpdate);
             }
         } catch (final SQLException e) {
             plugin.getLogger().log(Level.WARNING, "Error while trying to update the MySQL! Reason: " + e.getMessage());
@@ -261,7 +285,8 @@ public class MySQL {
      */
     public boolean updateArenaDat(ArenaDat arenaDat) {
         try {
-            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + arenaDat.getStartDate() + "', '" + arenaDat.getEndDate() + "', '" + ConvertersAPI.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm zzz");
+            final String infoCreate = "INSERT INTO " + DBGameInfo + " (GameNumber, Winner, StartDate, EndDate, InitialPlayers, GameChat, GameEvents) VALUES ('" + arenaDat.getGameNumber() + "', '" + arenaDat.getWinner() + "', '" + dateFormat.format(arenaDat.getStartDate()) + "', '" + dateFormat.format(arenaDat.getEndDate()) + "', '" + ConvertersAPI.convertListToString(arenaDat.getInitialPlayers(), ",") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameChat(), "\r\n") + "', '" + ConvertersAPI.convertListToString(arenaDat.getGameEvents(), "\r\n") + "');";
             this.connection.createStatement().executeUpdate(infoCreate);
         } catch (final SQLException e) {
             plugin.getLogger().log(Level.WARNING, "Error while trying to update the MySQL! Reason: " + e.getMessage());
