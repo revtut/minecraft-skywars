@@ -32,11 +32,6 @@ public final class ActionBarAPI {
     public static SkyWars plugin = null;
 
     /**
-     * Version of Minecraft which might receive these packets
-     */
-    private static final int VERSION = 47;
-
-    /**
      * Send a action bar to a player.
      *
      * @param p      player to send the action bar
@@ -50,8 +45,6 @@ public final class ActionBarAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 IChatBaseComponent actionMessage = ChatSerializer.a(message);
                 PacketPlayOutChat ppoc = new PacketPlayOutChat(actionMessage, (byte) 2);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);

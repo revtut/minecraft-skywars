@@ -30,11 +30,6 @@ public final class CameraAPI {
     public static SkyWars plugin = null;
 
     /**
-     * Version of Minecraft which might receive these packets
-     */
-    private static final int VERSION = 47;
-
-    /**
      * Send a camera to a player.
      *
      * @param player player to send the camera
@@ -48,8 +43,6 @@ public final class CameraAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 PacketPlayOutCamera camera = new PacketPlayOutCamera((Entity) alvo);
                 ((CraftPlayer)player).getHandle().playerConnection.sendPacket(camera);
             }
@@ -69,8 +62,6 @@ public final class CameraAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 PacketPlayOutCamera camera = new PacketPlayOutCamera((Entity) player);
                 ((CraftPlayer)player).getHandle().playerConnection.sendPacket(camera);
             }

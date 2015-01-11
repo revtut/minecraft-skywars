@@ -33,11 +33,6 @@ public final class TitleAPI {
     public static SkyWars plugin = null;
 
     /**
-     * Version of Minecraft which might receive these packets
-     */
-    private static final int VERSION = 47;
-
-    /**
      * Send a title to a player.
      *
      * @param p     player to send the title
@@ -51,8 +46,6 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 IChatBaseComponent titleSerializer = ChatSerializer.a(title);
                 PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.TITLE, titleSerializer);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
@@ -74,8 +67,6 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 IChatBaseComponent subTitleSerializer = ChatSerializer.a(subtitle);
                 PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subTitleSerializer);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
@@ -99,8 +90,6 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 PacketPlayOutTitle packet = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
@@ -120,8 +109,6 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.RESET, null);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }
@@ -141,8 +128,6 @@ public final class TitleAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.CLEAR, null);
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
             }

@@ -33,11 +33,6 @@ public final class TabAPI {
     public static SkyWars plugin = null;
 
     /**
-     * Version of Minecraft which might receive these packets
-     */
-    private static final int VERSION = 47;
-
-    /**
      * Set the tab list of a player.
      *
      * @param p      player to send the tab
@@ -52,8 +47,6 @@ public final class TabAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if (VERSION != VERSION)
-                    return;
                 IChatBaseComponent tabTitle = ChatSerializer.a(title);
                 IChatBaseComponent tabFooter = ChatSerializer.a(footer);
                 PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
