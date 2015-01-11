@@ -40,7 +40,7 @@ public class PlayerCommand implements Listener {
     /**
      * Array with all the blocked commands
      */
-    private String[] blockedCommands = { "/pl", "/plugins", "/about", "/bukkit:", "/ver", "version", "/?", "/op", "/deop", "/server", "/lag", "/stop", "/start", "/restart", "/nocheatplus", "/ncp", "/pex", "/permissionsex"};
+    private String[] blockedCommands = { "/pl", "/plugins", "/about", "/bukkit:", "/ver", "version", "/?", "/op", "/deop", "/server", "/lag", "/stop", "/start", "/restart", "/nocheatplus", "/ncp"};
 
     /**
      * Player command cooldown
