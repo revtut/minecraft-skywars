@@ -82,7 +82,7 @@ public class PlayerCommand implements Listener {
         }
 
         // Unknown command
-        HelpTopic helpTopic = Bukkit.getHelpMap().getHelpTopic(e.getMessage());
+        HelpTopic helpTopic = Bukkit.getHelpMap().getHelpTopic(e.getMessage().split(" ")[0]);
         if (helpTopic == null) {
             player.sendMessage(Message.getMessage(Message.PLAYER_UNKNOWN_COMMAND, player));
             e.setCancelled(true);
