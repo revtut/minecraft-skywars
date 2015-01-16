@@ -88,17 +88,17 @@ public class SkyWars extends JavaPlugin {
     /**
      * Arena Manager
      */
-    public final ArenaManager arenaManager = new ArenaManager(this);
+    public ArenaManager arenaManager;
 
     /**
      * Player Manager
      */
-    public final PlayerManager playerManager = new PlayerManager(this);
+    public PlayerManager playerManager;
 
     /**
      * ScoreBoard Manager
      */
-    public final ScoreBoardManager scoreBoardManager = new ScoreBoardManager(this);
+    public ScoreBoardManager scoreBoardManager;
 
     /**
      * Player Chest
@@ -156,6 +156,11 @@ public class SkyWars extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        /* Create Classes */
+        arenaManager = new ArenaManager(this);
+        playerManager = new PlayerManager(this);
+        scoreBoardManager = new ScoreBoardManager(this);
+
         /* Set Main Classes */
         ActionBarAPI.plugin = this;
         AppearanceAPI.plugin = this;
