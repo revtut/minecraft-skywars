@@ -265,12 +265,15 @@ public class SkyWars extends JavaPlugin {
      * @return true if successfull
      */
     private boolean createFiles() {
+        /* Main Folder */
+        if(!getDataFolder().exists())
+            if(!getDataFolder().mkdir())
+                return false;
+
         /* Config File */
         final File config = new File(getDataFolder() + File.separator + "config.yml");
         if (!config.exists()) {
             try {
-                if (!config.getParentFile().mkdirs())
-                    return false;
                 if (!config.createNewFile())
                     return false;
             } catch (IOException e) {
@@ -282,16 +285,16 @@ public class SkyWars extends JavaPlugin {
         }
 
         /* MySQL File */
-        final File mysqlConf = new File(getDataFolder() + File.separator + "mysql.yml");
-        if (!mysqlConf.exists()) {
+        final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
+        if (!mysqlFile.exists()) {
             try {
-                if (!mysqlConf.createNewFile())
+                if (!mysqlFile.createNewFile())
                     return false;
             } catch (IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating mysql.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!copyFile(getResource("mysql.yml"), mysqlConf))
+            if (!copyFile(getResource("mysql.yml"), mysqlFile))
                 return false;
         }
         return true;
@@ -328,22 +331,22 @@ public class SkyWars extends JavaPlugin {
      */
     private boolean readFiles() {
         /* Config File */
-        final File config = new File(getDataFolder() + File.separator + "config.yml");
-        final FileConfiguration configConf = YamlConfiguration.loadConfiguration(config);
+        final File configFile = new File(getDataFolder() + File.separator + "config.yml");
+        final FileConfiguration configConfiguration = YamlConfiguration.loadConfiguration(configFile);
         // Title
-        titleMessage = ConvertersAPI.convertToJSON(configConf.getString("Title").replaceAll("&", "§"));
-        subTitleMessage = ConvertersAPI.convertToJSON(configConf.getString("Subtitle").replaceAll("&", "§"));
-        fadeIn = configConf.getInt("FadeIn");
-        fadeOut = configConf.getInt("FadeOut");
-        timeOnScreen = configConf.getInt("TimeOnScreen");
+        titleMessage = ConvertersAPI.convertToJSON(configConfiguration.getString("Title").replaceAll("&", "§"));
+        subTitleMessage = ConvertersAPI.convertToJSON(configConfiguration.getString("Subtitle").replaceAll("&", "§"));
+        fadeIn = configConfiguration.getInt("FadeIn");
+        fadeOut = configConfiguration.getInt("FadeOut");
+        timeOnScreen = configConfiguration.getInt("TimeOnScreen");
         // Tab
-        tabTitle = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabTitle").replaceAll("&", "§")));
-        tabFooter = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConf.getString("TabFooter").replaceAll("&", "§")));
+        tabTitle = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConfiguration.getString("TabTitle").replaceAll("&", "§")));
+        tabFooter = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConfiguration.getString("TabFooter").replaceAll("&", "§")));
 
         /* MySQL File */
         final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
-        final FileConfiguration mysqlConf = YamlConfiguration.loadConfiguration(mysqlFile);
-        mysql = new MySQL(this, mysqlConf.getString("Hostname"), mysqlConf.getString("Port"), mysqlConf.getString("Database"), mysqlConf.getString("Username"), mysqlConf.getString("Password"));
+        final FileConfiguration mysqlConfiguration = YamlConfiguration.loadConfiguration(mysqlFile);
+        mysql = new MySQL(this, mysqlConfiguration.getString("Hostname"), mysqlConfiguration.getString("Port"), mysqlConfiguration.getString("Database"), mysqlConfiguration.getString("Username"), mysqlConfiguration.getString("Password"));
         if (!mysql.openConnection())
             return false;
         mysql.createMySQL();
