@@ -116,35 +116,34 @@ public class ArenaInGame implements Runnable {
                 continue;
 
             Player closest = AlgebraAPI.closestPlayer(arena, alvo);
-            if(null == closest)
-                continue;
+            if(null != closest) {
+                double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-            double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                // Set compass target
+                if(alvoDat.getStatus() == PlayerStatus.ALIVE) { // Player is alive, change compass
+                    alvo.setCompassTarget(closest.getLocation());
 
-            // Set compass target
-            if(alvoDat.getStatus() == PlayerStatus.ALIVE) { // Player is alive, change compass
-                alvo.setCompassTarget(closest.getLocation());
+                    for(ItemStack itemStack : alvo.getInventory().getContents()) {
+                        if(null == itemStack)
+                            continue;
 
-                for(ItemStack itemStack : alvo.getInventory().getContents()) {
-                    if(null == itemStack)
-                        continue;
-
-                    if(!itemStack.getType().equals(Material.COMPASS))
-                        continue;
+                        if(!itemStack.getType().equals(Material.COMPASS))
+                            continue;
 
 
-                    ItemMeta compassMeta = itemStack.getItemMeta();
-                    compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
-                    itemStack.setItemMeta(compassMeta);
-                    break;
+                        ItemMeta compassMeta = itemStack.getItemMeta();
+                        compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
+                        itemStack.setItemMeta(compassMeta);
+                        break;
+                    }
+                } else if (alvoDat.getStatus() == PlayerStatus.DEAD || alvoDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
+                    ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
+
+                    // Send message to spectator players
+                    if(remainingTime % 30 == 0)
+                        alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
                 }
-            } else if (alvoDat.getStatus() == PlayerStatus.DEAD || alvoDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
-                ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
-
-                // Send message to spectator players
-                if(remainingTime % 30 == 0)
-                    alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
             }
 
             switch (remainingTime) {

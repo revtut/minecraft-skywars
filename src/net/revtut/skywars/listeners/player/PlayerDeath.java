@@ -94,15 +94,8 @@ public class PlayerDeath implements Listener {
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);
 
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // Respawn
-                BypassesAPI.respawnBypass(alvo);
-                // Restore camera
-                CameraAPI.resetCamera(alvo);
-            }
-        }, 60);
+        // Respawn
+        BypassesAPI.respawnBypass(alvo);
 
         // Damager player
         Player damager = null;
@@ -137,44 +130,7 @@ public class PlayerDeath implements Listener {
             arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
             // Multi Kills
             int numberKills = damagerDat.getGameKills();
-            switch(numberKills) {
-                case 1:
-                    break;
-                case 2:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_SECOND);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " second kill!")); // Add to event log
-                    break;
-                case 3:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_THIRD);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " third kill!")); // Add to event log
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_FIFTH);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " fifth kill!")); // Add to event log
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_SEVENTH);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " seventh kill!")); // Add to event log
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_TENTH);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " tenth kill!")); // Add to event log
-                    break;
-                default:
-                    alvoArena.sendMessage(Message.PLAYER_KILL_UNBELIEVABLE);
-                    arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " unbelievable kill!")); // Add to event log
-                    break;
-            }
-            // Send his damager camera
-            CameraAPI.sendCamera(alvo, damager);
+            sendMultiKillMessage(numberKills, alvoArena, damager);
             // Title
             // Target
             TitleAPI.sendTimes(alvo, 5, 60, 5);
@@ -207,6 +163,56 @@ public class PlayerDeath implements Listener {
             }
             // Set Remaining Time
             alvoArena.setRemainingTime(0);
+        }
+    }
+
+    /**
+     * Send the multikill message to the arena
+     *
+     * @param numberKills number of kills of the damager
+     * @param arena arena to send the message
+     * @param damager damager that made those kills
+     */
+    private void sendMultiKillMessage(int numberKills, Arena arena, Player damager) {
+        ArenaDat arenaDat = arena.getArenaDat();
+        if(arenaDat == null)
+            return;
+
+        switch(numberKills) {
+            case 1:
+                break;
+            case 2:
+                arena.sendMessage(Message.PLAYER_KILL_SECOND);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " second kill!")); // Add to event log
+                break;
+            case 3:
+                arena.sendMessage(Message.PLAYER_KILL_THIRD);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " third kill!")); // Add to event log
+                break;
+            case 4:
+                break;
+            case 5:
+                arena.sendMessage(Message.PLAYER_KILL_FIFTH);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " fifth kill!")); // Add to event log
+                break;
+            case 6:
+                break;
+            case 7:
+                arena.sendMessage(Message.PLAYER_KILL_SEVENTH);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " seventh kill!")); // Add to event log
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                arena.sendMessage(Message.PLAYER_KILL_TENTH);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " tenth kill!")); // Add to event log
+                break;
+            default:
+                arena.sendMessage(Message.PLAYER_KILL_UNBELIEVABLE);
+                arenaDat.addGameEvent(ChatColor.stripColor(damager.getName() + " unbelievable kill!")); // Add to event log
+                break;
         }
     }
 }
