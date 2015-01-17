@@ -298,12 +298,7 @@ public class ArenaManager {
      */
     private boolean removeMap(final Arena arena) {
         // Unload of the World
-        int attempts = 3; // number of attempts to unload the world
-        boolean unloaded; // true if unloading was successfull
-        do{
-            unloaded = WorldAPI.unloadWorld(arena.getMapName());
-            attempts--;
-        }while(!unloaded && attempts >= 0);
+        boolean unloaded = WorldAPI.unloadWorld(arena.getMapName());
 
         if(!unloaded){
             plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName());
@@ -311,11 +306,15 @@ public class ArenaManager {
         }
 
         // Remove Directory
-        if (WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
-            return true;
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
+                    plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
+            }
+        }, 120L);
 
-        plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
-        return false;
+        return true;
     }
 
     /**

@@ -9,6 +9,7 @@ import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.nametag.NameTagAPI;
 import net.revtut.skywars.libraries.tab.TabAPI;
 import net.revtut.skywars.libraries.titles.TitleAPI;
+import net.revtut.skywars.libraries.world.WorldAPI;
 import net.revtut.skywars.listeners.block.BlockBreak;
 import net.revtut.skywars.listeners.block.BlockPlace;
 import net.revtut.skywars.listeners.environment.ProjectileHit;
@@ -169,6 +170,7 @@ public class SkyWars extends JavaPlugin {
         NameTagAPI.plugin = this;
         TabAPI.plugin = this;
         TitleAPI.plugin = this;
+        WorldAPI.plugin = this;
         PlayerDat.plugin = this;
         Message.plugin = this;
 

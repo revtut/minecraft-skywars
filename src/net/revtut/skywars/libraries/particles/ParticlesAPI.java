@@ -29,7 +29,6 @@ public final class ParticlesAPI {
      */
     private static final Random r = new Random();
 
-
     /**
      * Create helix particle effect follow X-Axis
      *

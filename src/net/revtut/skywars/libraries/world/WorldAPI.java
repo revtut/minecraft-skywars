@@ -1,5 +1,7 @@
 package net.revtut.skywars.libraries.world;
 
+import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.libraries.bypasses.BypassesAPI;
 import net.revtut.skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -31,6 +33,11 @@ public final class WorldAPI {
     private WorldAPI() {}
 
     /**
+     * Main class
+     */
+    public static SkyWars plugin = null;
+
+    /**
      * Load a new world to the server.
      *
      * @param worldName name of the world to load
@@ -51,22 +58,37 @@ public final class WorldAPI {
      * @param worldName name of the world to load
      * @return true if world was unloaded
      */
-    public static boolean unloadWorld(String worldName) {
-        World world = Bukkit.getWorld(worldName);
+    public static boolean unloadWorld(final String worldName) {
+        final World world = Bukkit.getWorld(worldName);
         if (world == null)
             return false;
         world.setAutoSave(false);
         world.setKeepSpawnInMemory(false);
 
         // Kick remaining players
-        for (Player player : world.getPlayers())
-            player.kickPlayer("§4A resetar o mundo... nao e suposto estares aqui!");
+        for (Player player : world.getPlayers()) {
+            if(player.isDead())
+                BypassesAPI.respawnBypass(player);
+            player.kickPlayer("§4How were you in the world? o.O");
+        }
 
         // Unload all the chunks
         for(Chunk chunk : world.getLoadedChunks())
-            world.unloadChunk(chunk);
+                world.unloadChunk(chunk);
 
-        return Bukkit.unloadWorld(world, true);
+        // Unload world
+        if (null == plugin) {
+            plugin.getLogger().log(Level.WARNING, "Main plugin is null inside WorldAPI!");
+            return false;
+        }
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            public void run() {
+                if(!Bukkit.unloadWorld(world, true))
+                    plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
+            }
+        }, 60L);
+
+        return true;
     }
 
     /**
@@ -104,7 +126,7 @@ public final class WorldAPI {
 
             return true;
         } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to ser damage of falling blocks in ReflectionAPI!");
+            plugin.getLogger().log(Level.WARNING, "Error while trying to ser damage of falling blocks in ReflectionAPI!");
             e.printStackTrace();
             return false;
         }
@@ -150,8 +172,8 @@ public final class WorldAPI {
                 fOutStream.close();
             }
         } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
-            Logger.getLogger("Minecraft").log(Level.WARNING, e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to copy world folder from " + srcDir.getAbsolutePath() + " to " + trgDir.getAbsolutePath() + ".");
+            plugin.getLogger().log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -173,8 +195,8 @@ public final class WorldAPI {
             if(!dir.delete())
                 Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to delete " + dir.getName() + ".");
         } catch (Exception e) {
-            Logger.getLogger("Minecraft").log(Level.WARNING, "Error while trying to delete " + dir.getAbsolutePath() + ".");
-            Logger.getLogger("Minecraft").log(Level.WARNING, e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Error while trying to delete " + dir.getAbsolutePath() + ".");
+            plugin.getLogger().log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
