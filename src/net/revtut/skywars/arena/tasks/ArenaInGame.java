@@ -1,6 +1,10 @@
-package net.revtut.skywars.arena;
+package net.revtut.skywars.arena.tasks;
 
 import net.revtut.skywars.SkyWars;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaDat;
+import net.revtut.skywars.arena.ArenaLocation;
+import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.algebra.AlgebraAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
