@@ -99,7 +99,8 @@ public final class NameTagAPI implements Listener {
     private static void setNameTag(Scoreboard board, Player p) {
         String id = PermissionsAPI.getGroupName(p);
         String prefix = PermissionsAPI.getGroupTag(p);
-        prefix += " ";
+        if(prefix != "")
+            prefix += " ";
         String sufix = "";
 
         Team team = board.getTeam(id);

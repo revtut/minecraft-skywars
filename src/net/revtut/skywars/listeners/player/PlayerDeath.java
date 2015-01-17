@@ -123,8 +123,18 @@ public class PlayerDeath implements Listener {
             PlayerDamage.lastPlayerDamager.remove(alvo.getUniqueId());
         }
 
+        // Stats
+        alvoDat.addDeath(); // Target stats
+        alvoDat.addLose();
+
         // Messages
         if (damager != null) {
+            // Points earned
+            int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
+            damagerDat.addPoints(poinsEarned);
+            // Add kill
+            damagerDat.addKill();
+
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
             alvoArena.sendMessage(Message.PLAYER_KILLED_BY, damager.getName());
@@ -202,16 +212,5 @@ public class PlayerDeath implements Listener {
             // Set Remaining Time
             alvoArena.setRemainingTime(0);
         }
-
-        // Stats
-        alvoDat.addDeath(); // Target stats
-        alvoDat.addLose();
-        if (damagerDat == null)
-            return;
-        // Points earned
-        int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
-        damagerDat.addPoints(poinsEarned);
-        // Add kill
-        damagerDat.addKill();
     }
 }

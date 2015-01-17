@@ -1,6 +1,7 @@
 package net.revtut.skywars.libraries.camera;
 
-import net.minecraft.server.v1_8_R1.*;
+import net.minecraft.server.v1_8_R1.Entity;
+import net.minecraft.server.v1_8_R1.PacketPlayOutCamera;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
@@ -43,8 +44,9 @@ public final class CameraAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                PacketPlayOutCamera camera = new PacketPlayOutCamera((Entity) alvo);
-                ((CraftPlayer)player).getHandle().playerConnection.sendPacket(camera);
+                CraftPlayer craftAlvo = (CraftPlayer) alvo;
+                PacketPlayOutCamera camera = new PacketPlayOutCamera(craftAlvo.getHandle());
+                ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(camera);
             }
         });
     }
@@ -62,8 +64,9 @@ public final class CameraAPI {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                PacketPlayOutCamera camera = new PacketPlayOutCamera((Entity) player);
-                ((CraftPlayer)player).getHandle().playerConnection.sendPacket(camera);
+                CraftPlayer craftPlayer = (CraftPlayer) player;
+                PacketPlayOutCamera camera = new PacketPlayOutCamera(craftPlayer.getHandle());
+                craftPlayer.getHandle().playerConnection.sendPacket(camera);
             }
         });
     }
