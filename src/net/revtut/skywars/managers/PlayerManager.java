@@ -6,6 +6,7 @@ import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,8 @@ public class PlayerManager {
         player.setHealth(healthLevel);
         player.setFoodLevel(foodLevel);
         if (removePotions)
-            player.getActivePotionEffects().clear();
+            for (PotionEffect potionEffect : player.getActivePotionEffects())
+                player.removePotionEffect(potionEffect.getType());
         if (clearInv) {
             player.getInventory().clear();
             player.getInventory().setArmorContents(null);
