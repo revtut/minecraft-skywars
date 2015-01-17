@@ -227,6 +227,9 @@ public class PlayerChat implements Listener {
             mensagem = mensagem.replaceAll("&", "§");
         }
 
+        // Percentage symbol
+        mensagem = mensagem.replaceAll("%", "%%");
+
         // Formato da Mensagem
         if(playerDat.getStatus() == PlayerStatus.DEAD)
             playerArena.sendMessage(Message.PLAYER_DEAD_PREFIX, player.getDisplayName() + " §6» §f" + mensagem);
