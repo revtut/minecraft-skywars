@@ -1,5 +1,6 @@
 package net.revtut.skywars.libraries.nametag;
 
+import net.revtut.permissions.api.PermissionsAPI;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
@@ -96,43 +97,9 @@ public final class NameTagAPI implements Listener {
      * @param p     player to show the NameTag
      */
     private static void setNameTag(Scoreboard board, Player p) {
-        String id = "DEFAULT";
-        String prefix = "";
+        String id = PermissionsAPI.getGroupName(p);
+        String prefix = PermissionsAPI.getGroupTag(p);
         String sufix = "";
-        if (p.hasPermission("rev.tag.ceo")) {
-            id = "CEO";
-            prefix = "§5[CEO] ";
-        } else if (p.hasPermission("rev.tag.admin")) {
-            id = "ADM";
-            prefix = "§4[ADM] ";
-        } else if (p.hasPermission("rev.tag.developer")) {
-            id = "DEV";
-            prefix = "§6[DEV] ";
-        } else if (p.hasPermission("rev.tag.moderator")) {
-            id = "MOD";
-            prefix = "§1[MOD] ";
-        } else if (p.hasPermission("rev.tag.staff")) {
-            id = "STF";
-            prefix = "§2[STF] ";
-        } else if (p.hasPermission("rev.tag.thaiberium")) {
-            id = "THB";
-            prefix = "§3[THB] ";
-        } else if (p.hasPermission("rev.tag.designer")) {
-            id = "DNZ";
-            prefix = "§6[DZN] ";
-        } else if (p.hasPermission("rev.tag.youtuber")) {
-            id = "YT";
-            prefix = "§9[YT] ";
-        } else if (p.hasPermission("rev.tag.vipstar")) {
-            id = "VIPSTAR";
-            prefix = "§b[VIP★] ";
-        } else if (p.hasPermission("rev.tag.vipplus")) {
-            id = "VIPPLUS";
-            prefix = "§a[VIP+] ";
-        } else if (p.hasPermission("rev.tag.vip")) {
-            id = "VIP";
-            prefix = "§e[VIP] ";
-        }
 
         Team team = board.getTeam(id);
         if (team == null) {
