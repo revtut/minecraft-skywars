@@ -113,11 +113,7 @@ public class PlayerDeath implements Listener {
                 damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
                 if (damagerDat == null)
                     return;
-                Arena damagerArena = plugin.arenaManager.getArenaByPlayer(damagerDat);
-                if (damagerArena == null)
-                    return;
-                // Check if they are in the same arena
-                if (alvoArena.getArenaNumber() != damagerArena.getArenaNumber())
+                if(!plugin.arenaManager.inSameArena(alvoDat, damagerDat))
                     return;
             }
             PlayerDamage.lastPlayerDamager.remove(alvo.getUniqueId());
