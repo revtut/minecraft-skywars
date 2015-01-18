@@ -390,19 +390,17 @@ public class ArenaManager {
      * @return the name of the map
      */
     private String addNewMap(final int arenaNumber) {
-        // Current Directory
-        String currentDir = System.getProperty("user.dir");
         // Source Directory
-        String[] listWorlds = new File(currentDir + File.separator + "worlds").list();
+        String[] listWorlds = new File(plugin.getDataFolder() + File.separator + "worlds").list();
         if (listWorlds == null) {
             plugin.getLogger().log(Level.WARNING, "Worlds folder not found!");
             return null;
         }
         int posWorld = new Random().nextInt(listWorlds.length);
-        final String srcPath = new File(currentDir + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
+        final String srcPath = new File(plugin.getDataFolder() + File.separator + "worlds" + File.separator + listWorlds[posWorld]).getAbsolutePath();
         // Target Directory
-        final String mapName = listWorlds[posWorld] + "_" + arenaNumber;
-        final String trgPath = new File(currentDir + File.separator + mapName).getAbsolutePath();
+        final String mapName = arenaNumber + "_" + listWorlds[posWorld];
+        final String trgPath = new File(System.getProperty("user.dir") + File.separator + mapName).getAbsolutePath();
 
 
         // Copy World
