@@ -52,7 +52,7 @@ public class Fly implements Listener {
                     if(this.antiHackFly.containsKey(p.getName())){
                         this.antiHackFly.put(p.getName(), 0);
                     }
-                    this.antiHackFly.put(p.getName(), ((Integer) this.antiHackFly.get(p.getName())).intValue() + 1);
+                    this.antiHackFly.put(p.getName(), (Integer) this.antiHackFly.get(p.getName()) + 1);
                     p.kickPlayer("§4Foste kickado por uso de fly hack!");
                 }
             }

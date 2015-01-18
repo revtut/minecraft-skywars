@@ -43,9 +43,7 @@ public class KillAura implements CommandExecutor, Listener{
             Villager villager = (Villager) e.getEntity();
             Player damager = (Player) e.getDamager();
             if(villager.getCustomName().equals(damager.getName())){
-                Bukkit.getOnlinePlayers().stream().filter(online -> online.hasPermission("revtut.antihack")).forEach(online -> {
-                    online.sendMessage("§7|§3Sky Wars Anti§7| " + damager.getName() + "poderá estar a usar ForceField(KillAura)");
-                });
+                Bukkit.getOnlinePlayers().stream().filter(online -> online.hasPermission("revtut.antihack")).forEach(online -> online.sendMessage("§7|§3Sky Wars Anti§7| " + damager.getName() + "poderá estar a usar ForceField(KillAura)"));
             }
         }
     }
