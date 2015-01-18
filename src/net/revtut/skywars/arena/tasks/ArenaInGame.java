@@ -7,6 +7,7 @@ import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.algebra.AlgebraAPI;
+import net.revtut.skywars.libraries.bypasses.BypassesAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
@@ -115,41 +116,17 @@ public class ArenaInGame implements Runnable {
             if (alvo == null)
                 continue;
 
-            Player closest = AlgebraAPI.closestPlayer(arena, alvo);
-            if(null != closest) {
-                double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
-                DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
-                // Set compass target
-                if(alvoDat.getStatus() == PlayerStatus.ALIVE) { // Player is alive, change compass
-                    alvo.setCompassTarget(closest.getLocation());
-
-                    for(ItemStack itemStack : alvo.getInventory().getContents()) {
-                        if(null == itemStack)
-                            continue;
-
-                        if(!itemStack.getType().equals(Material.COMPASS))
-                            continue;
-
-
-                        ItemMeta compassMeta = itemStack.getItemMeta();
-                        compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
-                        itemStack.setItemMeta(compassMeta);
-                        break;
-                    }
-                } else if (alvoDat.getStatus() == PlayerStatus.DEAD || alvoDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
-                    ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
-
-                    // Send message to spectator players
-                    if(remainingTime % 30 == 0)
-                        alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
-                }
-            }
+            // Update the compass
+            updateClosestTarget(alvoDat);
 
             switch (remainingTime) {
                 case 60:
                     TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
+                    break;
+                case 30:
+                    TitleAPI.sendTimes(alvo, 20, 60, 20);
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b30"));
                     break;
                 case 10:
                     TitleAPI.sendTimes(alvo, 20, 60, 20);
@@ -185,11 +162,15 @@ public class ArenaInGame implements Runnable {
                     if (arenaDat == null)
                         return;
 
+                    // Respawn the player if needed
+                    if(alvo.isDead())
+                        BypassesAPI.respawnBypass(alvo);
+
                     // Points earned for playing the game
                     int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
                     alvoDat.addPoints(poinsEarned);
 
-                    // Check winner
+                    // Arena ended without any winner
                     if (arenaDat.getWinner().equals("NULL")) {
                         // Titles
                         TitleAPI.sendTimes(alvo, 5, 60, 5);
@@ -201,49 +182,42 @@ public class ArenaInGame implements Runnable {
 
                         // Chat message
                         alvo.sendMessage(Message.getMessage(Message.GAME_TIMEOUT, alvo));
-                    } else {
-                        // Title timings
-                        TitleAPI.sendTimes(alvo, 5, 60, 5);
-
-                        Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
-                        if (winner != null) {
-                            // Check if he is the winner
-                            if (winner.getUniqueId().equals(alvo.getUniqueId())) {
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WON, alvo)));
-
-                                // Add win
-                                alvoDat.addWin();
-
-                                // Points earned for winning
-                                poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
-                                alvoDat.addPoints(poinsEarned);
-
-                                // Sound
-                                alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
-                            } else{
-                                TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
-
-                                // Sound
-                                alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
-                            }
-
-                            // Subtitle
-                            TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo) + winner.getName()));
-
-                            // Chat message
-                            alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winner.getName());
-                        } else{
-                            // Titles
-                            TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
-                            TitleAPI.sendSubTitle(alvo, "");
-
-                            // Sound
-                            alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
-
-                            // Chat message
-                            alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + "John Doe");
-                        }
+                        break;
                     }
+
+                    Player winner = Bukkit.getPlayer(UUID.fromString(arenaDat.getWinner()));
+                    String winnerName = "John Doe";
+                    if(winner != null)
+                        winnerName = winner.getName();
+
+                    // Check if he is the winner
+                    if (winnerName.equalsIgnoreCase(alvo.getName())) {
+                        // Points earned for winning
+                        poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
+                        alvoDat.addPoints(poinsEarned);
+
+                        // Add win
+                        alvoDat.addWin();
+
+                        // Sound
+                        alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
+
+                        // Titles
+                        TitleAPI.sendTimes(alvo, 5, 60, 5);
+                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WON, alvo)));
+                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo) + winnerName));
+                    } else {
+                        // Sound
+                        alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
+
+                        // Titles
+                        TitleAPI.sendTimes(alvo, 5, 60, 5);
+                        TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
+                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo) + winnerName));
+                    }
+
+                    // Chat message
+                    alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winnerName);
                     break;
             }
         }
@@ -267,7 +241,7 @@ public class ArenaInGame implements Runnable {
         arena.setStatus(ArenaStatus.ENDGAME);
 
         arenaDat.setEndDate(new Date()); // Set end date
-        arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
+        arenaDat.addGameEvent("The game " + arenaDat.getGameNumber() + " has ended!");
 
         // Message game report
         arena.sendMessage(Message.GAME_REPORT, arenaDat.getGameNumber());
@@ -300,8 +274,54 @@ public class ArenaInGame implements Runnable {
                     alvo.teleport(centerLocation);
                 }
             }, i);
-            alvo.teleport(centerLocation);
             i++;
+        }
+    }
+
+    /**
+     * Update the closest target to a given player
+     *
+     * @param playerDat player dat to uppdate the closest target
+     */
+    private void updateClosestTarget(PlayerDat playerDat) {
+        final Player alvo = Bukkit.getPlayer(playerDat.getUUID());
+        if (alvo == null)
+            return;
+
+        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+        if(null == arena)
+            return;
+
+        Player closest = AlgebraAPI.closestPlayer(arena, alvo);
+        if(null == closest)
+            return;
+
+        double distance = AlgebraAPI.distanceBetween(alvo.getLocation(), closest.getLocation());
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        // Set compass target
+        if(playerDat.getStatus() == PlayerStatus.ALIVE) { // Player is alive, change compass
+            alvo.setCompassTarget(closest.getLocation());
+
+            for(ItemStack itemStack : alvo.getInventory().getContents()) {
+                if(null == itemStack)
+                    continue;
+
+                if(!itemStack.getType().equals(Material.COMPASS))
+                    continue;
+
+
+                ItemMeta compassMeta = itemStack.getItemMeta();
+                compassMeta.setDisplayName("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m");
+                itemStack.setItemMeta(compassMeta);
+                break;
+            }
+        } else if (playerDat.getStatus() == PlayerStatus.DEAD || playerDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
+            ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
+
+            // Send message to spectator players
+            if(arena.getRemainingTime() % 30 == 0)
+                alvo.sendMessage(Message.getMessage(Message.DONT_LEAVE_ARENA, alvo));
         }
     }
 }

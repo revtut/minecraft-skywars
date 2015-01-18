@@ -56,18 +56,17 @@ public class ArenaManager {
     /**
      * Minimum players for the game
      */
-    public final int minPlayers = 2;
+    public final int minPlayers = 8;
 
     /**
      * Minimum players for lobby time be reduced
      */
-    public final int minReduceTimePlayers = 16;
+    public final int minReduceTimePlayers = 20;
 
     /**
      * Maximum players that can play in each game
      */
     public final int maxPlayers = 24;
-
 
     /**
      * Creates a new arena and add it to the server
@@ -212,7 +211,6 @@ public class ArenaManager {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                // PlayerDat
                 plugin.mysql.updateArenaDat(arenaDat);
             }
         });
@@ -264,7 +262,6 @@ public class ArenaManager {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                // PlayerDat
                 plugin.mysql.updateArenaDat(arenaDat);
             }
         });
@@ -306,7 +303,7 @@ public class ArenaManager {
         }
 
         // Remove Directory
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
                 if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
@@ -347,7 +344,7 @@ public class ArenaManager {
 
         // Message to arena
         arena.sendMessage(Message.PLAYER_LEFT_GAME, player.getDisplayName() + " §6(" + arena.getPlayers().size() + "/" + maxPlayers + ")");
-        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " saiu da arena!")); // Add to event log
+        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " has left the arena!")); // Add to event log
 
         // Hide to Server
         plugin.arenaManager.hideToServer(player, true);
@@ -382,7 +379,7 @@ public class ArenaManager {
                     }
                 }
                 // Config arena dat
-                arenaDat.addGameEvent("Terminou o jogo numero " + arenaDat.getGameNumber());
+                arenaDat.addGameEvent("The game " + arenaDat.getGameNumber() + " has ended!");
                 arenaDat.setEndDate(new Date());
                 arenaDat.setWinner("NULL");
                 // Delete the arena
@@ -391,7 +388,7 @@ public class ArenaManager {
                     public void run() {
                         removeArena(arena);
                     }
-                }, 100);
+                }, 1200L);
             } else if (arena.getStatus() == ArenaStatus.ENDGAME) {
                 if (arena.getAlivePlayers().size() < 1) {
                     // Delete the arena
@@ -400,7 +397,7 @@ public class ArenaManager {
                         public void run() {
                             removeArena(arena);
                         }
-                    }, 600);
+                    }, 1200L);
                 }
             }
         }
@@ -533,7 +530,7 @@ public class ArenaManager {
 
         // Message to arena
         arena.sendMessage(Message.PLAYER_JOINED_GAME, player.getDisplayName() + " §6(" + arena.getPlayers().size() + "/" + maxPlayers + ")");
-        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " entrou na arena!")); // Add to event log
+        arenaDat.addGameEvent(ChatColor.stripColor(player.getDisplayName() + " joined the arena!")); // Add to event log
 
         // Config Player
         if (!plugin.playerManager.configPlayer(playerDat, PlayerStatus.WAITING, GameMode.ADVENTURE, false, false, 0, 0, 20.0, 20, true, true, 0))

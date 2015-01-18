@@ -89,7 +89,7 @@ public class PlayerJoin implements Listener {
                         }
 
                         // Arena
-                        Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+                        final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
                         if (arena == null) {
                             plugin.getLogger().log(Level.WARNING, "Player's Arena is null on join!");
                             // Send him to Hub. Error in arena
@@ -100,53 +100,40 @@ public class PlayerJoin implements Listener {
                         // New Arena if Needed
                         if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
                             plugin.arenaManager.createNewArena();
+
+                        /*
+                            RUN THE TASK LATER BECAUSE LANGUAGE TAKES A LITTLE BIT
+                            TO GET TO THE SERVER SO WE HAVE TO WAIT IN ORDER TO
+                            SETUP HIS SCOREBOARD AND SERVER LANGUAGE
+                         */
+                        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                // Language of the player
+                                Language language = LanguageAPI.getLanguage(p);
+                                if(null == language)
+                                    plugin.getLogger().log(Level.WARNING, "Player's language is null");
+                                else
+                                    playerDat.setLanguage(language);
+
+                                // Scoreboard
+                                Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);
+                                p.setScoreboard(board);
+
+                                // Nametag
+                                NameTagAPI.setNameTag(board, p, true);
+
+                                // Update ScoreBoard to player
+                                plugin.scoreBoardManager.updateAlive(arena, playerDat);
+                                plugin.scoreBoardManager.updateDeath(arena, playerDat);
+
+                                // Update points in ScoreBoard
+                                plugin.scoreBoardManager.updatePoints(playerDat);
+                            }
+                        }, 20);
                     }
                 });
             }
         });
-
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // PlayerDat
-                final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
-                if (playerDat == null) {
-                    plugin.getLogger().log(Level.WARNING, "PlayerDat is null on join!");
-                    // Send him to Hub. Error in playerDat
-                    plugin.connectServer(p, "hub");
-                    return;
-                }
-
-                // Arena
-                Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-                if (arena == null) {
-                    plugin.getLogger().log(Level.WARNING, "Player's Arena is null on join!");
-                    // Send him to Hub. Error in arena
-                    plugin.connectServer(p, "hub");
-                    return;
-                }
-
-                // Language of the player
-                Language language = LanguageAPI.getLanguage(p);
-                if(null == language)
-                    plugin.getLogger().log(Level.WARNING, "Player's language is null");
-                else
-                    playerDat.setLanguage(language);
-
-                // Scoreboard
-                Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);
-                p.setScoreboard(board);
-
-                // Nametag
-                NameTagAPI.setNameTag(board, p, true);
-
-                // Update ScoreBoard to player
-                plugin.scoreBoardManager.updateAlive(arena, playerDat);
-                plugin.scoreBoardManager.updateDeath(arena, playerDat);
-
-                // Update points in ScoreBoard
-                plugin.scoreBoardManager.updatePoints(playerDat);
-            }
-        }, 20);
     }
 }

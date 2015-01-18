@@ -4,7 +4,6 @@ import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
-import net.revtut.skywars.libraries.camera.CameraAPI;
 import net.revtut.skywars.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
@@ -84,6 +83,10 @@ public class PlayerDeath implements Listener {
         alvoDat.setStatus(PlayerStatus.DEAD);
         alvo.setGameMode(GameMode.SPECTATOR);
 
+        // Update target stats
+        alvoDat.addDeath();
+        alvoDat.addLose();
+
         // Hide to Arena
         plugin.arenaManager.hideToArena(alvo, false);
 
@@ -95,7 +98,12 @@ public class PlayerDeath implements Listener {
         plugin.scoreBoardManager.updateDeath(alvoArena);
 
         // Respawn
-        BypassesAPI.respawnBypass(alvo);
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                BypassesAPI.respawnBypass(alvo);
+            }
+        }, 20L);
 
         // Damager player
         Player damager = null;
@@ -112,30 +120,29 @@ public class PlayerDeath implements Listener {
             PlayerDamage.lastPlayerDamager.remove(alvo.getUniqueId());
         }
 
-        // Stats
-        alvoDat.addDeath(); // Target stats
-        alvoDat.addLose();
-
         // Messages
         if (damager != null) {
             // Points earned
             int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
             damagerDat.addPoints(poinsEarned);
+
             // Add kill
             damagerDat.addKill();
 
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
             alvoArena.sendMessage(Message.PLAYER_KILLED_BY, damager.getName());
-            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " foi morto por " + damager.getName() + ".")); // Add to event log
+            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " was killed by " + damager.getName() + ".")); // Add to event log
+
             // Multi Kills
             int numberKills = damagerDat.getGameKills();
             sendMultiKillMessage(numberKills, alvoArena, damager);
-            // Title
+
             // Target
             TitleAPI.sendTimes(alvo, 5, 60, 5);
             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));
             TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_WERE_KILLED_BY, alvo) + damager.getName()));
+
             // Damager
             TitleAPI.sendTimes(damager, 5, 60, 5);
             TitleAPI.sendTitle(damager, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_KILLED, damager)));
@@ -143,8 +150,8 @@ public class PlayerDeath implements Listener {
         } else {
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
-            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " morreu.")); // Add to event log
-            // Title
+            arenaDat.addGameEvent(ChatColor.stripColor(alvo.getName() + " died.")); // Add to event log
+
             // Target
             TitleAPI.sendTimes(alvo, 5, 60, 5);
             TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_DIED, alvo)));

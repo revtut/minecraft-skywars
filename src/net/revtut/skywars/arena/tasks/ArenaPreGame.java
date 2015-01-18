@@ -200,7 +200,7 @@ public class ArenaPreGame implements Runnable {
         arena.setStatus(ArenaStatus.INGAME);
 
         arenaDat.setStartDate(new Date()); // Set start date
-        arenaDat.addGameEvent("Comecou o jogo numero " + arenaDat.getGameNumber());
+        arenaDat.addGameEvent("The game " + arenaDat.getGameNumber() + " has started!");
 
         // Loop all the players
         for (final PlayerDat alvoDat : arena.getPlayers()) {

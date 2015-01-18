@@ -163,6 +163,7 @@ public class ArenaEndGame implements Runnable {
                 Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
                 if(alvo != null)
                     plugin.connectServer(alvo, "hub");
+
                 plugin.getLogger().log(Level.WARNING, "Could not add player to the new arena.");
             }
         }
