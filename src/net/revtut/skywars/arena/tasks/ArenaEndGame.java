@@ -73,15 +73,16 @@ public class ArenaEndGame implements Runnable {
      */
     @Override
     public void run() {
-        int remainingTime;
-        for (final Arena arena : plugin.arenaManager.getArenas()) {
+        plugin.arenaManager.getArenas().forEach(arena -> {
+            int remainingTime;
+
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
-                continue;
+                return;
 
             // Check status
             if(arena.getStatus() != ArenaStatus.ENDGAME)
-                continue;
+                return;
 
             // Remaining time of that arena
             remainingTime = arena.getRemainingTime();
@@ -91,7 +92,7 @@ public class ArenaEndGame implements Runnable {
             } else {
                 fromEndGameToLobby(arena);
             }
-        }
+        });
     }
 
     /**
@@ -136,36 +137,26 @@ public class ArenaEndGame implements Runnable {
         final Arena newArena;
         if (arenaMove != null) {
             newArena = arenaMove; // Move to the new arena
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.arenaManager.removeArena(arena);
-                }
-            }, 1200);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.arenaManager.removeArena(arena), 1200);
         } else {
             newArena = arena; // Stay on the same arena
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.arenaManager.resetArena(arena);
-                }
-            }, 1200);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.arenaManager.resetArena(arena), 1200);
         }
 
         // Remove players and add them to new arena
-        List<PlayerDat> players = new ArrayList<PlayerDat>(arena.getPlayers());
-        for (final PlayerDat alvoDat : players) {
-            plugin.arenaManager.removePlayer(alvoDat, false);
+        List<PlayerDat> players = new ArrayList<>(arena.getPlayers());
+        players.forEach(player -> {
+            plugin.arenaManager.removePlayer(player, false);
 
             // Add to new arena
-            if (!plugin.arenaManager.addPlayer(alvoDat, newArena)) {
+            if (!plugin.arenaManager.addPlayer(player, newArena)) {
                 // Send him to Hub. Error while adding to arena
-                Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
+                Player alvo = Bukkit.getPlayer(player.getUUID());
                 if(alvo != null)
                     plugin.connectServer(alvo, "hub");
 
                 plugin.getLogger().log(Level.WARNING, "Could not add player to the new arena.");
             }
-        }
+        });
     }
 }

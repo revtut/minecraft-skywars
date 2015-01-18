@@ -62,78 +62,69 @@ public class PlayerJoin implements Listener {
         TabAPI.setTab(p, plugin.tabTitle, plugin.tabFooter);
 
         final UUID uuid = p.getUniqueId();
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            // PlayerDat
+            plugin.mysql.createPlayerDat(uuid);
+
+            Bukkit.getScheduler().runTask(plugin, () -> {
                 // PlayerDat
-                plugin.mysql.createPlayerDat(uuid);
+                final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
+                if (playerDat == null) {
+                    plugin.getLogger().log(Level.WARNING, "PlayerDat is null on join!");
+                    // Send him to Hub. Error in playerDat
+                    plugin.connectServer(p, "hub");
+                    return;
+                }
 
-                Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        // PlayerDat
-                        final PlayerDat playerDat = plugin.playerManager.getPlayerDatByUUID(p.getUniqueId());
-                        if (playerDat == null) {
-                            plugin.getLogger().log(Level.WARNING, "PlayerDat is null on join!");
-                            // Send him to Hub. Error in playerDat
-                            plugin.connectServer(p, "hub");
-                            return;
-                        }
+                // Add to Arena
+                if (!plugin.arenaManager.addPlayer(playerDat)) {
+                    plugin.getLogger().log(Level.WARNING, "Could not add the player to an Arena on join!");
+                    // Send him to Hub. No arena available
+                    plugin.connectServer(p, "hub");
+                    return;
+                }
 
-                        // Add to Arena
-                        if (!plugin.arenaManager.addPlayer(playerDat)) {
-                            plugin.getLogger().log(Level.WARNING, "Could not add the player to an Arena on join!");
-                            // Send him to Hub. No arena available
-                            plugin.connectServer(p, "hub");
-                            return;
-                        }
+                // Arena
+                final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
+                if (arena == null) {
+                    plugin.getLogger().log(Level.WARNING, "Player's Arena is null on join!");
+                    // Send him to Hub. Error in arena
+                    plugin.connectServer(p, "hub");
+                    return;
+                }
 
-                        // Arena
-                        final Arena arena = plugin.arenaManager.getArenaByPlayer(playerDat);
-                        if (arena == null) {
-                            plugin.getLogger().log(Level.WARNING, "Player's Arena is null on join!");
-                            // Send him to Hub. Error in arena
-                            plugin.connectServer(p, "hub");
-                            return;
-                        }
+                // New Arena if Needed
+                if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
+                    plugin.arenaManager.createNewArena();
 
-                        // New Arena if Needed
-                        if (plugin.arenaManager.getNumberAvailableArenas() <= 1)
-                            plugin.arenaManager.createNewArena();
+                /*
+                    RUN THE TASK LATER BECAUSE LANGUAGE TAKES A LITTLE BIT
+                    TO GET TO THE SERVER SO WE HAVE TO WAIT IN ORDER TO
+                    SETUP HIS SCOREBOARD AND SERVER LANGUAGE
+                 */
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    // Language of the player
+                    Language language = LanguageAPI.getLanguage(p);
+                    if(null == language)
+                        plugin.getLogger().log(Level.WARNING, "Player's language is null");
+                    else
+                        playerDat.setLanguage(language);
 
-                        /*
-                            RUN THE TASK LATER BECAUSE LANGUAGE TAKES A LITTLE BIT
-                            TO GET TO THE SERVER SO WE HAVE TO WAIT IN ORDER TO
-                            SETUP HIS SCOREBOARD AND SERVER LANGUAGE
-                         */
-                        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                // Language of the player
-                                Language language = LanguageAPI.getLanguage(p);
-                                if(null == language)
-                                    plugin.getLogger().log(Level.WARNING, "Player's language is null");
-                                else
-                                    playerDat.setLanguage(language);
+                    // Scoreboard
+                    Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);
+                    p.setScoreboard(board);
 
-                                // Scoreboard
-                                Scoreboard board = plugin.scoreBoardManager.createScoreBoard(p);
-                                p.setScoreboard(board);
+                    // Nametag
+                    NameTagAPI.setNameTag(board, p, true);
 
-                                // Nametag
-                                NameTagAPI.setNameTag(board, p, true);
+                    // Update ScoreBoard to player
+                    plugin.scoreBoardManager.updateAlive(arena, playerDat);
+                    plugin.scoreBoardManager.updateDeath(arena, playerDat);
 
-                                // Update ScoreBoard to player
-                                plugin.scoreBoardManager.updateAlive(arena, playerDat);
-                                plugin.scoreBoardManager.updateDeath(arena, playerDat);
-
-                                // Update points in ScoreBoard
-                                plugin.scoreBoardManager.updatePoints(playerDat);
-                            }
-                        }, 20);
-                    }
-                });
-            }
+                    // Update points in ScoreBoard
+                    plugin.scoreBoardManager.updatePoints(playerDat);
+                }, 20);
+            });
         });
     }
 }

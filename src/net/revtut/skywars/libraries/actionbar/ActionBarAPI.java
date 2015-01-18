@@ -42,13 +42,10 @@ public final class ActionBarAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside ActionBarAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                IChatBaseComponent actionMessage = ChatSerializer.a(message);
-                PacketPlayOutChat ppoc = new PacketPlayOutChat(actionMessage, (byte) 2);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            IChatBaseComponent actionMessage = ChatSerializer.a(message);
+            PacketPlayOutChat ppoc = new PacketPlayOutChat(actionMessage, (byte) 2);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);
         });
     }
 }

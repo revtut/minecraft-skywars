@@ -81,11 +81,9 @@ public final class WorldAPI {
             plugin.getLogger().log(Level.WARNING, "Main plugin is null inside WorldAPI!");
             return false;
         }
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            public void run() {
-                if(!Bukkit.unloadWorld(world, true))
-                    plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
-            }
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if(!Bukkit.unloadWorld(world, true))
+                plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
         }, 60L);
 
         return true;

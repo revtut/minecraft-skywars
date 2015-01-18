@@ -39,7 +39,7 @@ public class ArenaLocation {
     /**
      * List with all the spawn locations of the game
      */
-    private List<Location> spawnLocations = new ArrayList<Location>();
+    private List<Location> spawnLocations = new ArrayList<>();
 
     /**
      * Constructor of ArenaLocation

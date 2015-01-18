@@ -239,12 +239,7 @@ public class PlayerDat {
         plugin.scoreBoardManager.updatePoints(this);
         // Update in MySQL
         final PlayerDat playerDat = this;
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                plugin.mysql.addPoints(playerDat, points);
-            }
-        });
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.addPoints(playerDat, points));
     }
 
     /**

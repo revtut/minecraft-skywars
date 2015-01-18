@@ -75,12 +75,7 @@ public class PlayerQuit implements Listener {
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                // MySQL Tasks
-                plugin.mysql.updatePlayerDat(playerDat);
-            }
-        });
+        // MySQL Tasks
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updatePlayerDat(playerDat));
     }
 }

@@ -33,7 +33,7 @@ public class Engineer{
     /**
      * List with all the mines in the arena
      */
-    private final Map<Location, UUID> landMinesList = new HashMap<Location, UUID>();
+    private final Map<Location, UUID> landMinesList = new HashMap<>();
 
     /**
      * Land Mine

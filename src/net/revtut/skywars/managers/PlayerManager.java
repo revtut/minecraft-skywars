@@ -39,7 +39,7 @@ public class PlayerManager {
     /**
      * List of all playerDats in the server
      */
-    private final List<PlayerDat> playersDat = new ArrayList<PlayerDat>();
+    private final List<PlayerDat> playersDat = new ArrayList<>();
 
     /**
      * Add a new player dat to the server
@@ -107,8 +107,7 @@ public class PlayerManager {
         player.setHealth(healthLevel);
         player.setFoodLevel(foodLevel);
         if (removePotions)
-            for (PotionEffect potionEffect : player.getActivePotionEffects())
-                player.removePotionEffect(potionEffect.getType());
+            player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
         if (clearInv) {
             player.getInventory().clear();
             player.getInventory().setArmorContents(null);

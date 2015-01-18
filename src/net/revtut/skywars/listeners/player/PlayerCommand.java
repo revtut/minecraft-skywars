@@ -45,7 +45,7 @@ public class PlayerCommand implements Listener {
     /**
      * Player command cooldown
      */
-    private final Map<UUID, Long> cooldownCommand = new HashMap<UUID, Long>();
+    private final Map<UUID, Long> cooldownCommand = new HashMap<>();
 
     /**
      * Control when a player try to execute a command. Check if it is invalid

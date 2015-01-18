@@ -74,15 +74,16 @@ public class ArenaPreGame implements Runnable {
      */
     @Override
     public void run() {
-        int remainingTime;
-        for (final Arena arena : plugin.arenaManager.getArenas()) {
+        plugin.arenaManager.getArenas().forEach(arena -> {
+            int remainingTime;
+
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
-                continue;
+                return;
 
             // Check status
             if(arena.getStatus() != ArenaStatus.PREGAME)
-                continue;
+                return;
 
             // Remaining time of that arena
             remainingTime = arena.getRemainingTime();
@@ -92,7 +93,7 @@ public class ArenaPreGame implements Runnable {
             } else {
                 fromPreGameToInGame(arena);
             }
-        }
+        });
     }
 
     /**
@@ -104,10 +105,10 @@ public class ArenaPreGame implements Runnable {
      */
     private void onPreGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for (PlayerDat alvoDat : arena.getPlayers()) {
+        arena.getPlayers().forEach(alvoDat -> {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
-                continue;
+                return;
 
             alvo.setLevel(remainingTime);
 
@@ -179,7 +180,7 @@ public class ArenaPreGame implements Runnable {
                     alvo.playSound(alvo.getLocation(), Sound.LEVEL_UP, 1, 10);
                     break;
             }
-        }
+        });
     }
 
     /**
@@ -228,12 +229,9 @@ public class ArenaPreGame implements Runnable {
             alvoLocation.getBlock().setType(Material.AIR);
 
             // Status (add some delay so they dont lose life when falling)
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    alvo.sendMessage(Message.getMessage(Message.ALLOWED_OPEN_CHESTS, alvo));
-                    alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
-                }
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                alvo.sendMessage(Message.getMessage(Message.ALLOWED_OPEN_CHESTS, alvo));
+                alvoDat.setStatus(PlayerStatus.ALIVE); // Set as alive player
             }, 40);
         }
     }

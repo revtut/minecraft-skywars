@@ -82,15 +82,16 @@ public class ArenaInGame implements Runnable {
      */
     @Override
     public void run() {
-        int remainingTime;
-        for (final Arena arena : plugin.arenaManager.getArenas()) {
+        plugin.arenaManager.getArenas().forEach(arena -> {
+            int remainingTime;
+
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
-                continue;
+                return;
 
             // Check status
             if(arena.getStatus() != ArenaStatus.INGAME)
-                continue;
+                return;
 
             // Remaining time of that arena
             remainingTime = arena.getRemainingTime();
@@ -100,7 +101,7 @@ public class ArenaInGame implements Runnable {
             } else {
                 fromInGameToEndGame(arena);
             }
-        }
+        });
     }
 
     /**
@@ -111,10 +112,10 @@ public class ArenaInGame implements Runnable {
      */
     private void onInGame(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for (final PlayerDat alvoDat : arena.getPlayers()) {
+        arena.getPlayers().forEach(alvoDat -> {
             final Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
-                continue;
+                return;
 
             // Update the compass
             updateClosestTarget(alvoDat);
@@ -220,7 +221,7 @@ public class ArenaInGame implements Runnable {
                     alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winnerName);
                     break;
             }
-        }
+        });
     }
 
     /**
@@ -268,12 +269,7 @@ public class ArenaInGame implements Runnable {
             plugin.arenaManager.unhideToArena(alvo, false);
 
             // Teleport
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    alvo.teleport(centerLocation);
-                }
-            }, i);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> alvo.teleport(centerLocation), i);
             i++;
         }
     }

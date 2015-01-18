@@ -389,14 +389,12 @@ public class SkyWars extends JavaPlugin {
      * Check if MySQL connection is opened, if not it tries to open it
      */
     public void checkMySQL() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-            public void run() {
-                try {
-                    mysql.getConnection().createStatement().executeQuery("SELECT 1;");
-                } catch (SQLException e) {
-                    getLogger().log(Level.WARNING, "MySQL connection is closed!");
-                    mysql.openConnection();
-                }
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            try {
+                mysql.getConnection().createStatement().executeQuery("SELECT 1;");
+            } catch (SQLException e) {
+                getLogger().log(Level.WARNING, "MySQL connection is closed!");
+                mysql.openConnection();
             }
         }, 1200, 1200);
     }

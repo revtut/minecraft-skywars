@@ -43,13 +43,10 @@ public final class TitleAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                IChatBaseComponent titleSerializer = ChatSerializer.a(title);
-                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.TITLE, titleSerializer);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            IChatBaseComponent titleSerializer = ChatSerializer.a(title);
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.TITLE, titleSerializer);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         });
     }
 
@@ -64,13 +61,10 @@ public final class TitleAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                IChatBaseComponent subTitleSerializer = ChatSerializer.a(subtitle);
-                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subTitleSerializer);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            IChatBaseComponent subTitleSerializer = ChatSerializer.a(subtitle);
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subTitleSerializer);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         });
     }
 
@@ -87,12 +81,9 @@ public final class TitleAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                PacketPlayOutTitle packet = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         });
     }
 
@@ -106,12 +97,9 @@ public final class TitleAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.RESET, null);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.RESET, null);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         });
     }
 
@@ -125,12 +113,9 @@ public final class TitleAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside TitleAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.CLEAR, null);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(EnumTitleAction.CLEAR, null);
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
         });
     }
 }

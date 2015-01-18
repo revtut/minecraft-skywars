@@ -66,12 +66,12 @@ public class PlayerChat implements Listener {
     /**
      * Last message sent
      */
-    private final Map<UUID, String> lastMessage = new HashMap<UUID, String>();
+    private final Map<UUID, String> lastMessage = new HashMap<>();
 
     /**
      * Player chat cooldown
      */
-    private final Map<UUID, Long> cooldownMessage = new HashMap<UUID, Long>();
+    private final Map<UUID, Long> cooldownMessage = new HashMap<>();
 
     /**
      * Control the chat of the server. Reformats the messages sent. Before sending

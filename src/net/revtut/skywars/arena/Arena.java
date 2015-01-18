@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Arena Object.
@@ -47,7 +48,7 @@ public class Arena {
     /**
      * List of players which are on the arena
      */
-    private final List<PlayerDat> players = new ArrayList<PlayerDat>();
+    private final List<PlayerDat> players = new ArrayList<>();
 
     /**
      * Arena Location (all the locations of that arena)
@@ -103,14 +104,14 @@ public class Arena {
      * @param args arguments of the message will be attached at the end of it
      */
     public void sendMessage(Message message, String args) {
-        for (PlayerDat playerDat : players) {
+        players.forEach(playerDat -> {
             Player player = Bukkit.getPlayer(playerDat.getUUID());
             if (player == null)
-                continue;
+                return;
             // Send message
             String translatedMessage = Message.getMessage(message, player);
             player.sendMessage(translatedMessage + args);
-        }
+        });
     }
 
     /**
@@ -195,14 +196,13 @@ public class Arena {
      * @return list with all alive players
      */
     public List<PlayerDat> getAlivePlayers() {
-        List<PlayerDat> alivePlayers = new ArrayList<PlayerDat>();
+        List<PlayerDat> alivePlayers = new ArrayList<>();
         // Lobby
         if (this.status == ArenaStatus.LOBBY || this.status == ArenaStatus.PREGAME)
             return this.getPlayers();
+        
         // Already ingame
-        for (PlayerDat player : players)
-            if (player.getStatus() == PlayerStatus.ALIVE)
-                alivePlayers.add(player);
+        alivePlayers.addAll(players.stream().filter(player -> player.getStatus() == PlayerStatus.ALIVE).collect(Collectors.toList()));
         return alivePlayers;
     }
 
@@ -212,10 +212,7 @@ public class Arena {
      * @return list with all dead players
      */
     public List<PlayerDat> getDeadPlayers() {
-        List<PlayerDat> deathPlayers = new ArrayList<PlayerDat>();
-        for (PlayerDat player : this.players)
-            if (player.getStatus() == PlayerStatus.DEAD)
-                deathPlayers.add(player);
+        List<PlayerDat> deathPlayers = this.players.stream().filter(player -> player.getStatus() == PlayerStatus.DEAD).collect(Collectors.toList());
         return deathPlayers;
     }
 
@@ -225,10 +222,7 @@ public class Arena {
      * @return list with all spectators players
      */
     public List<PlayerDat> getSpectatorPlayers() {
-        List<PlayerDat> spectatorPlayers = new ArrayList<PlayerDat>();
-        for (PlayerDat player : players)
-            if (player.getStatus() == PlayerStatus.SPECTATOR)
-                spectatorPlayers.add(player);
+        List<PlayerDat> spectatorPlayers = players.stream().filter(player -> player.getStatus() == PlayerStatus.SPECTATOR).collect(Collectors.toList());
         return spectatorPlayers;
     }
 

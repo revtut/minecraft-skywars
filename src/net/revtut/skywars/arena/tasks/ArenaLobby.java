@@ -74,15 +74,16 @@ public class ArenaLobby implements Runnable {
      */
     @Override
     public void run() {
-        int remainingTime;
-        for (final Arena arena : plugin.arenaManager.getArenas()) {
+        plugin.arenaManager.getArenas().forEach(arena -> {
+            int remainingTime;
+
             // Check if there are players in arena
             if (arena.getPlayers().size() < 1)
-                continue;
+                return;
 
             // Check status
             if(arena.getStatus() != ArenaStatus.LOBBY)
-                continue;
+                return;
 
             // Remaining time of that arena
             remainingTime = arena.getRemainingTime();
@@ -105,7 +106,7 @@ public class ArenaLobby implements Runnable {
                     arena.setRemainingTime(ArenaStatus.LOBBY.getTime());
                 }
             }
-        }
+        });
     }
 
     /**
@@ -115,10 +116,10 @@ public class ArenaLobby implements Runnable {
      */
     private void onLobby(Arena arena) {
         int remainingTime = arena.getRemainingTime();
-        for (PlayerDat alvoDat : arena.getPlayers()) {
+        arena.getPlayers().forEach(alvoDat -> {
             Player alvo = Bukkit.getPlayer(alvoDat.getUUID());
             if (alvo == null)
-                continue;
+                return;
 
             alvo.setLevel(remainingTime);
 
@@ -142,7 +143,7 @@ public class ArenaLobby implements Runnable {
                     alvo.playSound(alvo.getLocation(), Sound.ORB_PICKUP, 1, 10);
                     break;
             }
-        }
+        });
     }
 
     /**
@@ -192,13 +193,10 @@ public class ArenaLobby implements Runnable {
                 continue;
             }
             arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    alvo.teleport(spawnLocation);
-                    // Give kit menu to the player
-                    arena.getKitManager().giveKitMenuItem(alvoDat);
-                }
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                alvo.teleport(spawnLocation);
+                // Give kit menu to the player
+                arena.getKitManager().giveKitMenuItem(alvoDat);
             }, i);
             i++;
         }

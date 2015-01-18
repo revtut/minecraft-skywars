@@ -37,17 +37,17 @@ public class ArenaDat {
     /**
      * List with all the initial players (in fact a list with their UUIDs)
      */
-    private final List<String> initialPlayers = new ArrayList<String>();
+    private final List<String> initialPlayers = new ArrayList<>();
 
     /**
      * List with the game chat history
      */
-    private final List<String> gameChat = new ArrayList<String>();
+    private final List<String> gameChat = new ArrayList<>();
 
     /**
      * List with the game events history
      */
-    private final List<String> gameEvents = new ArrayList<String>(); // Game Events
+    private final List<String> gameEvents = new ArrayList<>(); // Game Events
 
     /**
      * Returns the game number

@@ -31,7 +31,7 @@ public class ScoreBoardManager {
     /**
      * Map with all the scoreboards of the players
      */
-    private final Map<UUID, Scoreboard> scoreBoards = new HashMap<UUID, Scoreboard>();
+    private final Map<UUID, Scoreboard> scoreBoards = new HashMap<>();
 
     /**
      * Constructor of ScoreBoardManager
@@ -97,9 +97,7 @@ public class ScoreBoardManager {
      * @param arena arena to update alive players
      */
     public void updateAlive(Arena arena) {
-        for (PlayerDat alvoDat : arena.getPlayers()) {
-            updateAlive(arena, alvoDat);
-        }
+        arena.getPlayers().forEach(alvoDat -> updateAlive(arena, alvoDat));
     }
 
     /**
@@ -128,9 +126,7 @@ public class ScoreBoardManager {
      * @param arena arena to update death players
      */
     public void updateDeath(Arena arena) {
-        for (PlayerDat alvoDat : arena.getPlayers()) {
-            updateDeath(arena, alvoDat);
-        }
+        arena.getPlayers().forEach(alvoDat -> updateDeath(arena, alvoDat));
     }
 
     /**

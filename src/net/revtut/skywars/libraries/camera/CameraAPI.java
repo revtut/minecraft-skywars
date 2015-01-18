@@ -1,6 +1,5 @@
 package net.revtut.skywars.libraries.camera;
 
-import net.minecraft.server.v1_8_R1.Entity;
 import net.minecraft.server.v1_8_R1.PacketPlayOutCamera;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
@@ -41,13 +40,10 @@ public final class CameraAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside CameraAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                CraftPlayer craftAlvo = (CraftPlayer) alvo;
-                PacketPlayOutCamera camera = new PacketPlayOutCamera(craftAlvo.getHandle());
-                ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(camera);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            CraftPlayer craftAlvo = (CraftPlayer) alvo;
+            PacketPlayOutCamera camera = new PacketPlayOutCamera(craftAlvo.getHandle());
+            ((CraftPlayer)alvo).getHandle().playerConnection.sendPacket(camera);
         });
     }
 
@@ -61,13 +57,10 @@ public final class CameraAPI {
             Logger.getLogger("Minecraft").log(Level.WARNING, "Main plugin is null inside CameraAPI!");
             return;
         }
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                CraftPlayer craftPlayer = (CraftPlayer) player;
-                PacketPlayOutCamera camera = new PacketPlayOutCamera(craftPlayer.getHandle());
-                craftPlayer.getHandle().playerConnection.sendPacket(camera);
-            }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            CraftPlayer craftPlayer = (CraftPlayer) player;
+            PacketPlayOutCamera camera = new PacketPlayOutCamera(craftPlayer.getHandle());
+            craftPlayer.getHandle().playerConnection.sendPacket(camera);
         });
     }
 }

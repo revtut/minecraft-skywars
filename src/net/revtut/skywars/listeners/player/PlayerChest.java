@@ -38,23 +38,18 @@ public class PlayerChest implements Listener {
     public PlayerChest(final SkyWars plugin) {
         this.plugin = plugin;
         // Generate the random loot every 5 minutes
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            @Override
-            public void run() {
-                generateItemStacks();
-            }
-        }, 0, 6000);
+        Bukkit.getScheduler().runTaskTimer(plugin, this::generateItemStacks, 0, 6000);
     }
 
     /**
      * List with all items available
      */
-    private final List<ItemStack> itemStacks = new ArrayList<ItemStack>();
+    private final List<ItemStack> itemStacks = new ArrayList<>();
 
     /**
      * List with already filled chests
      */
-    private static final List<Location> locChests = new ArrayList<Location>();
+    private static final List<Location> locChests = new ArrayList<>();
 
     /**
      * Takes care of what to do when a player interacts with a chest
@@ -200,9 +195,7 @@ public class PlayerChest implements Listener {
      * @param world world of the locations to be removed
      */
     public void clearLocationsFromWorld(World world){
-        List<Location> chestsLocations = new ArrayList<Location>(locChests);
-        for(Location loc : chestsLocations)
-            if(loc.getWorld().equals(world))
-                locChests.remove(loc);
+        List<Location> chestsLocations = new ArrayList<>(locChests);
+        chestsLocations.stream().filter(loc -> loc.getWorld().equals(world)).forEach(locChests::remove);
     }
 }

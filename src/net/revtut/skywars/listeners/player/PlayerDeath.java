@@ -98,12 +98,7 @@ public class PlayerDeath implements Listener {
         plugin.scoreBoardManager.updateDeath(alvoArena);
 
         // Respawn
-        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                BypassesAPI.respawnBypass(alvo);
-            }
-        }, 20L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> BypassesAPI.respawnBypass(alvo), 20L);
 
         // Damager player
         Player damager = null;

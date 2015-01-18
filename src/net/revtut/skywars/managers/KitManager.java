@@ -99,7 +99,7 @@ public class KitManager {
     /**
      * Map with players and choosen kit
      */
-    public final Map<UUID, Kit> playerKit = new HashMap<UUID, Kit>();
+    public final Map<UUID, Kit> playerKit = new HashMap<>();
 
     /**
      * Give the kit menu item to player

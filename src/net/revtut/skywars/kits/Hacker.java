@@ -35,12 +35,12 @@ public class Hacker {
     /**
      * List with players that already respawned
      */
-    private final List<UUID> respawnedPlayers = new ArrayList<UUID>();
+    private final List<UUID> respawnedPlayers = new ArrayList<>();
 
     /**
      * List with players to be respawned
      */
-    private final List<UUID> toBeRespawnedPlayers = new ArrayList<UUID>();
+    private final List<UUID> toBeRespawnedPlayers = new ArrayList<>();
 
     /**
      * Black Leather Helmet
