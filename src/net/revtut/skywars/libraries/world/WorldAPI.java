@@ -1,5 +1,6 @@
 package net.revtut.skywars.libraries.world;
 
+import net.minecraft.server.v1_8_R1.RegionFileCache;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
 import net.revtut.skywars.libraries.reflection.ReflectionAPI;
@@ -84,6 +85,7 @@ public final class WorldAPI {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if(!Bukkit.unloadWorld(world, true))
                 plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
+            RegionFileCache.a();
         }, 60L);
 
         return true;
