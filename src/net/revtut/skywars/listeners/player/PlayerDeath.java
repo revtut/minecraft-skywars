@@ -107,10 +107,9 @@ public class PlayerDeath implements Listener {
             damager = Bukkit.getPlayer(PlayerDamage.lastPlayerDamager.get(alvo.getUniqueId()));
             if(damager != null){
                 damagerDat = plugin.playerManager.getPlayerDatByUUID(damager.getUniqueId());
-                if (damagerDat == null)
-                    return;
-                if(!plugin.arenaManager.inSameArena(alvoDat, damagerDat))
-                    return;
+                if (damagerDat != null)
+                    if(!plugin.arenaManager.inSameArena(alvoDat, damagerDat))
+                        return;
             }
             PlayerDamage.lastPlayerDamager.remove(alvo.getUniqueId());
         }
