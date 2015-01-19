@@ -202,7 +202,7 @@ public class Arena {
             return this.getPlayers();
         
         // Already ingame
-        alivePlayers.addAll(players.stream().filter(player -> player.getStatus() == PlayerStatus.ALIVE).collect(Collectors.toList()));
+        alivePlayers.addAll(players.stream().filter(player -> (player.getStatus() == PlayerStatus.ALIVE || player.getStatus() == PlayerStatus.WAITING)).collect(Collectors.toList()));
         return alivePlayers;
     }
 
