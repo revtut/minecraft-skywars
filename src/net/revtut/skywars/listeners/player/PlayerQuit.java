@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /**
@@ -74,6 +76,11 @@ public class PlayerQuit implements Listener {
 
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);
+
+        // Remove from last damagers
+        for(Map.Entry<UUID, UUID> entry : PlayerDamage.lastPlayerDamager.entrySet())
+                if(entry.getValue().equals(playerDat.getUUID()))
+                    PlayerDamage.lastPlayerDamager.remove(entry.getKey());
 
         // MySQL Tasks
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updatePlayerDat(playerDat));

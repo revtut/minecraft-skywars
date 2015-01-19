@@ -115,7 +115,7 @@ public class PlayerDeath implements Listener {
         }
 
         // Messages
-        if (damager != null) {
+        if (damager != null && damagerDat != null) {
             // Points earned
             int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
             damagerDat.addPoints(poinsEarned);
