@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -78,7 +79,8 @@ public class PlayerQuit implements Listener {
         plugin.playerManager.removePlayerDat(playerDat);
 
         // Remove from last damagers
-        for(Map.Entry<UUID, UUID> entry : PlayerDamage.lastPlayerDamager.entrySet())
+        Map<UUID, UUID> lastDamagers = new HashMap<>(PlayerDamage.lastPlayerDamager);
+        for(Map.Entry<UUID, UUID> entry : lastDamagers.entrySet())
                 if(entry.getValue().equals(playerDat.getUUID()))
                     PlayerDamage.lastPlayerDamager.remove(entry.getKey());
 
