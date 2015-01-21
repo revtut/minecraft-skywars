@@ -57,6 +57,10 @@ public class PlayerMove implements Listener {
         if (arena.getStatus() != ArenaStatus.INGAME)
             return;
 
+        // Engineer
+        // Guardian
+        arena.getKitManager().engineer.landMineActivate(player);
+
         // Dead
         if (playerDat.getStatus() == PlayerStatus.DEAD){
             Location location = player.getLocation();
