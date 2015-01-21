@@ -52,7 +52,7 @@ public class PlayerRespawn implements Listener {
         if (arena == null)
             return;
 
-        // Ninja
+        // Hacker
         Location locSpawn = arena.getKitManager().hacker.respawnPlayer(player, arena);
         if (locSpawn != null){
             e.setRespawnLocation(locSpawn);

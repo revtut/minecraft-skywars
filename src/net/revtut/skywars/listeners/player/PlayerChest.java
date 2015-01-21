@@ -99,7 +99,7 @@ public class PlayerChest implements Listener {
         Material[] materialOther = {Material.EGG, Material.SNOW_BALL, Material.ARROW};
         Enchantment[] enchantsArmor = {Enchantment.OXYGEN, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_EXPLOSIONS, Enchantment.PROTECTION_FALL, Enchantment.PROTECTION_FIRE, Enchantment.PROTECTION_PROJECTILE};
         Enchantment[] enchantWeapon = {Enchantment.DURABILITY, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT, Enchantment.KNOCKBACK};
-        Enchantment[] enchantOther = {Enchantment.ARROW_KNOCKBACK, Enchantment.ARROW_DAMAGE, Enchantment.ARROW_FIRE};
+        Enchantment[] enchantBow = {Enchantment.ARROW_KNOCKBACK, Enchantment.ARROW_FIRE, Enchantment.ARROW_DAMAGE};
 
         // Armor
         for (int i = 0; i < 15; i++) {
@@ -128,11 +128,20 @@ public class PlayerChest implements Listener {
             ItemStack itemStack = new ItemStack(materialsWeapon[pos], quantidade);
             // Enchantment
             if (plugin.rand.nextFloat() < 70) {
-                pos = plugin.rand.nextInt(enchantWeapon.length);
-                Enchantment enchant = enchantWeapon[pos]; // Enchantment
-                if (enchant.canEnchantItem(itemStack)) {
-                    quantidade = plugin.rand.nextInt(2) + 1; // Enchantment level
-                    itemStack.addUnsafeEnchantment(enchant, quantidade);
+                if(itemStack.getType().equals(Material.BOW)){
+                    pos = plugin.rand.nextInt(enchantBow.length);
+                    Enchantment enchant = enchantBow[pos]; // Enchantment
+                    if (enchant.canEnchantItem(itemStack)) {
+                        quantidade = plugin.rand.nextInt(2) + 1; // Enchantment level
+                        itemStack.addUnsafeEnchantment(enchant, quantidade);
+                    }
+                } else {
+                    pos = plugin.rand.nextInt(enchantWeapon.length);
+                    Enchantment enchant = enchantWeapon[pos]; // Enchantment
+                    if (enchant.canEnchantItem(itemStack)) {
+                        quantidade = plugin.rand.nextInt(2) + 1; // Enchantment level
+                        itemStack.addUnsafeEnchantment(enchant, quantidade);
+                    }
                 }
             }
             // Add to list
@@ -175,15 +184,6 @@ public class PlayerChest implements Listener {
             int quantidade = plugin.rand.nextInt(15) + 1;
             // ItemStack
             ItemStack itemStack = new ItemStack(materialOther[pos], quantidade);
-            // Enchantment
-            if (plugin.rand.nextFloat() < 0.80) {
-                pos = plugin.rand.nextInt(enchantOther.length);
-                Enchantment enchant = enchantOther[pos]; // Enchantment
-                if (enchant.canEnchantItem(itemStack)) {
-                    quantidade = plugin.rand.nextInt(2) + 1; // Enchantment level
-                    itemStack.addUnsafeEnchantment(enchant, quantidade);
-                }
-            }
             // Add to list
             itemStacks.add(itemStack);
         }
