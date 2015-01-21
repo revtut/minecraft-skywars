@@ -4,12 +4,10 @@ import net.minecraft.server.v1_8_R1.RegionFileCache;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
 import net.revtut.skywars.libraries.reflection.ReflectionAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,6 +45,7 @@ public final class WorldAPI {
     public static boolean loadWorld(String worldName) {
         // World Creator
         WorldCreator creator = new WorldCreator(worldName);
+        creator.type(WorldType.FLAT);
         creator.generateStructures(false);
         World world = creator.createWorld();
         // Check if it is not Null
