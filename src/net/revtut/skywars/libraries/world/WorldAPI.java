@@ -74,18 +74,19 @@ public final class WorldAPI {
 
         // Unload all the chunks
         for(Chunk chunk : world.getLoadedChunks())
-                world.unloadChunk(chunk);
+            world.unloadChunk(chunk);
 
         // Unload world
         if (null == plugin) {
             plugin.getLogger().log(Level.WARNING, "Main plugin is null inside WorldAPI!");
             return false;
         }
+
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             if(!Bukkit.unloadWorld(world, true))
                 plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
             RegionFileCache.a();
-        }, 60L);
+        }, 5L);
 
         return true;
     }

@@ -220,22 +220,24 @@ public class ArenaManager {
         if (!removeMap(arena))
             return false;
 
-        // Add new map
-        String mapName = addNewMap(arena.getArenaNumber());
-        if (mapName == null)
-            return false;
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            // Add new map
+            String mapName = addNewMap(arena.getArenaNumber());
+            if (mapName == null)
+                return;
 
-        // Update Arena
-        String gameNumber = nextGameNumber();
-        arena.setMapName(mapName);
-        arena.setArenaDat(new ArenaDat());
-        arena.setStatus(ArenaStatus.LOBBY);
-        arena.setKitManager(new KitManager());
-        ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
-        if (arenaLocation == null)
-            return false;
-        arena.setArenaLocation(arenaLocation);
-        arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
+            // Update Arena
+            String gameNumber = nextGameNumber();
+            arena.setMapName(mapName);
+            arena.setArenaDat(new ArenaDat());
+            arena.setStatus(ArenaStatus.LOBBY);
+            arena.setKitManager(new KitManager());
+            ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
+            if (arenaLocation == null)
+                return;
+            arena.setArenaLocation(arenaLocation);
+            arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
+        }, 40L);
         return true;
     }
 
@@ -257,11 +259,6 @@ public class ArenaManager {
         // MySQL Tasks
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updateArenaDat(arenaDat));
 
-        // New Arena if Needed
-        if (getNumberAvailableArenas() <= 1) {
-            createNewArena();
-        }
-
         // Clear chests locations
         World world = Bukkit.getWorld(arena.getMapName());
         if(world != null)
@@ -273,6 +270,11 @@ public class ArenaManager {
 
         // Remove From List
         arenas.remove(arena);
+
+        // New Arena if Needed
+        if (getNumberAvailableArenas() <= 1) {
+            Bukkit.getScheduler().runTaskLater(plugin, () -> createNewArena(), 40L);
+        }
 
         return true;
     }
@@ -297,7 +299,7 @@ public class ArenaManager {
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
             if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
                 plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
-        }, 120L);
+        }, 20L);
 
         return true;
     }
@@ -412,6 +414,12 @@ public class ArenaManager {
             if (arena != null)
                 removeArena(arena);
         }
+
+        // Disable auto-saving
+        World world = Bukkit.getWorld(mapName);
+        if(world == null)
+            return null;
+        world.setAutoSave(false);
 
         return mapName;
     }
