@@ -11,7 +11,7 @@ main: net.revtut.skywars.SkyWars
 
 commands:
 
-# Appearance
+# All commands
   information:
     description: Information about a game
     aliases: [info, status, informationen, informacao, informacion]
