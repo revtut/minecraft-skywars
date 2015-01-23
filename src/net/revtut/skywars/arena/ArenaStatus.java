@@ -21,7 +21,7 @@ public enum ArenaStatus {
     /**
      * Players are already playing the game.
      */
-    INGAME(900),
+    INGAME(1200),
     /**
      * The game has ended.
      */

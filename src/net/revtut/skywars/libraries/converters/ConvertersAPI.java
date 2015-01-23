@@ -158,13 +158,28 @@ public final class ConvertersAPI {
      * @return seconds converted to the format
      */
     public static String convertSecondsToDHMS(long sec) {
+        long days = sec / (86400);
+        long rest = sec % 86400;
+        long hours = rest / 3600;
+        rest = rest % 3600;
+        long minutes = rest / 60;
+        long seconds = rest % 60;
 
-        long days = sec / (60 * 60 * 24);
-        long hours = sec / (60 * 60);
-        long minutes = sec / (60);
+        return days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
+    }
+
+    /**
+     * Convert seconds to M : S format.
+     * Minutes : Seconds
+     *
+     * @param sec seconds to be converted
+     * @return seconds converted to the format
+     */
+    public static String convertSecondsToMS(long sec) {
+        long minutes = sec / 60;
         long seconds = sec % 60;
 
-        return days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
+        return minutes + "m : " + seconds + "s";
     }
 
     /**

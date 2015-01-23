@@ -12,15 +12,16 @@ main: net.revtut.skywars.SkyWars
 commands:
 
 # Appearance
-  firework:
-    description: Launch Firework
-    aliases: [fw]
+  information:
+    description: Information about a game
+    aliases: [info, status, informationen, informacao, informacion]
 
 ##############
 # PERMISSOES #
 ##############
 
 permissions:
+
 # Chat
   rev.advertisment:
     description: Permission to advertise

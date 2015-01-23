@@ -5,6 +5,7 @@ import net.revtut.skywars.arena.tasks.ArenaEndGame;
 import net.revtut.skywars.arena.tasks.ArenaInGame;
 import net.revtut.skywars.arena.tasks.ArenaLobby;
 import net.revtut.skywars.arena.tasks.ArenaPreGame;
+import net.revtut.skywars.commands.Info;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
@@ -253,6 +254,9 @@ public class SkyWars extends JavaPlugin {
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
+
+        /* Commands */
+        getCommand("information").setExecutor(new Info(this));
     }
 
     /**

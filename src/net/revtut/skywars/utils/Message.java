@@ -225,6 +225,11 @@ public enum Message {
     POINTS,
 
     /**
+     * Remaining Time
+     */
+    REMAINING_TIME,
+
+    /**
      * Tactical has enabled invisibility
      */
     TACTICAL_ENABLED_INVISIBILITY,
@@ -378,6 +383,8 @@ public enum Message {
                 return inspectorPrefix + getPlayerUnknownCommand(language);
             case POINTS:
                 return getPoints(language);
+            case REMAINING_TIME:
+                return getRemainingTime(language);
             case TACTICAL_ENABLED_INVISIBILITY:
                 return gamePrefix + getTaticalEnabledInvisibility(language);
             case TIME_OUT:
@@ -1421,6 +1428,31 @@ public enum Message {
                 return "§6Puntos: ";
             default:
                 return "§6Points: ";
+        }
+    }
+
+    /**
+     * Get the remaining time message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getRemainingTime(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Remaining Time: ";
+            case FRENCH:
+                return "§6Temps Restant: ";
+            case GERMAN:
+                return "§6Verbleibende Zeit: ";
+            case PORTUGUESE_PT:
+                return "§6Tempo Restante: ";
+            case PORTUGUESE_BR:
+                return "§6Tempo Restante: ";
+            case SPANISH:
+                return "§6Tiempo Restante: ";
+            default:
+                return "§6Remaining Time: ";
         }
     }
 

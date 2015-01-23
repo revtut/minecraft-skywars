@@ -1,6 +1,6 @@
 # Title Message
 Title: '&3SKY WARS'
-Subtitle: '&7Game Number: %gamenumber%'
+Subtitle: '&7Game ID: %gamenumber%'
 FadeIn: 40
 FadeOut: 20
 TimeOnScreen: 100
