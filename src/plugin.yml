@@ -44,3 +44,8 @@ permissions:
   rev.msgcolors:
     description: Permission to chat with colors
     default: op
+
+# Game
+  rev.nolosepoints:
+    description: Permission to leave the game without losing points
+    default: op
