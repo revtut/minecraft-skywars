@@ -123,6 +123,10 @@ public class PlayerJoin implements Listener {
 
                     // Update points in ScoreBoard
                     plugin.scoreBoardManager.updatePoints(playerDat);
+
+                    // Update stats in ScoreBoard
+                    plugin.scoreBoardManager.updateWinsLosses(playerDat);
+                    plugin.scoreBoardManager.updateKillsDeaths(playerDat);
                 }, 20);
             });
         });

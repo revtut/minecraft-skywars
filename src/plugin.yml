@@ -15,6 +15,9 @@ commands:
   information:
     description: Information about a game
     aliases: [info, status, informationen, informacao, informacion]
+  statistics:
+    description: Statistics of the player
+    aliases: [stats, statistiques, statistik, estatisticas, estadisticas]
 
 ##############
 # PERMISSOES #

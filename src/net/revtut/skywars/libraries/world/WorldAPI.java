@@ -7,7 +7,6 @@ import net.revtut.skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.*;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
-import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.io.FileInputStream;

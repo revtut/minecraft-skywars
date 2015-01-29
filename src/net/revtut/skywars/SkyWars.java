@@ -1,11 +1,13 @@
 package net.revtut.skywars;
 
-import net.revtut.skywars.arena.*;
+import net.revtut.skywars.arena.Arena;
+import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.arena.tasks.ArenaEndGame;
 import net.revtut.skywars.arena.tasks.ArenaInGame;
 import net.revtut.skywars.arena.tasks.ArenaLobby;
 import net.revtut.skywars.arena.tasks.ArenaPreGame;
 import net.revtut.skywars.commands.Info;
+import net.revtut.skywars.commands.Stats;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
@@ -257,6 +259,7 @@ public class SkyWars extends JavaPlugin {
 
         /* Commands */
         getCommand("information").setExecutor(new Info(this));
+        getCommand("statistics").setExecutor(new Stats(this));
     }
 
     /**

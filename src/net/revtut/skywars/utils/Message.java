@@ -30,6 +30,11 @@ public enum Message {
     DEAD,
 
     /**
+     * Scoreboard - Deaths
+     */
+    DEATHS,
+
+    /**
      * Tell the player to not leave the arena
      */
     DONT_LEAVE_ARENA,
@@ -75,6 +80,11 @@ public enum Message {
     HACKER_RESPAWN,
 
     /**
+     * Scoreboard - Kills
+     */
+    KILLS,
+
+    /**
      * Player has aleady chosen the kit
      */
     KIT_ALREADY_CHOSEN,
@@ -88,6 +98,12 @@ public enum Message {
      * Player received the kit
      */
     KIT_RECEIVED,
+
+    /**
+     * Scoreboard - Losses
+     */
+    LOSSES,
+
 
     /**
      * Minimum players to start the game has not been achieved
@@ -220,7 +236,12 @@ public enum Message {
     PLAYER_UNKNOWN_COMMAND,
 
     /**
-     * Points of the player
+     * Play Time
+     */
+    PLAYTIME,
+
+    /**
+     * Scoreboard - Points
      */
     POINTS,
 
@@ -243,6 +264,11 @@ public enum Message {
      * Winner of the match
      */
     WINNER,
+
+    /**
+     * Scoreboard - Wins
+     */
+    WINS,
 
     /**
      * You have died message
@@ -305,6 +331,8 @@ public enum Message {
                 return gamePrefix + getAllowedOpenChests(language);
             case DEAD:
                 return getDead(language);
+            case DEATHS:
+                return getDeaths(language);
             case DONT_LEAVE_ARENA:
                 return gamePrefix + getDontLeaveArena(language);
             case EMPTY_MESSAGE:
@@ -323,12 +351,16 @@ public enum Message {
                 return gamePrefix + getGuardianEnabledSpeed(language);
             case HACKER_RESPAWN:
                 return gamePrefix + getHackerRespawn(language);
+            case KILLS:
+                return getKills(language);
             case KIT_ALREADY_CHOSEN:
                 return gamePrefix + getKitAlreadyChosen(language);
             case KIT_BOUGHT:
                 return gamePrefix + getKitBought(language);
             case KIT_RECEIVED:
                 return gamePrefix + getKitReceived(language);
+            case LOSSES:
+                return getLosses(language);
             case MININUM_PLAYERS_NOT_ACHIEVED:
                 return gamePrefix + getMinimumPlayersNotAchieved(language);
             case MINIMUM_PLAYERS_REDUCE_TIME_ACHIEVED:
@@ -381,6 +413,8 @@ public enum Message {
                 return inspectorPrefix + getPlayerSpam(language);
             case PLAYER_UNKNOWN_COMMAND:
                 return inspectorPrefix + getPlayerUnknownCommand(language);
+            case PLAYTIME:
+                return getPlayTime(language);
             case POINTS:
                 return getPoints(language);
             case REMAINING_TIME:
@@ -391,6 +425,8 @@ public enum Message {
                 return getTimeOut(language);
             case WINNER:
                 return getWinner(language);
+            case WINS:
+                return getWins(language);
             case YOU_DIED:
                 return getYouDied(language);
             case YOU_KILLED:
@@ -415,19 +451,19 @@ public enum Message {
     private static String getAlive(Language language){
         switch(language){
             case ENGLISH:
-                return "§aAlive: ";
+                return "§aAlive";
             case FRENCH:
-                return "§aVivant: ";
+                return "§aVivant";
             case GERMAN:
-                return "§aLebendig: ";
+                return "§aLebendig";
             case PORTUGUESE_PT:
-                return "§aVivos: ";
+                return "§aVivos";
             case PORTUGUESE_BR:
-                return "§aVivos: ";
+                return "§aVivos";
             case SPANISH:
-                return "§aVivo: ";
+                return "§aVivo";
             default:
-                return "§aAlive: ";
+                return "§aAlive";
         }
     }
 
@@ -465,19 +501,44 @@ public enum Message {
     private static String getDead(Language language){
         switch(language){
             case ENGLISH:
-                return "§cDead: ";
+                return "§cDead";
             case FRENCH:
-                return "§cMorts: ";
+                return "§cMorts";
             case GERMAN:
-                return "§cTote: ";
+                return "§cTote";
             case PORTUGUESE_PT:
-                return "§cMortos: ";
+                return "§cMortos";
             case PORTUGUESE_BR:
-                return "§cMortos: ";
+                return "§cMortos";
             case SPANISH:
-                return "§cMuerto: ";
+                return "§cMuerto";
             default:
-                return "§cDead: ";
+                return "§cDead";
+        }
+    }
+
+    /**
+     * Get deaths message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getDeaths(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Deaths";
+            case FRENCH:
+                return "§6Deaths";
+            case GERMAN:
+                return "§6Deaths";
+            case PORTUGUESE_PT:
+                return "§6Deaths";
+            case PORTUGUESE_BR:
+                return "§6Deaths";
+            case SPANISH:
+                return "§6Deaths";
+            default:
+                return "§6Deaths";
         }
     }
 
@@ -682,6 +743,31 @@ public enum Message {
     }
 
     /**
+     * Get kills message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getKills(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Kills";
+            case FRENCH:
+                return "§6Kills";
+            case GERMAN:
+                return "§6Kills";
+            case PORTUGUESE_PT:
+                return "§6Kills";
+            case PORTUGUESE_BR:
+                return "§6Kills";
+            case SPANISH:
+                return "§6Kills";
+            default:
+                return "§6Kills";
+        }
+    }
+
+    /**
      * Get kit already chosen message
      *
      * @param language language to get the translation
@@ -753,6 +839,31 @@ public enum Message {
                 return "§aHa recibido Kit ";
             default:
                 return "§aYou have received Kit ";
+        }
+    }
+
+    /**
+     * Get losses message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getLosses(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Losses";
+            case FRENCH:
+                return "§6Pertes";
+            case GERMAN:
+                return "§6Verluste";
+            case PORTUGUESE_PT:
+                return "§6Derrotas";
+            case PORTUGUESE_BR:
+                return "§6Derrotas";
+            case SPANISH:
+                return "§6Derrotas";
+            default:
+                return "§6Losses";
         }
     }
 
@@ -1407,6 +1518,31 @@ public enum Message {
     }
 
     /**
+     * Get play time message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getPlayTime(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Play Time";
+            case FRENCH:
+                return "§6Temps de Jeu";
+            case GERMAN:
+                return "§6Spielzeit";
+            case PORTUGUESE_PT:
+                return "§6Tempo de Jogo";
+            case PORTUGUESE_BR:
+                return "§6Tempo de Jogo";
+            case SPANISH:
+                return "§6Tiempo de Juego";
+            default:
+                return "§6Play Time";
+        }
+    }
+
+    /**
      * Get points message
      *
      * @param language language to get the translation
@@ -1415,19 +1551,19 @@ public enum Message {
     private static String getPoints(Language language){
         switch(language){
             case ENGLISH:
-                return "§6Points: ";
+                return "§6Points";
             case FRENCH:
-                return "§6Points: ";
+                return "§6Points";
             case GERMAN:
-                return "§6Punkte: ";
+                return "§6Punkte";
             case PORTUGUESE_PT:
-                return "§6Pontos: ";
+                return "§6Pontos";
             case PORTUGUESE_BR:
-                return "§6Pontos: ";
+                return "§6Pontos";
             case SPANISH:
-                return "§6Puntos: ";
+                return "§6Puntos";
             default:
-                return "§6Points: ";
+                return "§6Points";
         }
     }
 
@@ -1440,19 +1576,19 @@ public enum Message {
     private static String getRemainingTime(Language language){
         switch(language){
             case ENGLISH:
-                return "§6Remaining Time: ";
+                return "§6Remaining Time";
             case FRENCH:
-                return "§6Temps Restant: ";
+                return "§6Temps Restant";
             case GERMAN:
-                return "§6Verbleibende Zeit: ";
+                return "§6Verbleibende Zeit";
             case PORTUGUESE_PT:
-                return "§6Tempo Restante: ";
+                return "§6Tempo Restante";
             case PORTUGUESE_BR:
-                return "§6Tempo Restante: ";
+                return "§6Tempo Restante";
             case SPANISH:
-                return "§6Tiempo Restante: ";
+                return "§6Tiempo Restante";
             default:
-                return "§6Remaining Time: ";
+                return "§6Remaining Time";
         }
     }
 
@@ -1528,6 +1664,31 @@ public enum Message {
                 return "§7Ganador: ";
             default:
                 return "§7Winner: ";
+        }
+    }
+
+    /**
+     * Get wins message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getWins(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Wins";
+            case FRENCH:
+                return "§6Victoires";
+            case GERMAN:
+                return "§6Siege";
+            case PORTUGUESE_PT:
+                return "§6Vitórias";
+            case PORTUGUESE_BR:
+                return "§6Vitórias";
+            case SPANISH:
+                return "§6Victorias";
+            default:
+                return "§6Wins";
         }
     }
 

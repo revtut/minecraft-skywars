@@ -12,14 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * Game Info Command.
+ * Stats Command.
  *
- * <P>Command to get the info about a game.</P>
+ * <P>Command to get the stats of the player.</P>
  *
  * @author Joao Silva
  * @version 1.0
  */
-public class Info implements CommandExecutor {
+public class Stats implements CommandExecutor {
 
     /**
      * Main class
@@ -27,16 +27,16 @@ public class Info implements CommandExecutor {
     private final SkyWars plugin;
 
     /**
-     * Constructor of Info
+     * Constructor of Stats
      *
      * @param plugin main class
      */
-    public Info(final SkyWars plugin) {
+    public Stats(final SkyWars plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Controls the execution of the Info command.
+     * Controls the execution of the Stats command.
      *
      * @param sender entity who sent the command
      * @param cmd command sent
@@ -61,10 +61,12 @@ public class Info implements CommandExecutor {
                 return true;
 
             player.sendMessage("§6<====== §3Sky Wars §6======>");
-            player.sendMessage("§6Game ID: §7" + arenaDat.getGameNumber());
-            player.sendMessage(Message.getMessage(Message.ALIVE, player) + ": §7" + arena.getAlivePlayers().size());
-            player.sendMessage(Message.getMessage(Message.DEAD, player) + ": §7" + arena.getDeadPlayers().size());
-            player.sendMessage(Message.getMessage(Message.REMAINING_TIME, player) + ": §7" + ConvertersAPI.convertSecondsToMS(arena.getRemainingTime()));
+            player.sendMessage("§6Nickname: §7" + player.getName());
+            player.sendMessage(Message.getMessage(Message.WINS, player) + ": §7" + playerDat.getWins());
+            player.sendMessage(Message.getMessage(Message.LOSSES, player) + ": §7" + playerDat.getLosses());
+            player.sendMessage(Message.getMessage(Message.KILLS, player) + ": §7" + playerDat.getKills());
+            player.sendMessage(Message.getMessage(Message.DEATHS, player) + ": §7" + playerDat.getDeaths());
+            player.sendMessage(Message.getMessage(Message.PLAYTIME, player) + ": §7" + ConvertersAPI.convertSecondsToDHMS(playerDat.getPlayTime()));
             player.sendMessage("§6<=====================>");
 
             return true;

@@ -97,6 +97,10 @@ public class PlayerDeath implements Listener {
         plugin.scoreBoardManager.updateAlive(alvoArena);
         plugin.scoreBoardManager.updateDeath(alvoArena);
 
+        // Update stats
+        plugin.scoreBoardManager.updateWinsLosses(alvoDat);
+        plugin.scoreBoardManager.updateKillsDeaths(alvoDat);
+
         // Respawn
         Bukkit.getScheduler().runTaskLater(plugin, () -> BypassesAPI.respawnBypass(alvo), 20L);
 
@@ -122,6 +126,9 @@ public class PlayerDeath implements Listener {
 
             // Add kill
             damagerDat.addKill();
+
+            // Update stats
+            plugin.scoreBoardManager.updateKillsDeaths(damagerDat);
 
             // Message to arena
             alvoArena.sendMessage(Message.PLAYER_DIED, alvo.getName());
