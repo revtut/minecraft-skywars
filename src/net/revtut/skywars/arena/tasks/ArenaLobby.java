@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.Date;
 import java.util.logging.Level;
 
 /**
@@ -162,6 +163,9 @@ public class ArenaLobby implements Runnable {
 
         // Change Status
         arena.setStatus(ArenaStatus.PREGAME);
+
+        arenaDat.setStartDate(new Date()); // Set start date
+        arenaDat.addGameEvent("The game " + arenaDat.getGameNumber() + " has started!");
 
         // Message
         String mapName = arena.getMapName().replace("" + arena.getArenaNumber(), "").replaceAll("_", " ");
