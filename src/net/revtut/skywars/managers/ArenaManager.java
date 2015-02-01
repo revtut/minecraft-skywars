@@ -220,24 +220,23 @@ public class ArenaManager {
         if (!removeMap(arena))
             return false;
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            // Add new map
-            String mapName = addNewMap(arena.getArenaNumber());
-            if (mapName == null)
-                return;
+        // Add new map
+        String mapName = addNewMap(arena.getArenaNumber());
+        if (mapName == null)
+            return false;
 
-            // Update Arena
-            String gameNumber = nextGameNumber();
-            arena.setMapName(mapName);
-            arena.setArenaDat(new ArenaDat());
-            arena.setStatus(ArenaStatus.LOBBY);
-            arena.setKitManager(new KitManager());
-            ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
-            if (arenaLocation == null)
-                return;
-            arena.setArenaLocation(arenaLocation);
-            arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
-        }, 40L);
+        // Update Arena
+        String gameNumber = nextGameNumber();
+        arena.setMapName(mapName);
+        arena.setArenaDat(new ArenaDat());
+        arena.setStatus(ArenaStatus.LOBBY);
+        arena.setKitManager(new KitManager());
+        ArenaLocation arenaLocation = createArenaLocation(new File(System.getProperty("user.dir") + File.separator + mapName + File.separator + "locations.yml"), mapName);
+        if (arenaLocation == null)
+            return false;
+        arena.setArenaLocation(arenaLocation);
+        arena.getArenaDat().setGameNumber(gameNumber); // Set GameNumber
+
         return true;
     }
 
@@ -273,7 +272,7 @@ public class ArenaManager {
 
         // New Arena if Needed
         if (getNumberAvailableArenas() <= 1) {
-            Bukkit.getScheduler().runTaskLater(plugin, () -> createNewArena(), 40L);
+            createNewArena();
         }
 
         return true;
@@ -296,10 +295,8 @@ public class ArenaManager {
         }
 
         // Remove Directory
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
-            if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
-                plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
-        }, 20L);
+        if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
+            plugin.getLogger().log(Level.SEVERE, "Error while removing world directory " + arena.getMapName());
 
         return true;
     }
@@ -347,8 +344,8 @@ public class ArenaManager {
         PlayerDamage.lastPlayerDamager.remove(player.getUniqueId());
 
         if (checkArena) {
-            // Check if game already started
-            if ((arena.getStatus() == ArenaStatus.INGAME || arena.getStatus() == ArenaStatus.PREGAME) && arena.getAlivePlayers().size() <= 1) {
+            // Check if game is in pregame
+            if (arena.getStatus() == ArenaStatus.PREGAME && arena.getAlivePlayers().size() <= 1) {
                 // Send message
                 arena.sendMessage(Message.NOT_ENOUGH_PLAYERS_TO_CONTINUE);
                 // Send remaining players to new arena
@@ -374,10 +371,6 @@ public class ArenaManager {
                 arenaDat.setWinner("NULL");
                 // Delete the arena
                 Bukkit.getScheduler().runTaskLater(plugin, () -> removeArena(arena), 1200L);
-            } else if (arena.getStatus() == ArenaStatus.ENDGAME) {
-                // Delete the arena
-                if (arena.getAlivePlayers().size() < 1)
-                    Bukkit.getScheduler().runTaskLater(plugin, () -> removeArena(arena), 1200L);
             }
         }
 

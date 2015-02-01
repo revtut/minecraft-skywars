@@ -234,7 +234,7 @@ public class PlayerDat {
         char signal = '+';
         if(points < 0)
             signal = '-';
-        player.sendMessage(Message.getMessage(Message.POINTS, player) + signal + Math.abs(points));
+        player.sendMessage(Message.getMessage(Message.POINTS, player) + " " + signal + Math.abs(points));
         // Update points in ScoreBoard
         plugin.scoreBoardManager.updatePoints(this);
         // Update in MySQL

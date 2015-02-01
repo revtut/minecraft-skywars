@@ -81,13 +81,9 @@ public final class WorldAPI {
             return false;
         }
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if(!Bukkit.unloadWorld(world, true))
-                plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + worldName);
-            RegionFileCache.a();
-        }, 5L);
+        RegionFileCache.a();
 
-        return true;
+        return Bukkit.unloadWorld(world, true);
     }
 
     /**

@@ -8,8 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -66,15 +69,16 @@ public class PlayerQuit implements Listener {
                 if(!p.hasPermission("rev.nolosepoints"))
                     playerDat.addPoints(0 - plugin.pointsPerKill * (1 + plugin.arenaManager.maxPlayers/(arena.getPlayers().size() * 10))); // Remove points because left before endgame
 
+        // Simulate player death
+        PlayerDeath playerDeath = new PlayerDeath(plugin);
+        playerDeath.updateArena(arena, p);
+
         // Remove from arena
-        if (!plugin.arenaManager.removePlayer(playerDat, true)) {
+        if (!plugin.arenaManager.removePlayer(playerDat, true))
             plugin.getLogger().log(Level.WARNING, "Error while removing PlayerDat from arena on quit!");
-            return;
-        }
 
         // Remove from scoreboard
-        if(!plugin.scoreBoardManager.removePlayerScoreBoard(p))
-            plugin.getLogger().log(Level.WARNING, "Error while removing player's scoreboard as it is null!");
+        plugin.scoreBoardManager.removePlayerScoreBoard(p);
 
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);

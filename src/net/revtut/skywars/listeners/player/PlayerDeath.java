@@ -65,13 +65,6 @@ public class PlayerDeath implements Listener {
         if (arena == null)
             return;
 
-        // ArenaDat
-        ArenaDat arenaDat = arena.getArenaDat();
-        if (arenaDat == null) {
-            plugin.getLogger().log(Level.WARNING, "ArenaDat is null when player dies!");
-            return;
-        }
-
         // Hacker
         if (arena.getKitManager().hacker.canRespawn(alvoDat, arena)){
             // Bypass respawn
@@ -82,24 +75,39 @@ public class PlayerDeath implements Listener {
         // Respawn
         Bukkit.getScheduler().runTaskLater(plugin, () -> BypassesAPI.respawnBypass(alvo), 20L);
 
-        // Hide to Arena
-        plugin.arenaManager.hideToArena(alvo, false);
+        // Update the arena
+        updateArena(arena, alvo);
+    }
 
-        // Show to spectators
-        plugin.arenaManager.showToSpectators(alvo, true);
+    /**
+     * Updates the arena regarding a player death
+     *
+     * @param arena arena of the player
+     * @param target killed player
+     */
+    public void updateArena(Arena arena, Player target) {
+        // ArenaDat
+        ArenaDat arenaDat = arena.getArenaDat();
+        if (arenaDat == null) {
+            plugin.getLogger().log(Level.WARNING, "ArenaDat is null when player dies!");
+            return;
+        }
+
+        // Update killed player
+        updateKilledPlayer(arena, target);
 
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(arena);
         plugin.scoreBoardManager.updateDeath(arena);
 
         // Damager player
-        Player damager = getLastDamager(alvo);
+        Player damager = getLastDamager(target);
 
         // Messages
         if (damager != null) {
-            killedByPlayer(arena, alvo, damager);
+            killedByPlayer(arena, target, damager);
         } else {
-            killedByNature(arena, alvo);
+            killedByNature(arena, target);
         }
 
         // Check if game ended
@@ -167,6 +175,12 @@ public class PlayerDeath implements Listener {
         }
     }
 
+    /**
+     * Update the killed player
+     *
+     * @param arena arena where player was killed
+     * @param target killes player
+     */
     private void updateKilledPlayer(Arena arena, Player target) {
         final PlayerDat targetDat = plugin.playerManager.getPlayerDatByUUID(target.getUniqueId());
         if (targetDat == null)
@@ -183,6 +197,12 @@ public class PlayerDeath implements Listener {
         // Update stats
         plugin.scoreBoardManager.updateWinsLosses(targetDat);
         plugin.scoreBoardManager.updateKillsDeaths(targetDat);
+
+        // Hide to Arena
+        plugin.arenaManager.hideToArena(target, false);
+
+        // Show to spectators
+        plugin.arenaManager.showToSpectators(target, true);
     }
 
     /**
