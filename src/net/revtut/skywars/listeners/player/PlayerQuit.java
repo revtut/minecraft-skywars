@@ -69,10 +69,6 @@ public class PlayerQuit implements Listener {
                 if(!p.hasPermission("rev.nolosepoints"))
                     playerDat.addPoints(0 - plugin.pointsPerKill * (1 + plugin.arenaManager.maxPlayers/(arena.getPlayers().size() * 10))); // Remove points because left before endgame
 
-        // Simulate player death
-        PlayerDeath playerDeath = new PlayerDeath(plugin);
-        playerDeath.updateArena(arena, p);
-
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true))
             plugin.getLogger().log(Level.WARNING, "Error while removing PlayerDat from arena on quit!");
@@ -82,6 +78,10 @@ public class PlayerQuit implements Listener {
 
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);
+
+        // Simulate player death
+        PlayerDeath playerDeath = new PlayerDeath(plugin);
+        playerDeath.updateArena(arena, p);
 
         // Remove from last damagers
         Map<UUID, UUID> lastDamagers = new HashMap<>(PlayerDamage.lastPlayerDamager);
