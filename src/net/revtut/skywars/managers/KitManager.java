@@ -214,7 +214,7 @@ public class KitManager {
             itemStack = new ItemStack(kit.getMaterial(), 1);
             itemMeta = itemStack.getItemMeta(); // ItemMeta
             itemMeta.setDisplayName(kit.getDisplayName()); // DisplayName
-            itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + "§b" + kit.getCost())); // Lore
+            itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §b" + kit.getCost())); // Lore
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }

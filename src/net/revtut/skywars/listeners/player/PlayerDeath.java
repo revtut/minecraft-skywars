@@ -118,6 +118,8 @@ public class PlayerDeath implements Listener {
                 if (winnerDat != null){
                     arenaDat.setWinner(winnerDat.getUUID().toString());
                     winnerDat.setStatus(PlayerStatus.WAITING); // Set status so he cannot die
+                    // Update its scoreboard
+                    plugin.scoreBoardManager.updateWinsLosses(winnerDat);
                 }
             }
             // Set Remaining Time
