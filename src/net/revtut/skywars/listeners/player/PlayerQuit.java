@@ -4,6 +4,7 @@ import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -80,8 +81,10 @@ public class PlayerQuit implements Listener {
         plugin.playerManager.removePlayerDat(playerDat);
 
         // Simulate player death
-        PlayerDeath playerDeath = new PlayerDeath(plugin);
-        playerDeath.updateArena(arena, p);
+        if(playerDat.getStatus() == PlayerStatus.ALIVE) {
+            PlayerDeath playerDeath = new PlayerDeath(plugin);
+            playerDeath.updateArena(arena, p);
+        }
 
         // Remove from last damagers
         Map<UUID, UUID> lastDamagers = new HashMap<>(PlayerDamage.lastPlayerDamager);
