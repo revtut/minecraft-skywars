@@ -256,6 +256,7 @@ public class SkyWars extends JavaPlugin {
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerRespawn(this), this);
+        pm.registerEvents(new PlayerTabComplete(this), this);
 
         /* Commands */
         getCommand("information").setExecutor(new Info(this));
