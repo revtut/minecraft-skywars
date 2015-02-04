@@ -6,8 +6,13 @@ import net.revtut.skywars.arena.tasks.ArenaEndGame;
 import net.revtut.skywars.arena.tasks.ArenaInGame;
 import net.revtut.skywars.arena.tasks.ArenaLobby;
 import net.revtut.skywars.arena.tasks.ArenaPreGame;
-import net.revtut.skywars.commands.Info;
-import net.revtut.skywars.commands.Stats;
+import net.revtut.skywars.commands.appearance.Fireworks;
+import net.revtut.skywars.commands.building.GameMode;
+import net.revtut.skywars.commands.building.Speed;
+import net.revtut.skywars.commands.game.Info;
+import net.revtut.skywars.commands.game.Stats;
+import net.revtut.skywars.commands.mechanics.Time;
+import net.revtut.skywars.commands.teleport.*;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
 import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.libraries.bypasses.BypassesAPI;
@@ -258,8 +263,22 @@ public class SkyWars extends JavaPlugin {
         pm.registerEvents(new PlayerRespawn(this), this);
 
         /* Commands */
+        // Appearance
+        getCommand("firework").setExecutor(new Fireworks(this));
+        // Building
+        getCommand("gamemode").setExecutor(new GameMode(this));
+        getCommand("speed").setExecutor(new Speed(this));
+        // Game
         getCommand("information").setExecutor(new Info(this));
         getCommand("statistics").setExecutor(new Stats(this));
+        // Mechanics
+        getCommand("time").setExecutor(new Time(this));
+        // Teleport
+        getCommand("spawn").setExecutor(new Spawn(this));
+        getCommand("teleportall").setExecutor(new TeleportAll(this));
+        getCommand("teleporthere").setExecutor(new TeleportHere(this));
+        getCommand("teleportpos").setExecutor(new TeleportPos(this));
+        getCommand("teleport").setExecutor(new TeleportTo(this));
     }
 
     /**

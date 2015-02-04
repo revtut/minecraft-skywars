@@ -10,8 +10,12 @@ main: net.revtut.skywars.SkyWars
 ############
 
 commands:
+# Appearance
+  firework:
+    description: Launch Firework
+    aliases: [fw, feuartifice, feuerwerk, fogoartificio, fuegoartificiale]
 
-# All commands
+# Game
   information:
     description: Information about a game
     aliases: [info, status, informationen, informacao, informacion]
@@ -19,11 +23,39 @@ commands:
     description: Statistics of the player
     aliases: [stats, statistiques, statistik, estatisticas, estadisticas]
 
+# Teleport
+  spawn:
+    description: Teleport To Spawn
+  teleportall:
+    description: Teleport All Players
+    aliases: [tpall, teleportertous, alleteleportieren, teleportartodos, teletransportarsetodo]
+  teleporthere:
+    description: Teleport Player To You
+    aliases: [tphere, teleporterici, teleportierenhier, teleportaraqui, teletransportarseaquí]
+  teleportpos:
+    description: Teleport To X Y Z
+    aliases: [tppos, teleportierenpos, teleportarpos, telepuertopos]
+  teleport:
+    description: Teleport To Player [From Player]
+    aliases: [tp, teleportieren, teleportar, telepuerto]
+
 ##############
 # PERMISSOES #
 ##############
 
 permissions:
+# Appearance
+  rev.firework:
+    description: Permission to launch firework
+    default: op
+
+# Building
+  rev.gamemode:
+    description: Permission to switch game mode
+    default: op
+  rev.speed:
+    description: Permission to change speed
+    default: op
 
 # Chat
   rev.advertisment:
@@ -48,4 +80,23 @@ permissions:
 # Game
   rev.nolosepoints:
     description: Permission to leave the game without losing points
+    default: op
+
+# Mechanics
+  rev.time:
+    description: Permission to change the time
+    default: op
+
+# Teleport
+  rev.teleportall:
+    description: Permission to teleport all players
+    default: op
+  rev.teleporthere:
+    description: Permission to teleport player to you
+    default: op
+  rev.teleportpos:
+    description: Permission to teleport to x y z
+    default: op
+  rev.teleport:
+    description: Permission to teleport to player [from player]
     default: op

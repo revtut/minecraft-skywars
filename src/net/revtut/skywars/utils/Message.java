@@ -25,6 +25,36 @@ public enum Message {
     ALLOWED_OPEN_CHESTS,
 
     /**
+     * Buy VIP message when trying to use a VIP command
+     */
+    COMMAND_BUY_VIP,
+
+    /**
+     * Command Game Mode Changed
+     */
+    COMMAND_GAMEMODE_CHANGED,
+
+    /**
+     * Command Teleported
+     */
+    COMMAND_TELEPORT,
+
+    /**
+     * Command Time Changed
+     */
+    COMMAND_TIME_CHANGED,
+
+    /**
+     * Command Speed Changed
+     */
+    COMMAND_SPEED_CHANGED,
+
+    /**
+     * Correct sintax message
+     */
+    CORRECT_SINTAX,
+
+    /**
      * Scoreboard - Dead
      */
     DEAD,
@@ -103,7 +133,6 @@ public enum Message {
      * Scoreboard - Losses
      */
     LOSSES,
-
 
     /**
      * Minimum players to start the game has not been achieved
@@ -221,6 +250,11 @@ public enum Message {
     PLAYER_LEFT_GAME,
 
     /**
+     * Player not online message
+     */
+    PLAYER_NOT_ONLINE,
+
+    /**
      * There is an error with the player's profile
      */
     PLAYER_PROFILE_ERROR,
@@ -259,6 +293,11 @@ public enum Message {
      * Game time out
      */
     TIME_OUT,
+
+    /**
+     * Please use integers message
+     */
+    USE_INTEGERS,
 
     /**
      * Winner of the match
@@ -329,6 +368,18 @@ public enum Message {
                 return getAlive(language);
             case ALLOWED_OPEN_CHESTS:
                 return gamePrefix + getAllowedOpenChests(language);
+            case COMMAND_BUY_VIP:
+                return gamePrefix + getCommandBuyVIP(language);
+            case COMMAND_GAMEMODE_CHANGED:
+                return gamePrefix + getCommandGameModeChanged(language);
+            case COMMAND_TELEPORT:
+                return gamePrefix + getCommandTeleport(language);
+            case COMMAND_TIME_CHANGED:
+                return gamePrefix + getCommandTimeChanged(language);
+            case COMMAND_SPEED_CHANGED:
+                return gamePrefix + getCommandSpeedChanged(language);
+            case CORRECT_SINTAX:
+                return inspectorPrefix + getCorrectSintax(language);
             case DEAD:
                 return getDead(language);
             case DEATHS:
@@ -407,6 +458,8 @@ public enum Message {
                 return gamePrefix + getPlayerKilledBy(language);
             case PLAYER_LEFT_GAME:
                 return gamePrefix + getPlayerLeftGame(language);
+            case PLAYER_NOT_ONLINE:
+                return inspectorPrefix + getPlayerNotOnline(language);
             case PLAYER_PROFILE_ERROR:
                 return inspectorPrefix + getPlayerProfileError(language);
             case PLAYER_SPAM:
@@ -423,6 +476,8 @@ public enum Message {
                 return gamePrefix + getTaticalEnabledInvisibility(language);
             case TIME_OUT:
                 return getTimeOut(language);
+            case USE_INTEGERS:
+                return inspectorPrefix + getUseIntegers(language);
             case WINNER:
                 return getWinner(language);
             case WINS:
@@ -489,6 +544,156 @@ public enum Message {
                 return "§aAhora puede abrir los cofres!";
             default:
                 return "§aYou may now open the chests!";
+        }
+    }
+
+    /**
+     * Get the buy vip message when trying to use a vip command
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandBuyVIP(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§4You must become VIP to do that!";
+            case FRENCH:
+                return "§4Vous devez devenir VIP pour faire ça!";
+            case GERMAN:
+                return "§4Sie müssen VIP, das zu tun zu werden!";
+            case PORTUGUESE_PT:
+                return "§4Para fazeres isso tens que adquirir o VIP!";
+            case PORTUGUESE_BR:
+                return "§4Você deve se tornar VIP para fazer isso!";
+            case SPANISH:
+                return "§4Usted debe convertirse en VIP a hacer eso!";
+            default:
+                return "§4You must become VIP to do that!";
+        }
+    }
+
+    /**
+     * Get the game mode changed message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandGameModeChanged(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§aYour gamemode has been changed to ";
+            case FRENCH:
+                return "§aVotre mode de jeu a été changé pour ";
+            case GERMAN:
+                return "§aIhre Spielmodus wurde geändert ";
+            case PORTUGUESE_PT:
+                return "§aO modo de jogo foi alterado para ";
+            case PORTUGUESE_BR:
+                return "§aO seu modo de jogo foi alterado para ";
+            case SPANISH:
+                return "§aSu modo de juego se ha cambiado a ";
+            default:
+                return "§aYour gamemode has been changed to ";
+        }
+    }
+
+    /**
+     * Get the teleport to location message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandTeleport(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§aYou have been teleported to ";
+            case FRENCH:
+                return "§aVous avez été téléporté ";
+            case GERMAN:
+                return "§aSie haben, um teleportiert ";
+            case PORTUGUESE_PT:
+                return "§aFoste teleportado para ";
+            case PORTUGUESE_BR:
+                return "§aVocê foi teleportado para ";
+            case SPANISH:
+                return "§aUsted ha sido teletransportado a ";
+            default:
+                return "§aYou have been teleported to ";
+        }
+    }
+
+    /**
+     * Get the time changed message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandTimeChanged(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§aTime has been changed to ";
+            case FRENCH:
+                return "§aLe temps a été modifié pour ";
+            case GERMAN:
+                return "§aZeit wurde geändert ";
+            case PORTUGUESE_PT:
+                return "§aO tempo foi alterado para ";
+            case PORTUGUESE_BR:
+                return "§aO tempo foi alterado para ";
+            case SPANISH:
+                return "§aEl tiempo ha sido cambiado a ";
+            default:
+                return "§aTime has been changed to ";
+        }
+    }
+
+    /**
+     * Get the speed changed message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandSpeedChanged(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§aYour speed has been changed to ";
+            case FRENCH:
+                return "§aVotre vitesse a été modifiée pour ";
+            case GERMAN:
+                return "§aIhre Geschwindigkeit wurde geändert ";
+            case PORTUGUESE_PT:
+                return "§aA sua velocidade foi alterada para ";
+            case PORTUGUESE_BR:
+                return "§aA sua velocidade foi alterada para ";
+            case SPANISH:
+                return "§aSu velocidad ha cambiado a ";
+            default:
+                return "§aYour speed has been changed to ";
+        }
+    }
+
+    /**
+     * Get correct sintax message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCorrectSintax(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§cCorrect usage: ";
+            case FRENCH:
+                return "§cUtilisation correcte: ";
+            case GERMAN:
+                return "§cBestimmungsgemäßer Gebrauch: ";
+            case PORTUGUESE_PT:
+                return "§cSintaxe correta: ";
+            case PORTUGUESE_BR:
+                return "§cSintaxe correta: ";
+            case SPANISH:
+                return "§cUso correcto: ";
+            default:
+                return "§cCorrect usage: ";
         }
     }
 
@@ -1243,6 +1448,31 @@ public enum Message {
     }
 
     /**
+     * Get player not online message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getPlayerNotOnline(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§4That player is not online!";
+            case FRENCH:
+                return "§4Ce joueur ne est pas online!";
+            case GERMAN:
+                return "§4Dieser Spieler ist nicht online!";
+            case PORTUGUESE_PT:
+                return "§4Esse jogador não se encontra online!";
+            case PORTUGUESE_BR:
+                return "§4Esse jogador não está online!";
+            case SPANISH:
+                return "§4Ese jugador no está online!";
+            default:
+                return "§4That player is not online!";
+        }
+    }
+
+    /**
      * Get player joined the game message
      *
      * @param language language to get the translation
@@ -1639,6 +1869,31 @@ public enum Message {
                 return "§4SE ACABÓ EL TIEMPO";
             default:
                 return "§4TIME OUT";
+        }
+    }
+
+    /**
+     * Get use integers message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getUseIntegers(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§4Please use integers.";
+            case FRENCH:
+                return "§4Se il vous plaît utiliser les nombres entiers.";
+            case GERMAN:
+                return "§4Bitte verwenden Sie ganze Zahlen.";
+            case PORTUGUESE_PT:
+                return "§4Por favor usar números inteiros.";
+            case PORTUGUESE_BR:
+                return "§4Você tem que usar números inteiros.";
+            case SPANISH:
+                return "§4Por favor, use números enteros.";
+            default:
+                return "§4Please use integers.";
         }
     }
 

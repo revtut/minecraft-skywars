@@ -1,4 +1,4 @@
-package net.revtut.skywars.commands;
+package net.revtut.skywars.commands.game;
 
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
