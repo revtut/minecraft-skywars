@@ -94,7 +94,7 @@ public class PlayerDeath implements Listener {
         }
 
         // Update killed player
-        updateKilledPlayer(arena, target);
+        updateKilledPlayer(target);
 
         // Scoreboard update alive players and dead
         plugin.scoreBoardManager.updateAlive(arena);
@@ -118,8 +118,6 @@ public class PlayerDeath implements Listener {
                 if (winnerDat != null){
                     arenaDat.setWinner(winnerDat.getUUID().toString());
                     winnerDat.setStatus(PlayerStatus.WAITING); // Set status so he cannot die
-                    // Update its scoreboard
-                    plugin.scoreBoardManager.updateWinsLosses(winnerDat);
                 }
             }
             // Set Remaining Time
@@ -180,10 +178,9 @@ public class PlayerDeath implements Listener {
     /**
      * Update the killed player
      *
-     * @param arena arena where player was killed
      * @param target killes player
      */
-    private void updateKilledPlayer(Arena arena, Player target) {
+    private void updateKilledPlayer(Player target) {
         final PlayerDat targetDat = plugin.playerManager.getPlayerDatByUUID(target.getUniqueId());
         if (targetDat == null)
             return;

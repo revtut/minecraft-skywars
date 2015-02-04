@@ -692,7 +692,7 @@ public class ArenaManager {
     /**
      * Hide player to the arena
      *
-     * @param player      player to unhide to the arena
+     * @param player      player to hide to the arena
      * @param toPlayerToo true if hide all in the arena to player
      * @return true if sucessfully hided to the players in the arena
      */

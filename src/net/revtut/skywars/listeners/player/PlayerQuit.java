@@ -85,9 +85,7 @@ public class PlayerQuit implements Listener {
 
         // Remove from last damagers
         Map<UUID, UUID> lastDamagers = new HashMap<>(PlayerDamage.lastPlayerDamager);
-        for(Map.Entry<UUID, UUID> entry : lastDamagers.entrySet())
-                if(entry.getValue().equals(playerDat.getUUID()))
-                    PlayerDamage.lastPlayerDamager.remove(entry.getKey());
+        lastDamagers.entrySet().stream().filter(entry -> entry.getValue().equals(playerDat.getUUID())).forEach(entry -> PlayerDamage.lastPlayerDamager.remove(entry.getKey()));
 
         // MySQL Tasks
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updatePlayerDat(playerDat));

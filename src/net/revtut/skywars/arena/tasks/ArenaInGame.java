@@ -171,9 +171,6 @@ public class ArenaInGame implements Runnable {
                     int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
                     alvoDat.addPoints(poinsEarned);
 
-                    // Update stats
-                    plugin.scoreBoardManager.updateWinsLosses(alvoDat);
-
                     // Arena ended without any winner
                     if (arenaDat.getWinner().equals("NULL")) {
                         // Titles
@@ -222,6 +219,10 @@ public class ArenaInGame implements Runnable {
 
                     // Chat message
                     alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winnerName);
+
+                    // Update stats
+                    plugin.scoreBoardManager.updateWinsLosses(alvoDat);
+
                     break;
             }
         });

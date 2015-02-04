@@ -58,7 +58,6 @@ public class PlayerMove implements Listener {
             return;
 
         // Engineer
-        // Guardian
         arena.getKitManager().engineer.landMineActivate(player);
 
         // Dead
