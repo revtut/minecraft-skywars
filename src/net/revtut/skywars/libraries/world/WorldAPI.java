@@ -76,14 +76,10 @@ public final class WorldAPI {
             world.unloadChunk(chunk);
 
         // Unload world
-        if (null == plugin) {
-            plugin.getLogger().log(Level.WARNING, "Main plugin is null inside WorldAPI!");
-            return false;
-        }
-
+        boolean successfull = Bukkit.unloadWorld(world, true);
         RegionFileCache.a();
 
-        return Bukkit.unloadWorld(world, true);
+        return successfull;
     }
 
     /**

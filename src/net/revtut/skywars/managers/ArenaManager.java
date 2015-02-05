@@ -289,10 +289,8 @@ public class ArenaManager {
         // Unload of the World
         boolean unloaded = WorldAPI.unloadWorld(arena.getMapName());
 
-        if(!unloaded){
-            plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName());
-            return false;
-        }
+        if(!unloaded)
+            plugin.getLogger().log(Level.SEVERE, "Error while unloading world " + arena.getMapName() + "... Trying to remove the folder anyway.");
 
         // Remove Directory
         if (!WorldAPI.removeDirectory(new File(System.getProperty("user.dir") + File.separator + arena.getMapName())))
