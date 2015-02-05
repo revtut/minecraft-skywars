@@ -38,11 +38,6 @@ public class PlayerCommand implements Listener {
     }
 
     /**
-     * Array with all the blocked commands
-     */
-    private final String[] blockedCommands = { "/pl", "/plugins", "/about", "/bukkit:", "/ver", "version", "/?", "/op", "/deop", "/server", "/lag", "/stop", "/start", "/restart", "/nocheatplus", "/ncp"};
-
-    /**
      * Player command cooldown
      */
     private final Map<UUID, Long> cooldownCommand = new HashMap<>();
@@ -68,16 +63,6 @@ public class PlayerCommand implements Listener {
                 return;
             } else {
                 cooldownCommand.remove(player.getUniqueId());
-            }
-        }
-
-        // Blocked commands
-        String message = e.getMessage();
-        for(String blockedCommand : blockedCommands) {
-            if(message.contains(blockedCommand)) {
-                e.setCancelled(true);
-                player.sendMessage(Message.getMessage(Message.PLAYER_BLOCKED_COMMAND, player));
-                return;
             }
         }
 

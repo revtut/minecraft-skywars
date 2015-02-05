@@ -15,6 +15,14 @@ commands:
     description: Launch Firework
     aliases: [fw, feuartifice, feuerwerk, fogoartificio, fuegoartificiale]
 
+# Building
+  gamemode:
+    description: Switch Game Mode
+    aliases: [gm, modejeu, spielmodus, modojogo, modojuego]
+  speed:
+    description: Change Speed
+    aliases: [vitesse, geschwindigkeit, velocidade, velocidad]
+
 # Game
   information:
     description: Information about a game
@@ -22,6 +30,11 @@ commands:
   statistics:
     description: Statistics of the player
     aliases: [stats, statistiques, statistik, estatisticas, estadisticas]
+
+# Mechanics
+  time:
+    description: Change The Time and Weather
+    aliases: [weather, temps, zeit, tempo, tiempo]
 
 # Teleport
   spawn:
