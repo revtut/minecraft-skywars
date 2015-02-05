@@ -110,6 +110,7 @@ public class PlayerManager {
         if (clearInv) {
             player.getInventory().clear();
             player.getInventory().setArmorContents(null);
+            player.updateInventory();
         }
         player.setFireTicks(fireTicks);
         return true;
