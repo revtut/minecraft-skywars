@@ -49,8 +49,8 @@ public class Speed implements CommandExecutor {
                 return true;
             }
 
-            if (args.length > 1) {
-                player.sendMessage(Message.getMessage(Message.CORRECT_SINTAX, player) + "/speed <speed> <player>");
+            if (args.length > 2) {
+                player.sendMessage(Message.getMessage(Message.CORRECT_SINTAX, player) + "/speed <speed> [player]");
                 return true;
             }
 
@@ -66,8 +66,8 @@ public class Speed implements CommandExecutor {
                     player.sendMessage(Message.getMessage(Message.USE_INTEGERS, player));
                 }
                 return true;
-            } else {
-                Player alvo = Bukkit.getPlayer(args[0]);
+            } else if(args.length == 2) {
+                Player alvo = Bukkit.getPlayer(args[1]);
                 if (alvo == null) {
                     player.sendMessage(Message.getMessage(Message.PLAYER_NOT_ONLINE, player));
                     return true;
@@ -84,6 +84,9 @@ public class Speed implements CommandExecutor {
                 } catch (Exception e) {
                     player.sendMessage(Message.getMessage(Message.USE_INTEGERS, player));
                 }
+                return true;
+            } else {
+                player.sendMessage(Message.getMessage(Message.CORRECT_SINTAX, player) + "/speed <speed> [player]");
                 return true;
             }
         } else {
