@@ -86,7 +86,12 @@ public class PlayerDamage implements Listener {
         else if (entity instanceof FishHook)
             damager = (Player) ((FishHook) entity).getShooter();
         else if (entity instanceof Arrow)
-            damager = (Player) ((Arrow) entity).getShooter();
+            if(((Arrow) entity).getShooter() instanceof Player)
+                damager = (Player) ((Arrow) entity).getShooter();
+            else {
+                e.setCancelled(true);
+                return;
+            }
         if (damager == null) {
             e.setCancelled(true);
             return;

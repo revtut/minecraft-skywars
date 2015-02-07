@@ -2,11 +2,9 @@ package net.revtut.skywars.libraries.world;
 
 import net.minecraft.server.v1_8_R1.RegionFileCache;
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.libraries.bypasses.BypassesAPI;
 import net.revtut.skywars.libraries.reflection.ReflectionAPI;
 import org.bukkit.*;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,15 +63,18 @@ public final class WorldAPI {
         world.setKeepSpawnInMemory(false);
 
         // Kick remaining players
-        for (Player player : world.getPlayers()) {
-            if(player.isDead())
-                BypassesAPI.respawnBypass(player);
-            player.kickPlayer("§4How were you in the world? o.O");
-        }
+        world.getPlayers().forEach(player -> player.kickPlayer("§fUps, looks like I was disconnected!"));
+
+        // Remove all living entities
+        world.getLivingEntities().forEach(org.bukkit.entity.LivingEntity::remove);
+
+        // Remove all entities
+        world.getEntities().forEach(org.bukkit.entity.Entity::remove);
 
         // Unload all the chunks
-        for(Chunk chunk : world.getLoadedChunks())
-            world.unloadChunk(chunk);
+        for (Chunk chunk : world.getLoadedChunks()) {
+            chunk.unload();
+        }
 
         // Unload world
         boolean successfull = Bukkit.unloadWorld(world, true);

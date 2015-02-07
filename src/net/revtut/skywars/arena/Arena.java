@@ -104,14 +104,16 @@ public class Arena {
      * @param args arguments of the message will be attached at the end of it
      */
     public void sendMessage(Message message, String args) {
-        players.forEach(playerDat -> {
-            Player player = Bukkit.getPlayer(playerDat.getUUID());
-            if (player == null)
-                return;
-            // Send message
-            String translatedMessage = Message.getMessage(message, player);
-            player.sendMessage(translatedMessage + args);
-        });
+        synchronized (players) {
+            players.forEach(playerDat -> {
+                Player player = Bukkit.getPlayer(playerDat.getUUID());
+                if (player == null)
+                    return;
+                // Send message
+                String translatedMessage = Message.getMessage(message, player);
+                player.sendMessage(translatedMessage + args);
+            });
+        }
     }
 
     /**
