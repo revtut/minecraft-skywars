@@ -5,6 +5,7 @@ import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
+import net.revtut.skywars.utils.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -65,7 +66,7 @@ public class PlayerQuit implements Listener {
         if (arena != null)
             if(arena.getStatus() == ArenaStatus.INGAME)
                 if(!p.hasPermission("rev.nolosepoints"))
-                    playerDat.addPoints(0 - plugin.pointsPerKill * (1 + plugin.arenaManager.maxPlayers/(arena.getPlayers().size() * 10))); // Remove points because left before endgame
+                    playerDat.addPoints(0 - Reward.KILL.calculatePoints(playerDat)); // Remove points because left before endgame
 
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true))

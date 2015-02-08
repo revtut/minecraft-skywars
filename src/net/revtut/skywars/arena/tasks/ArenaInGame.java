@@ -13,6 +13,7 @@ import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
+import net.revtut.skywars.utils.Reward;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -168,8 +169,7 @@ public class ArenaInGame implements Runnable {
                         BypassesAPI.respawnBypass(alvo);
 
                     // Points earned for playing the game
-                    int poinsEarned = (int) (plugin.pointsPerGame + plugin.pointsPerGame * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerGame * ((float) plugin.rand.nextInt(26) / 100));
-                    alvoDat.addPoints(poinsEarned);
+                    alvoDat.addPoints(Reward.PARTICIPATION.calculatePoints(alvoDat));
 
                     // Arena ended without any winner
                     if (arenaDat.getWinner().equals("NULL")) {
@@ -194,8 +194,7 @@ public class ArenaInGame implements Runnable {
                     // Check if he is the winner
                     if (winnerName.equalsIgnoreCase(alvo.getName())) {
                         // Points earned for winning
-                        poinsEarned = (int) (plugin.pointsPerWin + plugin.pointsPerWin * ((float) alvoDat.getGameKills() / arenaDat.getInitialPlayers().size()) + plugin.pointsPerWin * ((float) plugin.rand.nextInt(51) / 100));
-                        alvoDat.addPoints(poinsEarned);
+                        alvoDat.addPoints(Reward.WIN.calculatePoints(alvoDat));
 
                         // Add win
                         alvoDat.addWin();

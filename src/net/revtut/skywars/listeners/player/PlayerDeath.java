@@ -9,6 +9,7 @@ import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
+import net.revtut.skywars.utils.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -217,8 +218,7 @@ public class PlayerDeath implements Listener {
             return;
 
         // Points earned
-        int poinsEarned = (int) (plugin.pointsPerKill + plugin.pointsPerKill * ((float) damagerDat.getGameKills() / arena.getArenaDat().getInitialPlayers().size()) + plugin.pointsPerKill * ((float) plugin.rand.nextInt(11) / 100));
-        damagerDat.addPoints(poinsEarned);
+        damagerDat.addPoints(Reward.KILL.calculatePoints(damagerDat));
 
         // Add kill
         damagerDat.addKill();
