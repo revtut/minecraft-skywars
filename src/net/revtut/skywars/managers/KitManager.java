@@ -214,7 +214,10 @@ public class KitManager {
             itemStack = new ItemStack(kit.getMaterial(), 1);
             itemMeta = itemStack.getItemMeta(); // ItemMeta
             itemMeta.setDisplayName(kit.getDisplayName()); // DisplayName
-            itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §b" + kit.getCost())); // Lore
+            if(!player.hasPermission("rev.halfcost"))
+                itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §b" + kit.getCost())); // Lore
+            else
+                itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §4§m" + kit.getCost() + " " + "§b" + (kit.getCost()/2))); // Lore
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
@@ -250,15 +253,21 @@ public class KitManager {
         }
         // Choosen kit
         Kit kit = Kit.values()[position];
+        // Cost
+        int cost = 0;
+        if(!player.hasPermission("rev.halfcost"))
+            cost = kit.getCost();
+        else
+            cost = kit.getCost() / 2;
         // Check if player has enough points
-        if(playerDat.getPoints() < kit.getCost()){
+        if(playerDat.getPoints() < cost){
             player.sendMessage(Message.getMessage(Message.NOT_ENOUGH_POINTS_FOR_KIT, player));
             return;
         }
         // Add to map
         playerKit.put(playerDat.getUUID(), kit);
         // Decrease points
-        playerDat.addPoints(0 - kit.getCost());
+        playerDat.addPoints(0 - cost);
         // Message
         player.sendMessage(Message.getMessage(Message.KIT_BOUGHT, player) + ChatColor.stripColor(kit.getDisplayName()) + "!");
     }

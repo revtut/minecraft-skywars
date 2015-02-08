@@ -113,3 +113,8 @@ permissions:
   rev.teleport:
     description: Permission to teleport to player [from player]
     default: op
+
+# Utils
+  rev.halfcost:
+    description: Permission to get the kits for the half of its cost
+    default: op

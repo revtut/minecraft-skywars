@@ -25,3 +25,9 @@ Tatical(fantasma)
 
 Screamer
 - Ainda por definir
+
+Life
+- +3 corações durante o jogo
+
+EnderPearl
+- Adicionar algumas enderpearls
