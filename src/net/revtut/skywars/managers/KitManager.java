@@ -217,7 +217,7 @@ public class KitManager {
             if(!player.hasPermission("rev.halfcost"))
                 itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §b" + kit.getCost())); // Lore
             else
-                itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §4§m" + kit.getCost() + " " + "§b" + (kit.getCost()/2))); // Lore
+                itemMeta.setLore(Arrays.asList("§7" + ChatColor.stripColor(Message.getMessage(Message.POINTS, player)) + " §4§m" + kit.getCost() + "§r " + "§b" + (kit.getCost()/2))); // Lore
             itemStack.setItemMeta(itemMeta); // Set iteMeta
             inventory.setItem(i , itemStack);
         }
