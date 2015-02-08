@@ -202,7 +202,7 @@ public class Arena {
         // Lobby
         if (this.status == ArenaStatus.LOBBY || this.status == ArenaStatus.PREGAME)
             return this.getPlayers();
-        
+
         // Already ingame
         alivePlayers.addAll(players.stream().filter(player -> (player.getStatus() == PlayerStatus.ALIVE || player.getStatus() == PlayerStatus.WAITING)).collect(Collectors.toList()));
         return alivePlayers;
@@ -282,7 +282,6 @@ public class Arena {
     public void setKitManager(KitManager kitManager) {
         this.kitManager = kitManager;
     }
-
 
     /**
      * Set the players of the arena
