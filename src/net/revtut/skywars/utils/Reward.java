@@ -92,17 +92,17 @@ public enum Reward {
         switch (this) {
             case PARTICIPATION:
                 points += this.getPoints();
-                points += this.getPoints() * ((float) playerDat.getKills() / 24);
+                points += this.getPoints() * ((float) playerDat.getGameKills() / 24);
                 points += this.getPoints() * ((float) rand.nextInt(11) / 100);
                 break;
             case KILL:
                 points += this.getPoints();
-                points += this.getPoints() * ((float) playerDat.getKills() / 24);
+                points += this.getPoints() * ((float) playerDat.getGameKills() / 24);
                 points += this.getPoints() * ((float) rand.nextInt(26) / 100);
                 break;
             case WIN:
                 points += this.getPoints();
-                points += this.getPoints() * ((float) playerDat.getKills() / 24);
+                points += this.getPoints() * ((float) playerDat.getGameKills() / 24);
                 points += this.getPoints() * ((float) rand.nextInt(51) / 100);
                 break;
         }
