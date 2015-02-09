@@ -169,7 +169,7 @@ public class ArenaInGame implements Runnable {
                         BypassesAPI.respawnBypass(alvo);
 
                     // Points earned for playing the game
-                    alvoDat.addPoints(Reward.PARTICIPATION.calculatePoints(alvoDat));
+                    int pointsEarned = Reward.PARTICIPATION.calculatePoints(alvoDat);
 
                     // Arena ended without any winner
                     if (arenaDat.getWinner().equals("NULL")) {
@@ -194,7 +194,7 @@ public class ArenaInGame implements Runnable {
                     // Check if he is the winner
                     if (winnerName.equalsIgnoreCase(alvo.getName())) {
                         // Points earned for winning
-                        alvoDat.addPoints(Reward.WIN.calculatePoints(alvoDat));
+                        pointsEarned += Reward.WIN.calculatePoints(alvoDat);
 
                         // Add win
                         alvoDat.addWin();
@@ -215,6 +215,9 @@ public class ArenaInGame implements Runnable {
                         TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.YOU_LOST, alvo)));
                         TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(Message.getMessage(Message.WINNER, alvo) + winnerName));
                     }
+
+                    // Add the points
+                    alvoDat.addPoints(pointsEarned);
 
                     // Chat message
                     alvo.sendMessage(Message.getMessage(Message.GAME_WINNER, alvo) + winnerName);
