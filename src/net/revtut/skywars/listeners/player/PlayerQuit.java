@@ -69,6 +69,15 @@ public class PlayerQuit implements Listener {
                 if(!p.hasPermission("rev.nolosepoints"))
                     playerDat.addPoints(0 - Reward.KILL.calculatePoints(playerDat)); // Remove points because left before endgame
 
+        // Simulate player death
+        if(playerDat.getStatus() == PlayerStatus.ALIVE) {
+            PlayerDeath playerDeath = new PlayerDeath(plugin);
+            playerDeath.updateArena(arena, p);
+        }
+
+        // MySQL Tasks
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updatePlayerDat(playerDat));
+
         // Remove from arena
         if (!plugin.arenaManager.removePlayer(playerDat, true))
             plugin.getLogger().log(Level.WARNING, "Error while removing PlayerDat from arena on quit!");
@@ -79,18 +88,9 @@ public class PlayerQuit implements Listener {
         // Remove playerDat
         plugin.playerManager.removePlayerDat(playerDat);
 
-        // Simulate player death
-        if(playerDat.getStatus() == PlayerStatus.ALIVE) {
-            PlayerDeath playerDeath = new PlayerDeath(plugin);
-            playerDeath.updateArena(arena, p);
-        }
-
         // Remove from last damagers
         Map<UUID, UUID> lastDamagers = new HashMap<>(PlayerDamage.lastPlayerDamager);
         lastDamagers.entrySet().stream().filter(entry -> entry.getValue().equals(playerDat.getUUID())).forEach(entry -> PlayerDamage.lastPlayerDamager.remove(entry.getKey()));
-
-        // MySQL Tasks
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.mysql.updatePlayerDat(playerDat));
 
         // Remove the craft player
         CraftPlayer craftPlayer = (CraftPlayer) p;
