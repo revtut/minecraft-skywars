@@ -1,5 +1,6 @@
 package net.revtut.skywars.arena.tasks;
 
+import net.revtut.permissions.api.PermissionsAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
@@ -7,11 +8,9 @@ import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.utils.Message;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -190,13 +189,29 @@ public class ArenaLobby implements Runnable {
                 continue;
             }
 
-            // Teleport player
+            // Teleport Location
             final Location spawnLocation = arenaLocation.getSpawnLocations().get(i);
             if (spawnLocation == null) {
                 plugin.getLogger().log(Level.WARNING, "Spawn location " + i + " is null when chaning from Lobby to PreGame");
                 continue;
             }
-            arenaDat.addInitialPlayer(alvoDat.getUUID().toString()); // Add to initial players list
+
+            // Change the color of the glass
+            ItemStack glassItemStack = getGlassMaterial(alvo);
+            for(int x = spawnLocation.getBlockX() - 1; x < spawnLocation.getBlockX() + 1; x++)
+                for(int z = spawnLocation.getBlockZ() - 1; z < spawnLocation.getBlockZ() + 1; z++)
+                    for(int y = spawnLocation.getBlockY() - 1; y < spawnLocation.getBlockY() + 3; y++) {
+                        Location location = new Location(spawnLocation.getWorld(), x, y, z);
+                        if(location.getBlock().getType().equals(Material.GLASS)
+                                || location.getBlock().getType().equals(Material.STAINED_GLASS)) {
+                            location.getBlock().setType(glassItemStack.getType());
+                            location.getBlock().setData(glassItemStack.getData().getData());
+                        }
+                    }
+
+            // Add to initial players list
+            arenaDat.addInitialPlayer(alvoDat.getUUID().toString());
+
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 alvo.teleport(spawnLocation);
                 // Give kit menu to the player
@@ -204,5 +219,47 @@ public class ArenaLobby implements Runnable {
             }, i);
             i++;
         }
+    }
+
+    /**
+     * Get the glass color and type around the player
+     *
+     * @param player player to get the glass
+     * @return glass color and type
+     */
+    private ItemStack getGlassMaterial(Player player) {
+        String displayName = player.getDisplayName();
+        if(displayName.startsWith("§f"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 0);
+        else if(displayName.startsWith("§6"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 1);
+        else if(displayName.startsWith("§d"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 2);
+        else if(displayName.startsWith("§b"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 3);
+        else if(displayName.startsWith("§e"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 4);
+        else if(displayName.startsWith("§a"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 5);
+        else if(displayName.startsWith("§c"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 6);
+        else if(displayName.startsWith("§8"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 7);
+        else if(displayName.startsWith("§7"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 8);
+        else if(displayName.startsWith("§3"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 9);
+        else if(displayName.startsWith("§5"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 10);
+        else if(displayName.startsWith("§9"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 11);
+        else if(displayName.startsWith("§2"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 13);
+        else if(displayName.startsWith("§4"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 14);
+        else if(displayName.startsWith("§0"))
+            return new ItemStack(Material.STAINED_GLASS, 1, (byte) 15);
+        else
+            return new ItemStack(Material.GLASS, 1, (byte) 0);
     }
 }
