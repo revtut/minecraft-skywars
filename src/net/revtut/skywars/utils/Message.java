@@ -25,6 +25,11 @@ public enum Message {
     ALLOWED_OPEN_CHESTS,
 
     /**
+     * Blocked command during ingame
+     */
+    COMMAND_BLOCKED_INGAME,
+
+    /**
      * Buy VIP message when trying to use a VIP command
      */
     COMMAND_BUY_VIP,
@@ -300,6 +305,11 @@ public enum Message {
     USE_INTEGERS,
 
     /**
+     * Wait before using it again
+     */
+    WAIT_BEFORE_USE_AGAIN,
+
+    /**
      * Winner of the match
      */
     WINNER,
@@ -368,6 +378,8 @@ public enum Message {
                 return getAlive(language);
             case ALLOWED_OPEN_CHESTS:
                 return gamePrefix + getAllowedOpenChests(language);
+            case COMMAND_BLOCKED_INGAME:
+                return inspectorPrefix + getCommandBlockedIngame(language);
             case COMMAND_BUY_VIP:
                 return gamePrefix + getCommandBuyVIP(language);
             case COMMAND_GAMEMODE_CHANGED:
@@ -478,6 +490,8 @@ public enum Message {
                 return getTimeOut(language);
             case USE_INTEGERS:
                 return inspectorPrefix + getUseIntegers(language);
+            case WAIT_BEFORE_USE_AGAIN:
+                return inspectorPrefix + getWaitBeforUseAgain(language);
             case WINNER:
                 return getWinner(language);
             case WINS:
@@ -544,6 +558,31 @@ public enum Message {
                 return "§aAhora puede abrir los cofres!";
             default:
                 return "§aYou may now open the chests!";
+        }
+    }
+
+    /**
+     * Get command blocked during ingame message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandBlockedIngame(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§4Not available during the game.";
+            case FRENCH:
+                return "§4Non disponible au cours du jeu.";
+            case GERMAN:
+                return "§4Nicht verfügbar während des Spiels.";
+            case PORTUGUESE_PT:
+                return "§4Não disponível durante o jogo.";
+            case PORTUGUESE_BR:
+                return "§4Não disponível durante o jogo.";
+            case SPANISH:
+                return "§4No disponible durante el juego.";
+            default:
+                return "§4Not available during the game.";
         }
     }
 
@@ -994,7 +1033,7 @@ public enum Message {
                 return "§4Usted ya ha elegido su kit!";
             default:
                 return "§4You have already chosen your kit!";
-            }
+        }
     }
 
     /**
@@ -1179,7 +1218,7 @@ public enum Message {
      * @return translated message
      */
     private static String getNoWinner(Language language){
-          switch(language){
+        switch(language){
             case ENGLISH:
                 return "§7NO WINNER";
             case FRENCH:
@@ -1304,7 +1343,7 @@ public enum Message {
      * @return translated message
      */
     private static String getPlayerCooldownCommands(Language language){
-         switch(language){
+        switch(language){
             case ENGLISH:
                 return "§4You have to wait for 3 seconds between commands.";
             case FRENCH:
@@ -1504,7 +1543,7 @@ public enum Message {
      * @return translated message
      */
     private static String getPlayerKillFifth(Language language){
-         switch(language){
+        switch(language){
             case ENGLISH:
                 return "§6§lFIFTH KILL! OMG!!!!!";
             case FRENCH:
@@ -1894,6 +1933,31 @@ public enum Message {
                 return "§4Por favor, use números enteros.";
             default:
                 return "§4Please use integers.";
+        }
+    }
+
+    /**
+     * Get wait before using it again message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getWaitBeforUseAgain(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§4Please wait before using it again.";
+            case FRENCH:
+                return "§4Se il vous plaît attendre avant de l'utiliser à nouveau.";
+            case GERMAN:
+                return "§4Bitte bevor Sie es wieder warten.";
+            case PORTUGUESE_PT:
+                return "§4Por favor espere antes de usar novamente.";
+            case PORTUGUESE_BR:
+                return "§4Você tem que esperar antes de usar novamente.";
+            case SPANISH:
+                return "§4Por favor, espere antes de usarla de nuevo.";
+            default:
+                return "§4Please wait before using it again.";
         }
     }
 
