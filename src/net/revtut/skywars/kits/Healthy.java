@@ -76,5 +76,6 @@ public class Healthy {
 
         // Maximum health
         p.setMaxHealth(p.getMaxHealth() + 10);
+        p.setHealth(p.getMaxHealth());
     }
 }

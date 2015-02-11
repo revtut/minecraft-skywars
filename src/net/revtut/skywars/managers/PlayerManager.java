@@ -105,6 +105,7 @@ public class PlayerManager {
         player.setTotalExperience(expLevel);
         player.setExp(expPercent);
         player.setHealth(healthLevel);
+        player.setMaxHealth(healthLevel);
         player.setFoodLevel(foodLevel);
         if (removePotions)
             player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
