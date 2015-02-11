@@ -19,7 +19,7 @@ public enum Kit {
     /**
      * Hacker
      */
-    HACKER("§6Hacker", Material.GOLD_NUGGET, 2400),
+    HACKER("§6Hacker", Material.GOLD_NUGGET, 2800),
     /**
      * Ninja
      */
@@ -43,7 +43,7 @@ public enum Kit {
     /**
      * Healthy
      */
-    HEALTHY("§6Healthy", Material.GOLDEN_APPLE, 1800);
+    HEALTHY("§6Healthy", Material.GOLDEN_APPLE, 2200);
     /**
      * Screamer
      */

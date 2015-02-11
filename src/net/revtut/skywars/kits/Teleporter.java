@@ -20,7 +20,7 @@ public class Teleporter {
     /**
      * Teleporter Ender Pearls
      */
-    private final ItemStack teleporterEnder = new ItemStack(Material.ENDER_PEARL, 5);
+    private final ItemStack teleporterEnder = new ItemStack(Material.ENDER_PEARL, 3);
     {
         ItemMeta enderPearlMeta = teleporterEnder.getItemMeta();
         enderPearlMeta.setDisplayName("§3Teleporter Pearls");

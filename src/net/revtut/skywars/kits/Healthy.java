@@ -75,7 +75,7 @@ public class Healthy {
         p.getInventory().setBoots(leatherBoots);
 
         // Maximum health
-        p.setMaxHealth(p.getMaxHealth() + 10);
+        p.setMaxHealth(p.getMaxHealth() + (2*3));
         p.setHealth(p.getMaxHealth());
     }
 }
