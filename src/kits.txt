@@ -23,11 +23,15 @@ Tatical(fantasma)
  - Durabilidade: 2x
 - Armadura: colete verde
 
+Teleporter
+- Enderpearls
+  - Quantidade de enderpearls: 5
+- Armadura: Capacete de pele maroon na cabeça
+
+Healthy
+- Corações adicionais
+  - Quantidade: 5 corações
+- Armadura: Toda de pele branca
+
 Screamer
 - Ainda por definir
-
-Life
-- +3 corações durante o jogo
-
-EnderPearl
-- Adicionar algumas enderpearls

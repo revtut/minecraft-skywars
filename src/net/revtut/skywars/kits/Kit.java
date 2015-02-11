@@ -19,7 +19,7 @@ public enum Kit {
     /**
      * Hacker
      */
-    HACKER("§6Hacker", Material.GOLD_NUGGET, 1200),
+    HACKER("§6Hacker", Material.GOLD_NUGGET, 2400),
     /**
      * Ninja
      */
@@ -27,7 +27,7 @@ public enum Kit {
     /**
      * Tatical
      */
-    TATICAL("§6Tatical", Material.ENDER_PEARL, 700),
+    TATICAL("§6Tatical", Material.SLIME_BALL, 700),
     /**
      * Guardian
      */
@@ -35,7 +35,15 @@ public enum Kit {
     /**
      * Lifestealer
      */
-    LIFESTEALER("§6Lifestealer", Material.REDSTONE, 1500);
+    LIFESTEALER("§6Lifestealer", Material.REDSTONE, 1500),
+    /**
+     * Teleporter
+     */
+    TELEPORTER("§6Teleporter", Material.ENDER_PEARL, 1200),
+    /**
+     * Healthy
+     */
+    HEALTHY("§6Healthy", Material.GOLDEN_APPLE, 1800);
     /**
      * Screamer
      */

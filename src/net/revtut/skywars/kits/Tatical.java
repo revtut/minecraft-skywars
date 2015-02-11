@@ -24,7 +24,7 @@ public class Tatical {
     /**
      * Invisible Ender Pearls
      */
-    private final ItemStack invisibleEnder = new ItemStack(Material.ENDER_PEARL, 2);
+    private final ItemStack invisibleEnder = new ItemStack(Material.SLIME_BALL, 2);
     {
         ItemMeta enderPearlMeta = invisibleEnder.getItemMeta();
         enderPearlMeta.setDisplayName("§3Tatical Phantom");
@@ -70,7 +70,7 @@ public class Tatical {
             if(action != Action.RIGHT_CLICK_BLOCK)
                 return false;
         // Type of item
-        if(itemStack.getType() != Material.ENDER_PEARL)
+        if(itemStack.getType() != Material.SLIME_BALL)
             return false;
         if (!itemStack.hasItemMeta())
             return false;

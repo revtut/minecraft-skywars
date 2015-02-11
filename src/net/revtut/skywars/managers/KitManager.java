@@ -36,6 +36,8 @@ public class KitManager {
         ninja = new Ninja();
         tatical = new Tatical();
         lifestealer = new Lifestealer();
+        teleporter = new Teleporter();
+        healthy = new Healthy();
         screamer = new Screamer();
     }
 
@@ -68,6 +70,16 @@ public class KitManager {
      * Kit Lifestealer
      */
     public final Lifestealer lifestealer;
+
+    /**
+     * Kit Teleporter
+     */
+    public final Teleporter teleporter;
+
+    /**
+     * Kit Healthy
+     */
+    public final Healthy healthy;
 
     /**
      * Kit Screamer
@@ -154,6 +166,10 @@ public class KitManager {
             tatical.kitTatical(player);
         else if(kit == Kit.LIFESTEALER)
             lifestealer.kitLifestealer(player);
+        else if(kit == Kit.TELEPORTER)
+            teleporter.kitTeleporter(player);
+        else if(kit == Kit.HEALTHY)
+            healthy.kitHealthy(player);
         //else if(kit == Kit.SCREAMER)
         //    screamer.kitScreamer(player);
 
