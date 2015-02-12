@@ -115,7 +115,7 @@ public class PlayerManager {
             player.updateInventory();
         }
         player.setFireTicks(fireTicks);
-        ((CraftPlayer) player).getHandle().getDataWatcher().watch(10, (byte) 0); // Clear arrows
+        ((CraftPlayer) player).getHandle().getDataWatcher().watch(9, (byte) 0); // Clear arrows
         return true;
     }
 
