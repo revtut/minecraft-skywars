@@ -43,9 +43,7 @@ public class Spawn implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command cmd, final String commandLabel, final String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            player.teleport(player.getWorld().getSpawnLocation().add(0.5D, 0.5D, 0.5D));
-
-            player.sendMessage(Message.getMessage(Message.COMMAND_TELEPORT, player) + "spawn!");
+            player.sendMessage(Message.getMessage(Message.PLAYER_BLOCKED_COMMAND, player));
             return true;
         } else {
             sender.sendMessage("§4Console blocked command!");
