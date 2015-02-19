@@ -53,8 +53,8 @@ public class Guardian {
      *
      * @param player player to set speed
      * @param action interact action
-     * @param duration speed duration
      * @param itemStack itemstack of the player
+     * @param duration speed duration
      * @return true if player was set invisible
      */
     public boolean setSpeed(Player player, Action action, ItemStack itemStack, int duration){

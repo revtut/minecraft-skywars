@@ -109,7 +109,11 @@ public class ArenaPreGame implements Runnable {
             if (alvo == null)
                 return;
 
+            // Set level
             alvo.setLevel(remainingTime);
+
+            // Show an announcement
+
 
             switch (remainingTime) {
                 case 10:
