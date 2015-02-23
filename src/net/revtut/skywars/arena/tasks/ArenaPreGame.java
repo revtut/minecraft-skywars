@@ -112,9 +112,6 @@ public class ArenaPreGame implements Runnable {
             // Set level
             alvo.setLevel(remainingTime);
 
-            // Show an announcement
-
-
             switch (remainingTime) {
                 case 10:
                     TitleAPI.sendTimes(alvo, 5, 20, 5);

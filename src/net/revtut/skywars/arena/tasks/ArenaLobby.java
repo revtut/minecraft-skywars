@@ -1,10 +1,14 @@
 package net.revtut.skywars.arena.tasks;
 
+import net.revtut.advertisements.core.Campaign;
+import net.revtut.advertisements.managers.AdvertisementManager;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
+import net.revtut.skywars.libraries.converters.ConvertersAPI;
+import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.utils.Message;
 import org.bukkit.*;
@@ -212,9 +216,31 @@ public class ArenaLobby implements Runnable {
             arenaDat.addInitialPlayer(alvoDat.getUUID().toString());
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                // Teleport to the start location
                 alvo.teleport(spawnLocation);
+
                 // Give kit menu to the player
                 arena.getKitManager().giveKitMenuItem(alvoDat);
+
+                // Show the advertisement
+                Campaign campaign = AdvertisementManager.getRandomCampaign(alvoDat.getLanguage().getCode()); // Try to get advertisement on player language
+                if(campaign == null)
+                    campaign = AdvertisementManager.getRandomCampaign(); // Get a random advertisement no matter what language
+                if(campaign != null) {
+                    // Split advertisement
+                    String[] advertisement = campaign.getAdvertisement().replaceAll("&", "§").split("/x");
+
+                    // Send title and subtitle
+                    TitleAPI.sendTimes(alvo, 5, 340, 5); // Stay on the screen for 15 seconds (~340 ticks)
+                    TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON(advertisement[0]));
+                    if(advertisement.length > 1)
+                        TitleAPI.sendSubTitle(alvo, ConvertersAPI.convertToJSON(advertisement[1]));
+                    else
+                        TitleAPI.sendSubTitle(alvo, "");
+
+                    // Add view to the campaign
+                    campaign.addView();
+                }
             }, i);
             i++;
         }
