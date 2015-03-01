@@ -15,35 +15,35 @@ public enum Kit {
     /**
      * Engineer
      */
-    ENGINEER("§6Engineer", Material.IRON_BLOCK, 900),
+    ENGINEER("§6Engineer", Material.IRON_BLOCK, 1900),
     /**
      * Hacker
      */
-    HACKER("§6Hacker", Material.GOLD_NUGGET, 2800),
+    HACKER("§6Hacker", Material.GOLD_NUGGET, 4000),
     /**
      * Ninja
      */
-    NINJA("§6Ninja", Material.FISHING_ROD, 400),
+    NINJA("§6Ninja", Material.FISHING_ROD, 800),
     /**
      * Tatical
      */
-    TATICAL("§6Tatical", Material.SLIME_BALL, 700),
+    TATICAL("§6Tatical", Material.SLIME_BALL, 1400),
     /**
      * Guardian
      */
-    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 500),
+    GUARDIAN("§6Guardian", Material.IRON_BOOTS, 1100),
     /**
      * Lifestealer
      */
-    LIFESTEALER("§6Lifestealer", Material.REDSTONE, 1500),
+    LIFESTEALER("§6Lifestealer", Material.REDSTONE, 3800),
     /**
      * Teleporter
      */
-    TELEPORTER("§6Teleporter", Material.ENDER_PEARL, 1200),
+    TELEPORTER("§6Teleporter", Material.ENDER_PEARL, 3100),
     /**
      * Healthy
      */
-    HEALTHY("§6Healthy", Material.GOLDEN_APPLE, 2200);
+    HEALTHY("§6Healthy", Material.GOLDEN_APPLE, 3700);
     /**
      * Screamer
      */
