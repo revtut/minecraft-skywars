@@ -5,6 +5,7 @@ import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,6 +62,18 @@ public class PlayerInteract implements Listener {
             Inventory inventory = arena.getKitManager().createKitMenu(playerDat, player.getItemInHand());
             if(inventory != null)
                 player.openInventory(inventory);
+        }
+
+        // Lobby Kit
+        if(arena.getKitManager().lobby.connectToHub(player, e.getItem(), e.getAction())) {
+            plugin.connectServer(player, "hub");
+            return;
+        }
+        if(player.getItemInHand() != null) {
+            if (player.getItemInHand().getType() == Material.WRITTEN_BOOK) {
+                e.setCancelled(false);
+                return;
+            }
         }
 
         // Check status

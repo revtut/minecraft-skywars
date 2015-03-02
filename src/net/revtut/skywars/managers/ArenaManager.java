@@ -513,6 +513,9 @@ public class ArenaManager {
         // Reset game kills
         playerDat.resetGameKills();
 
+        // Add items
+        arena.getKitManager().lobby.kitLobby(player);
+
         // Update scoreboard
         plugin.scoreBoardManager.updateAlive(arena);
         plugin.scoreBoardManager.updateDeath(arena);

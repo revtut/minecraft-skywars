@@ -30,6 +30,7 @@ public class KitManager {
      * Constructor of KitManager
      */
     public KitManager() {
+        lobby = new Lobby();
         engineer = new Engineer();
         guardian = new Guardian();
         hacker = new Hacker();
@@ -40,6 +41,11 @@ public class KitManager {
         healthy = new Healthy();
         screamer = new Screamer();
     }
+
+    /**
+     * Kit Lobby
+     */
+    public final Lobby lobby;
 
     /**
      * Kit Engineer

@@ -117,6 +117,9 @@ public class PlayerJoin implements Listener {
                     // Nametag
                     NameTagAPI.setNameTag(board, p, true);
 
+                    // Add items
+                    arena.getKitManager().lobby.kitLobby(p);
+
                     // Update ScoreBoard to player
                     plugin.scoreBoardManager.updateAlive(arena, playerDat);
                     plugin.scoreBoardManager.updateDeath(arena, playerDat);

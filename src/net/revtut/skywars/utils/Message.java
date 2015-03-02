@@ -85,6 +85,11 @@ public enum Message {
     ENGINEER_PLACED_MINE,
 
     /**
+     * Exit to the Hub
+     */
+    EXIT_TO_HUB,
+
+    /**
      * Current game map
      */
     GAME_MAP,
@@ -113,6 +118,11 @@ public enum Message {
      * Hacker bypassed respawn death
      */
     HACKER_RESPAWN,
+
+    /**
+     * How to Play
+     */
+    HOW_TO_PLAY,
 
     /**
      * Scoreboard - Kills
@@ -402,6 +412,8 @@ public enum Message {
                 return "";
             case ENGINEER_PLACED_MINE:
                 return gamePrefix + getEngineerPlacedMine(language);
+            case EXIT_TO_HUB:
+                return getExitToHub(language);
             case GAME_MAP:
                 return gamePrefix + getGameMap(language);
             case GAME_REPORT:
@@ -414,6 +426,8 @@ public enum Message {
                 return gamePrefix + getGuardianEnabledSpeed(language);
             case HACKER_RESPAWN:
                 return gamePrefix + getHackerRespawn(language);
+            case HOW_TO_PLAY:
+                return getHowToPlay(language);
             case KILLS:
                 return getKills(language);
             case KIT_ALREADY_CHOSEN:
@@ -836,6 +850,32 @@ public enum Message {
         }
     }
 
+
+    /**
+     * Get exit to hub display name message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getExitToHub(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§6Exit to Hub";
+            case FRENCH:
+                return "§6Quitter pour Hub";
+            case GERMAN:
+                return "§6Ausgang zum Hub";
+            case PORTUGUESE_PT:
+                return "§6Sair para Hub";
+            case PORTUGUESE_BR:
+                return "§6Sair para Hub";
+            case SPANISH:
+                return "§6Salir para Hub";
+            default:
+                return "§6Exit to Hub";
+        }
+    }
+
     /**
      * Get game map message
      *
@@ -983,6 +1023,108 @@ public enum Message {
                 return "§6Has hackeado la muerte y resucitado!";
             default:
                 return "§6You have hacked the death and respawned!";
+        }
+    }
+
+    /**
+     * Get how to play description message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getHowToPlay(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§b§lSky Wars\n" +
+                        "\n" +
+                        "§0The Sky Wars is a game in which each player is born in a different island.\n" +
+                        "The goal is to kill the opponents who are on the other islands.\n" +
+                        "For it, you can take the random items that are in the chests/xof the islands.\n" +
+                        "The game winner is the last survivor.\n/x" +
+
+                        "§6§lCommands\n" +
+                        "\n" +
+                        "§0/info - information of the current game round\n" +
+                        "\n" +
+                        "§0/stats - game statistics in this mini-game.";
+            case FRENCH:
+                return "§b§lSky Wars\n" +
+                        "\n" +
+                        "§0Les Sky Wars est un jeu dans lequel chaque joueur est né dans une île différente.\n" +
+                        "Le but est de tuer les adversaires qui sont sur les autres îles.\n" +
+                        "Pour cela, vous pouvez prendre les/xéléments aléatoires qui sont dans les coffres des îles.\n" +
+                        "Le gagnant du jeu est le dernier survivant.\n/x" +
+
+                        "§6§lCommandes\n" +
+                        "\n" +
+                        "§0/info - information de la tour en cours de jeu \n" +
+                        "\n" +
+                        "§0/stats - statistiques de jeu dans ce mini-jeu.";
+            case GERMAN:
+                return "§b§lSky Wars \n" +
+                        "\n" +
+                        "§0The Sky Wars ist ein Spiel, in dem jeder Spieler in einer anderen Insel geboren.\n" +
+                        "Das Ziel ist es, die Gegner, die auf den anderen Inseln sind zu töten.\n" +
+                        "Denn es ist, können Sie die zufällige/xElemente, die in der Brust sindder Inseln zu nehmen.\n" +
+                        "Das Spiel Gewinner ist der letzte Überlebende.\n/x" +
+
+                        "§6§lBefehlen\n" +
+                        "\n" +
+                        "§0/info - informationen von der aktuellen Spielrunde\n" +
+                        "\n" +
+                        "§0/statistik - Spiel-Statistiken in diesem Minispiel.";
+            case PORTUGUESE_PT:
+                return "§b§lSky Wars\n" +
+                        "\n" +
+                        "§0O Sky Wars é um jogo no qual cada jogador nasce numa ilha diferente.\n" +
+                        "O objetivo é matar os adversários que estão nas outras ilhas.\n" +
+                        "Para isso podem apanhar os itens aleatórios que se encontram nos baús/xdas ilhas.\n" +
+                        "O vencedor do jogo é o último sobrevivente.\n/x" +
+
+                        "§6§lComandos\n" +
+                        "\n" +
+                        "§0/info - informações da ronda de jogo atual.\n" +
+                        "\n" +
+                        "§0/stats - estatísticas de jogo nesse minijogo.";
+            case PORTUGUESE_BR:
+                return "§b§lSky Wars\n" +
+                        "\n" +
+                        "§0O Sky Wars é um jogo no qual cada jogador nasce numa ilha diferente.\n" +
+                        "O objetivo é matar os adversários que estão nas outras ilhas.\n" +
+                        "Para isso podem apanhar os itens aleatórios que se encontram nos baús/xdas ilhas.\n" +
+                        "O vencedor do jogo é o último sobrevivente.\n/x" +
+
+                        "§6§lComandos\n" +
+                        "\n" +
+                        "§0/info - informações da ronda de jogo atual.\n" +
+                        "\n" +
+                        "§0/stats - estatísticas de jogo nesse minijogo.";
+            case SPANISH:
+                return "§b§lSky Wars \n" +
+                        "\n" +
+                        "§0The Sky Wars es un juego en el que cada jugador ha nacido en una isla diferente.\n" +
+                        "El objetivo es matar a los opositores que se encuentran en las otras islas.\n" +
+                        "Para que puede tomar los elementos al azar que se encuentran en los cofres de las/xislas.\n" +
+                        "El ganador del juego es el último superviviente.\n/x" +
+
+                        "§6§lComandos\n" +
+                        "\n" +
+                        "§0/informacion - información de la actual ronda de juego \n" +
+                        "\n" +
+                        "§0/estadisticas - estadísticas del juego en este mini-juego.";
+            default:
+                return "§b§lSky Wars\n" +
+                        "\n" +
+                        "§0O Sky Wars is a game in which each player is born in a different island.\n" +
+                        "The goal is to kill the opponents who are on the other islands.\n" +
+                        "For it, you can take the random items that are in the chests/xof the islands.\n" +
+                        "The game winner is the last survivor.\n/x" +
+
+                        "§6§lCommands\n" +
+                        "\n" +
+                        "§0/info - information of the current game round\n" +
+                        "\n" +
+                        "§0/stats - game statistics in this mini-game.";
         }
     }
 
