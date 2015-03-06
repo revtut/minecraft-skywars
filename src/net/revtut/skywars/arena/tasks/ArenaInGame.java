@@ -168,6 +168,10 @@ public class ArenaInGame implements Runnable {
                     if(alvo.isDead())
                         BypassesAPI.respawnBypass(alvo);
 
+                    // Bypass spectatores
+                    if(alvoDat.getStatus() == PlayerStatus.SPECTATOR)
+                        return;
+
                     // Points earned for playing the game
                     int pointsEarned = Reward.PARTICIPATION.calculatePoints(alvoDat);
 
