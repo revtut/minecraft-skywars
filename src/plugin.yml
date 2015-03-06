@@ -30,6 +30,8 @@ commands:
   statistics:
     description: Statistics of the player
     aliases: [stats, statistiques, statistik, estatisticas, estadisticas]
+  watch:
+    description: Watch a game
 
 # Mechanics
   time:

@@ -11,6 +11,7 @@ import net.revtut.skywars.commands.building.GameMode;
 import net.revtut.skywars.commands.building.Speed;
 import net.revtut.skywars.commands.game.Info;
 import net.revtut.skywars.commands.game.Stats;
+import net.revtut.skywars.commands.game.Watch;
 import net.revtut.skywars.commands.mechanics.Time;
 import net.revtut.skywars.commands.teleport.*;
 import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
@@ -235,6 +236,7 @@ public class SkyWars extends JavaPlugin {
         // Game
         getCommand("information").setExecutor(new Info(this));
         getCommand("statistics").setExecutor(new Stats(this));
+        getCommand("watch").setExecutor(new Watch(this));
         // Mechanics
         getCommand("time").setExecutor(new Time(this));
         // Teleport
