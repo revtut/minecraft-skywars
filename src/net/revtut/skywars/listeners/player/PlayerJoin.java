@@ -116,9 +116,7 @@ public class PlayerJoin implements Listener {
                     p.setScoreboard(board);
 
                     // Nametag
-                    String id = PermissionsAPI.getGroupName(p);
-                    String prefix = PermissionsAPI.getGroupTag(p);
-                    NameTagAPI.setNameTag(board, p, id, prefix, true);
+                    NameTagAPI.setNameTag(board, p, true);
 
                     // Add items
                     arena.getKitManager().lobby.kitLobby(p);

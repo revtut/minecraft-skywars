@@ -57,12 +57,12 @@ public class ArenaManager {
     /**
      * Minimum players for the game
      */
-    public final int minPlayers = 8;
+    public final int minPlayers = 1;
 
     /**
      * Minimum players for lobby time be reduced
      */
-    public final int minReduceTimePlayers = 20;
+    public final int minReduceTimePlayers = 1;
 
     /**
      * Maximum players that can play in each game

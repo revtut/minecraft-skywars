@@ -333,7 +333,7 @@ public class ArenaInGame implements Runnable {
                 break;
             }
         } else if (playerDat.getStatus() == PlayerStatus.DEAD || playerDat.getStatus() == PlayerStatus.SPECTATOR) { // Player is spectating send action bar message
-            ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"));
+            ActionBarAPI.sendActionBar(alvo, ConvertersAPI.convertToJSON("§6" + closest.getName() + " §7- §e" + decimalFormat.format(distance) + "m"), 1);
 
             // Send message to spectator players
             if(arena.getRemainingTime() % 30 == 0)
