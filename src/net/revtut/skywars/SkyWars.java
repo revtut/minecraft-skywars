@@ -1,5 +1,6 @@
 package net.revtut.skywars;
 
+import net.revtut.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.arena.tasks.ArenaEndGame;
@@ -14,15 +15,6 @@ import net.revtut.skywars.commands.game.Stats;
 import net.revtut.skywars.commands.game.Watch;
 import net.revtut.skywars.commands.mechanics.Time;
 import net.revtut.skywars.commands.teleport.*;
-import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
-import net.revtut.skywars.libraries.appearance.AppearanceAPI;
-import net.revtut.skywars.libraries.bypasses.BypassesAPI;
-import net.revtut.skywars.libraries.camera.CameraAPI;
-import net.revtut.skywars.libraries.converters.ConvertersAPI;
-import net.revtut.skywars.libraries.nametag.NameTagAPI;
-import net.revtut.skywars.libraries.tab.TabAPI;
-import net.revtut.skywars.libraries.titles.TitleAPI;
-import net.revtut.skywars.libraries.world.WorldAPI;
 import net.revtut.skywars.listeners.block.BlockBreak;
 import net.revtut.skywars.listeners.block.BlockPlace;
 import net.revtut.skywars.listeners.environment.ProjectileHit;
@@ -140,14 +132,6 @@ public class SkyWars extends JavaPlugin {
         scoreBoardManager = new ScoreBoardManager(this);
 
         /* Set Main Classes */
-        ActionBarAPI.plugin = this;
-        AppearanceAPI.plugin = this;
-        BypassesAPI.plugin = this;
-        CameraAPI.plugin = this;
-        NameTagAPI.plugin = this;
-        TabAPI.plugin = this;
-        TitleAPI.plugin = this;
-        WorldAPI.plugin = this;
         PlayerDat.plugin = this;
         Message.plugin = this;
 
@@ -201,8 +185,6 @@ public class SkyWars extends JavaPlugin {
 
         /* Register Events */
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        /* Libraries */
-        pm.registerEvents(new NameTagAPI(), this);
         /* Listeners */
         // Block
         pm.registerEvents(new BlockBreak(this), this);

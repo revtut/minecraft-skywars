@@ -1,11 +1,12 @@
 package net.revtut.skywars.listeners.player;
 
+import net.revtut.libraries.language.Language;
+import net.revtut.libraries.language.LanguageAPI;
+import net.revtut.libraries.nametag.NameTagAPI;
+import net.revtut.libraries.tab.TabAPI;
+import net.revtut.permissions.api.PermissionsAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
-import net.revtut.skywars.libraries.language.Language;
-import net.revtut.skywars.libraries.language.LanguageAPI;
-import net.revtut.skywars.libraries.nametag.NameTagAPI;
-import net.revtut.skywars.libraries.tab.TabAPI;
 import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -115,7 +116,9 @@ public class PlayerJoin implements Listener {
                     p.setScoreboard(board);
 
                     // Nametag
-                    NameTagAPI.setNameTag(board, p, true);
+                    String id = PermissionsAPI.getGroupName(p);
+                    String prefix = PermissionsAPI.getGroupTag(p);
+                    NameTagAPI.setNameTag(board, p, id, prefix, true);
 
                     // Add items
                     arena.getKitManager().lobby.kitLobby(p);

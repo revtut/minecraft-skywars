@@ -1,10 +1,10 @@
 package net.revtut.skywars.arena.tasks;
 
+import net.revtut.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.arena.ArenaStatus;
-import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

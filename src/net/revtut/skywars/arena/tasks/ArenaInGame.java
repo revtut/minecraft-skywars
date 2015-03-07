@@ -1,15 +1,15 @@
 package net.revtut.skywars.arena.tasks;
 
+import net.revtut.libraries.actionbar.ActionBarAPI;
+import net.revtut.libraries.algebra.AlgebraAPI;
+import net.revtut.libraries.bypasses.BypassesAPI;
+import net.revtut.libraries.converters.ConvertersAPI;
+import net.revtut.libraries.titles.TitleAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.arena.ArenaLocation;
 import net.revtut.skywars.arena.ArenaStatus;
-import net.revtut.skywars.libraries.actionbar.ActionBarAPI;
-import net.revtut.skywars.libraries.algebra.AlgebraAPI;
-import net.revtut.skywars.libraries.bypasses.BypassesAPI;
-import net.revtut.skywars.libraries.converters.ConvertersAPI;
-import net.revtut.skywars.libraries.titles.TitleAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import net.revtut.skywars.utils.Message;
@@ -20,7 +20,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -298,7 +300,15 @@ public class ArenaInGame implements Runnable {
         if(null == arena)
             return;
 
-        Player closest = AlgebraAPI.closestPlayer(arena, alvo);
+        // Create list with all alive players
+        List<Player> playerList = new ArrayList<>();
+        for(PlayerDat targetDat : arena.getAlivePlayers()) {
+            Player target = Bukkit.getPlayer(targetDat.getUUID());
+            if(target == null)
+                continue;
+            playerList.add(target);
+        }
+        Player closest = AlgebraAPI.closestPlayer(playerList, alvo);
         if(null == closest)
             return;
 

@@ -1,9 +1,9 @@
 package net.revtut.skywars.commands.appearance;
 
+import net.revtut.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaStatus;
-import net.revtut.skywars.libraries.appearance.AppearanceAPI;
 import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.utils.Message;
 import org.bukkit.command.Command;

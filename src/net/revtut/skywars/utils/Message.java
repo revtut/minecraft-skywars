@@ -1,7 +1,7 @@
 package net.revtut.skywars.utils;
 
+import net.revtut.libraries.language.Language;
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.libraries.language.Language;
 import net.revtut.skywars.player.PlayerDat;
 import org.bukkit.entity.Player;
 
