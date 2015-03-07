@@ -96,6 +96,9 @@ permissions:
   rev.nolosepoints:
     description: Permission to leave the game without losing points
     default: op
+  rev.watch:
+    description: Permission to watch a game
+    default: op
 
 # Mechanics
   rev.time:
