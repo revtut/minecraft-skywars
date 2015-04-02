@@ -127,14 +127,17 @@ public class ArenaInGame implements Runnable {
                 case 60:
                     TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b60"));
+                    TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 30:
                     TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§b30"));
+                    TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 10:
                     TitleAPI.sendTimes(alvo, 20, 60, 20);
                     TitleAPI.sendTitle(alvo, ConvertersAPI.convertToJSON("§210"));
+                    TitleAPI.sendSubTitle(alvo, "");
                     break;
                 case 5:
                     TitleAPI.sendTimes(alvo, 5, 20, 5);

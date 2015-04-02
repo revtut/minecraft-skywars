@@ -4,7 +4,6 @@ import net.revtut.libraries.language.Language;
 import net.revtut.libraries.language.LanguageAPI;
 import net.revtut.libraries.nametag.NameTagAPI;
 import net.revtut.libraries.tab.TabAPI;
-import net.revtut.permissions.api.PermissionsAPI;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.player.PlayerDat;
