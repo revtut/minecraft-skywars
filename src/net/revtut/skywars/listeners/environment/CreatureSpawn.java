@@ -1,14 +1,9 @@
 package net.revtut.skywars.listeners.environment;
 
 import net.revtut.skywars.SkyWars;
-import net.revtut.skywars.arena.Arena;
-import net.revtut.skywars.player.PlayerDat;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 /**
  * Creature Spawn Event.
