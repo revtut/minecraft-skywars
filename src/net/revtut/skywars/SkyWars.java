@@ -17,6 +17,7 @@ import net.revtut.skywars.commands.mechanics.Time;
 import net.revtut.skywars.commands.teleport.*;
 import net.revtut.skywars.listeners.block.BlockBreak;
 import net.revtut.skywars.listeners.block.BlockPlace;
+import net.revtut.skywars.listeners.environment.CreatureSpawn;
 import net.revtut.skywars.listeners.environment.ProjectileHit;
 import net.revtut.skywars.listeners.environment.Weather;
 import net.revtut.skywars.listeners.player.*;
@@ -190,6 +191,7 @@ public class SkyWars extends JavaPlugin {
         pm.registerEvents(new BlockBreak(this), this);
         pm.registerEvents(new BlockPlace(this), this);
         // Environment
+        pm.registerEvents(new CreatureSpawn(this), this);
         pm.registerEvents(new ProjectileHit(this), this);
         pm.registerEvents(new Weather(this), this);
         // Player
