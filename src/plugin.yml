@@ -19,6 +19,9 @@ commands:
   gamemode:
     description: Switch Game Mode
     aliases: [gm, modejeu, spielmodus, modojogo, modojuego]
+  fly:
+    description: Switch Flight Mode
+    aliases: [voler, fliegen, voar, volar]
   speed:
     description: Change Speed
     aliases: [vitesse, geschwindigkeit, velocidade, velocidad]
@@ -67,6 +70,12 @@ permissions:
 # Building
   rev.gamemode:
     description: Permission to switch game mode
+    default: op
+  rev.fly:
+    description: Permission to switch flight mode
+    default: op
+  rev.fly.others:
+    description: Permission to switch flight mode of other players
     default: op
   rev.speed:
     description: Permission to change speed

@@ -95,6 +95,7 @@ public class PlayerManager {
      */
     public boolean configPlayer(PlayerDat playerDat, PlayerStatus status, GameMode gameMode, boolean allowFlight, boolean setFlying, int expLevel, float expPercent, double healthLevel, int foodLevel, boolean removePotions, boolean clearInv, int fireTicks) {
         playerDat.setStatus(status);
+        playerDat.setFlyingMode(allowFlight);
         // Player
         Player player = Bukkit.getPlayer(playerDat.getUUID());
         if (null == player)

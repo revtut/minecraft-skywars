@@ -8,6 +8,7 @@ import net.revtut.skywars.arena.tasks.ArenaInGame;
 import net.revtut.skywars.arena.tasks.ArenaLobby;
 import net.revtut.skywars.arena.tasks.ArenaPreGame;
 import net.revtut.skywars.commands.appearance.Fireworks;
+import net.revtut.skywars.commands.building.Fly;
 import net.revtut.skywars.commands.building.GameMode;
 import net.revtut.skywars.commands.building.Speed;
 import net.revtut.skywars.commands.game.Info;
@@ -216,6 +217,7 @@ public class SkyWars extends JavaPlugin {
         getCommand("firework").setExecutor(new Fireworks(this));
         // Building
         getCommand("gamemode").setExecutor(new GameMode(this));
+        getCommand("fly").setExecutor(new Fly(this));
         getCommand("speed").setExecutor(new Speed(this));
         // Game
         getCommand("information").setExecutor(new Info(this));

@@ -79,6 +79,10 @@ public class PlayerDat {
      */
     private PlayerStatus status;
 
+    /**
+     * Flying mode of the player
+     */
+    private boolean flyingMode;
 
     /**
      * Constructor of PlayerDat
@@ -105,6 +109,7 @@ public class PlayerDat {
         this.gameKills = 0;
         this.deaths = deaths;
         this.status = PlayerStatus.WAITING;
+        this.flyingMode = false;
     }
 
     /**
@@ -218,6 +223,13 @@ public class PlayerDat {
     }
 
     /**
+     * Set the flying mode of the player dat
+     *
+     * @param flyingMode new flying mode of the player dat
+     */
+    public void setFlyingMode(boolean flyingMode) { this.flyingMode = flyingMode; }
+
+    /**
      * Add points to the player dat
      *
      * @param points points to add
@@ -275,4 +287,11 @@ public class PlayerDat {
      * Reset the game kills of a player
      */
     public void resetGameKills() { this.gameKills = 0; }
+
+    /**
+     * Get if player has flying mode enabled
+     *
+     * @return true if player has enabled flying mode
+     */
+    public boolean isFlyingMode() { return flyingMode; }
 }

@@ -35,6 +35,16 @@ public enum Message {
     COMMAND_BUY_VIP,
 
     /**
+     * Command Fly Mode Disabled
+     */
+    COMMAND_FLY_DISABLED,
+
+    /**
+     * Command Fly Mode Enabled
+     */
+    COMMAND_FLY_ENABLED,
+
+    /**
      * Command Game Mode Changed
      */
     COMMAND_GAMEMODE_CHANGED,
@@ -392,6 +402,10 @@ public enum Message {
                 return inspectorPrefix + getCommandBlockedIngame(language);
             case COMMAND_BUY_VIP:
                 return gamePrefix + getCommandBuyVIP(language);
+            case COMMAND_FLY_DISABLED:
+                return gamePrefix + getCommandFlyDisabled(language);
+            case COMMAND_FLY_ENABLED:
+                return gamePrefix + getCommandFlyEnabled(language);
             case COMMAND_GAMEMODE_CHANGED:
                 return gamePrefix + getCommandGameModeChanged(language);
             case COMMAND_TELEPORT:
@@ -622,6 +636,56 @@ public enum Message {
                 return "§4Usted debe convertirse en VIP a hacer eso!";
             default:
                 return "§4You must become VIP to do that!";
+        }
+    }
+
+    /**
+     * Get the fly disabled message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandFlyDisabled(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§cFly mode disabled.";
+            case FRENCH:
+                return "§cFly mode désactivée.";
+            case GERMAN:
+                return "§cFly-Modus deaktiviert.";
+            case PORTUGUESE_PT:
+                return "§cModo voar desativado.";
+            case PORTUGUESE_BR:
+                return "§cModo voador desabilitado.";
+            case SPANISH:
+                return "§cEl modo de volar desactivado.";
+            default:
+                return "§cFly mode disabled.";
+        }
+    }
+
+    /**
+     * Get the fly enabled message
+     *
+     * @param language language to get the translation
+     * @return translated message
+     */
+    private static String getCommandFlyEnabled(Language language){
+        switch(language){
+            case ENGLISH:
+                return "§aFly mode enabled.";
+            case FRENCH:
+                return "§aFly mode activé.";
+            case GERMAN:
+                return "§aFly-Modus aktiviert.";
+            case PORTUGUESE_PT:
+                return "§aModo voar ativado.";
+            case PORTUGUESE_BR:
+                return "§aModo voador habilitado.";
+            case SPANISH:
+                return "§aEl modo de volar ativado.";
+            default:
+                return "§aFly mode enabled.";
         }
     }
 
