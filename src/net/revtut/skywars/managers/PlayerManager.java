@@ -5,7 +5,7 @@ import net.revtut.skywars.player.PlayerDat;
 import net.revtut.skywars.player.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

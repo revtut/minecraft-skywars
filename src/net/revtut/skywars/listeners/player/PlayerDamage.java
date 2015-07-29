@@ -118,6 +118,10 @@ public class PlayerDamage implements Listener {
             health = 20;
         damager.setHealth(health);
 
+        // Check if was not "suicide"
+        if(alvo.getUniqueId().equals(damager.getUniqueId()))
+            return;
+
         // Add to last damager map
         PlayerDamage.lastPlayerDamager.put(alvoDat.getUUID(), damagerDat.getUUID());
     }
