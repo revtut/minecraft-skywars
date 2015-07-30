@@ -71,8 +71,10 @@ public class PlayerInteract implements Listener {
         }
         if(player.getItemInHand() != null) {
             if (player.getItemInHand().getType() == Material.WRITTEN_BOOK) {
-                e.setCancelled(false);
-                return;
+                if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                    e.setCancelled(false);
+                    return;
+                }
             }
         }
 
