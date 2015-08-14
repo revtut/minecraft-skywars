@@ -62,20 +62,30 @@ public class PlayerInteract implements Listener {
             Inventory inventory = arena.getKitManager().createKitMenu(playerDat, player.getItemInHand());
             if(inventory != null)
                 player.openInventory(inventory);
-        }
 
-        // Lobby Kit
-        if(arena.getKitManager().lobby.connectToHub(player, e.getItem(), e.getAction())) {
-            plugin.connectServer(player, "hub");
-            return;
-        }
-        if(player.getItemInHand() != null) {
-            if (player.getItemInHand().getType() == Material.WRITTEN_BOOK) {
-                if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    e.setCancelled(false);
-                    return;
+            // Lobby Kit
+            if(arena.getKitManager().lobby.connectToHub(player, e.getItem(), e.getAction())) {
+                plugin.connectServer(player, "hub");
+                return;
+            }
+            if(player.getItemInHand() != null) {
+                if (player.getItemInHand().getType() == Material.WRITTEN_BOOK) {
+                    if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                        e.setCancelled(false);
+                        return;
+                    }
                 }
             }
+
+            // Chest interact
+            plugin.playerChest.onChestInteract(e.getClickedBlock());
+
+            // Guardian
+            if(arena.getKitManager().guardian.setSpeed(player, e.getAction(), player.getItemInHand(), 10))
+                e.setCancelled(true);
+            // Tactical
+            if(arena.getKitManager().tatical.setInvisible(player, e.getAction(), player.getItemInHand(), 10))
+                e.setCancelled(true);
         }
 
         // Check status
@@ -87,18 +97,6 @@ public class PlayerInteract implements Listener {
         if (playerDat.getStatus() != PlayerStatus.ALIVE) {
             e.setCancelled(true);
             return;
-        }
-
-        if(e.getAction() != Action.PHYSICAL) {
-            // Chest interact
-            plugin.playerChest.onChestInteract(e.getClickedBlock());
-
-            // Guardian
-            if(arena.getKitManager().guardian.setSpeed(player, e.getAction(), player.getItemInHand(), 10))
-                e.setCancelled(true);
-            // Tactical
-            if(arena.getKitManager().tatical.setInvisible(player, e.getAction(), player.getItemInHand(), 10))
-                e.setCancelled(true);
         }
     }
 

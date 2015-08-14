@@ -1,5 +1,6 @@
 package net.revtut.skywars;
 
+import net.minecraft.server.v1_8_R3.Block;
 import net.revtut.libraries.converters.ConvertersAPI;
 import net.revtut.skywars.arena.Arena;
 import net.revtut.skywars.arena.ArenaDat;
@@ -26,9 +27,15 @@ import net.revtut.skywars.managers.ArenaManager;
 import net.revtut.skywars.managers.PlayerManager;
 import net.revtut.skywars.managers.ScoreBoardManager;
 import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.TopPlayer;
 import net.revtut.skywars.utils.Message;
 import net.revtut.skywars.utils.MySQL;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
+import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -37,6 +44,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -124,6 +133,16 @@ public class SkyWars extends JavaPlugin {
     public final Random rand = new Random();
 
     /**
+     * List with locations of top players heads (sorted)
+     */
+    private List<Location> headTopPlayersLocations;
+
+    /**
+     * List with locations of top players signs (sorted)
+     */
+    private List<Location> signTopPlayersLocations;
+
+    /**
      * Enable the plugin
      */
     @Override
@@ -132,6 +151,16 @@ public class SkyWars extends JavaPlugin {
         arenaManager = new ArenaManager(this);
         playerManager = new PlayerManager(this);
         scoreBoardManager = new ScoreBoardManager(this);
+
+        /* Top Players */
+        headTopPlayersLocations = new ArrayList<>();
+        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 251));
+        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 252));
+        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 250));
+        signTopPlayersLocations = new ArrayList<>();
+        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 251));
+        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 252));
+        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 250));
 
         /* Set Main Classes */
         PlayerDat.plugin = this;
@@ -334,8 +363,9 @@ public class SkyWars extends JavaPlugin {
         if (!mysql.openConnection())
             return false;
         mysql.createMySQL();
-        // Check MySQL Task
+        // MySQL Task
         checkMySQL();
+        updateTopPlayers();
 
         return true;
     }
@@ -375,5 +405,48 @@ public class SkyWars extends JavaPlugin {
                 mysql.openConnection();
             }
         }, 1200, 1200);
+    }
+
+    /**
+     * Update the top players
+     */
+    public void updateTopPlayers() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            TopPlayer[] topPlayers = mysql.getTopPlayers();
+
+            // Update in map
+            Bukkit.getScheduler().runTask(this, () -> {
+                TopPlayer topPlayer;
+                Location headLocation;
+                Location signLocation;
+
+                for(int i = 0; i < 3; i++) {
+                    if(topPlayers[i] == null)
+                        continue;
+                    if(i >= headTopPlayersLocations.size())
+                        continue;
+                    if(i >= signTopPlayersLocations.size())
+                        continue;
+
+                    topPlayer = topPlayers[i];
+                    headLocation = headTopPlayersLocations.get(i);
+                    signLocation = signTopPlayersLocations.get(i);
+
+                    // Head
+                    Skull skull = (Skull) headLocation.getBlock().getState();
+                    skull.setSkullType(SkullType.PLAYER);
+                    skull.setOwner(topPlayer.getNickname());
+                    skull.update(true);
+
+                    // Sign
+                    Sign sign = (Sign) signLocation.getBlock().getState();
+                    sign.setLine(0, "§b" + topPlayer.getNickname());
+                    sign.setLine(1, "§f☆ §0" + topPlayer.getPoints() + " §f☆");
+                    sign.setLine(2, "" + topPlayer.getWins() + "§aW §0/ " + topPlayer.getLoses() + "§cL");
+                    sign.setLine(3, "" + topPlayer.getKills() + "§aK §0/ " + topPlayer.getDeaths() + "§cD");
+                    sign.update();
+                }
+            });
+        }, 0, 1200 * 60);
     }
 }

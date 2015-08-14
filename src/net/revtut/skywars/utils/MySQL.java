@@ -5,6 +5,7 @@ import net.revtut.libraries.language.Language;
 import net.revtut.skywars.SkyWars;
 import net.revtut.skywars.arena.ArenaDat;
 import net.revtut.skywars.player.PlayerDat;
+import net.revtut.skywars.player.TopPlayer;
 import org.bukkit.Bukkit;
 import org.fusesource.jansi.Ansi;
 
@@ -59,6 +60,11 @@ public class MySQL {
      * Core Database
      */
     private final String DBCore = "Core";
+
+    /**
+     * Players Database
+     */
+    public final String DBPlayers = "Players";
 
     /**
      * SkyWars Core Database
@@ -216,6 +222,49 @@ public class MySQL {
             plugin.getLogger().log(Level.WARNING, "Error while trying to create PlayerDat! Reason: " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Get the top players of the game
+     * @return array with top three players
+     */
+    public TopPlayer[] getTopPlayers() {
+        TopPlayer[] topPlayers = new TopPlayer[3];
+
+        double pointsPerWin = 5;
+        double pointsPerLose = -1.5;
+        double pointsPerKill = 0.7;
+        double pointsPerDeath = -0.3;
+
+        try {
+            final String topPlayersStatement = "SELECT *, Wins * " + pointsPerWin
+                                                        + " + Losses * " + pointsPerLose
+                                                        + " + Kills * " + pointsPerKill
+                                                        + " + Deaths * " + pointsPerDeath
+                                                        + " AS Rank FROM " + DBGameCore + " ORDER BY Rank DESC LIMIT 3;";
+            final ResultSet resultTopPlayers = this.connection.createStatement().executeQuery(topPlayersStatement);
+            int index = 0;
+            UUID uuid;
+            while (resultTopPlayers.next()) {
+                uuid = UUID.fromString(resultTopPlayers.getString("Player"));
+
+                final String nicknameStatement = "SELECT * FROM " + DBPlayers + " WHERE UUID = '" + uuid + "';";
+                final ResultSet resultNickname = this.connection.createStatement().executeQuery(nicknameStatement);
+
+                if(!resultNickname.next())
+                    continue;
+
+                topPlayers[index++] = new TopPlayer(resultNickname.getString("Nickname"),
+                        resultTopPlayers.getInt("Rank"),
+                        resultTopPlayers.getInt("Wins"),
+                        resultTopPlayers.getInt("Losses"),
+                        resultTopPlayers.getInt("Kills"),
+                        resultTopPlayers.getInt("Deaths"));
+            }
+        } catch (final SQLException e) {
+            plugin.getLogger().log(Level.WARNING, "Error while trying to create TopPlayer! Reason: " + e.getMessage());
+        }
+        return topPlayers;
     }
 
     /**
