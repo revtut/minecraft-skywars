@@ -1,6 +1,7 @@
 name: SkyWars
 version: 1.0
 description: RevTut Network SkyWars Plugin
+depend: [Libraries]
 author: RevTut
 website: www.revtut.net
 main: net.revtut.skywars.SkyWars

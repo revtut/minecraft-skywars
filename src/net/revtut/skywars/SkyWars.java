@@ -1,52 +1,19 @@
 package net.revtut.skywars;
 
-import net.minecraft.server.v1_8_R3.Block;
-import net.revtut.libraries.converters.ConvertersAPI;
-import net.revtut.skywars.arena.Arena;
-import net.revtut.skywars.arena.ArenaDat;
-import net.revtut.skywars.arena.tasks.ArenaEndGame;
-import net.revtut.skywars.arena.tasks.ArenaInGame;
-import net.revtut.skywars.arena.tasks.ArenaLobby;
-import net.revtut.skywars.arena.tasks.ArenaPreGame;
-import net.revtut.skywars.commands.appearance.Fireworks;
-import net.revtut.skywars.commands.building.Fly;
-import net.revtut.skywars.commands.building.GameMode;
-import net.revtut.skywars.commands.building.Speed;
-import net.revtut.skywars.commands.game.Info;
-import net.revtut.skywars.commands.game.Stats;
-import net.revtut.skywars.commands.game.Watch;
-import net.revtut.skywars.commands.mechanics.Time;
-import net.revtut.skywars.commands.teleport.*;
-import net.revtut.skywars.listeners.block.BlockBreak;
-import net.revtut.skywars.listeners.block.BlockPlace;
-import net.revtut.skywars.listeners.environment.CreatureSpawn;
-import net.revtut.skywars.listeners.environment.ProjectileHit;
-import net.revtut.skywars.listeners.environment.Weather;
-import net.revtut.skywars.listeners.player.*;
-import net.revtut.skywars.managers.ArenaManager;
-import net.revtut.skywars.managers.PlayerManager;
-import net.revtut.skywars.managers.ScoreBoardManager;
-import net.revtut.skywars.player.PlayerDat;
-import net.revtut.skywars.player.TopPlayer;
-import net.revtut.skywars.utils.Message;
-import net.revtut.skywars.utils.MySQL;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
-import org.bukkit.block.Sign;
-import org.bukkit.block.Skull;
+import net.revtut.libraries.database.Database;
+import net.revtut.libraries.database.types.DatabaseType;
+import net.revtut.libraries.database.types.MySQL;
+import net.revtut.libraries.games.GameAPI;
+import net.revtut.libraries.games.GameController;
+import net.revtut.libraries.games.arena.types.ArenaSolo;
+import net.revtut.libraries.games.arena.types.ArenaType;
+import net.revtut.libraries.utils.FilesAPI;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 
 /**
@@ -62,204 +29,46 @@ import java.util.logging.Level;
  * @version 1.0
  */
 public class SkyWars extends JavaPlugin {
-    /**
-     * Title message on join
-     */
-    public String titleMessage = "§3RevTut";
 
     /**
-     * Subtitle message on join
+     * Instance of Sky Wars
      */
-    public String subTitleMessage = "§7Network";
+    private static SkyWars instance;
 
     /**
-     * Fade in message time
+     * Controller of the game
      */
-    public int fadeIn = 20;
+    private GameController gameController;
 
     /**
-     * Fade out message time
+     * Database of the game
      */
-    public int fadeOut = 20;
-
-    /**
-     * Time on screen of messages
-     */
-    public int timeOnScreen = 20;
-
-    /**
-     * Tab list title
-     */
-    public String tabTitle = "§3RevTut";
-
-    /**
-     * Tab list footer
-     */
-    public String tabFooter = "§6www.revtut.net";
-
-    /**
-     * MySQL object
-     */
-    public MySQL mysql;
-
-    /**
-     * Arena Manager
-     */
-    public ArenaManager arenaManager;
-
-    /**
-     * Player Manager
-     */
-    public PlayerManager playerManager;
-
-    /**
-     * ScoreBoard Manager
-     */
-    public ScoreBoardManager scoreBoardManager;
-
-    /**
-     * Player Chest
-     */
-    public PlayerChest playerChest;
-
-    /**
-     * Name of the server
-     */
-    public final String servidor = Bukkit.getServerName();
-
-    /**
-     * Random Class
-     */
-    public final Random rand = new Random();
-
-    /**
-     * List with locations of top players heads (sorted)
-     */
-    private List<Location> headTopPlayersLocations;
-
-    /**
-     * List with locations of top players signs (sorted)
-     */
-    private List<Location> signTopPlayersLocations;
+    private Database database;
 
     /**
      * Enable the plugin
      */
     @Override
     public void onEnable() {
-        /* Create Classes */
-        arenaManager = new ArenaManager(this);
-        playerManager = new PlayerManager(this);
-        scoreBoardManager = new ScoreBoardManager(this);
+        instance = this;
 
-        /* Top Players */
-        headTopPlayersLocations = new ArrayList<>();
-        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 251));
-        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 252));
-        headTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -179, 73, 250));
-        signTopPlayersLocations = new ArrayList<>();
-        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 251));
-        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 252));
-        signTopPlayersLocations.add(new Location(Bukkit.getWorlds().get(0), -178, 72, 250));
+        readFiles();
 
-        /* Set Main Classes */
-        PlayerDat.plugin = this;
-        Message.plugin = this;
-
-        /* Create Files */
-        if (!createFiles())
-            this.getLogger().log(Level.WARNING, "Error while trying to create the initial files.");
-
-        /* Read Files */
-        if (!readFiles())
-            this.getLogger().log(Level.WARNING, "Error while trying to read the files.");
-
-        /* Create Initial Arenas */
-        String lastGameNumber = mysql.lastGameNumber();
-        if (lastGameNumber == null) {
-            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas as last game number is null.");
-            return;
-        }
-        lastGameNumber = arenaManager.nextGameNumber(lastGameNumber);
-        // Arena 1
-        if (!arenaManager.createNewArena()) {
-            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas.");
-            return;
-        }
-        Arena arena = arenaManager.getArenas().get(0);
-        ArenaDat arenaDat = arena.getArenaDat();
-        if (arenaDat == null) {
-            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas as arena dat is null.");
-            return;
-        }
-        arenaDat.setGameNumber(lastGameNumber);
-        if (!arenaManager.createNewArena()) {
-            this.getLogger().log(Level.WARNING, "Error while creating the initial arenas.");
-            return;
+        // Database
+        if(database == null)
+            getLogger().log(Level.SEVERE, "Database could not be created... (maybe unknown type of database?)");
+        else {
+            database.connect();
+            if(database.getConnection() == null)
+                getLogger().log(Level.SEVERE, "Connection to the database could not be made!");
         }
 
-        /* Arena Runnables */
-        ArenaLobby taskLobby = new ArenaLobby(this);
-        ArenaLobby.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskLobby, 20, 20));
-        ArenaPreGame taskPreGame = new ArenaPreGame(this);
-        ArenaPreGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskPreGame, 20, 20));
-        ArenaInGame taskInGame = new ArenaInGame(this);
-        ArenaInGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskInGame, 20, 20));
-        ArenaEndGame taskEndGame = new ArenaEndGame(this);
-        ArenaEndGame.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(this, taskEndGame, 20, 20));
+        // Integrate GameAPI
+        gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
 
-        /* Player Chest */
-        playerChest = new PlayerChest(this);
-
-        /* Register Plugin Messages */
-        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
-        /* Register Events */
-        PluginManager pm = Bukkit.getServer().getPluginManager();
-        /* Listeners */
-        // Block
-        pm.registerEvents(new BlockBreak(this), this);
-        pm.registerEvents(new BlockPlace(this), this);
-        // Environment
-        pm.registerEvents(new CreatureSpawn(this), this);
-        pm.registerEvents(new ProjectileHit(this), this);
-        pm.registerEvents(new Weather(this), this);
-        // Player
-        pm.registerEvents(new PlayerBucketEmpty(this), this);
-        pm.registerEvents(new PlayerBucketFill(this), this);
-        pm.registerEvents(new PlayerChat(this), this);
-        pm.registerEvents(new PlayerCommand(this), this);
-        pm.registerEvents(new PlayerDamage(this), this);
-        pm.registerEvents(new PlayerDeath(this), this);
-        pm.registerEvents(new PlayerDrop(this), this);
-        pm.registerEvents(new PlayerFood(this), this);
-        pm.registerEvents(new PlayerInteract(this), this);
-        pm.registerEvents(new PlayerInventoryClick(this), this);
-        pm.registerEvents(new PlayerJoin(this), this);
-        pm.registerEvents(new PlayerMove(this), this);
-        pm.registerEvents(new PlayerPickup(this), this);
-        pm.registerEvents(new PlayerQuit(this), this);
-        pm.registerEvents(new PlayerRespawn(this), this);
-
-        /* Commands */
-        // Appearance
-        getCommand("firework").setExecutor(new Fireworks(this));
-        // Building
-        getCommand("gamemode").setExecutor(new GameMode(this));
-        getCommand("fly").setExecutor(new Fly(this));
-        getCommand("speed").setExecutor(new Speed(this));
-        // Game
-        getCommand("information").setExecutor(new Info(this));
-        getCommand("statistics").setExecutor(new Stats(this));
-        getCommand("watch").setExecutor(new Watch(this));
-        // Mechanics
-        getCommand("time").setExecutor(new Time(this));
-        // Teleport
-        getCommand("spawn").setExecutor(new Spawn(this));
-        getCommand("teleportall").setExecutor(new TeleportAll(this));
-        getCommand("teleporthere").setExecutor(new TeleportHere(this));
-        getCommand("teleportpos").setExecutor(new TeleportPos(this));
-        getCommand("teleport").setExecutor(new TeleportTo(this));
+        // Initialize first arena
+        ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
+        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
     }
 
     /**
@@ -267,9 +76,35 @@ public class SkyWars extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        /* Close MySQL */
-        if (!mysql.closeConnection())
-            this.getLogger().log(Level.WARNING, "Error while trying to close connection.");
+        // Close database connection
+        if(database != null) {
+            database.rollback();
+            database.close();
+        }
+    }
+
+    /**
+     * Get the instance of Sky Wars
+     * @return instance of Sky Wars
+     */
+    public static SkyWars getInstance() {
+        return instance;
+    }
+
+    /**
+     * Get the database of the game
+     * @return database of the game
+     */
+    public Database getDatabaseInstance() {
+        return database;
+    }
+
+    /**
+     * Get the controller of the game
+     * @return controller of the game
+     */
+    public GameController getGameController() {
+        return gameController;
     }
 
     /**
@@ -283,170 +118,58 @@ public class SkyWars extends JavaPlugin {
             if(!getDataFolder().mkdir())
                 return false;
 
-        /* Config File */
-        final File config = new File(getDataFolder() + File.separator + "config.yml");
-        if (!config.exists()) {
+        /* Configuration File */
+        final File configFile = new File(getDataFolder() + File.separator + "config.yml");
+        if (!configFile.exists()) {
             try {
-                if (!config.createNewFile())
+                if (!configFile.createNewFile())
                     return false;
             } catch (IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!copyFile(getResource("config.yml"), config))
+            if (!FilesAPI.copyFile(getResource("config.yml"), configFile))
                 return false;
         }
 
-        /* MySQL File */
-        final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
-        if (!mysqlFile.exists()) {
+        /* Database File */
+        final File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
+        if (!databaseFile.exists()) {
             try {
-                if (!mysqlFile.createNewFile())
+                if (!databaseFile.createNewFile())
                     return false;
             } catch (IOException e) {
-                this.getLogger().log(Level.WARNING, "Error while creating mysql.yml. Reason: " + e.getMessage());
+                this.getLogger().log(Level.WARNING, "Error while creating database.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!copyFile(getResource("mysql.yml"), mysqlFile))
+            if (!FilesAPI.copyFile(getResource("database.yml"), databaseFile))
                 return false;
         }
         return true;
-    }
-
-    /**
-     * Copy from a file to another one
-     *
-     * @param in   file to be copied
-     * @param file file to copy to
-     * @return true if successfull
-     */
-    private boolean copyFile(final InputStream in, final File file) {
-        try {
-            final OutputStream out = new FileOutputStream(file);
-            final byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-            return true;
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     /**
      * Read the configuration files and assign the variables
      *
-     * @return true if successfull
+     * @return true if successful, false otherwise
      */
     private boolean readFiles() {
-        /* Config File */
-        final File configFile = new File(getDataFolder() + File.separator + "config.yml");
-        final FileConfiguration configConfiguration = YamlConfiguration.loadConfiguration(configFile);
-        // Title
-        titleMessage = ConvertersAPI.convertToJSON(configConfiguration.getString("Title").replaceAll("&", "§"));
-        subTitleMessage = ConvertersAPI.convertToJSON(configConfiguration.getString("Subtitle").replaceAll("&", "§"));
-        fadeIn = configConfiguration.getInt("FadeIn");
-        fadeOut = configConfiguration.getInt("FadeOut");
-        timeOnScreen = configConfiguration.getInt("TimeOnScreen");
-        // Tab
-        tabTitle = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConfiguration.getString("TabTitle").replaceAll("&", "§")));
-        tabFooter = ConvertersAPI.convertSpecialCharacters(ConvertersAPI.convertToJSON(configConfiguration.getString("TabFooter").replaceAll("&", "§")));
+        /* Database File */
+        File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
+        FileConfiguration databaseConfiguration = YamlConfiguration.loadConfiguration(databaseFile);
 
-        /* MySQL File */
-        final File mysqlFile = new File(getDataFolder() + File.separator + "mysql.yml");
-        final FileConfiguration mysqlConfiguration = YamlConfiguration.loadConfiguration(mysqlFile);
-        mysql = new MySQL(this, mysqlConfiguration.getString("Hostname"), mysqlConfiguration.getString("Port"), mysqlConfiguration.getString("Database"), mysqlConfiguration.getString("Username"), mysqlConfiguration.getString("Password"));
-        if (!mysql.openConnection())
-            return false;
-        mysql.createMySQL();
-        // MySQL Task
-        checkMySQL();
-        updateTopPlayers();
+        String type, hostname, database, username, password;
+        int port;
+
+        type = databaseConfiguration.getString("Type");
+        hostname = databaseConfiguration.getString("Hostname");
+        port = databaseConfiguration.getInt("Port");
+        database = databaseConfiguration.getString("Database");
+        username = databaseConfiguration.getString("Username");
+        password = databaseConfiguration.getString("Password");
+
+        this.database = Database.createDatabase(DatabaseType.getByName(type), hostname, port, database, username, password);
 
         return true;
-    }
-
-    /**
-     * Connect a player to a server
-     *
-     * @param player player to send
-     * @param server server to connect
-     */
-    public void connectServer(Player player, String server) {
-        ByteArrayOutputStream b = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(b);
-
-        try {
-            out.writeUTF("Connect");
-            out.writeUTF(server);
-            out.writeUTF(player.getName());
-        } catch (IOException e) {
-            this.getLogger().log(Level.WARNING, "Error while sending player to " + server);
-            this.getLogger().log(Level.WARNING, e.getMessage());
-        }
-
-        player.sendPluginMessage(this, "BungeeCord", b.toByteArray());
-    }
-
-
-    /**
-     * Check if MySQL connection is opened, if not it tries to open it
-     */
-    public void checkMySQL() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            try {
-                mysql.getConnection().createStatement().executeQuery("SELECT 1;");
-            } catch (SQLException e) {
-                getLogger().log(Level.WARNING, "MySQL connection is closed!");
-                mysql.openConnection();
-            }
-        }, 1200, 1200);
-    }
-
-    /**
-     * Update the top players
-     */
-    public void updateTopPlayers() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            TopPlayer[] topPlayers = mysql.getTopPlayers();
-
-            // Update in map
-            Bukkit.getScheduler().runTask(this, () -> {
-                TopPlayer topPlayer;
-                Location headLocation;
-                Location signLocation;
-
-                for(int i = 0; i < 3; i++) {
-                    if(topPlayers[i] == null)
-                        continue;
-                    if(i >= headTopPlayersLocations.size())
-                        continue;
-                    if(i >= signTopPlayersLocations.size())
-                        continue;
-
-                    topPlayer = topPlayers[i];
-                    headLocation = headTopPlayersLocations.get(i);
-                    signLocation = signTopPlayersLocations.get(i);
-
-                    // Head
-                    Skull skull = (Skull) headLocation.getBlock().getState();
-                    skull.setSkullType(SkullType.PLAYER);
-                    skull.setOwner(topPlayer.getNickname());
-                    skull.update(true);
-
-                    // Sign
-                    Sign sign = (Sign) signLocation.getBlock().getState();
-                    sign.setLine(0, "§b" + topPlayer.getNickname());
-                    sign.setLine(1, "§f☆ §0" + topPlayer.getPoints() + " §f☆");
-                    sign.setLine(2, "" + topPlayer.getWins() + "§aW §0/ " + topPlayer.getLoses() + "§cL");
-                    sign.setLine(3, "" + topPlayer.getKills() + "§aK §0/ " + topPlayer.getDeaths() + "§cD");
-                    sign.update();
-                }
-            });
-        }, 0, 1200 * 60);
     }
 }
