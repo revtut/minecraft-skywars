@@ -1,14 +1,11 @@
-# Players Amount
+# Session Configuration
 MinPlayers: 8
 MaxPlayers: 24
 
-# Title Message
-Title: '&3SKY WARS'
-Subtitle: '&7Game ID: %gamenumber%'
-FadeIn: 40
-FadeOut: 20
-TimeOnScreen: 100
+# Server Configuration
+MaxSlots: 250
+TabTitle: 'Sky Wars'
+TabFooter: 'www.revtut.net'
 
-# Tab List
-TabTitle: '&3%ALT16% Sky Wars %ALT17%'
-TabFooter: '&6www.revtut.net'
+# Utils Configuration
+CoinsMultiplier: 1

@@ -13,11 +13,14 @@ import net.revtut.libraries.utils.FilesAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -116,31 +119,80 @@ public class SkyWars extends JavaPlugin {
      * @param arena arena to be initialized
      */
     public void initializeArena(Arena arena) {
+        switch (arena.getType()) {
+            case SOLO:
+                initializeArena((ArenaSolo) arena);
+                break;
+            case TEAM:
+                //initializeArena(arena);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Initialize a arena
+     * @param arena arena to be initialized (must extend arena solo)
+     */
+    private void initializeArena(ArenaSolo arena) {
         World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
 
-        // World location file
+        // World arena locations
         File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
         FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
 
+        // Single locations
         Location lobby = new Location(Bukkit.getWorld(locConfig.getString("Lobby.world")),
                                                         locConfig.getDouble("Lobby.x"),
                                                         locConfig.getDouble("Lobby.y"),
                                                         locConfig.getDouble("Lobby.z")),
-                spectator = new Location(Bukkit.getWorld(locConfig.getString("Spectator.world")),
-                                                        locConfig.getDouble("Spectator.x"),
-                                                        locConfig.getDouble("Spectator.y"),
-                                                        locConfig.getDouble("Spectator.z"));
+                spectator = new Location(world,
+                        locConfig.getDouble("Spectator.x"),
+                        locConfig.getDouble("Spectator.y"),
+                        locConfig.getDouble("Spectator.z")),
+                dead = new Location(world,
+                        locConfig.getDouble("Dead.x"),
+                        locConfig.getDouble("Dead.y"),
+                        locConfig.getDouble("Dead.z"));
+
+        // Array locations
         Location corners[] = new Location[] {
-                new Location(Bukkit.getWorld(locConfig.getString("Corners.First.world")), locConfig.getDouble("Corners.First.x"), locConfig.getDouble("Corners.First.y"), locConfig.getDouble("Corners.First.z")),
-                new Location(Bukkit.getWorld(locConfig.getString("Corners.Second.world")), locConfig.getDouble("Corners.Second.x"), locConfig.getDouble("Corners.Second.y"), locConfig.getDouble("Corners.Second.z"))
+                new Location(world,
+                        locConfig.getDouble("Corners.First.x"),
+                        locConfig.getDouble("Corners.First.y"),
+                        locConfig.getDouble("Corners.First.z")),
+                new Location(world,
+                        locConfig.getDouble("Corners.Second.x"),
+                        locConfig.getDouble("Corners.Second.y"),
+                        locConfig.getDouble("Corners.Second.z"))
         };
 
-        /*arena.initialize();
+        // List locations
+        List<Location> spawnLocations = new ArrayList<>();
+        ConfigurationSection section; Location spawnLocation;
+        for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
+            section = locConfig.getConfigurationSection("Spawns." + spawnNumber);
+            spawnLocation = new Location(world,
+                                    section.getDouble("x"),
+                                    section.getDouble("y"),
+                                    section.getDouble("z"));
+            spawnLocations.add(spawnLocation);
+        }
 
-        World arenaWorld, Location lobbyLocation, org.bukkit.Location
-        spectatorLocation, org.bukkit.Location[] corners, List< org.bukkit.Location > spawnLocations, org.bukkit.Location
-        deathLocation, List< org.bukkit.Location > deathMatchLocations, GameSession gameSession*/
+        List<Location> deathMatchLocations = new ArrayList<>();
+        Location deathMatchLocation;
+        for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
+            section = locConfig.getConfigurationSection("DeathMatch." + deathMatchSpawnNumber);
+            deathMatchLocation = new Location(world,
+                                            section.getDouble("x"),
+                                            section.getDouble("y"),
+                                            section.getDouble("z"));
+            deathMatchLocations.add(deathMatchLocation);
+        }
 
+        // Initialize the arena
+        arena.initialize(world, lobby, spectator, corners, spawnLocations, dead, deathMatchLocations, new GameSession(arena, 0, 0));
     }
 
     /**

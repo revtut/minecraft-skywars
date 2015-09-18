@@ -1,273 +1,239 @@
-# Lobby Spawn
-
+###############
+# LOBBY SPAWN #
+###############
 Lobby:
   world: 'world'
   x: 0
   y: 0
   z: 0
 
-# Spectator Spawn
+###################
+# SPECTATOR SPAWN #
+###################
 Spectator:
-  world: 'world'
   x: 0
   y: 0
   z: 0
 
-# Corners of the Arena
+##############
+# DEAD SPAWN #
+##############
+Dead:
+  x: 0
+  y: 0
+  z: 0
+
+########################
+# CORNERS OF THE ARENA #
+########################
 Corners:
   First:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   Second:
-    world: 'world'
     x: 0
     y: 0
     z: 0
 
-# Spawn Locations
+###################
+# SPAWN LOCATIONS #
+###################
 Spawns:
   1:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   2:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   3:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   4:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   5:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   6:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   7:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   8:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   9:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   10:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   11:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   12:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   13:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   14:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   15:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   16:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   17:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   18:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   19:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   20:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   21:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   22:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   23:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   24:
-    world: 'world'
     x: 0
     y: 0
     z: 0
 
-# Death Match Locations
+#########################
+# DEATH MATCH LOCATIONS #
+#########################
 DeathMatch:
   1:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   2:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   3:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   4:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   5:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   6:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   7:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   8:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   9:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   10:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   11:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   12:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   13:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   14:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   15:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   16:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   17:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   18:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   19:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   20:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   21:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   22:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   23:
-    world: 'world'
     x: 0
     y: 0
     z: 0
   24:
-    world: 'world'
     x: 0
     y: 0
     z: 0

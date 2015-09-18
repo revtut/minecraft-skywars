@@ -1,6 +1,6 @@
 Type: 'mysql'
 Hostname: 'localhost'
-Port: '3306'
+Port: 3306
 Database: 'revtut'
 Username: 'root'
 Password: 'admin'
