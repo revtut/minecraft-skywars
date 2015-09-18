@@ -1,3 +1,7 @@
+# Players Amount
+MinPlayers: 8
+MaxPlayers: 24
+
 # Title Message
 Title: '&3SKY WARS'
 Subtitle: '&7Game ID: %gamenumber%'

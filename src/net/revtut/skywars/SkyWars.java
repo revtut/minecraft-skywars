@@ -2,12 +2,16 @@ package net.revtut.skywars;
 
 import net.revtut.libraries.database.Database;
 import net.revtut.libraries.database.types.DatabaseType;
-import net.revtut.libraries.database.types.MySQL;
 import net.revtut.libraries.games.GameAPI;
 import net.revtut.libraries.games.GameController;
+import net.revtut.libraries.games.arena.Arena;
+import net.revtut.libraries.games.arena.session.GameSession;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
 import net.revtut.libraries.utils.FilesAPI;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -68,7 +72,7 @@ public class SkyWars extends JavaPlugin {
 
         // Initialize first arena
         ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
-        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
+        initializeArena(arena);
     }
 
     /**
@@ -108,17 +112,49 @@ public class SkyWars extends JavaPlugin {
     }
 
     /**
+     * Initialize a arena
+     * @param arena arena to be initialized
+     */
+    public void initializeArena(Arena arena) {
+        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
+
+        // World location file
+        File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
+        FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
+
+        Location lobby = new Location(Bukkit.getWorld(locConfig.getString("Lobby.world")),
+                                                        locConfig.getDouble("Lobby.x"),
+                                                        locConfig.getDouble("Lobby.y"),
+                                                        locConfig.getDouble("Lobby.z")),
+                spectator = new Location(Bukkit.getWorld(locConfig.getString("Spectator.world")),
+                                                        locConfig.getDouble("Spectator.x"),
+                                                        locConfig.getDouble("Spectator.y"),
+                                                        locConfig.getDouble("Spectator.z"));
+        Location corners[] = new Location[] {
+                new Location(Bukkit.getWorld(locConfig.getString("Corners.First.world")), locConfig.getDouble("Corners.First.x"), locConfig.getDouble("Corners.First.y"), locConfig.getDouble("Corners.First.z")),
+                new Location(Bukkit.getWorld(locConfig.getString("Corners.Second.world")), locConfig.getDouble("Corners.Second.x"), locConfig.getDouble("Corners.Second.y"), locConfig.getDouble("Corners.Second.z"))
+        };
+
+        /*arena.initialize();
+
+        World arenaWorld, Location lobbyLocation, org.bukkit.Location
+        spectatorLocation, org.bukkit.Location[] corners, List< org.bukkit.Location > spawnLocations, org.bukkit.Location
+        deathLocation, List< org.bukkit.Location > deathMatchLocations, GameSession gameSession*/
+
+    }
+
+    /**
      * Create the configuration files
      *
      * @return true if successfull
      */
     private boolean createFiles() {
-        /* Main Folder */
+        // Create main folder
         if(!getDataFolder().exists())
             if(!getDataFolder().mkdir())
                 return false;
 
-        /* Configuration File */
+        // Configuration file
         final File configFile = new File(getDataFolder() + File.separator + "config.yml");
         if (!configFile.exists()) {
             try {
@@ -132,7 +168,7 @@ public class SkyWars extends JavaPlugin {
                 return false;
         }
 
-        /* Database File */
+        // Database file
         final File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
         if (!databaseFile.exists()) {
             try {
@@ -154,19 +190,16 @@ public class SkyWars extends JavaPlugin {
      * @return true if successful, false otherwise
      */
     private boolean readFiles() {
-        /* Database File */
+        // Database File
         File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
         FileConfiguration databaseConfiguration = YamlConfiguration.loadConfiguration(databaseFile);
 
-        String type, hostname, database, username, password;
-        int port;
-
-        type = databaseConfiguration.getString("Type");
-        hostname = databaseConfiguration.getString("Hostname");
-        port = databaseConfiguration.getInt("Port");
-        database = databaseConfiguration.getString("Database");
-        username = databaseConfiguration.getString("Username");
-        password = databaseConfiguration.getString("Password");
+        String type = databaseConfiguration.getString("Type"),
+                hostname = databaseConfiguration.getString("Hostname"),
+                database = databaseConfiguration.getString("Database"),
+                username = databaseConfiguration.getString("Username"),
+                password = databaseConfiguration.getString("Password");
+        int port = databaseConfiguration.getInt("Port");
 
         this.database = Database.createDatabase(DatabaseType.getByName(type), hostname, port, database, username, password);
 
