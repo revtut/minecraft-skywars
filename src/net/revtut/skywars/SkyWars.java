@@ -59,23 +59,31 @@ public class SkyWars extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        // Read files
         readFiles();
 
         // Database
-        if(database == null)
+        if(database == null) {
             getLogger().log(Level.SEVERE, "Database could not be created... (maybe unknown type of database?)");
-        else {
+
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        } else {
             database.connect();
-            if(database.getConnection() == null)
-                getLogger().log(Level.SEVERE, "Connection to the database could not be made!");
+            if(database.getConnection() == null) {
+                getLogger().log(Level.SEVERE, "Connection to the database could not be established!");
+
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
         }
 
         // Integrate GameAPI
         gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
 
-        // Initialize first arena
-        ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
-        initializeArena(arena);
+        // Create initial arenas
+        initializeArena(gameController.createArena(ArenaType.SOLO));
+        initializeArena(gameController.createArena(ArenaType.SOLO));
     }
 
     /**
@@ -91,8 +99,8 @@ public class SkyWars extends JavaPlugin {
     }
 
     /**
-     * Get the instance of Sky Wars
-     * @return instance of Sky Wars
+     * Get the instance of the game
+     * @return instance of the game
      */
     public static SkyWars getInstance() {
         return instance;
@@ -198,7 +206,7 @@ public class SkyWars extends JavaPlugin {
     /**
      * Create the configuration files
      *
-     * @return true if successfull
+     * @return true if successful
      */
     private boolean createFiles() {
         // Create main folder
@@ -216,7 +224,7 @@ public class SkyWars extends JavaPlugin {
                 this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!FilesAPI.copyFile(getResource("config.yml"), configFile))
+            if (!FilesAPI.copyFile(getResource("resources/config.yml"), configFile))
                 return false;
         }
 
@@ -230,7 +238,7 @@ public class SkyWars extends JavaPlugin {
                 this.getLogger().log(Level.WARNING, "Error while creating database.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!FilesAPI.copyFile(getResource("database.yml"), databaseFile))
+            if (!FilesAPI.copyFile(getResource("resources/database.yml"), databaseFile))
                 return false;
         }
         return true;
