@@ -4,21 +4,22 @@ import net.revtut.libraries.database.Database;
 import net.revtut.libraries.database.types.DatabaseType;
 import net.revtut.libraries.games.GameAPI;
 import net.revtut.libraries.games.GameController;
-import net.revtut.libraries.games.arena.Arena;
+import net.revtut.libraries.games.GameListener;
 import net.revtut.libraries.games.arena.session.GameSession;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
 import net.revtut.libraries.utils.FilesAPI;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,11 +27,11 @@ import java.util.logging.Level;
 /**
  * Main class.
  *
- * <P>Skywars is a plugin where you have several players in islands. They all have the same amount of chests and resources available.</P>
+ * <P>Sky Wars is a plugin where you have several players in islands. They all have the same amount of chests and resources available.</P>
  * <P>However inside the chests the furniture is completely random. The goal of a player is either to kill all the players or throw them
  * to the void since there is no ground on the map. If after a predefined amount of time the game is not over yet we will have a tie so
  * there will be no winner.</P>
- * <P>There is a wide variety of kits, each one gives a differente advantage to the player that uses it.</P>
+ * <P>There is a wide variety of kits, each one gives a different advantage to the player that uses it.</P>
  *
  * @author Joao Silva
  * @version 1.0
@@ -82,8 +83,13 @@ public class SkyWars extends JavaPlugin {
         gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
 
         // Create initial arenas
-        initializeArena(gameController.createArena(ArenaType.SOLO));
-        initializeArena(gameController.createArena(ArenaType.SOLO));
+        initializeArena((ArenaSolo) gameController.createArena(ArenaType.SOLO));
+        initializeArena((ArenaSolo) gameController.createArena(ArenaType.SOLO));
+
+        // Register events
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new GameListener(), this);
+        pluginManager.registerEvents(new SessionListener(), this);
     }
 
     /**
@@ -124,26 +130,9 @@ public class SkyWars extends JavaPlugin {
 
     /**
      * Initialize a arena
-     * @param arena arena to be initialized
-     */
-    public void initializeArena(Arena arena) {
-        switch (arena.getType()) {
-            case SOLO:
-                initializeArena((ArenaSolo) arena);
-                break;
-            case TEAM:
-                //initializeArena(arena);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Initialize a arena
      * @param arena arena to be initialized (must extend arena solo)
      */
-    private void initializeArena(ArenaSolo arena) {
+    public void initializeArena(ArenaSolo arena) {
         World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
 
         // World arena locations

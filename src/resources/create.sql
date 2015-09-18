@@ -4,18 +4,8 @@ CREATE TABLE IF NOT EXISTS Player
   uuid CHAR(36) PRIMARY KEY NOT NULL
 );
 
-# Sky Wars Player Statistics
-CREATE TABLE IF NOT EXISTS SWPlayerStatistics
-(
-  player CHAR(36) NOT NULL,
-  statistic TINYTEXT NOT NULL,
-  value INT NOT NULL,
-  CONSTRAINT PRIMARY KEY (player, statistic),
-  CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES Player(uuid)
-);
-
-# Sky Wars Player Achievements
-CREATE TABLE IF NOT EXISTS SWPlayerAchievements
+# Player Achievements
+CREATE TABLE IF NOT EXISTS PlayerAchievements
 (
   player CHAR(36) NOT NULL,
   achievement TINYTEXT NOT NULL,
@@ -24,8 +14,22 @@ CREATE TABLE IF NOT EXISTS SWPlayerAchievements
   CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES Player(uuid)
 );
 
-# Sky Wars Log
-CREATE TABLE IF NOT EXISTS SWLog
+###############################
+# CUSTOMIZE ON EACH MINI-GAME #
+###############################
+
+# Player Statistics
+CREATE TABLE IF NOT EXISTS PlayerStatistics
+(
+  player CHAR(36) NOT NULL,
+  statistic TINYTEXT NOT NULL,
+  value INT NOT NULL,
+  CONSTRAINT PRIMARY KEY (player, statistic),
+  CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES Player(uuid)
+);
+
+# Log
+CREATE TABLE IF NOT EXISTS Log
 (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   winner CHAR(36) NOT NULL,
@@ -34,30 +38,30 @@ CREATE TABLE IF NOT EXISTS SWLog
   CONSTRAINT fk_player FOREIGN KEY (winner) REFERENCES Player(uuid)
 );
 
-# Sky Wars Chat Log
-CREATE TABLE IF NOT EXISTS SWChatLog
+# Chat Log
+CREATE TABLE IF NOT EXISTS ChatLog
 (
   session INT NOT NULL,
   message TINYTEXT NOT NULL,
   CONSTRAINT PRIMARY KEY (session, message),
-  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES SWLog(id)
+  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES Log(id)
 );
 
-# Sky Wars Events Log
-CREATE TABLE IF NOT EXISTS SWEventsLog
+# Events Log
+CREATE TABLE IF NOT EXISTS EventsLog
 (
   session INT NOT NULL,
   event TINYTEXT NOT NULL,
   CONSTRAINT PRIMARY KEY (session, event),
-  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES SWLog(id)
+  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES Log(id)
 );
 
-# Sky Wars Player Games
-CREATE TABLE IF NOT EXISTS SWPlayerGames
+# Player Games
+CREATE TABLE IF NOT EXISTS PlayerGames
 (
   session INT NOT NULL,
   player INT NOT NULL,
   CONSTRAINT PRIMARY KEY (session, player),
-  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES SWLog(id),
+  CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES Log(id),
   CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES Player(uuid)
 );
