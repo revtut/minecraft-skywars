@@ -4,8 +4,9 @@ MaxPlayers: 24
 
 # Server Configuration
 MaxSlots: 250
-TabTitle: 'Sky Wars'
-TabFooter: 'www.revtut.net'
+MessagePrefix: '&7|&6Sky Wars&7| '
+TabTitle: '&6Sky Wars'
+TabFooter: '&6www.revtut.net'
 
 # Utils Configuration
 CoinsMultiplier: 1

@@ -3,6 +3,7 @@ package net.revtut.skywars;
 import net.revtut.libraries.games.arena.Arena;
 import net.revtut.libraries.games.events.player.*;
 import net.revtut.libraries.games.player.PlayerData;
+import net.revtut.libraries.games.player.PlayerState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -12,7 +13,7 @@ import org.bukkit.event.Listener;
 public class GameListener implements Listener {
 
     /**
-     * Game API instance
+     * Game instance
      */
     private SkyWars plugin = SkyWars.getInstance();
 
@@ -28,6 +29,10 @@ public class GameListener implements Listener {
             return;
 
         PlayerData player = event.getPlayer();
+
+        // Do not allow spectators to cross border
+        if(player.getState() != PlayerState.ALIVE)
+            event.setCancelled(true);
     }
 
     /**
@@ -42,6 +47,11 @@ public class GameListener implements Listener {
             return;
 
         PlayerData player = event.getPlayer();
+
+        // Change join message
+        int numberPlayers = arena.getAllPlayers().size();
+        int maxPlayers = arena.getSession().getMaxPlayers();
+        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
     /**
@@ -56,6 +66,11 @@ public class GameListener implements Listener {
             return;
 
         PlayerData player = event.getPlayer();
+
+        // Change leave message
+        int numberPlayers = arena.getAllPlayers().size();
+        int maxPlayers = arena.getSession().getMaxPlayers();
+        event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
     /**
@@ -70,6 +85,11 @@ public class GameListener implements Listener {
             return;
 
         PlayerData player = event.getPlayer();
+
+        // Change join message
+        int numberPlayers = arena.getAllPlayers().size();
+        int maxPlayers = arena.getSession().getMaxPlayers();
+        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
     /**

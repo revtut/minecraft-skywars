@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS ChatLog
 (
   session INT NOT NULL,
   message TINYTEXT NOT NULL,
-  CONSTRAINT PRIMARY KEY (session, message),
+  sentTime TIMESTAMP NOT NULL,
+  CONSTRAINT PRIMARY KEY (session, message, sentTime),
   CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES Log(id)
 );
 
@@ -52,7 +53,8 @@ CREATE TABLE IF NOT EXISTS EventsLog
 (
   session INT NOT NULL,
   event TINYTEXT NOT NULL,
-  CONSTRAINT PRIMARY KEY (session, event),
+  eventTime TIMESTAMP NOT NULL,
+  CONSTRAINT PRIMARY KEY (session, event, eventTime),
   CONSTRAINT fk_session FOREIGN KEY (session) REFERENCES Log(id)
 );
 

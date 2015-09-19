@@ -5,6 +5,7 @@ import net.revtut.libraries.database.types.DatabaseType;
 import net.revtut.libraries.games.GameAPI;
 import net.revtut.libraries.games.GameController;
 import net.revtut.libraries.games.GameListener;
+import net.revtut.libraries.games.arena.ArenaFlag;
 import net.revtut.libraries.games.arena.session.GameSession;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
@@ -49,6 +50,11 @@ public class SkyWars extends JavaPlugin {
     private GameController gameController;
 
     /**
+     * Configuration of the game
+     */
+    private Configuration configuration;
+
+    /**
      * Database of the game
      */
     private Database database;
@@ -60,8 +66,11 @@ public class SkyWars extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Read files
-        readFiles();
+        // Configuration files
+        if(!createFiles())
+            getLogger().log(Level.SEVERE, "Configuration files could not be created!");
+        if(!readFiles())
+            getLogger().log(Level.SEVERE, "Configuration files could not be read!");
 
         // Database
         if(database == null) {
@@ -83,8 +92,7 @@ public class SkyWars extends JavaPlugin {
         gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
 
         // Create initial arenas
-        initializeArena((ArenaSolo) gameController.createArena(ArenaType.SOLO));
-        initializeArena((ArenaSolo) gameController.createArena(ArenaType.SOLO));
+        createArena();
 
         // Register events
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -113,6 +121,14 @@ public class SkyWars extends JavaPlugin {
     }
 
     /**
+     * Get the configuration of the game
+     * @return configuration of the game
+     */
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    /**
      * Get the database of the game
      * @return database of the game
      */
@@ -129,10 +145,19 @@ public class SkyWars extends JavaPlugin {
     }
 
     /**
+     * Create a arena for the game
+     */
+    public void createArena() {
+        ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
+        initializeArena(arena);
+        initializeFlags(arena);
+    }
+
+    /**
      * Initialize a arena
      * @param arena arena to be initialized (must extend arena solo)
      */
-    public void initializeArena(ArenaSolo arena) {
+    private void initializeArena(ArenaSolo arena) {
         World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
 
         // World arena locations
@@ -188,8 +213,29 @@ public class SkyWars extends JavaPlugin {
             deathMatchLocations.add(deathMatchLocation);
         }
 
+        // Game Session
+        GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
+
         // Initialize the arena
-        arena.initialize(world, lobby, spectator, corners, spawnLocations, dead, deathMatchLocations, new GameSession(arena, 0, 0));
+        arena.initialize(world, lobby, spectator, corners, spawnLocations, dead, deathMatchLocations, session);
+    }
+
+    /**
+     * Initialize the flags of the arena
+     * @param arena arena to be updated
+     */
+    private void initializeFlags(ArenaSolo arena) {
+        arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
+        arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
+        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
+        arena.updateFlag(ArenaFlag.BUCKET_FILL, false);
+        arena.updateFlag(ArenaFlag.CHAT, true);
+        arena.updateFlag(ArenaFlag.DROP_ITEM, false);
+        arena.updateFlag(ArenaFlag.DAMAGE, false);
+        arena.updateFlag(ArenaFlag.INVENTORY_CLICK, true);
+        arena.updateFlag(ArenaFlag.INTERACT, true);
+        arena.updateFlag(ArenaFlag.MOVE, true);
+        arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
     }
 
     /**
@@ -239,6 +285,20 @@ public class SkyWars extends JavaPlugin {
      * @return true if successful, false otherwise
      */
     private boolean readFiles() {
+        // Configuration File
+        File configurationFile = new File(getDataFolder() + File.separator + "configuration.yml");
+        FileConfiguration configurationConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
+
+        int minPlayers = configurationConfiguration.getInt("MinPlayers"),
+                maxPlayers = configurationConfiguration.getInt("MaxPlayers"),
+                maxSlots = configurationConfiguration.getInt("MaxSlots");
+        String prefix = configurationConfiguration.getString("MessagePrefix"),
+                tabTitle = configurationConfiguration.getString("TabTitle"),
+                tabFooter = configurationConfiguration.getString("TabFooter");
+        double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
+
+        this.configuration = new Configuration(minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);
+
         // Database File
         File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
         FileConfiguration databaseConfiguration = YamlConfiguration.loadConfiguration(databaseFile);
