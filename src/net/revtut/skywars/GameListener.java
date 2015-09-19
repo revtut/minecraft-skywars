@@ -65,6 +65,10 @@ public class GameListener implements Listener {
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
+        // TODO Add scoreboard to the player
+        // TODO Add lobby items
+        // TODO Change its tab list etc
+
         // Create more arenas if needed
         if(plugin.getGameController().getAvailableArenas().size() <= 1)
             plugin.createArena();
@@ -139,5 +143,11 @@ public class GameListener implements Listener {
             return;
 
         PlayerData player = event.getPlayer();
+
+        // Block dead players
+        if(player.getState() == PlayerState.DEAD) {
+            event.setCancelled(true);
+            return;
+        }
     }
 }
