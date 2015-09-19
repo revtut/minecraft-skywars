@@ -1,6 +1,8 @@
 package net.revtut.skywars;
 
 import net.revtut.libraries.games.arena.Arena;
+import net.revtut.libraries.games.arena.ArenaPreference;
+import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.events.player.*;
 import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
@@ -31,8 +33,10 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Do not allow spectators to cross border
-        if(player.getState() != PlayerState.ALIVE)
+        if(player.getState() != PlayerState.ALIVE) {
             event.setCancelled(true);
+            return;
+        }
     }
 
     /**
@@ -46,12 +50,24 @@ public class GameListener implements Listener {
         if(!plugin.getGameController().hasArena(arena))
             return;
 
+        // Check maximum slots
+        int onlinePlayers = plugin.getGameController().getOnlinePlayers().size();
+        int maxSlots = plugin.getConfiguration().getMaxSlots();
+        if(onlinePlayers >= maxSlots) {
+            event.setCancelled(true);
+            return;
+        }
+
         PlayerData player = event.getPlayer();
 
         // Change join message
         int numberPlayers = arena.getAllPlayers().size();
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
+
+        // Create more arenas if needed
+        if(plugin.getGameController().getAvailableArenas().size() <= 1)
+            plugin.createArena();
     }
 
     /**
@@ -71,6 +87,25 @@ public class GameListener implements Listener {
         int numberPlayers = arena.getAllPlayers().size();
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
+
+        // Delete arena if needed
+        if(arena.getSession() != null && arena.getSession().getState() != GameState.LOBBY) {
+            if(arena.getPlayers(PlayerState.ALIVE).size() <= 1) {
+                Arena targetArena;
+                for(PlayerData target : arena.getAllPlayers()) {
+                    if(target == player)
+                        continue;
+
+                    targetArena = plugin.getGameController().getAvailableArena(ArenaPreference.MORE_PLAYERS);
+
+                    // No arena available or not allowed to join the arena
+                    if(targetArena == null || !arena.join(target)) {
+                        // TODO take care when player can not rejoin an arena
+                    }
+                }
+                plugin.getGameController().removeArena(arena);
+            }
+        }
     }
 
     /**

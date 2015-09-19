@@ -67,10 +67,18 @@ public class SkyWars extends JavaPlugin {
         instance = this;
 
         // Configuration files
-        if(!createFiles())
+        if(!createFiles()) {
             getLogger().log(Level.SEVERE, "Configuration files could not be created!");
-        if(!readFiles())
-            getLogger().log(Level.SEVERE, "Configuration files could not be read!");
+
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+        if(!readFiles()) {
+            getLogger().log(Level.WARNING, "Configuration files could not be read!");
+
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Database
         if(database == null) {
@@ -90,8 +98,14 @@ public class SkyWars extends JavaPlugin {
 
         // Integrate GameAPI
         gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
+        if(gameController == null) {
+            getLogger().log(Level.SEVERE, "Error while registering the game! (maybe it is already registered?)");
 
-        // Create initial arenas
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Create initial arena
         createArena();
 
         // Register events
