@@ -61,7 +61,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change join message
-        int numberPlayers = arena.getAllPlayers().size();
+        int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
@@ -88,7 +88,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change leave message
-        int numberPlayers = arena.getAllPlayers().size();
+        int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
 
@@ -126,7 +126,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change join message
-        int numberPlayers = arena.getAllPlayers().size();
+        int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
     }
@@ -145,7 +145,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Block dead players
-        if(player.getState() == PlayerState.DEAD) {
+        if(player.getState() == PlayerState.DEAD) { // TODO Warn that dead players may not talk
             event.setCancelled(true);
             return;
         }

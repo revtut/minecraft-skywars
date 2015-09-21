@@ -14,6 +14,10 @@ Spectator:
   x: 0
   y: 0
   z: 0
+SpectatorDeathMatch:
+  x: 0
+  y: 0
+  z: 0
 
 ##############
 # DEAD SPAWN #
@@ -22,11 +26,24 @@ Dead:
   x: 0
   y: 0
   z: 0
+DeadDeathMatch:
+  x: 0
+  y: 0
+  z: 0
 
 ########################
 # CORNERS OF THE ARENA #
 ########################
 Corners:
+  First:
+    x: 0
+    y: 0
+    z: 0
+  Second:
+    x: 0
+    y: 0
+    z: 0
+CornersDeathMatch:
   First:
     x: 0
     y: 0

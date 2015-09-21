@@ -7,6 +7,7 @@ import net.revtut.libraries.games.GameController;
 import net.revtut.libraries.games.GameListener;
 import net.revtut.libraries.games.arena.ArenaFlag;
 import net.revtut.libraries.games.arena.session.GameSession;
+import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
 import net.revtut.libraries.utils.FilesAPI;
@@ -180,17 +181,29 @@ public class SkyWars extends JavaPlugin {
 
         // Single locations
         Location lobby = new Location(Bukkit.getWorld(locConfig.getString("Lobby.world")),
-                                                        locConfig.getDouble("Lobby.x"),
-                                                        locConfig.getDouble("Lobby.y"),
-                                                        locConfig.getDouble("Lobby.z")),
+                locConfig.getDouble("Lobby.x"),
+                locConfig.getDouble("Lobby.y"),
+                locConfig.getDouble("Lobby.z")),
+
                 spectator = new Location(world,
                         locConfig.getDouble("Spectator.x"),
                         locConfig.getDouble("Spectator.y"),
                         locConfig.getDouble("Spectator.z")),
+
+                spectatorDeathMatch = new Location(world,
+                        locConfig.getDouble("SpectatorDeathMatch.x"),
+                        locConfig.getDouble("SpectatorDeathMatch.y"),
+                        locConfig.getDouble("SpectatorDeathMatch.z")),
+
                 dead = new Location(world,
                         locConfig.getDouble("Dead.x"),
                         locConfig.getDouble("Dead.y"),
-                        locConfig.getDouble("Dead.z"));
+                        locConfig.getDouble("Dead.z")),
+
+                deadDeathMatch = new Location(world,
+                        locConfig.getDouble("DeadDeathMatch.x"),
+                        locConfig.getDouble("DeadDeathMatch.y"),
+                        locConfig.getDouble("DeadDeathMatch.z"));
 
         // Array locations
         Location corners[] = new Location[] {
@@ -201,8 +214,17 @@ public class SkyWars extends JavaPlugin {
                 new Location(world,
                         locConfig.getDouble("Corners.Second.x"),
                         locConfig.getDouble("Corners.Second.y"),
-                        locConfig.getDouble("Corners.Second.z"))
-        };
+                        locConfig.getDouble("Corners.Second.z"))},
+
+                cornersDeathMatch[] = new Location[] {
+                        new Location(world,
+                                locConfig.getDouble("CornersDeathMatch.First.x"),
+                                locConfig.getDouble("CornersDeathMatch.First.y"),
+                                locConfig.getDouble("CornersDeathMatch.First.z")),
+                        new Location(world,
+                                locConfig.getDouble("CornersDeathMatch.Second.x"),
+                                locConfig.getDouble("CornersDeathMatch.Second.y"),
+                                locConfig.getDouble("CornersDeathMatch.Second.z"))};
 
         // List locations
         List<Location> spawnLocations = new ArrayList<>();
@@ -210,9 +232,9 @@ public class SkyWars extends JavaPlugin {
         for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
             section = locConfig.getConfigurationSection("Spawns." + spawnNumber);
             spawnLocation = new Location(world,
-                                    section.getDouble("x"),
-                                    section.getDouble("y"),
-                                    section.getDouble("z"));
+                    section.getDouble("x"),
+                    section.getDouble("y"),
+                    section.getDouble("z"));
             spawnLocations.add(spawnLocation);
         }
 
@@ -221,17 +243,20 @@ public class SkyWars extends JavaPlugin {
         for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
             section = locConfig.getConfigurationSection("DeathMatch." + deathMatchSpawnNumber);
             deathMatchLocation = new Location(world,
-                                            section.getDouble("x"),
-                                            section.getDouble("y"),
-                                            section.getDouble("z"));
+                    section.getDouble("x"),
+                    section.getDouble("y"),
+                    section.getDouble("z"));
             deathMatchLocations.add(deathMatchLocation);
         }
+
+        // TODO Make locations look to the center
 
         // Game Session
         GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
 
         // Initialize the arena
-        arena.initialize(world, lobby, spectator, corners, spawnLocations, dead, deathMatchLocations, session);
+        arena.initialize(world, lobby, spectator, spectatorDeathMatch, corners, cornersDeathMatch, spawnLocations, dead, deadDeathMatch, deathMatchLocations, session);
+        session.updateState(GameState.LOBBY, 30);
     }
 
     /**
