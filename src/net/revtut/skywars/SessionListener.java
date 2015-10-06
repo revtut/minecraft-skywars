@@ -61,7 +61,7 @@ public class SessionListener implements Listener {
 
         switch (session.getState()) {
             case LOBBY:
-                if(arena.getSize() < arena.getSession().getMaxPlayers()) { // Minimum players not achieved
+                if(arena.getSize() < arena.getSession().getMinPlayers()) { // Minimum players not achieved
                     event.setCancelled(true);
                     break;
                 }
