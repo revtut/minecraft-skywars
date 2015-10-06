@@ -323,7 +323,7 @@ public class SkyWars extends JavaPlugin {
      */
     private boolean readFiles() {
         // Configuration File
-        File configurationFile = new File(getDataFolder() + File.separator + "configuration.yml");
+        File configurationFile = new File(getDataFolder() + File.separator + "config.yml");
         FileConfiguration configurationConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
 
         int minPlayers = configurationConfiguration.getInt("MinPlayers"),
