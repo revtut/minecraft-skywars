@@ -120,15 +120,16 @@ public class SessionListener implements Listener {
                         // TODO Give kit chooser
                     }
                 }
+                break;
             case START:
                 for(PlayerData player : arena.getAllPlayers()) {
-                    if(player.getState() != PlayerState.ALIVE)
+                    if (player.getState() != PlayerState.ALIVE)
                         continue;
 
                     gameClass = player.getGameClass();
-                    if(gameClass == null)
-                        continue; // TODO Add default kit to the player
-                    else
+                    if (gameClass == null) {
+                        // TODO Add default kit to the player
+                    } else
                         gameClass.equip(player);
 
                     bukkitPlayer = player.getBukkitPlayer();
