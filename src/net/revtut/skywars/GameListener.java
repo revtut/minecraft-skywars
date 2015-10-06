@@ -70,7 +70,7 @@ public class GameListener implements Listener {
         // TODO Change its tab list etc
 
         // Create more arenas if needed
-        if(plugin.getGameController().getAvailableArenas().size() <= 1)
+        if(plugin.getGameController().getAvailableArenas().size() <= -1) // TODO change to 1
             plugin.createArena();
     }
 

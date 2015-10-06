@@ -4,12 +4,12 @@ import net.revtut.libraries.database.Database;
 import net.revtut.libraries.database.types.DatabaseType;
 import net.revtut.libraries.games.GameAPI;
 import net.revtut.libraries.games.GameController;
-import net.revtut.libraries.games.GameListener;
 import net.revtut.libraries.games.arena.ArenaFlag;
 import net.revtut.libraries.games.arena.session.GameSession;
 import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
+import net.revtut.libraries.maths.AlgebraAPI;
 import net.revtut.libraries.utils.FilesAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -235,7 +235,7 @@ public class SkyWars extends JavaPlugin {
                     section.getDouble("x"),
                     section.getDouble("y"),
                     section.getDouble("z"));
-            spawnLocations.add(spawnLocation);
+            spawnLocations.add(AlgebraAPI.locationLookAt(spawnLocation, dead));
         }
 
         List<Location> deathMatchLocations = new ArrayList<>();
@@ -246,10 +246,8 @@ public class SkyWars extends JavaPlugin {
                     section.getDouble("x"),
                     section.getDouble("y"),
                     section.getDouble("z"));
-            deathMatchLocations.add(deathMatchLocation);
+            deathMatchLocations.add(AlgebraAPI.locationLookAt(deathMatchLocation, deadDeathMatch));
         }
-
-        // TODO Make locations look to the center
 
         // Game Session
         GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
