@@ -12,6 +12,8 @@ import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -134,6 +136,7 @@ public class SessionListener implements Listener {
                         continue;
 
                     bukkitPlayer.setGameMode(GameMode.SURVIVAL);
+                    bukkitPlayer.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
                 }
                 break;
             case DEATHMATCH:

@@ -10,6 +10,7 @@ import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
 import net.revtut.libraries.maths.AlgebraAPI;
+import net.revtut.libraries.scoreboard.InfoBoard;
 import net.revtut.libraries.utils.FilesAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,6 +50,11 @@ public class SkyWars extends JavaPlugin {
      * Controller of the game
      */
     private GameController gameController;
+
+    /**
+     * Manager of the Information Boards
+     */
+    private InfoBoardManager infoBoardManager;
 
     /**
      * Configuration of the game
@@ -105,6 +111,7 @@ public class SkyWars extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+        infoBoardManager = new InfoBoardManager();
 
         // Create initial arena
         createArena();
@@ -173,79 +180,35 @@ public class SkyWars extends JavaPlugin {
      * @param arena arena to be initialized (must extend arena solo)
      */
     private void initializeArena(ArenaSolo arena) {
-        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId());
+        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId() + "_");
 
         // World arena locations
         File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
         FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
 
         // Single locations
-        Location lobby = new Location(Bukkit.getWorld(locConfig.getString("Lobby.world")),
-                locConfig.getDouble("Lobby.x"),
-                locConfig.getDouble("Lobby.y"),
-                locConfig.getDouble("Lobby.z")),
-
-                spectator = new Location(world,
-                        locConfig.getDouble("Spectator.x"),
-                        locConfig.getDouble("Spectator.y"),
-                        locConfig.getDouble("Spectator.z")),
-
-                spectatorDeathMatch = new Location(world,
-                        locConfig.getDouble("SpectatorDeathMatch.x"),
-                        locConfig.getDouble("SpectatorDeathMatch.y"),
-                        locConfig.getDouble("SpectatorDeathMatch.z")),
-
-                dead = new Location(world,
-                        locConfig.getDouble("Dead.x"),
-                        locConfig.getDouble("Dead.y"),
-                        locConfig.getDouble("Dead.z")),
-
-                deadDeathMatch = new Location(world,
-                        locConfig.getDouble("DeadDeathMatch.x"),
-                        locConfig.getDouble("DeadDeathMatch.y"),
-                        locConfig.getDouble("DeadDeathMatch.z"));
+        Location lobby = Utils.parseLocation(locConfig, "Lobby"),
+                spectator = Utils.parseLocation(locConfig, "Spectator"),
+                spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch"),
+                dead = Utils.parseLocation(locConfig, "Dead"),
+                deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch");
 
         // Array locations
-        Location corners[] = new Location[] {
-                new Location(world,
-                        locConfig.getDouble("Corners.First.x"),
-                        locConfig.getDouble("Corners.First.y"),
-                        locConfig.getDouble("Corners.First.z")),
-                new Location(world,
-                        locConfig.getDouble("Corners.Second.x"),
-                        locConfig.getDouble("Corners.Second.y"),
-                        locConfig.getDouble("Corners.Second.z"))},
-
-                cornersDeathMatch[] = new Location[] {
-                        new Location(world,
-                                locConfig.getDouble("CornersDeathMatch.First.x"),
-                                locConfig.getDouble("CornersDeathMatch.First.y"),
-                                locConfig.getDouble("CornersDeathMatch.First.z")),
-                        new Location(world,
-                                locConfig.getDouble("CornersDeathMatch.Second.x"),
-                                locConfig.getDouble("CornersDeathMatch.Second.y"),
-                                locConfig.getDouble("CornersDeathMatch.Second.z"))};
+        Location corners[] = new Location[] { Utils.parseLocation(locConfig, "Corners.First", world), Utils.parseLocation(locConfig, "Corners.Second", world) },
+                cornersDeathMatch[] = new Location[] { Utils.parseLocation(locConfig, "CornersDeathMatch.First", world), Utils.parseLocation(locConfig, "CornersDeathMatch.Second", world) };
 
         // List locations
         List<Location> spawnLocations = new ArrayList<>();
-        ConfigurationSection section; Location spawnLocation;
+        Location spawnLocation;
         for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
-            section = locConfig.getConfigurationSection("Spawns." + spawnNumber);
-            spawnLocation = new Location(world,
-                    section.getDouble("x"),
-                    section.getDouble("y"),
-                    section.getDouble("z"));
+            spawnLocation = Utils.parseLocation(locConfig, "Spawns." + spawnNumber, world);
             spawnLocations.add(AlgebraAPI.locationLookAt(spawnLocation, dead));
         }
 
         List<Location> deathMatchLocations = new ArrayList<>();
         Location deathMatchLocation;
         for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
-            section = locConfig.getConfigurationSection("DeathMatch." + deathMatchSpawnNumber);
-            deathMatchLocation = new Location(world,
-                    section.getDouble("x"),
-                    section.getDouble("y"),
-                    section.getDouble("z"));
+            deathMatchLocation = Utils.parseLocation(locConfig, "DeathMatch." + deathMatchSpawnNumber, world);
             deathMatchLocations.add(AlgebraAPI.locationLookAt(deathMatchLocation, deadDeathMatch));
         }
 
@@ -255,6 +218,10 @@ public class SkyWars extends JavaPlugin {
         // Initialize the arena
         arena.initialize(world, lobby, spectator, spectatorDeathMatch, corners, cornersDeathMatch, spawnLocations, dead, deadDeathMatch, deathMatchLocations, session);
         session.updateState(GameState.LOBBY, 30);
+
+        // InfoBoard of the arena
+        InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
+        infoBoardManager.setInfoBoard(arena, infoBoard);
     }
 
     /**
@@ -269,6 +236,7 @@ public class SkyWars extends JavaPlugin {
         arena.updateFlag(ArenaFlag.CHAT, true);
         arena.updateFlag(ArenaFlag.DROP_ITEM, false);
         arena.updateFlag(ArenaFlag.DAMAGE, false);
+        arena.updateFlag(ArenaFlag.HUNGER, false);
         arena.updateFlag(ArenaFlag.INVENTORY_CLICK, true);
         arena.updateFlag(ArenaFlag.INTERACT, true);
         arena.updateFlag(ArenaFlag.MOVE, true);
