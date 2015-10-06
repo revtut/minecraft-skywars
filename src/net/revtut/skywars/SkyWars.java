@@ -143,6 +143,22 @@ public class SkyWars extends JavaPlugin {
     }
 
     /**
+     * Get the information board manager
+     * @return information board manager
+     */
+    public InfoBoardManager getInfoBoardManager() {
+        return infoBoardManager;
+    }
+
+    /**
+     * Get the controller of the game
+     * @return controller of the game
+     */
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    /**
      * Get the configuration of the game
      * @return configuration of the game
      */
@@ -156,14 +172,6 @@ public class SkyWars extends JavaPlugin {
      */
     public Database getDatabaseInstance() {
         return database;
-    }
-
-    /**
-     * Get the controller of the game
-     * @return controller of the game
-     */
-    public GameController getGameController() {
-        return gameController;
     }
 
     /**
@@ -188,10 +196,10 @@ public class SkyWars extends JavaPlugin {
 
         // Single locations
         Location lobby = Utils.parseLocation(locConfig, "Lobby"),
-                spectator = Utils.parseLocation(locConfig, "Spectator"),
-                spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch"),
-                dead = Utils.parseLocation(locConfig, "Dead"),
-                deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch");
+                spectator = Utils.parseLocation(locConfig, "Spectator", world),
+                spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch", world),
+                dead = Utils.parseLocation(locConfig, "Dead", world),
+                deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch", world);
 
         // Array locations
         Location corners[] = new Location[] { Utils.parseLocation(locConfig, "Corners.First", world), Utils.parseLocation(locConfig, "Corners.Second", world) },

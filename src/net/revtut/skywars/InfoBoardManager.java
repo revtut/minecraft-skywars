@@ -52,23 +52,21 @@ public class InfoBoardManager {
         InfoBoard infoBoard = new InfoBoard();
 
         // Title
-        infoBoard.setTitle("Sky Wars\n" + arena.getId());
+        infoBoard.setTitle("§bSKY WARS");
 
         // Body
-        infoBoard.addLabel(new StaticLabel("Map", 1));
-        infoBoard.addLabel(new StaticLabel(arena.getWorld().getName().split("_")[2], 10));
-        infoBoard.addLabel(new StaticLabel(" ", 9));
-        infoBoard.addLabel(new StaticLabel("Alive", 8));
-        infoBoard.addLabel(new StaticLabel("" + arena.getPlayers(PlayerState.ALIVE).size(), 7));
-        infoBoard.addLabel(new StaticLabel("  ", 6));
-        infoBoard.addLabel(new StaticLabel("Spectators", 5));
-        infoBoard.addLabel(new StaticLabel(" " + (arena.getPlayers(PlayerState.SPECTATOR).size() + arena.getPlayers(PlayerState.DEAD).size()), 4));
-        infoBoard.addLabel(new StaticLabel("   ", 3));
+        infoBoard.addLabel(new StaticLabel("§6Session: " + arena.getId(), 9));
+        infoBoard.addLabel(new StaticLabel("§6Map: " + arena.getWorld().getName().split("_")[2], 8));
+        infoBoard.addLabel(new StaticLabel("   ", 7));
+        infoBoard.addLabel(new StaticLabel("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 6));
+        infoBoard.addLabel(new StaticLabel("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 5));
+        infoBoard.addLabel(new StaticLabel("  ", 4));
 
         // Footer
-        infoBoard.addLabel(new StaticLabel("----------", 2));
-        infoBoard.addLabel(new StaticLabel("See us at", 1));
-        infoBoard.addLabel(new StaticLabel("revtut.net", 0));
+        infoBoard.addLabel(new StaticLabel("§7----------------", 4));
+        infoBoard.addLabel(new StaticLabel(" ", 3));
+        infoBoard.addLabel(new StaticLabel("§fCheck us out", 1));
+        infoBoard.addLabel(new StaticLabel("§6www.revtut.net", 0));
         return infoBoard;
     }
 }
