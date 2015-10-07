@@ -3,9 +3,12 @@ package net.revtut.skywars;
 import net.revtut.libraries.games.arena.Arena;
 import net.revtut.libraries.games.arena.ArenaPreference;
 import net.revtut.libraries.games.arena.session.GameState;
+import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.events.player.*;
 import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
+import net.revtut.libraries.utils.BypassesAPI;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,6 +44,39 @@ public class GameListener implements Listener {
     }
 
     /**
+     * Controls the player die event
+     * @param event player die event
+     */
+    @EventHandler
+    public void onDie(PlayerDieEvent event) {
+        // Check if the arena belongs to this game
+        Arena arena = event.getArena();
+        if(!plugin.getGameController().hasArena(arena))
+            return;
+
+        PlayerData target = event.getPlayer();
+        PlayerData killer = event.getKiller();
+
+        // Death message
+        if(killer == null)
+            event.setDeathMessage(plugin.getConfiguration().getPrefix() + "§a" + target.getName() + " died!");
+        else
+            event.setDeathMessage(plugin.getConfiguration().getPrefix() + "§a" + target.getName() + " was killed by " + killer.getName() + "!");
+
+        // Update player
+        target.updateState(PlayerState.DEAD);
+        target.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
+        BypassesAPI.respawnBypass(target.getBukkitPlayer());
+
+        ArenaSolo arenaSolo = (ArenaSolo) arena;
+        if(arenaSolo.getSession().getState() == GameState.DEATHMATCH)
+            target.getBukkitPlayer().teleport(arenaSolo.getDeadDeathMatchLocation());
+        else
+            target.getBukkitPlayer().teleport(arenaSolo.getDeadLocation());
+
+    }
+
+    /**
      * Controls the player join arena event
      * @param event player join arena event
      */
@@ -66,7 +102,7 @@ public class GameListener implements Listener {
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
-        // Scoreboard
+        // Bukkit player
         Player bukkitPlayer = player.getBukkitPlayer();
         if(bukkitPlayer == null)
             return;

@@ -218,6 +218,7 @@ public class SkyWars extends JavaPlugin {
         arena.updateFlag(ArenaFlag.INTERACT, true);
         arena.updateFlag(ArenaFlag.MOVE, true);
         arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
+        arena.updateFlag(ArenaFlag.WEATHER, false);
     }
 
     /**

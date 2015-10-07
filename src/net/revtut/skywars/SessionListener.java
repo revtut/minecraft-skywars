@@ -1,6 +1,7 @@
 package net.revtut.skywars;
 
 import net.revtut.libraries.games.arena.Arena;
+import net.revtut.libraries.games.arena.ArenaFlag;
 import net.revtut.libraries.games.arena.session.GameSession;
 import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
@@ -73,6 +74,7 @@ public class SessionListener implements Listener {
                 session.updateState(GameState.START, Integer.MAX_VALUE);
                 break;
             case START:
+            case DEATHMATCH:
                 event.setCancelled(true); // The only way to end a game is if someone wins
                 break;
             case FINISH:
@@ -101,7 +103,7 @@ public class SessionListener implements Listener {
         GameClass gameClass;
 
         // Switch case
-        switch (event.getNextState()) {
+        switch (event.getNextState()) { // TODO update arena flags
             case WARMUP:
                 playerIndex = -1;
                 for(PlayerData player : arena.getAllPlayers()) {
@@ -139,6 +141,16 @@ public class SessionListener implements Listener {
                     bukkitPlayer.setGameMode(GameMode.SURVIVAL);
                     bukkitPlayer.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
                 }
+
+                // Update flags
+                arena.updateFlag(ArenaFlag.BLOCK_BREAK, true);
+                arena.updateFlag(ArenaFlag.BLOCK_PLACE, true);
+                arena.updateFlag(ArenaFlag.BUCKET_EMPTY, true);
+                arena.updateFlag(ArenaFlag.BUCKET_FILL, true);
+                arena.updateFlag(ArenaFlag.DROP_ITEM, true);
+                arena.updateFlag(ArenaFlag.DAMAGE, true);
+                arena.updateFlag(ArenaFlag.HUNGER, true);
+                arena.updateFlag(ArenaFlag.PICKUP_ITEM, true);
                 break;
             case DEATHMATCH:
                 playerIndex = -1;
