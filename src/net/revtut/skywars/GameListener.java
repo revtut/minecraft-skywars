@@ -64,7 +64,7 @@ public class GameListener implements Listener {
         // Change join message
         int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
-        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
+        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "Â§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
         // Scoreboard
         Player bukkitPlayer = player.getBukkitPlayer();
@@ -97,7 +97,7 @@ public class GameListener implements Listener {
         // Change leave message
         int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
-        event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
+        event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "Â§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
 
         // Delete arena if needed
         if(arena.getSession() != null && arena.getSession().getState() != GameState.LOBBY) {
@@ -135,7 +135,7 @@ public class GameListener implements Listener {
         // Change join message
         int numberPlayers = arena.getSize();
         int maxPlayers = arena.getSession().getMaxPlayers();
-        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
+        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "ï¿½a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
     /**

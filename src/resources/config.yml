@@ -1,3 +1,10 @@
+# Lobby Spawn
+Lobby:
+  world: 'world'
+  x: 0
+  y: 0
+  z: 0
+
 # Session Configuration
 MinPlayers: 8
 MaxPlayers: 24

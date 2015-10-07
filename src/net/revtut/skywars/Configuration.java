@@ -1,9 +1,16 @@
 package net.revtut.skywars;
 
+import org.bukkit.Location;
+
 /**
  * Configuration of the game
  */
 public class Configuration {
+
+    /**
+     * Location of the lobby
+     */
+    private Location lobby;
 
     /**
      * Minimum players to start the game
@@ -42,6 +49,7 @@ public class Configuration {
 
     /**
      * Constructor of Configuration
+     * @param lobby location of the lobby
      * @param minPlayers minimum players to start the game
      * @param maxPlayers maximum players on a arena
      * @param maxSlots maximum players on this game
@@ -50,7 +58,8 @@ public class Configuration {
      * @param tabFooter footer of the tab list
      * @param coinsMultiplier coins multiplier
      */
-    public Configuration(int minPlayers, int maxPlayers, int maxSlots, String prefix, String tabTitle, String tabFooter, double coinsMultiplier) {
+    public Configuration(Location lobby, int minPlayers, int maxPlayers, int maxSlots, String prefix, String tabTitle, String tabFooter, double coinsMultiplier) {
+        this.lobby = lobby;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.maxSlots = maxSlots;
@@ -58,6 +67,14 @@ public class Configuration {
         this.tabTitle = tabTitle;
         this.tabFooter = tabFooter;
         this.coinsMultiplier = coinsMultiplier;
+    }
+
+    /**
+     * Get the lobby location
+     * @return lobby location
+     */
+    public Location getLobby() {
+        return lobby;
     }
 
     /**

@@ -57,14 +57,14 @@ public class InfoBoardManager {
         InfoBoard infoBoard = new InfoBoard(5);
 
         // Title
-        infoBoard.setTitle(new ScrollingLabel(new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.GOLD)));
+        infoBoard.setTitle(new ScrollingLabel(new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD)));
 
         // Body
         infoBoard.addLabel(new BlankLabel(12));
         infoBoard.addLabel(new ScrollingLabel(new TextScroller("§fBecome §6VIP §fat our store! | ", 15), 11));
         infoBoard.addLabel(new BlankLabel(10));
         infoBoard.addLabel(new StaticLabel("§6Session: §f" + arena.getId(), 9));
-        infoBoard.addLabel(new StaticLabel("§6Map: §f" + arena.getWorld().getName().split("_")[2], 8));
+        infoBoard.addLabel(new StaticLabel("§6Map: §fVoting!", 8));
         infoBoard.addLabel(new BlankLabel(7));
         infoBoard.addLabel(new StaticLabel("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 6));
         infoBoard.addLabel(new StaticLabel("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 5));

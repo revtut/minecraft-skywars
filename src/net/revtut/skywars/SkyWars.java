@@ -179,15 +179,52 @@ public class SkyWars extends JavaPlugin {
      */
     public void createArena() {
         ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
-        initializeArena(arena);
-        initializeFlags(arena);
+        initArena(arena);
+        initWorld(arena);
+        initFlags(arena);
     }
 
     /**
      * Initialize a arena
-     * @param arena arena to be initialized (must extend arena solo)
+     * @param arena arena to be initialized
      */
-    private void initializeArena(ArenaSolo arena) {
+    private void initArena(ArenaSolo arena) {
+        // Game Session
+        GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
+
+        // Initialize the arena
+        arena.initArena(configuration.getLobby(), session);
+        session.updateState(GameState.LOBBY, 30);
+
+        // InfoBoard of the arena
+        InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
+        infoBoardManager.setInfoBoard(arena, infoBoard);
+    }
+
+    /**
+     * Initialize the flags of a arena
+     * @param arena arena to be initialized
+     */
+    private void initFlags(ArenaSolo arena) {
+        arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
+        arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
+        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
+        arena.updateFlag(ArenaFlag.BUCKET_FILL, false);
+        arena.updateFlag(ArenaFlag.CHAT, true);
+        arena.updateFlag(ArenaFlag.DROP_ITEM, false);
+        arena.updateFlag(ArenaFlag.DAMAGE, false);
+        arena.updateFlag(ArenaFlag.HUNGER, false);
+        arena.updateFlag(ArenaFlag.INVENTORY_CLICK, true);
+        arena.updateFlag(ArenaFlag.INTERACT, true);
+        arena.updateFlag(ArenaFlag.MOVE, true);
+        arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
+    }
+
+    /**
+     * Initialize the world of a arena
+     * @param arena arena to be initialized
+     */
+    public void initWorld(ArenaSolo arena) {
         World world = gameController.loadRandomWorld(getName() + "_" + arena.getId() + "_");
 
         // World arena locations
@@ -195,8 +232,7 @@ public class SkyWars extends JavaPlugin {
         FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
 
         // Single locations
-        Location lobby = Utils.parseLocation(locConfig, "Lobby"),
-                spectator = Utils.parseLocation(locConfig, "Spectator", world),
+        Location spectator = Utils.parseLocation(locConfig, "Spectator", world),
                 spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch", world),
                 dead = Utils.parseLocation(locConfig, "Dead", world),
                 deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch", world);
@@ -220,35 +256,8 @@ public class SkyWars extends JavaPlugin {
             deathMatchLocations.add(AlgebraAPI.locationLookAt(deathMatchLocation, deadDeathMatch));
         }
 
-        // Game Session
-        GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
-
-        // Initialize the arena
-        arena.initialize(world, lobby, spectator, spectatorDeathMatch, corners, cornersDeathMatch, spawnLocations, dead, deadDeathMatch, deathMatchLocations, session);
-        session.updateState(GameState.LOBBY, 30);
-
-        // InfoBoard of the arena
-        InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
-        infoBoardManager.setInfoBoard(arena, infoBoard);
-    }
-
-    /**
-     * Initialize the flags of the arena
-     * @param arena arena to be updated
-     */
-    private void initializeFlags(ArenaSolo arena) {
-        arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
-        arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
-        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
-        arena.updateFlag(ArenaFlag.BUCKET_FILL, false);
-        arena.updateFlag(ArenaFlag.CHAT, true);
-        arena.updateFlag(ArenaFlag.DROP_ITEM, false);
-        arena.updateFlag(ArenaFlag.DAMAGE, false);
-        arena.updateFlag(ArenaFlag.HUNGER, false);
-        arena.updateFlag(ArenaFlag.INVENTORY_CLICK, true);
-        arena.updateFlag(ArenaFlag.INTERACT, true);
-        arena.updateFlag(ArenaFlag.MOVE, true);
-        arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
+        // Initialize the world of the arena
+        arena.initWorld(world, spectator, spectatorDeathMatch, corners, cornersDeathMatch, spawnLocations, dead, deadDeathMatch, deathMatchLocations);
     }
 
     /**
@@ -302,6 +311,7 @@ public class SkyWars extends JavaPlugin {
         File configurationFile = new File(getDataFolder() + File.separator + "config.yml");
         FileConfiguration configurationConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
 
+        Location lobby = Utils.parseLocation(configurationConfiguration, "Lobby");
         int minPlayers = configurationConfiguration.getInt("MinPlayers"),
                 maxPlayers = configurationConfiguration.getInt("MaxPlayers"),
                 maxSlots = configurationConfiguration.getInt("MaxSlots");
@@ -310,7 +320,7 @@ public class SkyWars extends JavaPlugin {
                 tabFooter = configurationConfiguration.getString("TabFooter");
         double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
 
-        this.configuration = new Configuration(minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);
+        this.configuration = new Configuration(lobby, minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);
 
         // Database File
         File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
