@@ -1,23 +1,22 @@
 package net.revtut.skywars;
 
-import net.revtut.libraries.database.Database;
-import net.revtut.libraries.database.types.DatabaseType;
-import net.revtut.libraries.games.GameAPI;
-import net.revtut.libraries.games.GameController;
-import net.revtut.libraries.games.arena.ArenaFlag;
-import net.revtut.libraries.games.arena.session.GameSession;
-import net.revtut.libraries.games.arena.session.GameState;
-import net.revtut.libraries.games.arena.types.ArenaSolo;
-import net.revtut.libraries.games.arena.types.ArenaType;
-import net.revtut.libraries.maths.AlgebraAPI;
-import net.revtut.libraries.maths.ConvertersAPI;
-import net.revtut.libraries.scoreboard.InfoBoard;
-import net.revtut.libraries.utils.FilesAPI;
+import net.revtut.libraries.generic.database.Database;
+import net.revtut.libraries.generic.database.types.DatabaseType;
+import net.revtut.libraries.generic.util.Files;
+import net.revtut.libraries.minecraft.games.GameAPI;
+import net.revtut.libraries.minecraft.games.GameController;
+import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
+import net.revtut.libraries.minecraft.games.arena.session.GameSession;
+import net.revtut.libraries.minecraft.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
+import net.revtut.libraries.minecraft.maths.AlgebraAPI;
+import net.revtut.libraries.minecraft.maths.ConvertersAPI;
+import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -285,7 +284,7 @@ public class SkyWars extends JavaPlugin {
                 this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!FilesAPI.copyFile(getResource("resources/config.yml"), configFile))
+            if (!Files.copyFile(getResource("resources/config.yml"), configFile))
                 return false;
         }
 
@@ -299,7 +298,7 @@ public class SkyWars extends JavaPlugin {
                 this.getLogger().log(Level.WARNING, "Error while creating database.yml. Reason: " + e.getMessage());
                 return false;
             }
-            if (!FilesAPI.copyFile(getResource("resources/database.yml"), databaseFile))
+            if (!Files.copyFile(getResource("resources/database.yml"), databaseFile))
                 return false;
         }
         return true;

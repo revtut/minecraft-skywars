@@ -1,13 +1,13 @@
 package net.revtut.skywars;
 
-import net.revtut.libraries.games.arena.Arena;
-import net.revtut.libraries.games.player.PlayerState;
-import net.revtut.libraries.scoreboard.InfoBoard;
-import net.revtut.libraries.scoreboard.label.BlankLabel;
-import net.revtut.libraries.scoreboard.label.ScrollingLabel;
-import net.revtut.libraries.scoreboard.label.StaticLabel;
-import net.revtut.libraries.text.scroller.ColorScroller;
-import net.revtut.libraries.text.scroller.TextScroller;
+import net.revtut.libraries.minecraft.games.arena.Arena;
+import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
+import net.revtut.libraries.minecraft.scoreboard.label.BlankLabel;
+import net.revtut.libraries.minecraft.scoreboard.label.ScrollingLabel;
+import net.revtut.libraries.minecraft.scoreboard.label.StaticLabel;
+import net.revtut.libraries.minecraft.text.scroller.ColorScroller;
+import net.revtut.libraries.minecraft.text.scroller.TextScroller;
 import org.bukkit.ChatColor;
 
 import java.util.HashMap;

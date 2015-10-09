@@ -1,16 +1,16 @@
 package net.revtut.skywars;
 
-import net.revtut.libraries.games.arena.Arena;
-import net.revtut.libraries.games.arena.ArenaPreference;
-import net.revtut.libraries.games.arena.session.GameState;
-import net.revtut.libraries.games.arena.types.ArenaSolo;
-import net.revtut.libraries.games.events.player.*;
-import net.revtut.libraries.games.player.PlayerData;
-import net.revtut.libraries.games.player.PlayerState;
-import net.revtut.libraries.scoreboard.InfoBoard;
-import net.revtut.libraries.scoreboard.InfoBoardLabel;
-import net.revtut.libraries.text.TabAPI;
-import net.revtut.libraries.utils.BypassesAPI;
+import net.revtut.libraries.minecraft.games.arena.Arena;
+import net.revtut.libraries.minecraft.games.arena.ArenaPreference;
+import net.revtut.libraries.minecraft.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.games.events.player.*;
+import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
+import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
+import net.revtut.libraries.minecraft.text.TabAPI;
+import net.revtut.libraries.minecraft.utils.BypassesAPI;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
