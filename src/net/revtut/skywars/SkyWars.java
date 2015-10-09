@@ -10,6 +10,7 @@ import net.revtut.libraries.games.arena.session.GameState;
 import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.arena.types.ArenaType;
 import net.revtut.libraries.maths.AlgebraAPI;
+import net.revtut.libraries.maths.ConvertersAPI;
 import net.revtut.libraries.scoreboard.InfoBoard;
 import net.revtut.libraries.utils.FilesAPI;
 import org.bukkit.Bukkit;
@@ -318,9 +319,9 @@ public class SkyWars extends JavaPlugin {
         int minPlayers = configurationConfiguration.getInt("MinPlayers"),
                 maxPlayers = configurationConfiguration.getInt("MaxPlayers"),
                 maxSlots = configurationConfiguration.getInt("MaxSlots");
-        String prefix = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix")),
-                tabTitle = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle")),
-                tabFooter = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter"));
+        String prefix = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix"))),
+                tabTitle = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle"))),
+                tabFooter = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter")));
         double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
 
         this.configuration = new Configuration(lobby, minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);

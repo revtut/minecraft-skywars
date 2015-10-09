@@ -9,6 +9,7 @@ import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
 import net.revtut.libraries.scoreboard.InfoBoard;
 import net.revtut.libraries.scoreboard.InfoBoardLabel;
+import net.revtut.libraries.text.TabAPI;
 import net.revtut.libraries.utils.BypassesAPI;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -76,6 +77,8 @@ public class GameListener implements Listener {
         else
             target.getBukkitPlayer().teleport(arenaSolo.getDeadLocation());
 
+        // TODO respawn event
+
         // Scoreboard
         InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
         InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
@@ -122,11 +125,12 @@ public class GameListener implements Listener {
         InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
         aliveLabel.setText("§aAlive: §f" + numberPlayers);
         infoBoard.updateLabel(aliveLabel);
-
         infoBoard.send(bukkitPlayer);
 
+        // Tab list
+        TabAPI.setTab(bukkitPlayer, plugin.getConfiguration().getTabTitle(), plugin.getConfiguration().getTabFooter());
+
         // TODO Add lobby items
-        // TODO Change its tab list etc
 
         // Create more arenas if needed
         if(plugin.getGameController().getAvailableArenas().size() <= 1)
@@ -147,7 +151,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change leave message
-        int numberPlayers = arena.getSize();
+        int numberPlayers = arena.getSize() - 1;
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
 
@@ -185,9 +189,9 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change join message
-        int numberPlayers = arena.getSize();
+        int numberPlayers = arena.getSize() + 1;
         int maxPlayers = arena.getSession().getMaxPlayers();
-        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "�a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
+        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
     /**
