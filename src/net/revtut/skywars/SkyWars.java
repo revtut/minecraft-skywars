@@ -13,6 +13,7 @@ import net.revtut.libraries.maths.AlgebraAPI;
 import net.revtut.libraries.scoreboard.InfoBoard;
 import net.revtut.libraries.utils.FilesAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -317,9 +318,9 @@ public class SkyWars extends JavaPlugin {
         int minPlayers = configurationConfiguration.getInt("MinPlayers"),
                 maxPlayers = configurationConfiguration.getInt("MaxPlayers"),
                 maxSlots = configurationConfiguration.getInt("MaxSlots");
-        String prefix = configurationConfiguration.getString("MessagePrefix"),
-                tabTitle = configurationConfiguration.getString("TabTitle"),
-                tabFooter = configurationConfiguration.getString("TabFooter");
+        String prefix = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix")),
+                tabTitle = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle")),
+                tabFooter = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter"));
         double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
 
         this.configuration = new Configuration(lobby, minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);

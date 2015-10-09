@@ -76,6 +76,14 @@ public class GameListener implements Listener {
         else
             target.getBukkitPlayer().teleport(arenaSolo.getDeadLocation());
 
+        // Scoreboard
+        InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
+        InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
+        InfoBoardLabel deadLabel = infoBoard.getLabel("dead");
+        aliveLabel.setText("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size());
+        deadLabel.setText("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size());
+        infoBoard.updateLabel(aliveLabel);
+        infoBoard.updateLabel(deadLabel);
     }
 
     /**
@@ -116,6 +124,7 @@ public class GameListener implements Listener {
         infoBoard.updateLabel(aliveLabel);
 
         infoBoard.send(bukkitPlayer);
+
         // TODO Add lobby items
         // TODO Change its tab list etc
 
