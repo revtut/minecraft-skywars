@@ -57,23 +57,23 @@ public class InfoBoardManager {
         InfoBoard infoBoard = new InfoBoard(5);
 
         // Title
-        infoBoard.setTitle(new ScrollingLabel(new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD)));
+        infoBoard.setTitle(new ScrollingLabel("title", new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD), 0));
 
         // Body
         infoBoard.addLabel(new BlankLabel(11));
-        infoBoard.addLabel(new ScrollingLabel(new TextScroller("§fBecome §6VIP §fat our store! | ", 15), 10));
+        infoBoard.addLabel(new ScrollingLabel("vip", new TextScroller("§fBecome §6VIP §fat our store! | ", 15), 10));
         infoBoard.addLabel(new BlankLabel(9));
-        infoBoard.addLabel(new StaticLabel("§6Session: §f" + arena.getId(), 8));
-        infoBoard.addLabel(new StaticLabel("§6Map: §fVoting!", 7));
+        infoBoard.addLabel(new StaticLabel("session", "§6Session: §f" + arena.getId(), 8));
+        infoBoard.addLabel(new StaticLabel("map", "§6Map: §fVoting!", 7));
         infoBoard.addLabel(new BlankLabel(6));
-        infoBoard.addLabel(new StaticLabel("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 5));
-        infoBoard.addLabel(new StaticLabel("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 4));
+        infoBoard.addLabel(new StaticLabel("alive", "§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 5));
+        infoBoard.addLabel(new StaticLabel("dead", "§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 4));
         infoBoard.addLabel(new BlankLabel(3));
 
         // Footer
-        infoBoard.addLabel(new StaticLabel("§8----------------", 2));
-        infoBoard.addLabel(new StaticLabel("§fCheck us out", 1));
-        infoBoard.addLabel(new StaticLabel("§6www.revtut.net", 0));
+        infoBoard.addLabel(new StaticLabel("separator", "§8----------------", 2));
+        infoBoard.addLabel(new StaticLabel("check_us", "§fCheck us out", 1));
+        infoBoard.addLabel(new StaticLabel("website", "§6www.revtut.net", 0));
         return infoBoard;
     }
 }

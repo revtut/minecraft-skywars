@@ -7,6 +7,8 @@ import net.revtut.libraries.games.arena.types.ArenaSolo;
 import net.revtut.libraries.games.events.player.*;
 import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
+import net.revtut.libraries.scoreboard.InfoBoard;
+import net.revtut.libraries.scoreboard.InfoBoardLabel;
 import net.revtut.libraries.utils.BypassesAPI;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -98,7 +100,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Change join message
-        int numberPlayers = arena.getSize();
+        int numberPlayers = arena.getSize() + 1;
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
@@ -108,7 +110,12 @@ public class GameListener implements Listener {
             return;
 
         // Scoreboard
-        plugin.getInfoBoardManager().getInfoBoard(arena).send(bukkitPlayer);
+        InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
+        InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
+        aliveLabel.setText("§aAlive: §f" + numberPlayers);
+        infoBoard.updateLabel(aliveLabel);
+
+        infoBoard.send(bukkitPlayer);
         // TODO Add lobby items
         // TODO Change its tab list etc
 

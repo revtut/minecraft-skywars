@@ -11,6 +11,8 @@ import net.revtut.libraries.games.events.session.SessionTimerExpireEvent;
 import net.revtut.libraries.games.events.session.SessionTimerTickEvent;
 import net.revtut.libraries.games.player.PlayerData;
 import net.revtut.libraries.games.player.PlayerState;
+import net.revtut.libraries.scoreboard.InfoBoard;
+import net.revtut.libraries.scoreboard.InfoBoardLabel;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -136,6 +138,12 @@ public class SessionListener implements Listener {
                 // TODO Give kit chooser
             }
         }
+
+        // Update scoreboard (label map)
+        InfoBoard infoBoard = SkyWars.getInstance().getInfoBoardManager().getInfoBoard(arena);
+        InfoBoardLabel mapLabel = infoBoard.getLabel("map");
+        mapLabel.setText("§6Map: §f" + arena.getWorld().getName().split("_")[2]);
+        infoBoard.updateLabel(mapLabel);
     }
 
     /**
