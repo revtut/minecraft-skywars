@@ -78,7 +78,7 @@ public class SessionListener implements Listener {
                 event.setCancelled(true); // The only way to end a game is if someone wins
                 break;
             case FINISH:
-                session.updateState(GameState.BUILD, Integer.MAX_VALUE);
+                // TODO rejoin all the players and close this arena
                 break;
         }
     }
@@ -96,96 +96,138 @@ public class SessionListener implements Listener {
 
         ArenaSolo arena = (ArenaSolo) session.getArena();
 
-        // Needed variables for the switch case
-        int playerIndex;
-        Player bukkitPlayer;
-        Location teleportLocation;
-        GameClass gameClass;
-
-        // Switch case
-        switch (event.getNextState()) { // TODO update arena flags
+        switch (event.getNextState()) {
             case WARMUP:
-                playerIndex = -1;
-                for(PlayerData player : arena.getAllPlayers()) {
-                    bukkitPlayer = player.getBukkitPlayer();
-                    if(bukkitPlayer == null)
-                        continue;
-
-                    if(player.getState() == PlayerState.SPECTATOR) {
-                        bukkitPlayer.teleport(arena.getSpectatorLocation());
-                    } else {
-                        ++playerIndex;
-
-                        teleportLocation = arena.getSpawnLocations().get(playerIndex % arena.getSpawnLocations().size());
-                        bukkitPlayer.teleport(teleportLocation);
-
-                        // TODO Give kit chooser
-                    }
-                }
+                onWarmUp(arena);
                 break;
             case START:
-                for(PlayerData player : arena.getAllPlayers()) {
-                    if (player.getState() != PlayerState.ALIVE)
-                        continue;
-
-                    gameClass = player.getGameClass();
-                    if (gameClass == null) {
-                        // TODO Add default kit to the player
-                    } else
-                        gameClass.equip(player);
-
-                    bukkitPlayer = player.getBukkitPlayer();
-                    if(bukkitPlayer == null)
-                        continue;
-
-                    bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-                    bukkitPlayer.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
-                }
-
-                // Update flags
-                arena.updateFlag(ArenaFlag.BLOCK_BREAK, true);
-                arena.updateFlag(ArenaFlag.BLOCK_PLACE, true);
-                arena.updateFlag(ArenaFlag.BUCKET_EMPTY, true);
-                arena.updateFlag(ArenaFlag.BUCKET_FILL, true);
-                arena.updateFlag(ArenaFlag.DROP_ITEM, true);
-                arena.updateFlag(ArenaFlag.DAMAGE, true);
-                arena.updateFlag(ArenaFlag.HUNGER, true);
-                arena.updateFlag(ArenaFlag.PICKUP_ITEM, true);
+                onStart(arena);
                 break;
             case DEATHMATCH:
-                playerIndex = -1;
-                for(PlayerData player : arena.getAllPlayers()) {
-                    bukkitPlayer = player.getBukkitPlayer();
-                    if(bukkitPlayer == null)
-                        continue;
-
-                    if(player.getState() == PlayerState.SPECTATOR) {
-                        bukkitPlayer.teleport(arena.getSpectatorDeathMatchLocation());
-                    } else if(player.getState() == PlayerState.DEAD) {
-                        bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
-                    } else {
-                        ++playerIndex;
-
-                        teleportLocation = arena.getDeathMatchLocations().get(playerIndex % arena.getDeathMatchLocations().size());
-                        bukkitPlayer.teleport(teleportLocation);
-                    }
-                }
+                onDeathMatch(arena);
                 break;
             case FINISH:
-                for(PlayerData player : arena.getAllPlayers()) {
-                    bukkitPlayer = player.getBukkitPlayer();
-                    if(bukkitPlayer == null)
-                        continue;
-
-                    if(arena.getSession().getState() == GameState.DEATHMATCH) {
-                        bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
-                    } else {
-                        bukkitPlayer.teleport(arena.getDeadLocation());
-                    }
-
-                    // TODO Change game mode when game finishes, launch fireworks
-                }
+                onFinish(arena);
                 break;
         }
+    }
+
+    /**
+     * Method to take care of what to do when state changes to warm up
+     * @param arena arena that is now on warm up
+     */
+    private void onWarmUp(ArenaSolo arena) {
+        int playerIndex = -1;
+        Player bukkitPlayer;
+        Location teleportLocation;
+        for(PlayerData player : arena.getAllPlayers()) {
+            bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer == null)
+                continue;
+
+            if(player.getState() == PlayerState.SPECTATOR) {
+                bukkitPlayer.teleport(arena.getSpectatorLocation());
+            } else {
+                ++playerIndex;
+
+                teleportLocation = arena.getSpawnLocations().get(playerIndex % arena.getSpawnLocations().size());
+                bukkitPlayer.teleport(teleportLocation);
+
+                // TODO Give kit chooser
+            }
+        }
+    }
+
+    /**
+     * Method to take care of what to do when state changes to start
+     * @param arena arena that is now on start
+     */
+    private void onStart(ArenaSolo arena) {
+        Player bukkitPlayer;
+        GameClass gameClass;
+        for(PlayerData player : arena.getAllPlayers()) {
+            if (player.getState() != PlayerState.ALIVE)
+                continue;
+
+            gameClass = player.getGameClass();
+            if (gameClass == null) {
+                // TODO Add default kit to the player
+            } else
+                gameClass.equip(player);
+
+            bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer == null)
+                continue;
+
+            bukkitPlayer.setGameMode(GameMode.SURVIVAL);
+            bukkitPlayer.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
+        }
+
+        // Update flags
+        arena.updateFlag(ArenaFlag.BLOCK_BREAK, true);
+        arena.updateFlag(ArenaFlag.BLOCK_PLACE, true);
+        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, true);
+        arena.updateFlag(ArenaFlag.BUCKET_FILL, true);
+        arena.updateFlag(ArenaFlag.DROP_ITEM, true);
+        arena.updateFlag(ArenaFlag.DAMAGE, true);
+        arena.updateFlag(ArenaFlag.HUNGER, true);
+        arena.updateFlag(ArenaFlag.PICKUP_ITEM, true);
+    }
+
+    /**
+     * Method to take care of what to do when state changes to death match
+     * @param arena arena that is now on death match
+     */
+    private void onDeathMatch(ArenaSolo arena) {
+        int playerIndex = -1;
+        Player bukkitPlayer;
+        Location teleportLocation;
+        for(PlayerData player : arena.getAllPlayers()) {
+            bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer == null)
+                continue;
+
+            if(player.getState() == PlayerState.SPECTATOR) {
+                bukkitPlayer.teleport(arena.getSpectatorDeathMatchLocation());
+            } else if(player.getState() == PlayerState.DEAD) {
+                bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
+            } else {
+                ++playerIndex;
+
+                teleportLocation = arena.getDeathMatchLocations().get(playerIndex % arena.getDeathMatchLocations().size());
+                bukkitPlayer.teleport(teleportLocation);
+            }
+        }
+    }
+
+    /**
+     * Method to take care of what to do when state changes to finish
+     * @param arena arena that is now on finish
+     */
+    private void onFinish(ArenaSolo arena) {
+        Player bukkitPlayer;
+        for(PlayerData player : arena.getAllPlayers()) {
+            bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer == null)
+                continue;
+
+            if(arena.getSession().getState() == GameState.DEATHMATCH) {
+                bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
+            } else {
+                bukkitPlayer.teleport(arena.getDeadLocation());
+            }
+
+            bukkitPlayer.setGameMode(GameMode.SPECTATOR);
+        }
+
+        // Update flags
+        arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
+        arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
+        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
+        arena.updateFlag(ArenaFlag.BUCKET_FILL, false);
+        arena.updateFlag(ArenaFlag.DROP_ITEM, false);
+        arena.updateFlag(ArenaFlag.DAMAGE, false);
+        arena.updateFlag(ArenaFlag.HUNGER, false);
+        arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
     }
 }

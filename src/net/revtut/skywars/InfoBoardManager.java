@@ -60,18 +60,18 @@ public class InfoBoardManager {
         infoBoard.setTitle(new ScrollingLabel(new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD)));
 
         // Body
-        infoBoard.addLabel(new BlankLabel(12));
-        infoBoard.addLabel(new ScrollingLabel(new TextScroller("§fBecome §6VIP §fat our store! | ", 15), 11));
-        infoBoard.addLabel(new BlankLabel(10));
-        infoBoard.addLabel(new StaticLabel("§6Session: §f" + arena.getId(), 9));
-        infoBoard.addLabel(new StaticLabel("§6Map: §fVoting!", 8));
-        infoBoard.addLabel(new BlankLabel(7));
-        infoBoard.addLabel(new StaticLabel("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 6));
-        infoBoard.addLabel(new StaticLabel("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 5));
-        infoBoard.addLabel(new BlankLabel(4));
+        infoBoard.addLabel(new BlankLabel(11));
+        infoBoard.addLabel(new ScrollingLabel(new TextScroller("§fBecome §6VIP §fat our store! | ", 15), 10));
+        infoBoard.addLabel(new BlankLabel(9));
+        infoBoard.addLabel(new StaticLabel("§6Session: §f" + arena.getId(), 8));
+        infoBoard.addLabel(new StaticLabel("§6Map: §fVoting!", 7));
+        infoBoard.addLabel(new BlankLabel(6));
+        infoBoard.addLabel(new StaticLabel("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size(), 5));
+        infoBoard.addLabel(new StaticLabel("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size(), 4));
+        infoBoard.addLabel(new BlankLabel(3));
 
         // Footer
-        infoBoard.addLabel(new StaticLabel("§8----------------", 3));
+        infoBoard.addLabel(new StaticLabel("§8----------------", 2));
         infoBoard.addLabel(new StaticLabel("§fCheck us out", 1));
         infoBoard.addLabel(new StaticLabel("§6www.revtut.net", 0));
         return infoBoard;

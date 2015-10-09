@@ -180,7 +180,7 @@ public class SkyWars extends JavaPlugin {
     public void createArena() {
         ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
         initArena(arena);
-        initWorld(arena);
+        initWorld(arena, "Chopper Wars");
         initFlags(arena);
     }
 
@@ -224,9 +224,10 @@ public class SkyWars extends JavaPlugin {
     /**
      * Initialize the world of a arena
      * @param arena arena to be initialized
+     * @param worldName name of the world to be loaded
      */
-    public void initWorld(ArenaSolo arena) {
-        World world = gameController.loadRandomWorld(getName() + "_" + arena.getId() + "_");
+    public void initWorld(ArenaSolo arena, String worldName) {
+        World world = gameController.loadWorld(getName() + "_" + arena.getId() + "_", worldName);
 
         // World arena locations
         File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
