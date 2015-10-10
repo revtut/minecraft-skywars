@@ -1,5 +1,6 @@
 package net.revtut.skywars.listeners.session;
 
+import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
 import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
@@ -32,7 +33,8 @@ public class SwitchStateListener implements Listener {
     public void onSwitchState(final SessionSwitchStateEvent event) {
         // Check if the arena belongs to this game
         final GameSession session = event.getSession();
-        if(!SkyWars.getInstance().getGameController().hasArena(session.getArena()))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(session.getArena()))
             return;
 
         final ArenaSolo arena = (ArenaSolo) session.getArena();

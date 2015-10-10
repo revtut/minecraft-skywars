@@ -69,6 +69,7 @@ public class SkyWars extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        infoBoardManager = new InfoBoardManager();
 
         // Configuration files
         if(!createFiles()) {
@@ -100,18 +101,6 @@ public class SkyWars extends JavaPlugin {
             }
         }
 
-        // Integrate GameAPI
-        gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
-        if(gameController == null) {
-            getLogger().log(Level.SEVERE, "Error while registering the game! (maybe it is already registered?)");
-
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-        gameController.createArena(ArenaType.SOLO);
-
-        infoBoardManager = new InfoBoardManager();
-
         // Register events
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ArenaLoadListener(), this);
@@ -121,6 +110,18 @@ public class SkyWars extends JavaPlugin {
         pluginManager.registerEvents(new TimerTickListener(), this);
 
         pluginManager.registerEvents(new GameListener(), this);
+
+        // Integrate GameAPI
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            gameController = GameAPI.getInstance().registerGame(this, new File(getDataFolder() + File.separator + "worlds"));
+            if(gameController == null) {
+                getLogger().log(Level.SEVERE, "Error while registering the game! (maybe it is already registered?)");
+
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
+            gameController.createArena(ArenaType.SOLO);
+        }, 20L);
     }
 
     /**
@@ -230,7 +231,7 @@ public class SkyWars extends JavaPlugin {
         final int minPlayers = configurationConfiguration.getInt("MinPlayers");
         final int maxPlayers = configurationConfiguration.getInt("MaxPlayers");
         final int maxSlots = configurationConfiguration.getInt("MaxSlots");
-        final String prefix = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix")));
+        final String prefix = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix"));
         final String tabTitle = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle")));
         final String tabFooter = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter")));
         final double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");

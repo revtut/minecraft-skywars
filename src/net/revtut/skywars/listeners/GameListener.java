@@ -1,5 +1,6 @@
 package net.revtut.skywars.listeners;
 
+import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
@@ -34,7 +35,8 @@ public class GameListener implements Listener {
     public void onCrossBorder(final PlayerCrossArenaBorderEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         final PlayerData player = event.getPlayer();
@@ -52,7 +54,8 @@ public class GameListener implements Listener {
     public void onDie(final PlayerDieEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         final PlayerData target = event.getPlayer();
@@ -95,7 +98,8 @@ public class GameListener implements Listener {
     public void onJoin(final PlayerJoinArenaEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         // Check maximum slots
@@ -139,7 +143,8 @@ public class GameListener implements Listener {
     public void onLeave(final PlayerLeaveArenaEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         final PlayerData player = event.getPlayer();
@@ -158,7 +163,8 @@ public class GameListener implements Listener {
     public void onSpectate(final PlayerSpectateArenaEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         // Change join message
@@ -173,7 +179,8 @@ public class GameListener implements Listener {
     public void onTalk(final PlayerTalkEvent event) {
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
-        if(!plugin.getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         final PlayerData player = event.getPlayer();

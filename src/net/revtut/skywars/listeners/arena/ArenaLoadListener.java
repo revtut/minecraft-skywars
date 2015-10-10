@@ -1,6 +1,6 @@
 package net.revtut.skywars.listeners.arena;
 
-import net.revtut.libraries.minecraft.games.arena.Arena;
+import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
 import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
@@ -35,17 +35,14 @@ public class ArenaLoadListener implements Listener {
     @EventHandler
     public void onArenaLoad(final ArenaLoadEvent event) {
         // Check if the arena belongs to this game
-        final Arena arena = event.getArena();
-        if(!SkyWars.getInstance().getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(event.getArena()))
             return;
 
-        if (!(arena instanceof ArenaSolo))
-            return;
-
-        final ArenaSolo arenaSolo = (ArenaSolo) arena;
-        initArena(arenaSolo);
-        initWorld(arenaSolo, "Chopper Wars");
-        initFlags(arenaSolo);
+        final ArenaSolo arena = (ArenaSolo) event.getArena();
+        initArena(arena);
+        initWorld(arena, "Chopper Wars");
+        initFlags(arena);
     }
 
     /**

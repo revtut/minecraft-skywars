@@ -1,5 +1,6 @@
 package net.revtut.skywars.listeners.session;
 
+import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
@@ -22,7 +23,8 @@ public class TimerExpireListener implements Listener {
         // Check if the arena belongs to this game
         final GameSession session = event.getSession();
         final Arena arena = session.getArena();
-        if(!SkyWars.getInstance().getGameController().hasArena(arena))
+        final GameController gameController = SkyWars.getInstance().getGameController();
+        if(gameController == null || !gameController.hasArena(arena))
             return;
 
         switch (session.getState()) {
