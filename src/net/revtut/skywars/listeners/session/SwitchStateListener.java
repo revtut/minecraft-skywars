@@ -1,18 +1,16 @@
-package net.revtut.skywars;
+package net.revtut.skywars.listeners.session;
 
-import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
 import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
 import net.revtut.libraries.minecraft.games.classes.GameClass;
 import net.revtut.libraries.minecraft.games.events.session.SessionSwitchStateEvent;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerExpireEvent;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerTickEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,68 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Session Listener
+ * Switch State Listener
  */
-public class SessionListener implements Listener {
-
-    /**
-     * Game API instance
-     */
-    private SkyWars plugin = SkyWars.getInstance();
-
-    /**
-     * Controls the session timer tick event
-     * @param event session timer tick event
-     */
-    @EventHandler
-    public void onTimerTick(SessionTimerTickEvent event) {
-        // Check if the arena belongs to this game
-        GameSession session = event.getSession();
-        Arena arena = session.getArena();
-        if(!plugin.getGameController().hasArena(arena))
-            return;
-
-        switch (session.getState()) {
-            case LOBBY:
-            case WARMUP:
-                for(PlayerData player : arena.getAllPlayers())
-                    player.getBukkitPlayer().setLevel(event.getTime());
-                break;
-        }
-    }
-
-    /**
-     * Controls the session timer expire event
-     * @param event session timer expire event
-     */
-    @EventHandler
-    public void onTimerExpire(SessionTimerExpireEvent event) {
-        // Check if the arena belongs to this game
-        GameSession session = event.getSession();
-        Arena arena = session.getArena();
-        if(!plugin.getGameController().hasArena(arena))
-            return;
-
-        switch (session.getState()) {
-            case LOBBY:
-                if(arena.getSize() < arena.getSession().getMinPlayers()) { // Minimum players not achieved
-                    event.setCancelled(true);
-                    break;
-                }
-                session.updateState(GameState.WARMUP, 30);
-                break;
-            case WARMUP:
-                session.updateState(GameState.START, Integer.MAX_VALUE);
-                break;
-            case START:
-            case DEATHMATCH:
-                event.setCancelled(true); // The only way to end a game is if someone wins
-                break;
-            case FINISH:
-                // TODO rejoin all the players and close this arena
-                break;
-        }
-    }
+public class SwitchStateListener implements Listener {
 
     /**
      * Controls the session switch state event
@@ -93,7 +32,7 @@ public class SessionListener implements Listener {
     public void onSwitchState(SessionSwitchStateEvent event) {
         // Check if the arena belongs to this game
         GameSession session = event.getSession();
-        if(!plugin.getGameController().hasArena(session.getArena()))
+        if(!SkyWars.getInstance().getGameController().hasArena(session.getArena()))
             return;
 
         ArenaSolo arena = (ArenaSolo) session.getArena();

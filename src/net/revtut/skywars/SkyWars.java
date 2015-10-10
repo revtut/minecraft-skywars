@@ -13,6 +13,11 @@ import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
 import net.revtut.libraries.minecraft.maths.AlgebraAPI;
 import net.revtut.libraries.minecraft.maths.ConvertersAPI;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
+import net.revtut.skywars.listeners.GameListener;
+import net.revtut.skywars.listeners.arena.ArenaLoadListener;
+import net.revtut.skywars.listeners.session.SwitchStateListener;
+import net.revtut.skywars.listeners.session.TimerExpireListener;
+import net.revtut.skywars.listeners.session.TimerTickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -114,13 +119,15 @@ public class SkyWars extends JavaPlugin {
         }
         infoBoardManager = new InfoBoardManager();
 
-        // Create initial arena
-        createArena();
-
         // Register events
         PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new ArenaLoadListener(), this);
+
+        pluginManager.registerEvents(new SwitchStateListener(), this);
+        pluginManager.registerEvents(new TimerExpireListener(), this);
+        pluginManager.registerEvents(new TimerTickListener(), this);
+
         pluginManager.registerEvents(new GameListener(), this);
-        pluginManager.registerEvents(new SessionListener(), this);
     }
 
     /**
@@ -173,94 +180,6 @@ public class SkyWars extends JavaPlugin {
      */
     public Database getDatabaseInstance() {
         return database;
-    }
-
-    /**
-     * Create a arena for the game
-     */
-    public void createArena() {
-        ArenaSolo arena = (ArenaSolo) gameController.createArena(ArenaType.SOLO);
-        initArena(arena);
-        initWorld(arena, "Chopper Wars");
-        initFlags(arena);
-    }
-
-    /**
-     * Initialize a arena
-     * @param arena arena to be initialized
-     */
-    private void initArena(ArenaSolo arena) {
-        // Game Session
-        GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
-
-        // Initialize the arena
-        arena.initArena(configuration.getLobby(), session);
-        session.updateState(GameState.LOBBY, 30);
-
-        // InfoBoard of the arena
-        InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
-        infoBoardManager.setInfoBoard(arena, infoBoard);
-    }
-
-    /**
-     * Initialize the flags of a arena
-     * @param arena arena to be initialized
-     */
-    private void initFlags(ArenaSolo arena) {
-        arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
-        arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
-        arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
-        arena.updateFlag(ArenaFlag.BUCKET_FILL, false);
-        arena.updateFlag(ArenaFlag.CHAT, true);
-        arena.updateFlag(ArenaFlag.DROP_ITEM, false);
-        arena.updateFlag(ArenaFlag.DAMAGE, false);
-        arena.updateFlag(ArenaFlag.HUNGER, false);
-        arena.updateFlag(ArenaFlag.INVENTORY_CLICK, true);
-        arena.updateFlag(ArenaFlag.INTERACT, true);
-        arena.updateFlag(ArenaFlag.MOVE, true);
-        arena.updateFlag(ArenaFlag.PICKUP_ITEM, false);
-        arena.updateFlag(ArenaFlag.WEATHER, false);
-    }
-
-    /**
-     * Initialize the world of a arena
-     * @param arena arena to be initialized
-     * @param worldName name of the world to be loaded
-     */
-    public void initWorld(ArenaSolo arena, String worldName) {
-        World world = gameController.loadWorld(getName() + "_" + arena.getId() + "_", worldName);
-
-        // World arena locations
-        File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
-        FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
-
-        // Single locations
-        Location spectator = Utils.parseLocation(locConfig, "Spectator", world),
-                spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch", world),
-                dead = Utils.parseLocation(locConfig, "Dead", world),
-                deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch", world);
-
-        // Array locations
-        Location corners[] = new Location[] { Utils.parseLocation(locConfig, "Corners.First", world), Utils.parseLocation(locConfig, "Corners.Second", world) },
-                cornersDeathMatch[] = new Location[] { Utils.parseLocation(locConfig, "CornersDeathMatch.First", world), Utils.parseLocation(locConfig, "CornersDeathMatch.Second", world) };
-
-        // List locations
-        List<Location> spawnLocations = new ArrayList<>();
-        Location spawnLocation;
-        for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
-            spawnLocation = Utils.parseLocation(locConfig, "Spawns." + spawnNumber, world);
-            spawnLocations.add(AlgebraAPI.locationLookAt(spawnLocation, dead));
-        }
-
-        List<Location> deathMatchLocations = new ArrayList<>();
-        Location deathMatchLocation;
-        for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
-            deathMatchLocation = Utils.parseLocation(locConfig, "DeathMatch." + deathMatchSpawnNumber, world);
-            deathMatchLocations.add(AlgebraAPI.locationLookAt(deathMatchLocation, deadDeathMatch));
-        }
-
-        // Initialize the world of the arena
-        arena.initWorld(world, spectator, spectatorDeathMatch, corners, cornersDeathMatch, spawnLocations, dead, deadDeathMatch, deathMatchLocations);
     }
 
     /**

@@ -1,5 +1,6 @@
-package net.revtut.skywars;
+package net.revtut.skywars.listeners;
 
+import net.revtut.libraries.Libraries;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.ArenaPreference;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
@@ -11,6 +12,7 @@ import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
 import net.revtut.libraries.minecraft.text.TabAPI;
 import net.revtut.libraries.minecraft.utils.BypassesAPI;
+import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,10 +42,8 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Do not allow spectators to cross border
-        if(player.getState() != PlayerState.ALIVE) {
+        if(player.getState() != PlayerState.ALIVE)
             event.setCancelled(true);
-            return;
-        }
     }
 
     /**
@@ -131,10 +131,6 @@ public class GameListener implements Listener {
         TabAPI.setTab(bukkitPlayer, plugin.getConfiguration().getTabTitle(), plugin.getConfiguration().getTabFooter());
 
         // TODO Add lobby items
-
-        // Create more arenas if needed
-        if(plugin.getGameController().getAvailableArenas().size() <= 1)
-            plugin.createArena();
     }
 
     /**
@@ -166,9 +162,8 @@ public class GameListener implements Listener {
                     targetArena = plugin.getGameController().getAvailableArena(ArenaPreference.MORE_PLAYERS);
 
                     // No arena available or not allowed to join the arena
-                    if(targetArena == null || !arena.join(target)) {
-                        // TODO take care when player can not rejoin an arena
-                    }
+                    if(targetArena == null || !arena.join(target)) // TODO Message user why he was reconnected
+                        Libraries.getInstance().getNetwork().connectPlayer(target.getBukkitPlayer(), "hub");
                 }
                 plugin.getGameController().removeArena(arena);
             }
@@ -186,12 +181,8 @@ public class GameListener implements Listener {
         if(!plugin.getGameController().hasArena(arena))
             return;
 
-        PlayerData player = event.getPlayer();
-
         // Change join message
-        int numberPlayers = arena.getSize() + 1;
-        int maxPlayers = arena.getSession().getMaxPlayers();
-        event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " is spectating! (" + numberPlayers + "/" + maxPlayers + ")");
+        event.setJoinMessage(null);
     }
 
     /**
@@ -208,9 +199,7 @@ public class GameListener implements Listener {
         PlayerData player = event.getPlayer();
 
         // Block dead players
-        if(player.getState() == PlayerState.DEAD) { // TODO Warn that dead players may not talk
+        if(player.getState() == PlayerState.DEAD) // TODO Warn that dead players may not talk
             event.setCancelled(true);
-            return;
-        }
     }
 }
