@@ -150,24 +150,6 @@ public class GameListener implements Listener {
         int numberPlayers = arena.getSize() - 1;
         int maxPlayers = arena.getSession().getMaxPlayers();
         event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
-
-        // Delete arena if needed
-        if(arena.getSession() != null && arena.getSession().getState() != GameState.LOBBY) {
-            if(arena.getPlayers(PlayerState.ALIVE).size() <= 1) {
-                Arena targetArena;
-                for(PlayerData target : arena.getAllPlayers()) {
-                    if(target == player)
-                        continue;
-
-                    targetArena = plugin.getGameController().getAvailableArena(ArenaPreference.MORE_PLAYERS);
-
-                    // No arena available or not allowed to join the arena
-                    if(targetArena == null || !arena.join(target)) // TODO Message user why he was reconnected
-                        Libraries.getInstance().getNetwork().connectPlayer(target.getBukkitPlayer(), "hub");
-                }
-                plugin.getGameController().removeArena(arena);
-            }
-        }
     }
 
     /**

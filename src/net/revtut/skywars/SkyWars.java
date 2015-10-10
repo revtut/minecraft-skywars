@@ -117,6 +117,8 @@ public class SkyWars extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+        gameController.createArena(ArenaType.SOLO);
+
         infoBoardManager = new InfoBoardManager();
 
         // Register events
