@@ -21,7 +21,7 @@ public class InfoBoardManager {
     /**
      * Map with all the scoreboards
      */
-    private Map<Arena, InfoBoard> scoreboards;
+    private final Map<Arena, InfoBoard> scoreboards;
 
     /**
      * Constructor of InfoBoardManager
@@ -35,7 +35,7 @@ public class InfoBoardManager {
      * @param arena arena to get the information board
      * @return information board of the arena
      */
-    public InfoBoard getInfoBoard(Arena arena) {
+    public InfoBoard getInfoBoard(final Arena arena) {
         return scoreboards.get(arena);
     }
 
@@ -44,7 +44,7 @@ public class InfoBoardManager {
      * @param arena arena to be set
      * @param infoBoard information board of the arena
      */
-    public void setInfoBoard(Arena arena, InfoBoard infoBoard) {
+    public void setInfoBoard(final Arena arena, final InfoBoard infoBoard) {
         scoreboards.put(arena, infoBoard);
     }
 
@@ -53,8 +53,8 @@ public class InfoBoardManager {
      * @param arena arena to create the information board
      * @return created information board
      */
-    public InfoBoard createInfoBoard(Arena arena) {
-        InfoBoard infoBoard = new InfoBoard(5);
+    public InfoBoard createInfoBoard(final Arena arena) {
+        final InfoBoard infoBoard = new InfoBoard(5);
 
         // Title
         infoBoard.setTitle(new ScrollingLabel("title", new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD), 0));

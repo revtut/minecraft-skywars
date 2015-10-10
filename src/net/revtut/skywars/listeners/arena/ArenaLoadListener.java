@@ -33,16 +33,16 @@ public class ArenaLoadListener implements Listener {
      * @param event arena load event
      */
     @EventHandler
-    public void onArenaLoad(ArenaLoadEvent event) {
+    public void onArenaLoad(final ArenaLoadEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!SkyWars.getInstance().getGameController().hasArena(arena))
             return;
 
         if (!(arena instanceof ArenaSolo))
             return;
 
-        ArenaSolo arenaSolo = (ArenaSolo) arena;
+        final ArenaSolo arenaSolo = (ArenaSolo) arena;
         initArena(arenaSolo);
         initWorld(arenaSolo, "Chopper Wars");
         initFlags(arenaSolo);
@@ -52,19 +52,19 @@ public class ArenaLoadListener implements Listener {
      * Initialize a arena
      * @param arena arena to be initialized
      */
-    private void initArena(ArenaSolo arena) {
+    private void initArena(final ArenaSolo arena) {
         // Game Session
-        SkyWars plugin = SkyWars.getInstance();
-        Configuration configuration = plugin.getConfiguration();
-        GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
+        final SkyWars plugin = SkyWars.getInstance();
+        final Configuration configuration = plugin.getConfiguration();
+        final GameSession session = new GameSession(arena, configuration.getMinPlayers(), configuration.getMaxPlayers());
 
         // Initialize the arena
         arena.initArena(configuration.getLobby(), session);
         session.updateState(GameState.LOBBY, 30);
 
         // InfoBoard of the arena
-        InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();
-        InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
+        final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();
+        final InfoBoard infoBoard = infoBoardManager.createInfoBoard(arena);
         infoBoardManager.setInfoBoard(arena, infoBoard);
     }
 
@@ -72,7 +72,7 @@ public class ArenaLoadListener implements Listener {
      * Initialize the flags of a arena
      * @param arena arena to be initialized
      */
-    private void initFlags(ArenaSolo arena) {
+    private void initFlags(final ArenaSolo arena) {
         arena.updateFlag(ArenaFlag.BLOCK_BREAK, false);
         arena.updateFlag(ArenaFlag.BLOCK_PLACE, false);
         arena.updateFlag(ArenaFlag.BUCKET_EMPTY, false);
@@ -93,34 +93,34 @@ public class ArenaLoadListener implements Listener {
      * @param arena arena to be initialized
      * @param worldName name of the world to be loaded
      */
-    public void initWorld(ArenaSolo arena, String worldName) {
-        SkyWars plugin = SkyWars.getInstance();
+    public void initWorld(final ArenaSolo arena, final String worldName) {
+        final SkyWars plugin = SkyWars.getInstance();
 
-        World world = plugin.getGameController().loadWorld(plugin.getName() + "_" + arena.getId() + "_", worldName);
+        final World world = plugin.getGameController().loadWorld(plugin.getName() + "_" + arena.getId() + "_", worldName);
 
         // World arena locations
-        File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
-        FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
+        final File locationFile = new File(world.getWorldFolder() + File.separator + "location.yml");
+        final FileConfiguration locConfig = YamlConfiguration.loadConfiguration(locationFile);
 
         // Single locations
-        Location spectator = Utils.parseLocation(locConfig, "Spectator", world),
+        final Location spectator = Utils.parseLocation(locConfig, "Spectator", world),
                 spectatorDeathMatch = Utils.parseLocation(locConfig, "SpectatorDeathMatch", world),
                 dead = Utils.parseLocation(locConfig, "Dead", world),
                 deadDeathMatch = Utils.parseLocation(locConfig, "DeadDeathMatch", world);
 
         // Array locations
-        Location corners[] = new Location[] { Utils.parseLocation(locConfig, "Corners.First", world), Utils.parseLocation(locConfig, "Corners.Second", world) },
+        final Location corners[] = new Location[] { Utils.parseLocation(locConfig, "Corners.First", world), Utils.parseLocation(locConfig, "Corners.Second", world) },
                 cornersDeathMatch[] = new Location[] { Utils.parseLocation(locConfig, "CornersDeathMatch.First", world), Utils.parseLocation(locConfig, "CornersDeathMatch.Second", world) };
 
         // List locations
-        List<Location> spawnLocations = new ArrayList<>();
+        final  List<Location> spawnLocations = new ArrayList<>();
         Location spawnLocation;
         for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
             spawnLocation = Utils.parseLocation(locConfig, "Spawns." + spawnNumber, world);
             spawnLocations.add(AlgebraAPI.locationLookAt(spawnLocation, dead));
         }
 
-        List<Location> deathMatchLocations = new ArrayList<>();
+        final List<Location> deathMatchLocations = new ArrayList<>();
         Location deathMatchLocation;
         for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
             deathMatchLocation = Utils.parseLocation(locConfig, "DeathMatch." + deathMatchSpawnNumber, world);

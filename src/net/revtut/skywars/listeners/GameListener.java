@@ -1,8 +1,6 @@
 package net.revtut.skywars.listeners;
 
-import net.revtut.libraries.Libraries;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.ArenaPreference;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
 import net.revtut.libraries.minecraft.games.events.player.*;
@@ -26,20 +24,20 @@ public class GameListener implements Listener {
     /**
      * Game instance
      */
-    private SkyWars plugin = SkyWars.getInstance();
+    private final SkyWars plugin = SkyWars.getInstance();
 
     /**
      * Controls the player cross arena border event
      * @param event player cross arena border event
      */
     @EventHandler
-    public void onCrossBorder(PlayerCrossArenaBorderEvent event) {
+    public void onCrossBorder(final PlayerCrossArenaBorderEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
-        PlayerData player = event.getPlayer();
+        final PlayerData player = event.getPlayer();
 
         // Do not allow spectators to cross border
         if(player.getState() != PlayerState.ALIVE)
@@ -51,14 +49,14 @@ public class GameListener implements Listener {
      * @param event player die event
      */
     @EventHandler
-    public void onDie(PlayerDieEvent event) {
+    public void onDie(final PlayerDieEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
-        PlayerData target = event.getPlayer();
-        PlayerData killer = event.getKiller();
+        final PlayerData target = event.getPlayer();
+        final PlayerData killer = event.getKiller();
 
         // Death message
         if(killer == null)
@@ -71,7 +69,7 @@ public class GameListener implements Listener {
         target.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
         BypassesAPI.respawnBypass(target.getBukkitPlayer());
 
-        ArenaSolo arenaSolo = (ArenaSolo) arena;
+        final ArenaSolo arenaSolo = (ArenaSolo) arena;
         if(arenaSolo.getSession().getState() == GameState.DEATHMATCH)
             target.getBukkitPlayer().teleport(arenaSolo.getDeadDeathMatchLocation());
         else
@@ -80,9 +78,9 @@ public class GameListener implements Listener {
         // TODO respawn event
 
         // Scoreboard
-        InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
-        InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
-        InfoBoardLabel deadLabel = infoBoard.getLabel("dead");
+        final InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
+        final InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
+        final InfoBoardLabel deadLabel = infoBoard.getLabel("dead");
         aliveLabel.setText("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size());
         deadLabel.setText("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size());
         infoBoard.updateLabel(aliveLabel);
@@ -94,35 +92,35 @@ public class GameListener implements Listener {
      * @param event player join arena event
      */
     @EventHandler
-    public void onJoin(PlayerJoinArenaEvent event) {
+    public void onJoin(final PlayerJoinArenaEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
         // Check maximum slots
-        int onlinePlayers = plugin.getGameController().getOnlinePlayers().size();
-        int maxSlots = plugin.getConfiguration().getMaxSlots();
+        final int onlinePlayers = plugin.getGameController().getOnlinePlayers().size();
+        final int maxSlots = plugin.getConfiguration().getMaxSlots();
         if(onlinePlayers >= maxSlots) {
             event.setCancelled(true);
             return;
         }
 
-        PlayerData player = event.getPlayer();
+        final PlayerData player = event.getPlayer();
 
         // Change join message
-        int numberPlayers = arena.getSize() + 1;
-        int maxPlayers = arena.getSession().getMaxPlayers();
+        final int numberPlayers = arena.getSize() + 1;
+        final int maxPlayers = arena.getSession().getMaxPlayers();
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
         // Bukkit player
-        Player bukkitPlayer = player.getBukkitPlayer();
+        final Player bukkitPlayer = player.getBukkitPlayer();
         if(bukkitPlayer == null)
             return;
 
         // Scoreboard
-        InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
-        InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
+        final InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
+        final InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
         aliveLabel.setText("§aAlive: §f" + numberPlayers);
         infoBoard.updateLabel(aliveLabel);
         infoBoard.send(bukkitPlayer);
@@ -138,17 +136,17 @@ public class GameListener implements Listener {
      * @param event player leave arena event
      */
     @EventHandler
-    public void onLeave(PlayerLeaveArenaEvent event) {
+    public void onLeave(final PlayerLeaveArenaEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
-        PlayerData player = event.getPlayer();
+        final PlayerData player = event.getPlayer();
 
         // Change leave message
-        int numberPlayers = arena.getSize() - 1;
-        int maxPlayers = arena.getSession().getMaxPlayers();
+        final int numberPlayers = arena.getSize() - 1;
+        final int maxPlayers = arena.getSession().getMaxPlayers();
         event.setLeaveMessage(plugin.getConfiguration().getPrefix() + "§c" + player.getName() + " has left! (" + numberPlayers + "/" + maxPlayers + ")");
     }
 
@@ -157,9 +155,9 @@ public class GameListener implements Listener {
      * @param event player spectate arena event
      */
     @EventHandler
-    public void onSpectate(PlayerSpectateArenaEvent event) {
+    public void onSpectate(final PlayerSpectateArenaEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
@@ -172,13 +170,13 @@ public class GameListener implements Listener {
      * @param event player talk event
      */
     @EventHandler
-    public void onTalk(PlayerTalkEvent event) {
+    public void onTalk(final PlayerTalkEvent event) {
         // Check if the arena belongs to this game
-        Arena arena = event.getArena();
+        final Arena arena = event.getArena();
         if(!plugin.getGameController().hasArena(arena))
             return;
 
-        PlayerData player = event.getPlayer();
+        final PlayerData player = event.getPlayer();
 
         // Block dead players
         if(player.getState() == PlayerState.DEAD) // TODO Warn that dead players may not talk

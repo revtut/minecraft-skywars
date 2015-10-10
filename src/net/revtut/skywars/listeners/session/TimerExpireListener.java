@@ -18,10 +18,10 @@ public class TimerExpireListener implements Listener {
      * @param event session timer expire event
      */
     @EventHandler
-    public void onTimerExpire(SessionTimerExpireEvent event) {
+    public void onTimerExpire(final SessionTimerExpireEvent event) {
         // Check if the arena belongs to this game
-        GameSession session = event.getSession();
-        Arena arena = session.getArena();
+        final GameSession session = event.getSession();
+        final Arena arena = session.getArena();
         if(!SkyWars.getInstance().getGameController().hasArena(arena))
             return;
 

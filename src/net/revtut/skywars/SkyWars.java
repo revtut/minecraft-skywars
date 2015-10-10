@@ -5,14 +5,8 @@ import net.revtut.libraries.generic.database.types.DatabaseType;
 import net.revtut.libraries.generic.util.Files;
 import net.revtut.libraries.minecraft.games.GameAPI;
 import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
-import net.revtut.libraries.minecraft.maths.AlgebraAPI;
 import net.revtut.libraries.minecraft.maths.ConvertersAPI;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.skywars.listeners.GameListener;
 import net.revtut.skywars.listeners.arena.ArenaLoadListener;
 import net.revtut.skywars.listeners.session.SwitchStateListener;
@@ -21,7 +15,6 @@ import net.revtut.skywars.listeners.session.TimerTickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -29,8 +22,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -122,7 +113,7 @@ public class SkyWars extends JavaPlugin {
         infoBoardManager = new InfoBoardManager();
 
         // Register events
-        PluginManager pluginManager = Bukkit.getPluginManager();
+        final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ArenaLoadListener(), this);
 
         pluginManager.registerEvents(new SwitchStateListener(), this);
@@ -201,7 +192,7 @@ public class SkyWars extends JavaPlugin {
             try {
                 if (!configFile.createNewFile())
                     return false;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating config.yml. Reason: " + e.getMessage());
                 return false;
             }
@@ -215,7 +206,7 @@ public class SkyWars extends JavaPlugin {
             try {
                 if (!databaseFile.createNewFile())
                     return false;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 this.getLogger().log(Level.WARNING, "Error while creating database.yml. Reason: " + e.getMessage());
                 return false;
             }
@@ -232,30 +223,30 @@ public class SkyWars extends JavaPlugin {
      */
     private boolean readFiles() {
         // Configuration File
-        File configurationFile = new File(getDataFolder() + File.separator + "config.yml");
-        FileConfiguration configurationConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
+        final File configurationFile = new File(getDataFolder() + File.separator + "config.yml");
+        final FileConfiguration configurationConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
 
-        Location lobby = Utils.parseLocation(configurationConfiguration, "Lobby");
-        int minPlayers = configurationConfiguration.getInt("MinPlayers"),
-                maxPlayers = configurationConfiguration.getInt("MaxPlayers"),
-                maxSlots = configurationConfiguration.getInt("MaxSlots");
-        String prefix = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix"))),
-                tabTitle = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle"))),
-                tabFooter = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter")));
-        double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
+        final Location lobby = Utils.parseLocation(configurationConfiguration, "Lobby");
+        final int minPlayers = configurationConfiguration.getInt("MinPlayers");
+        final int maxPlayers = configurationConfiguration.getInt("MaxPlayers");
+        final int maxSlots = configurationConfiguration.getInt("MaxSlots");
+        final String prefix = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix")));
+        final String tabTitle = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle")));
+        final String tabFooter = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter")));
+        final double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
 
         this.configuration = new Configuration(lobby, minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);
 
         // Database File
-        File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
-        FileConfiguration databaseConfiguration = YamlConfiguration.loadConfiguration(databaseFile);
+        final File databaseFile = new File(getDataFolder() + File.separator + "database.yml");
+        final FileConfiguration databaseConfiguration = YamlConfiguration.loadConfiguration(databaseFile);
 
-        String type = databaseConfiguration.getString("Type"),
-                hostname = databaseConfiguration.getString("Hostname"),
-                database = databaseConfiguration.getString("Database"),
-                username = databaseConfiguration.getString("Username"),
-                password = databaseConfiguration.getString("Password");
-        int port = databaseConfiguration.getInt("Port");
+        final String type = databaseConfiguration.getString("Type");
+        final String hostname = databaseConfiguration.getString("Hostname");
+        final String database = databaseConfiguration.getString("Database");
+        final String username = databaseConfiguration.getString("Username");
+        final String password = databaseConfiguration.getString("Password");
+        final int port = databaseConfiguration.getInt("Port");
 
         this.database = Database.createDatabase(DatabaseType.getByName(type), hostname, port, database, username, password);
 

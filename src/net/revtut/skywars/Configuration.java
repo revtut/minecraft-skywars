@@ -10,42 +10,42 @@ public class Configuration {
     /**
      * Location of the lobby
      */
-    private Location lobby;
+    private final Location lobby;
 
     /**
      * Minimum players to start the game
      */
-    private int minPlayers;
+    private final int minPlayers;
 
     /**
      * Maximum players on a arena
      */
-    private int maxPlayers;
+    private final int maxPlayers;
 
     /**
      * Maximum players on this game
      */
-    private int maxSlots;
+    private final int maxSlots;
 
     /**
      * Prefix of the game messages
      */
-    private String prefix;
+    private final String prefix;
 
     /**
      * Title of the tab list
      */
-    private String tabTitle;
+    private final String tabTitle;
 
     /**
      * Footer of the tab list
      */
-    private String tabFooter;
+    private final String tabFooter;
 
     /**
      * Coins multiplier
      */
-    private double coinsMultiplier;
+    private final double coinsMultiplier;
 
     /**
      * Constructor of Configuration
@@ -58,7 +58,7 @@ public class Configuration {
      * @param tabFooter footer of the tab list
      * @param coinsMultiplier coins multiplier
      */
-    public Configuration(Location lobby, int minPlayers, int maxPlayers, int maxSlots, String prefix, String tabTitle, String tabFooter, double coinsMultiplier) {
+    public Configuration(final Location lobby, final int minPlayers, final int maxPlayers, final int maxSlots, final String prefix, final String tabTitle, final String tabFooter, final double coinsMultiplier) {
         this.lobby = lobby;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;

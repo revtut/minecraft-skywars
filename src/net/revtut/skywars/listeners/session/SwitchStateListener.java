@@ -29,13 +29,13 @@ public class SwitchStateListener implements Listener {
      * @param event session switch state event
      */
     @EventHandler
-    public void onSwitchState(SessionSwitchStateEvent event) {
+    public void onSwitchState(final SessionSwitchStateEvent event) {
         // Check if the arena belongs to this game
-        GameSession session = event.getSession();
+        final GameSession session = event.getSession();
         if(!SkyWars.getInstance().getGameController().hasArena(session.getArena()))
             return;
 
-        ArenaSolo arena = (ArenaSolo) session.getArena();
+        final ArenaSolo arena = (ArenaSolo) session.getArena();
 
         switch (event.getNextState()) {
             case WARMUP:
@@ -57,11 +57,11 @@ public class SwitchStateListener implements Listener {
      * Method to take care of what to do when state changes to warm up
      * @param arena arena that is now on warm up
      */
-    private void onWarmUp(ArenaSolo arena) {
+    private void onWarmUp(final ArenaSolo arena) {
         int playerIndex = -1;
         Player bukkitPlayer;
         Location teleportLocation;
-        for(PlayerData player : arena.getAllPlayers()) {
+        for(final PlayerData player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;
@@ -79,8 +79,8 @@ public class SwitchStateListener implements Listener {
         }
 
         // Update scoreboard (label map)
-        InfoBoard infoBoard = SkyWars.getInstance().getInfoBoardManager().getInfoBoard(arena);
-        InfoBoardLabel mapLabel = infoBoard.getLabel("map");
+        final InfoBoard infoBoard = SkyWars.getInstance().getInfoBoardManager().getInfoBoard(arena);
+        final InfoBoardLabel mapLabel = infoBoard.getLabel("map");
         mapLabel.setText("§6Map: §f" + arena.getWorld().getName().split("_")[2]);
         infoBoard.updateLabel(mapLabel);
     }
@@ -89,10 +89,10 @@ public class SwitchStateListener implements Listener {
      * Method to take care of what to do when state changes to start
      * @param arena arena that is now on start
      */
-    private void onStart(ArenaSolo arena) {
+    private void onStart(final ArenaSolo arena) {
         Player bukkitPlayer;
         GameClass gameClass;
-        for(PlayerData player : arena.getAllPlayers()) {
+        for(final PlayerData player : arena.getAllPlayers()) {
             if (player.getState() != PlayerState.ALIVE)
                 continue;
 
@@ -125,11 +125,11 @@ public class SwitchStateListener implements Listener {
      * Method to take care of what to do when state changes to death match
      * @param arena arena that is now on death match
      */
-    private void onDeathMatch(ArenaSolo arena) {
+    private void onDeathMatch(final ArenaSolo arena) {
         int playerIndex = -1;
         Player bukkitPlayer;
         Location teleportLocation;
-        for(PlayerData player : arena.getAllPlayers()) {
+        for(final PlayerData player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;
@@ -151,9 +151,9 @@ public class SwitchStateListener implements Listener {
      * Method to take care of what to do when state changes to finish
      * @param arena arena that is now on finish
      */
-    private void onFinish(ArenaSolo arena) {
+    private void onFinish(final ArenaSolo arena) {
         Player bukkitPlayer;
-        for(PlayerData player : arena.getAllPlayers()) {
+        for(final PlayerData player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;

@@ -18,17 +18,17 @@ public class TimerTickListener implements Listener {
      * @param event session timer tick event
      */
     @EventHandler
-    public void onTimerTick(SessionTimerTickEvent event) {
+    public void onTimerTick(final SessionTimerTickEvent event) {
         // Check if the arena belongs to this game
-        GameSession session = event.getSession();
-        Arena arena = session.getArena();
+        final GameSession session = event.getSession();
+        final Arena arena = session.getArena();
         if(!SkyWars.getInstance().getGameController().hasArena(arena))
             return;
 
         switch (session.getState()) {
             case LOBBY:
             case WARMUP:
-                for(PlayerData player : arena.getAllPlayers())
+                for(final PlayerData player : arena.getAllPlayers())
                     player.getBukkitPlayer().setLevel(event.getTime());
                 break;
         }

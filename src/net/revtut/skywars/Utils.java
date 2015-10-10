@@ -16,7 +16,7 @@ public class Utils {
      * @param section section of the location
      * @return parsed location
      */
-    public static Location parseLocation(FileConfiguration configuration, String section) {
+    public static Location parseLocation(final FileConfiguration configuration, final String section) {
         return parseLocation(configuration, section, Bukkit.getWorld(configuration.getString(section + ".world")));
     }
 
@@ -27,7 +27,7 @@ public class Utils {
      * @param world world of the location
      * @return parsed location
      */
-    public static Location parseLocation(FileConfiguration configuration, String section, World world) {
+    public static Location parseLocation(final FileConfiguration configuration, final String section, final World world) {
         return new Location(
                 world,
                 configuration.getDouble(section + ".x"),
