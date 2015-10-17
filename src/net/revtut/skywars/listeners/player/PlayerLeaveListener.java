@@ -16,9 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Leave Listener
+ * Player Leave Listener
  */
-public class LeaveListener implements Listener {
+public class PlayerLeaveListener implements Listener {
 
     /**
      * Controls the player leave arena event

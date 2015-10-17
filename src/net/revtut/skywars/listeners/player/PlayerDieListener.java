@@ -18,9 +18,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Die Listener
+ * Player Die Listener
  */
-public class DieListener implements Listener {
+public class PlayerDieListener implements Listener {
 
     /**
      * Controls the player die event

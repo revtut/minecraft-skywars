@@ -2,26 +2,28 @@ package net.revtut.skywars.listeners.player;
 
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.events.player.PlayerCrossArenaBorderEvent;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerTickEvent;
+import net.revtut.libraries.minecraft.games.events.player.PlayerSpectateArenaEvent;
+import net.revtut.libraries.minecraft.games.events.player.PlayerTalkEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Cross Arena Border Listener
+ * Player Talk Listener
  */
-public class CrossArenaBorderListener implements Listener {
+public class PlayerTalkListener implements Listener {
 
     /**
-     * Controls the player cross arena border event
-     * @param event player cross arena border event
+     * Controls the player talk event
+     * @param event player talk event
      */
     @EventHandler
-    public void onCrossBorder(final PlayerCrossArenaBorderEvent event) {
+    public void onTalk(final PlayerTalkEvent event) {
+        final SkyWars plugin = SkyWars.getInstance();
+
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
         final GameController gameController = SkyWars.getInstance().getGameController();
@@ -30,8 +32,12 @@ public class CrossArenaBorderListener implements Listener {
 
         final PlayerData player = event.getPlayer();
 
-        // Do not allow spectators to cross border
-        if(player.getState() != PlayerState.ALIVE)
+        // Block non live players
+        if(player.getState() != PlayerState.ALIVE) {
             event.setCancelled(true);
+            final Player bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer != null)
+                bukkitPlayer.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
+        }
     }
 }

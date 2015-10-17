@@ -10,9 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Timer Expire Listener
+ * Session Timer Expire Listener
  */
-public class TimerExpireListener implements Listener {
+public class SessionTimerExpireListener implements Listener {
 
     /**
      * Controls the session timer expire event

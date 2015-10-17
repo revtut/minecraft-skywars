@@ -10,9 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Timer Tick Listener
+ * Session Timer Tick Listener
  */
-public class TimerTickListener implements Listener {
+public class SessionTimerTickListener implements Listener {
 
     /**
      * Controls the session timer tick event

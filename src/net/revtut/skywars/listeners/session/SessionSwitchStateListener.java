@@ -22,9 +22,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Switch State Listener
+ * Session Switch State Listener
  */
-public class SwitchStateListener implements Listener {
+public class SessionSwitchStateListener implements Listener {
 
     /**
      * Controls the session switch state event

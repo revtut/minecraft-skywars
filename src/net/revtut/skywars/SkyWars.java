@@ -7,11 +7,11 @@ import net.revtut.libraries.minecraft.games.GameAPI;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
 import net.revtut.libraries.minecraft.maths.ConvertersAPI;
-import net.revtut.skywars.listeners.arena.ArenaLoadListener;
+import net.revtut.skywars.listeners.arena.*;
 import net.revtut.skywars.listeners.player.*;
-import net.revtut.skywars.listeners.session.SwitchStateListener;
-import net.revtut.skywars.listeners.session.TimerExpireListener;
-import net.revtut.skywars.listeners.session.TimerTickListener;
+import net.revtut.skywars.listeners.session.SessionSwitchStateListener;
+import net.revtut.skywars.listeners.session.SessionTimerExpireListener;
+import net.revtut.skywars.listeners.session.SessionTimerTickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -103,18 +103,27 @@ public class SkyWars extends JavaPlugin {
 
         // Register events
         final PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new ArenaBlockBreakListener(), this);
+        pluginManager.registerEvents(new ArenaBlockPlaceListener(), this);
+        pluginManager.registerEvents(new ArenaBucketEmptyListener(), this);
+        pluginManager.registerEvents(new ArenaBucketFillListener(), this);
         pluginManager.registerEvents(new ArenaLoadListener(), this);
 
-        pluginManager.registerEvents(new CrossArenaBorderListener(), this);
-        pluginManager.registerEvents(new DieListener(), this);
-        pluginManager.registerEvents(new JoinListener(), this);
-        pluginManager.registerEvents(new LeaveListener(), this);
-        pluginManager.registerEvents(new SpectateListener(), this);
-        pluginManager.registerEvents(new TalkListener(), this);
+        pluginManager.registerEvents(new PlayerCatchItemListener(), this);
+        pluginManager.registerEvents(new PlayerCrossArenaBorderListener(), this);
+        pluginManager.registerEvents(new PlayerDieListener(), this);
+        pluginManager.registerEvents(new PlayerHungerListener(), this);
+        pluginManager.registerEvents(new PlayerInteractionListener(), this);
+        pluginManager.registerEvents(new PlayerInventoryClickListener(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
+        pluginManager.registerEvents(new PlayerLeaveListener(), this);
+        pluginManager.registerEvents(new PlayerSpectateListener(), this);
+        pluginManager.registerEvents(new PlayerTalkListener(), this);
+        pluginManager.registerEvents(new PlayerThrowItemListener(), this);
 
-        pluginManager.registerEvents(new SwitchStateListener(), this);
-        pluginManager.registerEvents(new TimerExpireListener(), this);
-        pluginManager.registerEvents(new TimerTickListener(), this);
+        pluginManager.registerEvents(new SessionSwitchStateListener(), this);
+        pluginManager.registerEvents(new SessionTimerExpireListener(), this);
+        pluginManager.registerEvents(new SessionTimerTickListener(), this);
 
         // Integrate GameAPI
         Bukkit.getScheduler().runTaskLater(this, () -> {

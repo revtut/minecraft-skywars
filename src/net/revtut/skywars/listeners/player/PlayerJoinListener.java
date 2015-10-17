@@ -20,9 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * Join Listener
+ * Player Join Listener
  */
-public class JoinListener implements Listener {
+public class PlayerJoinListener implements Listener {
 
     /**
      * Controls the player join arena event
