@@ -14,10 +14,6 @@ CREATE TABLE IF NOT EXISTS PlayerAchievements
   CONSTRAINT fk_player FOREIGN KEY (player) REFERENCES Player(uuid)
 );
 
-###############################
-# CUSTOMIZE ON EACH MINI-GAME #
-###############################
-
 # Player Statistics
 CREATE TABLE IF NOT EXISTS PlayerStatistics
 (
