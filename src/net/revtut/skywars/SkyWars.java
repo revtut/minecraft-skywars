@@ -7,8 +7,8 @@ import net.revtut.libraries.minecraft.games.GameAPI;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
 import net.revtut.libraries.minecraft.maths.ConvertersAPI;
-import net.revtut.skywars.listeners.GameListener;
 import net.revtut.skywars.listeners.arena.ArenaLoadListener;
+import net.revtut.skywars.listeners.player.*;
 import net.revtut.skywars.listeners.session.SwitchStateListener;
 import net.revtut.skywars.listeners.session.TimerExpireListener;
 import net.revtut.skywars.listeners.session.TimerTickListener;
@@ -105,11 +105,16 @@ public class SkyWars extends JavaPlugin {
         final PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ArenaLoadListener(), this);
 
+        pluginManager.registerEvents(new CrossArenaBorderListener(), this);
+        pluginManager.registerEvents(new DieListener(), this);
+        pluginManager.registerEvents(new JoinListener(), this);
+        pluginManager.registerEvents(new LeaveListener(), this);
+        pluginManager.registerEvents(new SpectateListener(), this);
+        pluginManager.registerEvents(new TalkListener(), this);
+
         pluginManager.registerEvents(new SwitchStateListener(), this);
         pluginManager.registerEvents(new TimerExpireListener(), this);
         pluginManager.registerEvents(new TimerTickListener(), this);
-
-        pluginManager.registerEvents(new GameListener(), this);
 
         // Integrate GameAPI
         Bukkit.getScheduler().runTaskLater(this, () -> {
@@ -130,10 +135,8 @@ public class SkyWars extends JavaPlugin {
     @Override
     public void onDisable() {
         // Close database connection
-        if(database != null) {
-            database.rollback();
+        if(database != null)
             database.close();
-        }
     }
 
     /**
