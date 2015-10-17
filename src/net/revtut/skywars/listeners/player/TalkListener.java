@@ -7,6 +7,7 @@ import net.revtut.libraries.minecraft.games.events.player.PlayerTalkEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -21,6 +22,8 @@ public class TalkListener implements Listener {
      */
     @EventHandler
     public void onTalk(final PlayerTalkEvent event) {
+        final SkyWars plugin = SkyWars.getInstance();
+
         // Check if the arena belongs to this game
         final Arena arena = event.getArena();
         final GameController gameController = SkyWars.getInstance().getGameController();
@@ -29,8 +32,12 @@ public class TalkListener implements Listener {
 
         final PlayerData player = event.getPlayer();
 
-        // Block dead players
-        if(player.getState() == PlayerState.DEAD) // TODO Warn that dead players may not talk
+        // Block non live players
+        if(player.getState() != PlayerState.ALIVE) {
             event.setCancelled(true);
+            final Player bukkitPlayer = player.getBukkitPlayer();
+            if(bukkitPlayer != null)
+                bukkitPlayer.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
+        }
     }
 }

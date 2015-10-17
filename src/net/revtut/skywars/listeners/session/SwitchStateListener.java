@@ -11,6 +11,7 @@ import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
+import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -80,11 +81,9 @@ public class SwitchStateListener implements Listener {
             }
         }
 
-        // Update scoreboard (label map)
-        final InfoBoard infoBoard = SkyWars.getInstance().getInfoBoardManager().getInfoBoard(arena);
-        final InfoBoardLabel mapLabel = infoBoard.getLabel("map");
-        mapLabel.setText("§6Map: §f" + arena.getWorld().getName().split("_")[2]);
-        infoBoard.updateLabel(mapLabel);
+        // Update scoreboard
+        final InfoBoardManager infoBoardManager = SkyWars.getInstance().getInfoBoardManager();
+        infoBoardManager.updateMap(arena, arena.getWorld().getName().split("_")[2]);
     }
 
     /**

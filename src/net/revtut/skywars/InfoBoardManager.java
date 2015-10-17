@@ -3,6 +3,7 @@ package net.revtut.skywars;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
+import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
 import net.revtut.libraries.minecraft.scoreboard.label.BlankLabel;
 import net.revtut.libraries.minecraft.scoreboard.label.ScrollingLabel;
 import net.revtut.libraries.minecraft.scoreboard.label.StaticLabel;
@@ -75,5 +76,56 @@ public class InfoBoardManager {
         infoBoard.addLabel(new StaticLabel("check_us", "§fCheck us out", 1));
         infoBoard.addLabel(new StaticLabel("website", "§6www.revtut.net", 0));
         return infoBoard;
+    }
+
+    /**
+     * Update the map inside the information board
+     * @param arena arena to be updated
+     * @param map map name of the arena
+     */
+    public void updateMap(final Arena arena, final String map) {
+        final InfoBoard infoBoard = getInfoBoard(arena);
+        if(infoBoard == null)
+            return;
+        final InfoBoardLabel mapLabel = infoBoard.getLabel("map");
+        if(mapLabel == null)
+            return;
+
+        mapLabel.setText("§6Map: §f" + map);
+        infoBoard.updateLabel(mapLabel);
+    }
+
+    /**
+     * Update alive players inside the information board
+     * @param arena arena to be updated
+     * @param numberPlayers number of players alive on the arena
+     */
+    public void updateAlive(final Arena arena, final int numberPlayers) {
+        final InfoBoard infoBoard = getInfoBoard(arena);
+        if(infoBoard == null)
+            return;
+        final InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
+        if(aliveLabel == null)
+            return;
+
+        aliveLabel.setText("§aAlive: §f" + numberPlayers);
+        infoBoard.updateLabel(aliveLabel);
+    }
+
+    /**
+     * Update dead players inside the information board
+     * @param arena arena to be updated
+     * @param numberPlayers number of players dead on the arena
+     */
+    public void updateDead(final Arena arena, final int numberPlayers) {
+        final InfoBoard infoBoard = getInfoBoard(arena);
+        if(infoBoard == null)
+            return;
+        final InfoBoardLabel deadLabel = infoBoard.getLabel("dead");
+        if(deadLabel == null)
+            return;
+
+        deadLabel.setText("§cDead: §f" + numberPlayers);
+        infoBoard.updateLabel(deadLabel);
     }
 }

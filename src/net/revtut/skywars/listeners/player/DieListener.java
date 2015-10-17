@@ -11,6 +11,7 @@ import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
 import net.revtut.libraries.minecraft.utils.BypassesAPI;
+import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
@@ -55,15 +56,9 @@ public class DieListener implements Listener {
         else
             target.getBukkitPlayer().teleport(arenaSolo.getDeadLocation());
 
-        // TODO respawn event
-
         // Scoreboard
-        final InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
-        final InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
-        final InfoBoardLabel deadLabel = infoBoard.getLabel("dead");
-        aliveLabel.setText("§aAlive: §f" + arena.getPlayers(PlayerState.ALIVE).size());
-        deadLabel.setText("§cDead: §f" + arena.getPlayers(PlayerState.DEAD).size());
-        infoBoard.updateLabel(aliveLabel);
-        infoBoard.updateLabel(deadLabel);
+        final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();
+        infoBoardManager.updateAlive(arena, arena.getPlayers(PlayerState.ALIVE).size());
+        infoBoardManager.updateDead(arena, arena.getPlayers(PlayerState.DEAD).size());
     }
 }

@@ -12,6 +12,7 @@ import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
 import net.revtut.libraries.minecraft.text.TabAPI;
 import net.revtut.libraries.minecraft.utils.BypassesAPI;
+import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -58,10 +59,9 @@ public class JoinListener implements Listener {
             return;
 
         // Scoreboard
-        final InfoBoard infoBoard = plugin.getInfoBoardManager().getInfoBoard(arena);
-        final InfoBoardLabel aliveLabel = infoBoard.getLabel("alive");
-        aliveLabel.setText("§aAlive: §f" + numberPlayers);
-        infoBoard.updateLabel(aliveLabel);
+        final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();
+        infoBoardManager.updateAlive(arena, numberPlayers);
+        final InfoBoard infoBoard = infoBoardManager.getInfoBoard(arena);
         infoBoard.send(bukkitPlayer);
 
         // Tab list
