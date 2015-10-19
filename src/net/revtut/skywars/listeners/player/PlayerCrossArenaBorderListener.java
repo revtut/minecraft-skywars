@@ -2,9 +2,7 @@ package net.revtut.skywars.listeners.player;
 
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.events.player.PlayerCrossArenaBorderEvent;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerTickEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;

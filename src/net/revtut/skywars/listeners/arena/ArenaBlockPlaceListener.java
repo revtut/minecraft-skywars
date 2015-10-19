@@ -2,7 +2,6 @@ package net.revtut.skywars.listeners.arena;
 
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.arena.ArenaBlockBreakEvent;
 import net.revtut.libraries.minecraft.games.events.arena.ArenaBlockPlaceEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;

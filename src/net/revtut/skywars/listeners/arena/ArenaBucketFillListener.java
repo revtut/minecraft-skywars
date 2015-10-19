@@ -2,7 +2,6 @@ package net.revtut.skywars.listeners.arena;
 
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.arena.ArenaBucketEmptyEvent;
 import net.revtut.libraries.minecraft.games.events.arena.ArenaBucketFillEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;

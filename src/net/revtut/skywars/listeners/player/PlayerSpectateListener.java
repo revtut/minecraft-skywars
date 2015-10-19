@@ -2,9 +2,7 @@ package net.revtut.skywars.listeners.player;
 
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.player.PlayerLeaveArenaEvent;
 import net.revtut.libraries.minecraft.games.events.player.PlayerSpectateArenaEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

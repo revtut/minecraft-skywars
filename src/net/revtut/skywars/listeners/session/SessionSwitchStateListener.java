@@ -9,8 +9,6 @@ import net.revtut.libraries.minecraft.games.classes.GameClass;
 import net.revtut.libraries.minecraft.games.events.session.SessionSwitchStateEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.GameMode;

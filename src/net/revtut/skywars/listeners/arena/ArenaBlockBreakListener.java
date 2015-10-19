@@ -3,11 +3,9 @@ package net.revtut.skywars.listeners.arena;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.events.arena.ArenaBlockBreakEvent;
-import net.revtut.libraries.minecraft.games.events.player.PlayerSpectateArenaEvent;
 import net.revtut.libraries.minecraft.games.player.PlayerData;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
