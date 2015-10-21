@@ -4,7 +4,7 @@ import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.games.events.session.SessionTimerTickEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +30,7 @@ public class SessionTimerTickListener implements Listener {
         switch (session.getState()) {
             case LOBBY:
             case WARMUP:
-                for(final PlayerData player : arena.getAllPlayers())
+                for(final GamePlayer player : arena.getAllPlayers())
                     player.getBukkitPlayer().setLevel(event.getTime());
                 break;
         }

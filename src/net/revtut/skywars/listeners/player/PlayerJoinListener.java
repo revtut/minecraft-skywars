@@ -3,7 +3,7 @@ package net.revtut.skywars.listeners.player;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.events.player.PlayerJoinArenaEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
 import net.revtut.libraries.minecraft.text.TabAPI;
 import net.revtut.skywars.InfoBoardManager;
@@ -39,7 +39,7 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        final PlayerData player = event.getPlayer();
+        final GamePlayer player = event.getPlayer();
 
         // Change join message
         final int numberPlayers = arena.getSize() + 1;

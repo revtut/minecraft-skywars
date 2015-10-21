@@ -5,7 +5,7 @@ import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
 import net.revtut.libraries.minecraft.games.events.player.PlayerDieEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.libraries.minecraft.utils.BypassesAPI;
 import net.revtut.skywars.InfoBoardManager;
@@ -33,8 +33,8 @@ public class PlayerDieListener implements Listener {
         if(gameController == null || !gameController.hasArena(arena))
             return;
 
-        final PlayerData target = event.getPlayer();
-        final PlayerData killer = event.getKiller();
+        final GamePlayer target = event.getPlayer();
+        final GamePlayer killer = event.getKiller();
 
         // Death message
         if(killer == null)

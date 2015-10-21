@@ -3,7 +3,7 @@ package net.revtut.skywars.listeners.player;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.events.player.PlayerLeaveArenaEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
@@ -29,7 +29,7 @@ public class PlayerLeaveListener implements Listener {
         if(gameController == null || !gameController.hasArena(arena))
             return;
 
-        final PlayerData player = event.getPlayer();
+        final GamePlayer player = event.getPlayer();
 
         // Change leave message
         final int numberPlayers = arena.getSize() - 1;

@@ -3,7 +3,7 @@ package net.revtut.skywars.listeners.player;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
 import net.revtut.libraries.minecraft.games.events.player.PlayerThrowItemEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
@@ -26,7 +26,7 @@ public class PlayerThrowItemListener implements Listener {
         if(gameController == null || !gameController.hasArena(arena))
             return;
 
-        final PlayerData player = event.getPlayer();
+        final GamePlayer player = event.getPlayer();
 
         // Block non live players
         if(player.getState() != PlayerState.ALIVE)

@@ -7,7 +7,7 @@ import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
 import net.revtut.libraries.minecraft.games.classes.GameClass;
 import net.revtut.libraries.minecraft.games.events.session.SessionSwitchStateEvent;
-import net.revtut.libraries.minecraft.games.player.PlayerData;
+import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
@@ -62,7 +62,7 @@ public class SessionSwitchStateListener implements Listener {
         int playerIndex = -1;
         Player bukkitPlayer;
         Location teleportLocation;
-        for(final PlayerData player : arena.getAllPlayers()) {
+        for(final GamePlayer player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;
@@ -91,7 +91,7 @@ public class SessionSwitchStateListener implements Listener {
     private void onStart(final ArenaSolo arena) {
         Player bukkitPlayer;
         GameClass gameClass;
-        for(final PlayerData player : arena.getAllPlayers()) {
+        for(final GamePlayer player : arena.getAllPlayers()) {
             if (player.getState() != PlayerState.ALIVE)
                 continue;
 
@@ -128,7 +128,7 @@ public class SessionSwitchStateListener implements Listener {
         int playerIndex = -1;
         Player bukkitPlayer;
         Location teleportLocation;
-        for(final PlayerData player : arena.getAllPlayers()) {
+        for(final GamePlayer player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;
@@ -152,7 +152,7 @@ public class SessionSwitchStateListener implements Listener {
      */
     private void onFinish(final ArenaSolo arena) {
         Player bukkitPlayer;
-        for(final PlayerData player : arena.getAllPlayers()) {
+        for(final GamePlayer player : arena.getAllPlayers()) {
             bukkitPlayer = player.getBukkitPlayer();
             if(bukkitPlayer == null)
                 continue;
