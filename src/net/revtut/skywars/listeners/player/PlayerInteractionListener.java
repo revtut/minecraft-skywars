@@ -4,6 +4,7 @@ import net.revtut.libraries.Libraries;
 import net.revtut.libraries.minecraft.appearance.ItemAPI;
 import net.revtut.libraries.minecraft.games.GameController;
 import net.revtut.libraries.minecraft.games.arena.Arena;
+import net.revtut.libraries.minecraft.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.games.events.player.PlayerInteractionEvent;
 import net.revtut.libraries.minecraft.games.player.GamePlayer;
 import net.revtut.libraries.minecraft.games.player.PlayerState;
@@ -17,6 +18,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -77,6 +79,12 @@ public class PlayerInteractionListener implements Listener {
 
         // Block non live players
         if(player.getState() != PlayerState.ALIVE) {
+            event.setCancelled(true);
+            return;
+        }
+
+        // Cancel physical interaction
+        if(event.getAction() == Action.PHYSICAL && arena.getSession() != null && arena.getSession().getState() == GameState.LOBBY) {
             event.setCancelled(true);
             return;
         }
