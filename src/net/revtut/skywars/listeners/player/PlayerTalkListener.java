@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.Date;
+
 /**
  * Player Talk Listener
  */
@@ -38,5 +40,12 @@ public class PlayerTalkListener implements Listener {
             if(bukkitPlayer != null)
                 bukkitPlayer.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
         }
+
+        // Change message style
+        final String message = player.getName() + " » " + event.getMessage();
+        event.setFormattedMessage(message);
+
+        // Log message
+        arena.getSession().addChatMessage(message, new Date());
     }
 }

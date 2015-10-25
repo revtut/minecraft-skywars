@@ -1,4 +1,4 @@
-package net.revtut.skywars;
+package net.revtut.skywars.utils;
 
 import org.bukkit.Location;
 

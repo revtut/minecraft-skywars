@@ -33,6 +33,9 @@ public class SessionTimerTickListener implements Listener {
                 for(final GamePlayer player : arena.getAllPlayers())
                     player.getBukkitPlayer().setLevel(event.getTime());
                 break;
+            case FINISH:
+                // TODO launch fireworks on winner
+                break;
         }
     }
 }

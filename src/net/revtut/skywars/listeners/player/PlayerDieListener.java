@@ -14,6 +14,8 @@ import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.List;
+
 /**
  * Player Die Listener
  */
@@ -57,5 +59,13 @@ public class PlayerDieListener implements Listener {
         final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();
         infoBoardManager.updateAlive(arena, arena.getPlayers(PlayerState.ALIVE).size());
         infoBoardManager.updateDead(arena, arena.getPlayers(PlayerState.DEAD).size());
+
+        // Check if the game has finished
+        final List<GamePlayer> alivePlayers = arena.getPlayers(PlayerState.ALIVE);
+        if(alivePlayers.size() <= 1) {
+            arena.getSession().updateState(GameState.FINISH, 20);
+            if(alivePlayers.size() == 1)
+                arena.getSession().setWinner(alivePlayers.get(0));
+        }
     }
 }
