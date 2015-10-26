@@ -61,20 +61,15 @@ public class SessionSwitchStateListener implements Listener {
      */
     private void onWarmUp(final ArenaSolo arena) {
         int playerIndex = -1;
-        Player bukkitPlayer;
         Location teleportLocation;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
-            if(bukkitPlayer == null)
-                continue;
-
             if(player.getState() == PlayerState.SPECTATOR) {
-                bukkitPlayer.teleport(arena.getSpectatorLocation());
+                player.teleport(arena.getSpectatorLocation());
             } else {
                 ++playerIndex;
 
                 teleportLocation = arena.getSpawnLocations().get(playerIndex % arena.getSpawnLocations().size());
-                bukkitPlayer.teleport(teleportLocation);
+                player.teleport(teleportLocation);
 
                 // TODO Give kit chooser
             }
@@ -90,7 +85,6 @@ public class SessionSwitchStateListener implements Listener {
      * @param arena arena that is now on start
      */
     private void onStart(final ArenaSolo arena) {
-        Player bukkitPlayer;
         GameClass gameClass;
         for(final GamePlayer player : arena.getAllPlayers()) {
             if (player.getState() != PlayerState.ALIVE)
@@ -102,12 +96,8 @@ public class SessionSwitchStateListener implements Listener {
             } else
                 gameClass.equip(player);
 
-            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
-            if(bukkitPlayer == null)
-                continue;
-
-            bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-            bukkitPlayer.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
+            player.setGameMode(GameMode.SURVIVAL);
+            player.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
         }
 
         // Update flags
@@ -127,22 +117,17 @@ public class SessionSwitchStateListener implements Listener {
      */
     private void onDeathMatch(final ArenaSolo arena) {
         int playerIndex = -1;
-        Player bukkitPlayer;
         Location teleportLocation;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
-            if(bukkitPlayer == null)
-                continue;
-
             if(player.getState() == PlayerState.SPECTATOR) {
-                bukkitPlayer.teleport(arena.getSpectatorDeathMatchLocation());
+                player.teleport(arena.getSpectatorDeathMatchLocation());
             } else if(player.getState() == PlayerState.DEAD) {
-                bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
+                player.teleport(arena.getDeadDeathMatchLocation());
             } else {
                 ++playerIndex;
 
                 teleportLocation = arena.getDeathMatchLocations().get(playerIndex % arena.getDeathMatchLocations().size());
-                bukkitPlayer.teleport(teleportLocation);
+                player.teleport(teleportLocation);
             }
         }
     }
@@ -152,19 +137,14 @@ public class SessionSwitchStateListener implements Listener {
      * @param arena arena that is now on finish
      */
     private void onFinish(final ArenaSolo arena) {
-        Player bukkitPlayer;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
-            if(bukkitPlayer == null)
-                continue;
-
             if(arena.getSession().getState() == GameState.DEATHMATCH) {
-                bukkitPlayer.teleport(arena.getDeadDeathMatchLocation());
+                player.teleport(arena.getDeadDeathMatchLocation());
             } else {
-                bukkitPlayer.teleport(arena.getDeadLocation());
+                player.teleport(arena.getDeadLocation());
             }
 
-            bukkitPlayer.setGameMode(GameMode.SPECTATOR);
+            player.setGameMode(GameMode.SPECTATOR);
         }
 
         // Update flags

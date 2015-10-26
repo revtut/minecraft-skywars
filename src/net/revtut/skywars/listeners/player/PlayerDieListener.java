@@ -47,23 +47,16 @@ public class PlayerDieListener implements Listener {
         else
             event.setDeathMessage(plugin.getConfiguration().getPrefix() + "§a" + target.getName() + " was killed by " + killer.getName() + "!");
 
-        // Get player
-        final Player bukkitTarget = Bukkit.getPlayer(target.getUuid());
-        if(bukkitTarget == null) {
-            Bukkit.getLogger().log(Level.SEVERE, "Target player on death does not exist on Bukkit!");
-            return;
-        }
-
         // Update player
         target.updateState(PlayerState.DEAD);
-        bukkitTarget.setGameMode(GameMode.SPECTATOR);
-        Packets.respawnBypass(bukkitTarget);
+        target.setGameMode(GameMode.SPECTATOR);
+        Packets.respawnBypass(Bukkit.getPlayer(target.getUuid()));
 
         final ArenaSolo arenaSolo = (ArenaSolo) arena;
         if(arenaSolo.getSession().getState() == GameState.DEATHMATCH)
-            bukkitTarget.teleport(arenaSolo.getDeadDeathMatchLocation());
+            target.teleport(arenaSolo.getDeadDeathMatchLocation());
         else
-            bukkitTarget.teleport(arenaSolo.getDeadLocation());
+            target.teleport(arenaSolo.getDeadLocation());
 
         // Scoreboard
         final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();

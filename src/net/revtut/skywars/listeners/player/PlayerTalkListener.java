@@ -37,11 +37,8 @@ public class PlayerTalkListener implements Listener {
         // Block non live players
         if(player.getState() != PlayerState.ALIVE) {
             event.setCancelled(true);
-            final Player bukkitPlayer = Bukkit.getPlayer(player.getUuid());
-            if(bukkitPlayer != null) {
-                bukkitPlayer.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
-                return;
-            }
+            player.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
+            return;
         }
 
         // Change message style
