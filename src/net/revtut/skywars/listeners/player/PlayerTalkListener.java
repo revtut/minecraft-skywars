@@ -1,11 +1,12 @@
 package net.revtut.skywars.listeners.player;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.player.PlayerTalkEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.events.player.PlayerTalkEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,9 +37,11 @@ public class PlayerTalkListener implements Listener {
         // Block non live players
         if(player.getState() != PlayerState.ALIVE) {
             event.setCancelled(true);
-            final Player bukkitPlayer = player.getBukkitPlayer();
-            if(bukkitPlayer != null)
+            final Player bukkitPlayer = Bukkit.getPlayer(player.getUuid());
+            if(bukkitPlayer != null) {
                 bukkitPlayer.sendMessage(plugin.getConfiguration().getPrefix() + "§cYou may not talk when you are not alive!");
+                return;
+            }
         }
 
         // Change message style

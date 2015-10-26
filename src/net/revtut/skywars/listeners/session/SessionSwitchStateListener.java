@@ -1,16 +1,17 @@
 package net.revtut.skywars.listeners.session;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
-import net.revtut.libraries.minecraft.games.classes.GameClass;
-import net.revtut.libraries.minecraft.games.events.session.SessionSwitchStateEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.ArenaFlag;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameSession;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.bukkit.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.bukkit.games.classes.GameClass;
+import net.revtut.libraries.minecraft.bukkit.games.events.session.SessionSwitchStateEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -63,7 +64,7 @@ public class SessionSwitchStateListener implements Listener {
         Player bukkitPlayer;
         Location teleportLocation;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = player.getBukkitPlayer();
+            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
             if(bukkitPlayer == null)
                 continue;
 
@@ -101,7 +102,7 @@ public class SessionSwitchStateListener implements Listener {
             } else
                 gameClass.equip(player);
 
-            bukkitPlayer = player.getBukkitPlayer();
+            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
             if(bukkitPlayer == null)
                 continue;
 
@@ -129,7 +130,7 @@ public class SessionSwitchStateListener implements Listener {
         Player bukkitPlayer;
         Location teleportLocation;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = player.getBukkitPlayer();
+            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
             if(bukkitPlayer == null)
                 continue;
 
@@ -153,7 +154,7 @@ public class SessionSwitchStateListener implements Listener {
     private void onFinish(final ArenaSolo arena) {
         Player bukkitPlayer;
         for(final GamePlayer player : arena.getAllPlayers()) {
-            bukkitPlayer = player.getBukkitPlayer();
+            bukkitPlayer = Bukkit.getPlayer(player.getUuid());
             if(bukkitPlayer == null)
                 continue;
 

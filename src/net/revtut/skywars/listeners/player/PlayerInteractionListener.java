@@ -1,13 +1,13 @@
 package net.revtut.skywars.listeners.player;
 
 import net.revtut.libraries.Libraries;
-import net.revtut.libraries.minecraft.appearance.ItemAPI;
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.events.player.PlayerInteractionEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.bukkit.appearance.Items;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.bukkit.games.events.player.PlayerInteractionEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -169,26 +169,26 @@ public class PlayerInteractionListener implements Listener {
 
         // Armor
         for (int i = 0; i < 15; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialsArmor, enchantsArmor, 0.80, 2));
+            itemStacks.add(Items.getRandomItem(materialsArmor, enchantsArmor, 0.80, 2));
 
         // Weapon
         for (int i = 0; i < 25; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialsWeapon, enchantWeapon, 0.70, 2));
+            itemStacks.add(Items.getRandomItem(materialsWeapon, enchantWeapon, 0.70, 2));
 
         // Bucket
         for (int i = 0; i < 15; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialBuckets));
+            itemStacks.add(Items.getRandomItem(materialBuckets));
 
         // Food
         for (int i = 0; i < 10; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialFood));
+            itemStacks.add(Items.getRandomItem(materialFood));
 
         // Block
         for (int i = 0; i < 15; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialBlock));
+            itemStacks.add(Items.getRandomItem(materialBlock));
 
         // Projectiles
         for (int i = 0; i < 20; i++)
-            itemStacks.add(ItemAPI.randomizeItem(materialProjectiles));
+            itemStacks.add(Items.getRandomItem(materialProjectiles));
     }
 }

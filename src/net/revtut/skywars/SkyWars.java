@@ -3,10 +3,9 @@ package net.revtut.skywars;
 import net.revtut.libraries.generic.database.Database;
 import net.revtut.libraries.generic.database.types.DatabaseType;
 import net.revtut.libraries.generic.util.Files;
-import net.revtut.libraries.minecraft.games.GameAPI;
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaType;
-import net.revtut.libraries.minecraft.maths.ConvertersAPI;
+import net.revtut.libraries.minecraft.bukkit.games.GameAPI;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.types.ArenaType;
 import net.revtut.skywars.listeners.arena.*;
 import net.revtut.skywars.listeners.player.*;
 import net.revtut.skywars.listeners.session.SessionSwitchStateListener;
@@ -246,8 +245,8 @@ public class SkyWars extends JavaPlugin {
         final int maxPlayers = configurationConfiguration.getInt("MaxPlayers");
         final int maxSlots = configurationConfiguration.getInt("MaxSlots");
         final String prefix = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("MessagePrefix"));
-        final String tabTitle = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle")));
-        final String tabFooter = ConvertersAPI.convertToJSON(ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter")));
+        final String tabTitle = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabTitle"));
+        final String tabFooter = ChatColor.translateAlternateColorCodes('&', configurationConfiguration.getString("TabFooter"));
         final double coinsMultiplier = configurationConfiguration.getDouble("CoinsMultiplier");
 
         this.configuration = new Configuration(lobby, minPlayers, maxPlayers, maxSlots, prefix, tabTitle, tabFooter, coinsMultiplier);

@@ -1,13 +1,14 @@
 package net.revtut.skywars.listeners.player;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.player.PlayerJoinArenaEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
-import net.revtut.libraries.minecraft.text.TabAPI;
+import net.revtut.libraries.minecraft.bukkit.appearance.Packets;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.events.player.PlayerJoinArenaEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.InfoBoard;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,7 +48,7 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(plugin.getConfiguration().getPrefix() + "§a" + player.getName() + " has joined! (" + numberPlayers + "/" + maxPlayers + ")");
 
         // Bukkit player
-        final Player bukkitPlayer = player.getBukkitPlayer();
+        final Player bukkitPlayer = Bukkit.getPlayer(player.getUuid());
         if(bukkitPlayer == null)
             return;
 
@@ -58,7 +59,7 @@ public class PlayerJoinListener implements Listener {
         infoBoard.send(bukkitPlayer);
 
         // Tab list
-        TabAPI.setTab(bukkitPlayer, plugin.getConfiguration().getTabTitle(), plugin.getConfiguration().getTabFooter());
+        Packets.sendTab(bukkitPlayer, plugin.getConfiguration().getTabTitle(), plugin.getConfiguration().getTabFooter());
 
         // TODO Add lobby items
     }

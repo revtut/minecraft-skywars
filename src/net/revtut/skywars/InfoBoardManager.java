@@ -1,15 +1,15 @@
 package net.revtut.skywars;
 
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoardLabel;
-import net.revtut.libraries.minecraft.scoreboard.label.BlankLabel;
-import net.revtut.libraries.minecraft.scoreboard.label.ScrollingLabel;
-import net.revtut.libraries.minecraft.scoreboard.label.StaticLabel;
-import net.revtut.libraries.minecraft.text.scroller.ColorScroller;
-import net.revtut.libraries.minecraft.text.scroller.TextScroller;
-import org.bukkit.ChatColor;
+
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.InfoBoard;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.InfoBoardLabel;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.label.BlankLabel;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.label.ScrollingLabel;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.label.StaticLabel;
+import net.revtut.libraries.minecraft.common.animation.text.ColorScroller;
+import net.revtut.libraries.minecraft.common.animation.text.TextScroller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class InfoBoardManager {
         final InfoBoard infoBoard = new InfoBoard(5);
 
         // Title
-        infoBoard.setTitle(new ScrollingLabel("title", new ColorScroller("SKY WARS", 1, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD), 0));
+        infoBoard.setTitle(new ScrollingLabel("title", new ColorScroller("SKY WARS", 1, "§b", "§e", "§6"), 0));
 
         // Body
         infoBoard.addLabel(new BlankLabel(11));

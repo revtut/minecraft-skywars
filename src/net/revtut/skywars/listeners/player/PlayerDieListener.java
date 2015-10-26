@@ -1,20 +1,23 @@
 package net.revtut.skywars.listeners.player;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
-import net.revtut.libraries.minecraft.games.events.player.PlayerDieEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
-import net.revtut.libraries.minecraft.utils.BypassesAPI;
+import net.revtut.libraries.minecraft.bukkit.appearance.Packets;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.bukkit.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.bukkit.games.events.player.PlayerDieEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Player Die Listener
@@ -44,16 +47,23 @@ public class PlayerDieListener implements Listener {
         else
             event.setDeathMessage(plugin.getConfiguration().getPrefix() + "§a" + target.getName() + " was killed by " + killer.getName() + "!");
 
+        // Get player
+        final Player bukkitTarget = Bukkit.getPlayer(target.getUuid());
+        if(bukkitTarget == null) {
+            Bukkit.getLogger().log(Level.SEVERE, "Target player on death does not exist on Bukkit!");
+            return;
+        }
+
         // Update player
         target.updateState(PlayerState.DEAD);
-        target.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
-        BypassesAPI.respawnBypass(target.getBukkitPlayer());
+        bukkitTarget.setGameMode(GameMode.SPECTATOR);
+        Packets.respawnBypass(bukkitTarget);
 
         final ArenaSolo arenaSolo = (ArenaSolo) arena;
         if(arenaSolo.getSession().getState() == GameState.DEATHMATCH)
-            target.getBukkitPlayer().teleport(arenaSolo.getDeadDeathMatchLocation());
+            bukkitTarget.teleport(arenaSolo.getDeadDeathMatchLocation());
         else
-            target.getBukkitPlayer().teleport(arenaSolo.getDeadLocation());
+            bukkitTarget.teleport(arenaSolo.getDeadLocation());
 
         // Scoreboard
         final InfoBoardManager infoBoardManager = plugin.getInfoBoardManager();

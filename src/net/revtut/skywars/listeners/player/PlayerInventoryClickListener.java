@@ -1,10 +1,10 @@
 package net.revtut.skywars.listeners.player;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.events.player.PlayerInventoryClickEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.player.PlayerState;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.events.player.PlayerInventoryClickEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.player.PlayerState;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

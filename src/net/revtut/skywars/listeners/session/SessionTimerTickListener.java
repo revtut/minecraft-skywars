@@ -1,15 +1,17 @@
 package net.revtut.skywars.listeners.session;
 
-import net.revtut.libraries.minecraft.appearance.AppearanceAPI;
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerTickEvent;
-import net.revtut.libraries.minecraft.games.player.GamePlayer;
-import net.revtut.libraries.minecraft.games.utils.Winner;
+import net.revtut.libraries.minecraft.bukkit.appearance.Effects;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameSession;
+import net.revtut.libraries.minecraft.bukkit.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.bukkit.games.events.session.SessionTimerTickEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
+import net.revtut.libraries.minecraft.bukkit.games.utils.Winner;
 import net.revtut.skywars.SkyWars;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -36,8 +38,11 @@ public class SessionTimerTickListener implements Listener {
         switch (session.getState()) {
             case LOBBY:
             case WARMUP:
-                for(final GamePlayer player : arena.getAllPlayers())
-                    player.getBukkitPlayer().setLevel(event.getTime());
+                for(final GamePlayer player : arena.getAllPlayers()) {
+                    final Player bukkitPlayer = Bukkit.getPlayer(player.getUuid());
+                    if(bukkitPlayer != null)
+                        bukkitPlayer.setLevel(event.getTime());
+                }
                 break;
             case FINISH:
                 final ArenaSolo arenaSolo = (ArenaSolo) arena;
@@ -53,12 +58,15 @@ public class SessionTimerTickListener implements Listener {
                 int i = 0;
                 for(final Location spawnLocation : spawnLocations) {
                     final Location location = new Location(spawnLocation.getWorld(), spawnLocation.getX(), spawnLocation.getY() + 20, spawnLocation.getZ());
-                    AppearanceAPI.launchFirework(location, 1, i++);
+                    Effects.launchFirework(location, 1, i++);
                 }
 
                 final Winner winner = arena.getSession().getWinner();
-                if(winner != null && winner instanceof GamePlayer)
-                    AppearanceAPI.launchFirework(((GamePlayer)winner).getBukkitPlayer(), 10, 2);
+                if(winner != null && winner instanceof GamePlayer) {
+                    final Player bukkitWinner = Bukkit.getPlayer(((GamePlayer) winner).getUuid());
+                    if (bukkitWinner != null)
+                        Effects.launchFirework(bukkitWinner, 10, 2);
+                }
                 break;
         }
     }

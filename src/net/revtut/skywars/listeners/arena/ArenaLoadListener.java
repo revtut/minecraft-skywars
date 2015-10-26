@@ -1,13 +1,13 @@
 package net.revtut.skywars.listeners.arena;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.ArenaFlag;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.arena.types.ArenaSolo;
-import net.revtut.libraries.minecraft.games.events.arena.ArenaLoadEvent;
-import net.revtut.libraries.minecraft.maths.AlgebraAPI;
-import net.revtut.libraries.minecraft.scoreboard.InfoBoard;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.ArenaFlag;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameSession;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.bukkit.games.arena.types.ArenaSolo;
+import net.revtut.libraries.minecraft.bukkit.games.events.arena.ArenaLoadEvent;
+import net.revtut.libraries.minecraft.bukkit.maths.Maths;
+import net.revtut.libraries.minecraft.bukkit.scoreboard.InfoBoard;
 import net.revtut.skywars.utils.Configuration;
 import net.revtut.skywars.InfoBoardManager;
 import net.revtut.skywars.SkyWars;
@@ -114,14 +114,16 @@ public class ArenaLoadListener implements Listener {
         Location spawnLocation;
         for (final String spawnNumber : locConfig.getConfigurationSection("Spawns").getKeys(false)) {
             spawnLocation = Utils.parseLocation(locConfig, "Spawns." + spawnNumber, world);
-            spawnLocations.add(AlgebraAPI.locationLookAt(spawnLocation, dead));
+            Maths.setLocationLookAt(spawnLocation, dead);
+            spawnLocations.add(spawnLocation);
         }
 
         final List<Location> deathMatchLocations = new ArrayList<>();
         Location deathMatchLocation;
         for (final String deathMatchSpawnNumber : locConfig.getConfigurationSection("DeathMatch").getKeys(false)) {
             deathMatchLocation = Utils.parseLocation(locConfig, "DeathMatch." + deathMatchSpawnNumber, world);
-            deathMatchLocations.add(AlgebraAPI.locationLookAt(deathMatchLocation, deadDeathMatch));
+            Maths.setLocationLookAt(deathMatchLocation, deadDeathMatch);
+            spawnLocations.add(deathMatchLocation);
         }
 
         // Initialize the world of the arena

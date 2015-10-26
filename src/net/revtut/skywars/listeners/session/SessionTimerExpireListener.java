@@ -1,10 +1,10 @@
 package net.revtut.skywars.listeners.session;
 
-import net.revtut.libraries.minecraft.games.GameController;
-import net.revtut.libraries.minecraft.games.arena.Arena;
-import net.revtut.libraries.minecraft.games.arena.session.GameSession;
-import net.revtut.libraries.minecraft.games.arena.session.GameState;
-import net.revtut.libraries.minecraft.games.events.session.SessionTimerExpireEvent;
+import net.revtut.libraries.minecraft.bukkit.games.GameController;
+import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameSession;
+import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
+import net.revtut.libraries.minecraft.bukkit.games.events.session.SessionTimerExpireEvent;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
