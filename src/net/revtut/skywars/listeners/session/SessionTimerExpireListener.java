@@ -1,13 +1,17 @@
 package net.revtut.skywars.listeners.session;
 
+import net.revtut.libraries.minecraft.bukkit.games.GameAPI;
 import net.revtut.libraries.minecraft.bukkit.games.GameController;
 import net.revtut.libraries.minecraft.bukkit.games.arena.Arena;
 import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameSession;
 import net.revtut.libraries.minecraft.bukkit.games.arena.session.GameState;
 import net.revtut.libraries.minecraft.bukkit.games.events.session.SessionTimerExpireEvent;
+import net.revtut.libraries.minecraft.bukkit.games.player.GamePlayer;
 import net.revtut.skywars.SkyWars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
 
 /**
  * Session Timer Expire Listener
@@ -43,7 +47,10 @@ public class SessionTimerExpireListener implements Listener {
                 event.setCancelled(true); // The only way to end a game is if someone wins
                 break;
             case FINISH:
-                // TODO rejoin all the players and close this arena
+                for(GamePlayer player : new ArrayList<>(arena.getAllPlayers())) {
+                    arena.leave(player);
+                    GameAPI.getInstance().joinRandomGame(player);
+                }
                 break;
         }
     }
