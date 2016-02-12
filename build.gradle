@@ -1,7 +1,8 @@
 apply plugin: 'java'
 
-group = group
-version = version
+group = theGroup
+version = theVersion
+sourceCompatibility = theSourceCompatibility
 
 dependencies {
     compile files('src/main/resources/libs/spigot.jar')
