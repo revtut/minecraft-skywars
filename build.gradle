@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+group = group
+version = version
+
+dependencies {
+    compile files('src/main/resources/libs/spigot.jar')
+    compile files('src/main/resources/libs/Minecraft-Libraries.jar')
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+}
+
+processResources {
+    from('src/main/resources/plugin.yml') {
+        filter {
+            String line -> line.replace 'version:', 'version: ' + version
+        }
+    }
+}
+
+jar {
+    doFirst {
+        exclude 'libs/**'
+    }
+}
