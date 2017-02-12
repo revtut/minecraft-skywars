@@ -23,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 /**
@@ -93,7 +94,10 @@ public class SkyWars extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         } else {
-            database.connect();
+            try {
+                database.connect();
+            } catch (SQLException | ClassNotFoundException ignore) {
+            }
             if(database.getConnection() == null) {
                 getLogger().log(Level.SEVERE, "Connection to the database could not be established!");
 
